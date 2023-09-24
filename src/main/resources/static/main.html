@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- 모바일 기기 접속 시 화면 크기 조절을 위해 뷰포트 설정 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<!-- vuetify.js에 필요한 스타일 파일 링크 연결 -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<v-app>
+			<v-app-bar app color="primary" dark fixed>
+				<v-app-bar-nav-icon></v-app-bar-nav-icon>
+				<v-toolbar-title>마스터 페이지</v-toolbar-title>
+				<v-spacer></v-spacer>
+				<v-btn icon>
+					<v-icon>mdi-dots-vertical</v-icon>
+				</v-btn>
+			</v-app-bar>
+			<v-content>
+				<v-container>
+					<BoardList/>
+				</v-container>
+			</v-content>
+			<v-footer color="secondary" dark fixed>
+				<div class="mx-auto">Copyright &copy;</div>
+			</v-footer>
+		</v-app>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+	<script>
+		new Vue({
+			el: '#app',
+			vuetify: new Vuetify()
+		})
+	</script>
+</body>	
+</html>
