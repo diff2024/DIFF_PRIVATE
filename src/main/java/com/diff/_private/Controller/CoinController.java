@@ -52,10 +52,12 @@ public class CoinController {
 	
 	@GetMapping(path = "/MainGridList")
 	public List<HashMap<String, String>> MainGridList(HttpServletRequest req) throws Exception {
-		String keyword = (req.getParameter("keyword")==null)?"":req.getParameter("keyword");
+		String std_date = (req.getParameter("std_date")==null)?"":req.getParameter("std_date");
+		String end_date = (req.getParameter("end_date")==null)?"":req.getParameter("end_date");
 		
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("keyword", keyword);
+		map.put("std_date", std_date);
+		map.put("end_date", end_date);
 		return CoinService.MainGridList(map);
 	}
 	@GetMapping(path = "/MainGridGraph")

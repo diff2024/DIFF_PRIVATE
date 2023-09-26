@@ -1,0 +1,36 @@
+/* 폰트 */ 
+@import './Font/nanumsquare.css';
+.fontDefault {
+	font-family: 'NanumSquare';
+}
+.fontBold {
+	font-family: 'NanumSquareB';
+}
+.fontLight {
+	font-family: 'NanumSquareL';	
+}
+/* List data-Table */
+.small-table {color:white; font-family: 'NanumSquare';}
+table.small-table thead tr {background:gray;}
+.searchWrap{border:1px solid #888; border-radius:5px; text-align:center; padding:20px 0; margin-bottom:40px;}
+.searchWrap input{width:60%; height:36px; border-radius:3px; padding:0 10px; border:1px solid #888;}
+.searchWrap .btnSearch{display:inline-block; margin-left:10px;}
+.tbList th{border-top:1px solid #888;}
+table thead tr {background:gray;}
+table thead tr th span {color:white; font-family: 'NanumSquare';}
+table.small-table thead tr th span {color:white; font-family: 'NanumSquare'; font-size: 0.5em;}
+table tbody td {font-family: 'NanumSquare';}
+.tbList th, .tbList td{border-bottom:1px solid #eee; padding:5px 0;}
+.tbList td.txt_left{text-align:left;}
+.btnRightWrap{text-align:right; margin:10px 0 0 0;}
+.pagination{margin:20px 0 0 0; text-align:center;}
+.first, .prev, .next, .last{border:1px solid #666; margin:0 5px;}
+.pagination span{display:inline-block; padding:0 5px; color:#333;}
+.pagination a{text-decoration:none; display:inline-blcok; padding:0 5px; color:#666;}
+.accent--text {color:#82b1ff !important; caret-color:#82b1ff !important; }
+
+/* 전체 */
+.v-toolbar { flex:0; }
+.v-btn { border-radius:0px;}
+.zero-margin { margin: 0; }
+.zero-padding { padding: 0; }

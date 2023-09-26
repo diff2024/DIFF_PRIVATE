@@ -1,0 +1,72 @@
+{
+  "name": "vue",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@ag-grid-community/styles": "^30.1.0",
+    "ag-grid-community": "^30.1.0",
+    "ag-grid-vue": "^30.1.0",
+    "axios": "^0.21.1",
+    "chart.js": "^2.9.4",
+    "chartjs-plugin-labels": "^1.1.0",
+    "core-js": "^2.6.5",
+    "image-map": "^2.0.1",
+    "jquery": "^3.6.0",
+    "material-design-icons-iconfont": "^6.7.0",
+    "print-js": "^1.6.0",
+    "sweetalert2": "^11.7.28",
+    "vue": "^2.6.10",
+    "vue-chartjs": "^3.5.1",
+    "vue-mobile-detection": "^1.0.0",
+    "vue-numkeyboard": "^1.1.2",
+    "vue-print-nb": "^1.7.5",
+    "vue-property-decorator": "^9.1.2",
+    "vue-router": "^3.5.1",
+    "vue-session": "^1.0.0",
+    "vuetify": "^2.5.2",
+    "vuetify-dialog": "^2.0.14",
+    "webpack": "^4.47.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.12.0",
+    "@vue/cli-plugin-eslint": "^3.12.0",
+    "@vue/cli-service": "^3.12.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "expose-loader": "^3.0.0",
+    "sass": "^1.67.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "^2.4.0",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.7.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
