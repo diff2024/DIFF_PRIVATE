@@ -54,6 +54,12 @@ public class CoinController {
 	public List<HashMap<String, String>> MainGridList(HttpServletRequest req) throws Exception {
 		String std_date = (req.getParameter("std_date")==null)?"":req.getParameter("std_date");
 		String end_date = (req.getParameter("end_date")==null)?"":req.getParameter("end_date");
+		if(std_date.equals("--")) {
+			std_date = "";
+		}
+		if(end_date.equals("--")) {
+			end_date = "";
+		}
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("std_date", std_date);

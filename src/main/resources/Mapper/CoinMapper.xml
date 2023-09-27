@@ -7,6 +7,7 @@
 	 		 , coalesce(cast(x.o_c_price_rate_5_count as varchar), '0') o_c_price_rate_5_count, coalesce(cast(x.o_c_price_rate_10_count as varchar), '0') o_c_price_rate_10_count, coalesce(cast(x.o_c_price_rate_15_count as varchar), '0') o_c_price_rate_15_count
 	 		 , coalesce(cast(x.o_c_price_rate_20_count as varchar), '0') o_c_price_rate_20_count, coalesce(cast(x.o_c_price_rate_25_count as varchar), '0') o_c_price_rate_25_count, coalesce(cast(x.o_c_price_rate_30_count as varchar), '0') o_c_price_rate_30_count
 			 , cast((ROUND(((cast(x.c_price as numeric)-cast(x.o_price as numeric))/cast(x.o_price as numeric))*100,2)) as varchar) open_close_rate
+			 , cast(ROUND(((((cast(x.max_price as numeric) - cast(x.min_price as numeric))/ cast(x.min_price as numeric))) * 100), 1) as varchar) lowest_highest_fluctuation
 			 , cast(ROUND((((cast(x.c_price as numeric) / (cast(x.min_price as numeric) + cast(x.max_price as numeric)))) * 100), 1) as varchar) highest_lowest_100per
 			 , cast((ROUND(((((cast(x.max_price as numeric) - cast(x.c_price as numeric)) / cast(x.max_price as numeric))) * 100), 1)) as varchar) highest_decline_rate
 			 , cast((ROUND(((((cast(x.c_price as numeric) - cast(x.min_price as numeric)) / cast(x.min_price as numeric))) * 100), 1)) as varchar) lowest_rise_rate

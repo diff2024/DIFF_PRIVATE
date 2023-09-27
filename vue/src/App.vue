@@ -30,10 +30,41 @@
 					<img src="./assets/logo.jpg" width="90px" style="vertical-align:middle;" />
 				</v-toolbar-title>
 				<v-spacer></v-spacer>
+				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">원화코인통계</span>
+				<v-spacer></v-spacer>
+				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
+				<v-spacer></v-spacer>
+				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
+				<v-spacer></v-spacer>
+				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
+				<v-spacer></v-spacer>
+				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
+				<v-spacer></v-spacer>
+				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
 			</v-app-bar>
 			<v-main>
 				<router-view></router-view>
 			</v-main>
+			<footer style="padding-bottom: 6px; padding-left:30px;">
+				<span style="font-size:20px;">DIFF | 836-28-01135 | 010-6598-0199</span>
+			</footer>
 		</v-app>
 	</div>
 </template>
