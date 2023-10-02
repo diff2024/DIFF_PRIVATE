@@ -1,7 +1,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.diff._private.Mapper.CoinMapper">
-		<select id="MainGridList" resultType="HashMap" parameterType="HashMap">
-		select x.coin_ticker id, x.gijun_date, x.coin_kor_name, x.coin_eng_name, x.max_price, x.min_price, x.o_price, x.c_price, x.l_price, x.h_price, x.trade_volume
+	<select id="MainGridList" resultType="HashMap" parameterType="HashMap">
+		select x.coin_ticker id, x.gijun_date, x.coin_kor_name, x.coin_eng_name, x.max_price, x.min_price, x.max_date, x.min_date, x.o_price, x.c_price, x.l_price, x.h_price, x.trade_volume
 			 , coalesce(x.o_c_price_rate_5_date, '') o_c_price_rate_5_date, coalesce(x.o_c_price_rate_10_date, '') o_c_price_rate_10_date, coalesce(x.o_c_price_rate_15_date, '') o_c_price_rate_15_date
 	 		 , coalesce(x.o_c_price_rate_20_date, '') o_c_price_rate_20_date, coalesce(x.o_c_price_rate_25_date, '') o_c_price_rate_25_date, coalesce(x.o_c_price_rate_30_date, '') o_c_price_rate_30_date
 	 		 , coalesce(cast(x.o_c_price_rate_5_count as varchar), '0') o_c_price_rate_5_count, coalesce(cast(x.o_c_price_rate_10_count as varchar), '0') o_c_price_rate_10_count, coalesce(cast(x.o_c_price_rate_15_count as varchar), '0') o_c_price_rate_15_count
@@ -13,6 +13,8 @@
 			 , cast((ROUND(((((cast(x.c_price as numeric) - cast(x.min_price as numeric)) / cast(x.min_price as numeric))) * 100), 1)) as varchar) lowest_rise_rate
 		  from (
 				select x.coin_ticker, y.coin_kor_name, y.coin_eng_name
+					 , coalesce((select max(replace(a.datetime_kst, 'T09:00:00', '')) from coin_days a where a.coin_ticker = x.coin_ticker and a.l_price = cast(min(cast(x.l_price as numeric)) as varchar)), '') min_date
+			 		 , coalesce((select max(replace(a.datetime_kst, 'T09:00:00', '')) from coin_days a where a.coin_ticker = x.coin_ticker and a.h_price = cast(max(cast(x.h_price as numeric)) as varchar)), '') max_date
 					 , case when position('.0' in cast(min(cast(x.l_price as numeric)) as varchar)) > (char_length(cast(min(cast(x.l_price as numeric)) as varchar))-2) then replace((cast(min(cast(x.l_price as numeric)) as varchar)), '.0', '') else cast(min(cast(x.l_price as numeric)) as varchar) end  min_price
 					 , case when position('.0' in cast(max(cast(x.h_price as numeric)) as varchar)) > (char_length(cast(max(cast(x.h_price as numeric)) as varchar))-2) then replace((cast(max(cast(x.h_price as numeric)) as varchar)), '.0', '') else cast(max(cast(x.h_price as numeric)) as varchar) end  max_price
 		             , (select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end from coin_days z where x.coin_ticker = z.coin_ticker order by z.datetime_kst desc limit 1) c_price

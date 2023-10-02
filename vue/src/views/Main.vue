@@ -40,6 +40,8 @@ export default {
 		//}
 	},
 	methods: {
+		LoginConfirm() {
+		}
 		/*
 		LoginConfirm() {
 			if(this.username == '' || this.password == ''){
