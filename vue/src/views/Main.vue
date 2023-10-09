@@ -17,29 +17,88 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+	<v-flex xs12 sm12 md12>
+		<v-row>
+			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
+				<Upbit5M :key="Upbit5MKey" />
+			</v-col>
+			<v-col xl="2" md="2" sm="2" style="text-align:center; padding-top:40px;">
+				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
+				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
+			</v-col>
+			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
+				<Upbit15M :key="Upbit15MKey" />
+			</v-col>
+		</v-row>
+		<v-row>
+			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
+				<Upbit60M :key="Upbit60MKey" />
+			</v-col>
+			<v-col xl="2" md="2" sm="2" style="text-align:center; padding-top:40px;">
+				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
+				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
+			</v-col>
+			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
+				<Upbit240M  :key="Upbit240MKey" />
+			</v-col>
+		</v-row>
+	</v-flex>
   </div>
 </template>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
 import axios from 'axios';
+import Upbit5M from '../components/upbit_5m.vue';
+import Upbit15M from '../components/upbit_15m.vue';
+import Upbit60M from '../components/upbit_60m.vue';
+import Upbit240M from '../components/upbit_240m.vue';
 
 export default {
 	data () {
-      return {
-		  username: '',
-		  password: '',
-		  dialog: false
-      }
+      	return {
+			username: '',
+			password: '',
+			dialog: false,
+			Upbit5MKey: 0,
+			Upbit15MKey: 0,
+			Upbit60MKey: 0,
+			Upbit240MKey: 0,
+      	}
     },
 	components: {
+		Upbit5M,
+		Upbit15M,
+		Upbit60M,
+		Upbit240M
 	},
     mounted() {
-	    //if (!this.$session.exists()) {
-		//	this.dialog = true
-		//}
+		this.CurrentDataTime();
+		setInterval(this.CurrentDataTime.bind(this) , 1000);
 	},
 	methods: {
+		CurrentDataTime() {
+			let hh = new Date().getHours() < 10? "0" + new Date().getHours(): new Date().getHours();
+			let mm = new Date().getMinutes() < 10? "0" + new Date().getMinutes(): new Date().getMinutes();
+			let ss = new Date().getSeconds() < 10? "0" + new Date().getSeconds(): new Date().getSeconds();
+
+			if(Number(ss) == 5){
+				Upbit5MRerender();
+				Upbit15MRerender();
+			}
+		},
+		Upbit5MRerender() {
+			this.Upbit5MKey += 1;  
+		},
+		Upbit15MRerender() {
+			this.Upbit15MKey += 1;  
+		},
+		Upbit60MRerender() {
+			this.Upbit60MKey += 1;  
+		},
+		Upbit240MRerender() {
+			this.Upbit240MKey += 1;  
+		},
 		LoginConfirm() {
 		}
 		/*

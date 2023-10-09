@@ -79,17 +79,6 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi</artifactId>
-		    <version>3.11</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi-ooxml</artifactId> <!-- 엑셀 2007 이상 버전에서 사용 -->
-		    <version>3.11</version>
-		</dependency>
-		
-		<dependency>
 		    <groupId>commons-io</groupId>
 		    <artifactId>commons-io</artifactId>
 		    <version>2.4</version>
@@ -112,11 +101,18 @@
 		    <artifactId>json</artifactId>
 		    <version>20180813</version>
 		</dependency>
-	 	<dependency>
-	 		<groupId>com.diff</groupId>
-	 		<artifactId>DIFF_MUKBANG</artifactId>
-	 		<version>0.0.1-SNAPSHOT</version>
-	 	</dependency>
+		
+		<dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.0.0</version>
+        </dependency>	
 	</dependencies>
 
 	<build>
@@ -127,5 +123,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

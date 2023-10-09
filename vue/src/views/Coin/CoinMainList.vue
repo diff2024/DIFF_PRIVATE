@@ -11,24 +11,49 @@
 		<v-flex xs12 sm12 md12 style="margin-bottom:20px;">
 			<v-card xs12 sm12 md12>
 				<v-card-title xs12 sm12 md12 class="fontBold" style="font-size:18px; font-weight:bold; padding-left: 60px; padding-top: 20px; padding-bottom: 10px;">
-					원화코인통계
+					업비트 코인 통계
 				</v-card-title>
 				<v-card-text>
 					<v-row style="padding-left:15px;">
 						<v-col lg="1" md="1" sm="2" cols="2" style="text-align:right;">
 							
 						</v-col>
-						<v-col lg="4" md="4" sm="8" cols="8" style="text-align:right;">
-							<v-text-field type="date" label="시작일자" style="width:180px; float:left;" prepend-icon="event" v-model="std_date" @change="makeData" />
+						<v-col lg="10" md="10" sm="8" cols="8" style="text-align:right;">
+							<v-text-field type="date" label="시작일자" style="width:180px; float:left;" prepend-icon="event" v-model="std_date" />
 							<div style="float:left; padding-top:20px;">&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;</div>
-							<v-text-field type="date" label="종료일자" style="width:180px; float:left;" prepend-icon="event" v-model="end_date" @change="makeData" />
-							<v-btn depressed dark small color="primary" style="float:right; margin-top:17px;">
+							<v-text-field type="date" label="종료일자" style="width:180px; float:left;" prepend-icon="event" v-model="end_date" />
+							
+							<v-btn depressed dark small color="primary" style="float:right; margin-top:17px; margin-left:10px;">
 								<v-icon small>search</v-icon>&nbsp;<span style="padding-bottom:2px;" @click="makeData">조회</span>
+							</v-btn>
+							<v-btn depressed dark small color="success" style="float:right; margin-top:17px;">
+								<v-icon small>summarize</v-icon>&nbsp;<span style="padding-bottom:2px;" @click="openExcel">엑셀</span>
 							</v-btn>
 						</v-col>
 						<v-col lg="1" md="1" sm="2" cols="2" style="text-align:right; vertical-align: middle;">
 							
 						</v-col>
+					</v-row>
+					<v-row justify="center">
+						<v-dialog v-model="excelModal" persistent max-width="450" @keydown.esc="excelModal = false">
+							<v-card>
+							<v-toolbar class="fontDefault" color="#283345" dark>엑셀</v-toolbar>
+							<v-card-text style="padding-bottom:0px;">
+								<v-row>
+									<v-col xl="6" md="6" sm="6" cols="6" align-self="center"  style="padding-bottom:0px;margin-bottom:0px;padding-top:25px;">
+										<v-text-field type="date" label="시작일자" style="width:180px; float:left;" prepend-icon="event" v-model="excel_std_date" />
+									</v-col>
+									<v-col xl="6" md="6" sm="6" cols="6" align-self="center"  style="padding-bottom:0px;margin-bottom:0px;padding-top:25px;">
+										<v-text-field type="date" label="종료일자" style="width:180px; float:left;" prepend-icon="event" v-model="excel_end_date" />
+									</v-col>
+								</v-row>
+							</v-card-text>
+							<v-card-actions class="justify-end">
+								<v-btn text style="font-size:18px; font-weight:bold;" @click="makeExcel">다운로드</v-btn>
+								<v-btn text style="font-size:18px; font-weight:bold; color:red;" @click="excelModal = !excelModal">닫기</v-btn>
+							</v-card-actions>
+							</v-card>
+						</v-dialog>
 					</v-row>
 				</v-card-text>
 			</v-card>
@@ -43,7 +68,7 @@
 							:columnDefs="columnDefs"
 							:rowData="rowData"
 							:animateRows="true"
-							overlayNoRowsTemplate="조회중..."
+							overlayNoRowsTemplate="업비트에서 데이터 가져오는중..."
 							rowSelection="multiple">
 						</ag-grid-vue>
 					</template>
@@ -65,7 +90,10 @@ export default {
             rowData: [],
 			std_date: '',
 			end_date: '',
-			isLoading: false
+			isLoading: false,
+			excel_std_date: '',
+			excel_end_date: '',
+			excelModal: false
 		}
 	},
 	components: {
@@ -73,9 +101,9 @@ export default {
 	},
 	beforeMount() {
        this.columnDefs = [
-           {headerName: '코인', field:"id", width:120, cellStyle: {textAlign: "center"}, sortable: false, filter: true, resizable:true},
+           {headerName: '코인', field:"id", width:80, cellStyle: {textAlign: "center"}, sortable: false, filter: true, resizable:true},
            {headerName: '코인명', field:"coin_kor_name", width:150, sortable: false, filter: true, resizable:true},
-		   {headerName: '거래량', field:"trade_volume", width:100, cellStyle: {textAlign: "right"}, sortable: false, filter: false, resizable:true},  
+		   {headerName: '거래량', field:"trade_volume", width:100, cellStyle: {textAlign: "right"}, sortable: true, filter: false, resizable:true},  
 		   {headerName: '조회종가', field:"c_price", width:130, cellDataType: 'number', cellStyle: {textAlign: "right"}, cellRenderer : currencyFormatter, sortable: true, filter: false, resizable:true}, 
 		   {headerName: '최저가', field:"min_price", width:130, cellDataType: 'number', cellStyle: {textAlign: "right"}, cellRenderer : currencyFormatter, sortable: true, filter: false, resizable:true}, 
 		   {headerName: '최저가(일자)', field:"min_date", width:130, cellStyle: {textAlign: "center"}, sortable: true, filter: false, resizable:true},  
@@ -119,15 +147,134 @@ export default {
 		this.makeData();
 	},
 	methods: {
-		makeData () {
-			if(this.std_date.length != 10){
-				this.std_date = '--'
+		openExcel() {
+			let today = new Date();
+			let year = today.getFullYear();
+			let month = today.getMonth() + 1;
+			let date = today.getDate();
+
+
+			if(Number(month) < 10){
+				month = '0'+month
 			}
-			if(this.end_date.length != 10){
-				this.end_date = '--'
+			if(Number(date) < 10){
+				date = '0'+date
 			}
 
-			if(this.std_date != '--' && this.end_date != '--' && Number((this.std_date).replaceAll("-", "")) > Number((this.end_date).replaceAll("-", ""))){
+			if(Number(month) > 9){
+				var now = new Date();
+				var yesterday = new Date(now.setDate(now.getDate() - 1));
+				let yesterday_year = yesterday.getFullYear();
+				let yesterday_month = yesterday.getMonth() + 1;
+				let yesterday_date = yesterday.getDate();
+
+				if(Number(yesterday_month) < 10){
+					yesterday_month = '0'+yesterday_month
+				}
+				if(Number(yesterday_date) < 10){
+					yesterday_date = '0'+yesterday_date
+				}
+
+				this.excel_std_date = yesterday_year + '-' + yesterday_month + '-' + yesterday_date
+				this.excel_end_date = yesterday_year + '-' + yesterday_month + '-' + yesterday_date
+			}else{
+				var now = new Date();
+				var yesterday2 = new Date(now.setDate(now.getDate() - 2));
+				let yesterday2_year = yesterday2.getFullYear();
+				let yesterday2_month = yesterday2.getMonth() + 1;
+				let yesterday2_date = yesterday2_date.getDate();
+
+				if(Number(yesterday2_month) < 10){
+					yesterday2_month = '0'+yesterday2_month
+				}
+				if(Number(yesterday2_date) < 10){
+					yesterday2_date = '0'+yesterday2_date
+				}
+				
+				this.excel_std_date = yesterday2_year + '-' + yesterday2_month + '-' + yesterday2_date
+				this.excel_end_date = yesterday2_year + '-' + yesterday2_month + '-' + yesterday2_date
+			}
+			
+			
+			this.excelModal = true
+		},
+		makeExcel() {
+			if(this.excel_std_date.length != 10){
+				this.excel_std_date = ''
+			}
+			if(this.excel_end_date.length != 10){
+				this.excel_end_date = ''
+			}
+
+			if(this.excel_std_date == ''){
+				Swal.fire({
+					title:'엑셀 시작일자를 설정 하시기 바랍니다.',
+					icon: 'error'
+				});
+				return;
+			}
+
+			if(this.excel_end_date == ''){
+				Swal.fire({
+					title:'엑셀 종료일자를 설정 하시기 바랍니다.',
+					icon: 'error'
+				});
+				return;
+			}
+
+
+			if(this.excel_std_date != '' && this.excel_end_date != '' && Number((this.excel_std_date).replaceAll("-", "")) > Number((this.excel_end_date).replaceAll("-", ""))){
+				Swal.fire({
+					title:'엑셀 시작일자가 종료일자보다 클 수 없습니다.',
+					icon: 'error'
+				});
+				return;
+			}
+			this.excelModal = false;
+
+			if(this.excel_std_date == this.excel_end_date){
+				axios.get('/Upbit/ExcelMake_Daily',{
+				params: {
+						std_date: this.excel_std_date,
+						end_date: this.excel_end_date
+					},
+				responseType: 'blob' 
+				})
+				.then(response => {
+					const url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
+					const link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', 'Daily_'+this.excel_std_date+'.xlsx');
+					document.body.appendChild(link);
+					link.click();
+				});
+			}else{
+				axios.get('/Upbit/ExcelMake_Weekly',{
+				params: {
+						std_date: this.excel_std_date,
+						end_date: this.excel_end_date
+					},
+				responseType: 'blob' 
+				})
+				.then(response => {
+					const url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
+					const link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', 'Weekly_'+this.excel_std_date+'_'+this.excel_end_date+'.xlsx');
+					document.body.appendChild(link);
+					link.click();
+				});
+			}
+		},
+		makeData () {
+			if(this.std_date.length != 10){
+				this.std_date = ''
+			}
+			if(this.end_date.length != 10){
+				this.end_date = ''
+			}
+
+			if(this.std_date != '' && this.end_date != '' && Number((this.std_date).replaceAll("-", "")) > Number((this.end_date).replaceAll("-", ""))){
 				Swal.fire({
 					title:'시작일자가 종료일자보다 클 수 없습니다.',
 					icon: 'error'
@@ -138,7 +285,7 @@ export default {
 			this.rowData = [];
 
 			this.isLoading = true;
-			axios.get('/Coin/MainGridList',{
+			axios.get('/Upbit/MainGridList',{
 			params: {
 					std_date: this.std_date,
 					end_date: this.end_date

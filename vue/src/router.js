@@ -16,6 +16,9 @@ const Main = () => {
 const CoinMainList = () => {
 	return import("./views/Coin/CoinMainList.vue")	
 }
+const BithumbCoinMainList = () => {
+	return import("./views/Coin/BithumbCoinMainList.vue")	
+}
 
 export const router = new Router({
   mode: 'history',
@@ -30,6 +33,11 @@ export const router = new Router({
       path: '/CoinMainList',
       name: 'coinMainList',
       component: CoinMainList
+    },
+    {
+      path: '/BithumbCoinMainList',
+      name: 'bithumbcoinMainList',
+      component: BithumbCoinMainList
     }
   ]
 });

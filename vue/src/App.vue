@@ -23,24 +23,20 @@
 }
 </style>
 <template>
-	<div id="app">
+	<div id="app" v-if="$route.name !== 'main'">
 		<v-app id="inspire">
-			<v-app-bar app color="#283345" dark class="fontDefault v-HeadClass" :clipped-left="$vuetify.breakpoint.lgAndUp">
+			<v-app-bar color="#283345" dark class="fontDefault v-HeadClass" :clipped-left="$vuetify.breakpoint.lgAndUp">
 				<v-toolbar-title v-on:click="goMainURL" class="fontDefault ml-2 pl-4" style="cursor:pointer;">
 					<img src="./assets/logo.jpg" width="90px" style="vertical-align:middle;" />
 				</v-toolbar-title>
 				<v-spacer></v-spacer>
-				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">원화코인통계</span>
+				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">업비트 코인 통계</span>
 				<v-spacer></v-spacer>
-				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
+				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('bithumbcoinMainList')">빗썸 코인 통계</span>
 				<v-spacer></v-spacer>
-				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
 				<v-spacer></v-spacer>
-				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
 				<v-spacer></v-spacer>
-				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
 				<v-spacer></v-spacer>
-				<span class="font-weight-light" style="cursor:pointer;" @click="$router.push('coinMainList')">코인통계</span>
 				<v-spacer></v-spacer>
 				<v-spacer></v-spacer>
 				<v-spacer></v-spacer>
@@ -63,9 +59,12 @@
 				<router-view></router-view>
 			</v-main>
 			<footer style="padding-bottom: 6px; padding-left:30px;">
-				<span style="font-size:20px;">DIFF | 836-28-01135 | 010-6598-0199</span>
+				<span style="font-size:20px;">DIFF</span>
 			</footer>
 		</v-app>
+	</div>
+	<div v-else>
+		<router-view></router-view>
 	</div>
 </template>
 <style scss>
