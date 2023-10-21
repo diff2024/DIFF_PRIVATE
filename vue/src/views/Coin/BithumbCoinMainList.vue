@@ -11,14 +11,14 @@
 		<v-flex xs12 sm12 md12 style="margin-bottom:20px;">
 			<v-card xs12 sm12 md12>
 				<v-card-title xs12 sm12 md12 class="fontBold" style="font-size:18px; font-weight:bold; padding-left: 60px; padding-top: 20px; padding-bottom: 10px;">
-					빗썸 코인 통계
+					빗썸 통계
 				</v-card-title>
 				<v-card-text>
-					<v-row style="padding-left:15px;">
-						<v-col lg="1" md="1" sm="2" cols="2" style="text-align:right;">
+					<v-row style="padding-left:15px; padding-top:0px; padding-bottom:0px;">
+						<v-col lg="1" md="1" sm="2" cols="2" style="padding-top:0px; padding-bottom:0px; text-align:right;">
 							
 						</v-col>
-						<v-col lg="10" md="10" sm="8" cols="8" style="text-align:right;">
+						<v-col lg="10" md="10" sm="8" cols="8" style="padding-top:0px; padding-bottom:0px; text-align:right;">
 							<v-text-field type="date" label="시작일자" style="width:180px; float:left;" prepend-icon="event" v-model="std_date" />
 							<div style="float:left; padding-top:20px;">&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;</div>
 							<v-text-field type="date" label="종료일자" style="width:180px; float:left;" prepend-icon="event" v-model="end_date" />
@@ -30,7 +30,7 @@
 								<v-icon small>summarize</v-icon>&nbsp;<span style="padding-bottom:2px;" @click="openExcel">엑셀</span>
 							</v-btn>
 						</v-col>
-						<v-col lg="1" md="1" sm="2" cols="2" style="text-align:right; vertical-align: middle;">
+						<v-col lg="1" md="1" sm="2" cols="2" style="padding-top:0px; padding-bottom:0px; text-align:right; vertical-align: middle;">
 							
 						</v-col>
 					</v-row>
@@ -45,6 +45,18 @@
 									</v-col>
 									<v-col xl="6" md="6" sm="6" cols="6" align-self="center"  style="padding-bottom:0px;margin-bottom:0px;padding-top:25px;">
 										<v-text-field type="date" label="종료일자" style="width:180px; float:left;" prepend-icon="event" v-model="excel_end_date" />
+									</v-col>
+								</v-row>
+								<v-row v-for="(coin, index) in coinInfo" v-bind:key="index">
+									<v-col xl="1" md="1" sm="1" cols="1" align-self="center" style="padding-top:0px; padding-bottom:0px;">
+										<v-checkbox style="left:50%;float:left;" v-model="coin.coin_YN" v-bind:disabled="coin.coin_ticker == 'BTC'" true-value="Y" false-value="N" />
+									</v-col>
+									<v-col xl="6" md="6" sm="6" cols="6" align-self="center" style="padding-top:0px; padding-bottom:0px;">
+										<input type="hidden" v-model="coin.coin_ticker" />
+										<span style="font-weight:800; font-size:18px; color:black;">{{ coin.coin_kor_name }}</span>
+									</v-col>
+									<v-col xl="5" md="5" sm="5" cols="5" align-self="center" style="padding-top:0px; padding-bottom:0px; text-align:right;">
+										<span style="font-weight:400; font-size:18px; color:black;">{{ coin.coin_price }}</span>
 									</v-col>
 								</v-row>
 							</v-card-text>
@@ -68,8 +80,7 @@
 							:columnDefs="columnDefs"
 							:rowData="rowData"
 							:animateRows="true"
-							overlayNoRowsTemplate="조회중..."
-							rowSelection="multiple">
+							overlayNoRowsTemplate="빗썸에서 데이터 가져오는중...">
 						</ag-grid-vue>
 					</template>
 				</v-card-text>
@@ -91,6 +102,7 @@ export default {
 			std_date: '',
 			end_date: '',
 			isLoading: false,
+			coinInfo: [{}],
 			excel_std_date: '',
 			excel_end_date: '',
 			excelModal: false
@@ -128,7 +140,20 @@ export default {
        ];
     },
 	created () {
-		
+		this.coinInfo.splice(0, 1);
+		axios.get('/Bithumb/CoinInfo')
+		.then(response => {
+			for(var x=0; x<response.data.length; x++){
+				var coin_price = (response.data[x].c_price).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+
+				this.coinInfo.push({
+					coin_ticker: response.data[x].coin_ticker,
+					coin_kor_name: response.data[x].coin_kor_name,
+					coin_price: coin_price,
+					coin_YN: 'Y'
+				})
+			}
+		});
 	},
 	mounted (){
 		let today = new Date();
@@ -153,6 +178,10 @@ export default {
 			let month = today.getMonth() + 1;
 			let date = today.getDate();
 
+			axios.get('/Bithumb/CoinInfo')
+			.then(response => {
+				console.log(response.data)
+			});
 
 			if(Number(month) < 10){
 				month = '0'+month
@@ -203,7 +232,6 @@ export default {
 				return;
 			}
 
-
 			if(this.excel_std_date != '' && this.excel_end_date != '' && Number((this.excel_std_date).replaceAll("-", "")) > Number((this.excel_end_date).replaceAll("-", ""))){
 				Swal.fire({
 					title:'엑셀 시작일자가 종료일자보다 클 수 없습니다.',
@@ -211,13 +239,30 @@ export default {
 				});
 				return;
 			}
+
+			var lastDate = new Date(Number(this.excel_end_date.substring(0, 4)), Number(this.excel_end_date.substring(5, 7)), 0);  
 			this.excelModal = false;
+
+			var coin_data = ""
+			const TMPcoinInfo = this.coinInfo.filter(el=>el.coin_YN == 'Y');
+			if(this.coinInfo.length > TMPcoinInfo.length){
+				for(var x=0; x<TMPcoinInfo.length; x++){
+					var tmp_ticker = TMPcoinInfo[x].coin_ticker;
+
+					if(coin_data == ''){
+						coin_data = tmp_ticker
+					}else{
+						coin_data = coin_data + ',' + tmp_ticker
+					}
+				}
+			}
 
 			if(this.excel_std_date == this.excel_end_date){
 				axios.get('/Bithumb/ExcelMake_Daily',{
 				params: {
 						std_date: this.excel_std_date,
-						end_date: this.excel_end_date
+						end_date: this.excel_end_date,
+						coin_ticker: coin_data
 					},
 				responseType: 'blob' 
 				})
@@ -225,7 +270,27 @@ export default {
 					const url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
 					const link = document.createElement('a');
 					link.href = url;
-					link.setAttribute('download', 'Daily_'+this.excel_std_date+'.xlsx');
+					link.setAttribute('download', '빗썸_Daily_'+this.excel_std_date+'.xlsx');
+					document.body.appendChild(link);
+					link.click();
+				});
+			}else if((this.excel_std_date.substring(5,7) == this.excel_end_date.substring(5,7)) && (this.excel_std_date.slice(-2)) == "01" && this.excel_end_date.slice(-2) == lastDate.getDate()){
+				axios.get('/Bithumb/ExcelMake_Monthly',{
+				params: {
+						std_date: this.excel_std_date,
+						end_date: this.excel_end_date,
+						yyyy: this.excel_std_date.substring(0,4),
+						mm: this.excel_std_date.substring(5,7),
+						excel_title: this.excel_std_date.substring(0,4) + '년 ' + this.excel_std_date.substring(5,7) + '월',
+						coin_ticker: coin_data
+					},
+				responseType: 'blob' 
+				})
+				.then(response => {
+					const url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
+					const link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', '빗썸_Monthly_'+this.excel_std_date+'_'+this.excel_end_date+'.xlsx');
 					document.body.appendChild(link);
 					link.click();
 				});
@@ -233,7 +298,8 @@ export default {
 				axios.get('/Bithumb/ExcelMake_Weekly',{
 				params: {
 						std_date: this.excel_std_date,
-						end_date: this.excel_end_date
+						end_date: this.excel_end_date,
+						coin_ticker: coin_data
 					},
 				responseType: 'blob' 
 				})
@@ -241,7 +307,7 @@ export default {
 					const url = window.URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
 					const link = document.createElement('a');
 					link.href = url;
-					link.setAttribute('download', 'Weekly_'+this.excel_std_date+'_'+this.excel_end_date+'.xlsx');
+					link.setAttribute('download', '빗썸_Weekly_'+this.excel_std_date+'_'+this.excel_end_date+'.xlsx');
 					document.body.appendChild(link);
 					link.click();
 				});

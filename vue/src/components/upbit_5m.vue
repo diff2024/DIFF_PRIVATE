@@ -52,13 +52,13 @@ export default {
 		
 	},
 	mounted (){
-		this.makeData();
 	},
 	methods: {
 		makeData () {
 			this.rowData = [];
 			axios.get('/Main/upbit_5m')
 			.then(response => {
+				console.log('upbit_5m     ' + String(response.data.length));
 				if(response.data.length > 100){
 					this.rowData = [];
 					for(var x=0; x<response.data.length; x++){

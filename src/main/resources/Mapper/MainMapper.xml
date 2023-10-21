@@ -1,0 +1,11 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.diff._private.Mapper.MainMapper">
+	<insert id="UpbitCoinMIN" parameterType="HashMap">
+		insert into upbit_coin_min
+			(coin_ticker, datetime_utc, datetime_kst, o_price, h_price, l_price, c_price, trade_volume, trade_price_volume)
+		values
+			(#{id}, #{datetime_utc}, #{datetime_kst}, #{open_price}, #{high_price}, #{low_price}, #{trade_price}, #{volume}, '')
+		ON CONFLICT ON CONSTRAINT upbit_coin_min_pk DO UPDATE SET
+			o_price = #{open_price}, h_price = #{high_price},  l_price = #{low_price},  c_price = #{trade_price}, trade_volume = #{volume}
+	</insert>
+</mapper>

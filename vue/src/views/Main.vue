@@ -20,26 +20,30 @@
 	<v-flex xs12 sm12 md12>
 		<v-row>
 			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
-				<Upbit5M :key="Upbit5MKey" />
+				<!-- <Upbit5M :key="Upbit5MKey" ref="ref_Upbit5M" /> -->
 			</v-col>
 			<v-col xl="2" md="2" sm="2" style="text-align:center; padding-top:40px;">
+				<!--
 				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
 				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
+				-->
 			</v-col>
 			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
-				<Upbit15M :key="Upbit15MKey" />
+				<!-- <Upbit15M :key="Upbit15MKey" ref="ref_Upbit15M" /> -->
 			</v-col>
 		</v-row>
 		<v-row>
 			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
-				<Upbit60M :key="Upbit60MKey" />
+				<!-- <Upbit60M :key="Upbit60MKey" ref="ref_Upbit60M" /> -->
 			</v-col>
 			<v-col xl="2" md="2" sm="2" style="text-align:center; padding-top:40px;">
+				<!--
 				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
 				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
+				-->
 			</v-col>
 			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
-				<Upbit240M  :key="Upbit240MKey" />
+				<!-- <Upbit240M  :key="Upbit240MKey" ref="ref_Upbit240M" /> -->
 			</v-col>
 		</v-row>
 	</v-flex>
@@ -49,10 +53,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
 import axios from 'axios';
+/*
 import Upbit5M from '../components/upbit_5m.vue';
 import Upbit15M from '../components/upbit_15m.vue';
 import Upbit60M from '../components/upbit_60m.vue';
 import Upbit240M from '../components/upbit_240m.vue';
+*/
 
 export default {
 	data () {
@@ -67,10 +73,12 @@ export default {
       	}
     },
 	components: {
+		/*
 		Upbit5M,
 		Upbit15M,
 		Upbit60M,
 		Upbit240M
+		*/
 	},
     mounted() {
 		this.CurrentDataTime();
@@ -78,14 +86,19 @@ export default {
 	},
 	methods: {
 		CurrentDataTime() {
-			let hh = new Date().getHours() < 10? "0" + new Date().getHours(): new Date().getHours();
-			let mm = new Date().getMinutes() < 10? "0" + new Date().getMinutes(): new Date().getMinutes();
 			let ss = new Date().getSeconds() < 10? "0" + new Date().getSeconds(): new Date().getSeconds();
 
+			/*
 			if(Number(ss) == 5){
-				Upbit5MRerender();
-				Upbit15MRerender();
+				this.$refs.ref_Upbit5M.makeData();
+			}else if(Number(ss) == 20){
+				this.$refs.ref_Upbit15M.makeData();
+			}else if(Number(ss) == 35){
+				this.$refs.ref_Upbit60M.makeData();
+			}else if(Number(ss) == 50){
+				this.$refs.ref_Upbit240M.makeData();
 			}
+			*/
 		},
 		Upbit5MRerender() {
 			this.Upbit5MKey += 1;  

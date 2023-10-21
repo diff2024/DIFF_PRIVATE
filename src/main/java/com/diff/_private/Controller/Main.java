@@ -40,7 +40,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.sl.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -60,13 +60,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.diff._private.Service.CoinService;
+import com.diff._private.Service.MainService;
 
 @RestController
 @RequestMapping("/Main")
 public class Main {
-
+	
 	@Autowired
 	CoinService CoinService;
+	
+	@Autowired
+	MainService MainService;
 	
 	@GetMapping(path = "/upbit_5m")
 	public List<HashMap<String, String>> upbit_5m(HttpServletRequest req) throws Exception {
@@ -80,7 +84,7 @@ public class Main {
 			
 			for(int i=0; i<coininfo.size(); i++) {
 				if(i > 0) {
-					Thread.sleep(150);
+					Thread.sleep(300);
 				}
 				String ticker = coininfo.get(i).get("coin_ticker");
 				String kor_name = coininfo.get(i).get("coin_kor_name");
@@ -110,27 +114,22 @@ public class Main {
 	                    String datetime0 = (JSONObject0.get("candle_date_time_kst")).toString();
 	                    String open_price0 = (JSONObject0.get("opening_price")).toString();
 	                    String trade_price0 = (JSONObject0.get("trade_price")).toString();
-	                    String trade_volume0 = Double.toString(Math.round(Double.parseDouble(JSONObject0.get("candle_acc_trade_volume").toString())*1000)/1000);
-	                    String trade_volume_price0 = Double.toString(Math.round(Double.parseDouble(JSONObject0.get("candle_acc_trade_price").toString())*1000)/1000);
+	                    String trade_volume0 = JSONObject1.get("candle_acc_trade_volume").toString();
 	                    
 	                    String timestamp1 = (JSONObject1.get("timestamp")).toString();
 	                    String datetime1 = (JSONObject1.get("candle_date_time_kst")).toString();
 	                    String open_price1 = (JSONObject1.get("opening_price")).toString();
 	                    String trade_price1 = (JSONObject1.get("trade_price")).toString();
-	                    String trade_volume1 = Double.toString(Math.round(Double.parseDouble(JSONObject1.get("candle_acc_trade_volume").toString())*1000)/1000);
-	                    String trade_volume_price1 = Double.toString(Math.round(Double.parseDouble(JSONObject1.get("candle_acc_trade_price").toString())*1000)/1000);
+	                    String trade_volume1 = JSONObject1.get("candle_acc_trade_volume").toString();
 	                    
 	                    BigDecimal BIGDECIMAL_TRADE_VOLUME0 = new BigDecimal(trade_volume0);
-                    	BigDecimal BIGDECIMAL_TRADE_VOLUME_PRICE0 = new BigDecimal(trade_volume_price0);
 	                    BigDecimal BIGDECIMAL_TRADE_PRICE0 = new BigDecimal(trade_price0);
 	                    BigDecimal BIGDECIMAL_OPEN_PRICE0 = new BigDecimal(open_price0);
 	                    BigDecimal BIGDECIMAL_TRADE_VOLUME1 = new BigDecimal(trade_volume1);
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME_PRICE1 = new BigDecimal(trade_volume_price1);
 	                    BigDecimal BIGDECIMAL_TRADE_PRICE1 = new BigDecimal(trade_price1);
 	                    BigDecimal BIGDECIMAL_OPEN_PRICE1 = new BigDecimal(open_price1);
 	                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE1.subtract(BIGDECIMAL_TRADE_PRICE0)).divide(BIGDECIMAL_TRADE_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
 	                    BigDecimal BIGDECIMAL_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME1.subtract(BIGDECIMAL_TRADE_VOLUME0)).divide(BIGDECIMAL_TRADE_VOLUME0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME_PRICE1.subtract(BIGDECIMAL_TRADE_VOLUME_PRICE0)).divide(BIGDECIMAL_TRADE_VOLUME_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
 	                    
 	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime0 + " " + open_price0 + " " + trade_price0 + " " + trade_volume_price0+ "  |  " + trade_volume0);
 	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime1 + " " + open_price1 + " " + trade_price1 + " " + trade_volume_price1+ "  |  " + trade_volume1);
@@ -142,17 +141,16 @@ public class Main {
 	                    map.put("eng_name", eng_name);
 	                    map.put("change_percent", BIGDECIMAL_CHANGE.toString());
 	                    map.put("volume_change_percent", BIGDECIMAL_VOLUME_CHANGE.toString());
-	                    map.put("trade_volume_change_percent", BIGDECIMAL_TRADE_VOLUME_CHANGE.toString());
 	                    map.put("timestamp0", timestamp0);
 	                    map.put("datetime0", datetime0);
 	                    map.put("open_price0", open_price0);
 	                    map.put("trade_price0", trade_price0);
-	                    map.put("trade_volume_price0", trade_volume_price0);
 	                    map.put("B_timestamp", timestamp1);
 	                    map.put("B_datetime", datetime1);
 	                    map.put("B_open_price", open_price1);
 	                    map.put("B_trade_price", trade_price1);
-	                    map.put("B_trade_volume_price", trade_volume_price1);
+	                    
+	                    //MainService.UpbitCoinMIN(map);
 	                    
 	                    coinlist.add(map);
 		                if (br.readLine() == null)
@@ -181,7 +179,6 @@ public class Main {
 	public List<HashMap<String, String>> upbit_15m(HttpServletRequest req) throws Exception {
 		System.out.println("/Main/upbit_15m");
 		ArrayList<HashMap<String, String>> coinlist = new ArrayList<HashMap<String, String>>();
-		/*
 		try {
 			CloseableHttpClient httpclient = HttpClients.createDefault();
 			HttpGet httpGet = null;
@@ -189,7 +186,7 @@ public class Main {
 			
 			for(int i=0; i<coininfo.size(); i++) {
 				if(i > 0) {
-					Thread.sleep(150);
+					Thread.sleep(300);
 				}
 				String ticker = coininfo.get(i).get("coin_ticker");
 				String kor_name = coininfo.get(i).get("coin_kor_name");
@@ -219,27 +216,22 @@ public class Main {
 	                    String datetime0 = (JSONObject0.get("candle_date_time_kst")).toString();
 	                    String open_price0 = (JSONObject0.get("opening_price")).toString();
 	                    String trade_price0 = (JSONObject0.get("trade_price")).toString();
-	                    String trade_volume0 = Double.toString(Math.round(Double.parseDouble(JSONObject0.get("candle_acc_trade_volume").toString())*1000)/1000);
-	                    String trade_volume_price0 = Double.toString(Math.round(Double.parseDouble(JSONObject0.get("candle_acc_trade_price").toString())*1000)/1000);
+	                    String trade_volume0 = JSONObject1.get("candle_acc_trade_volume").toString();
 	                    
 	                    String timestamp1 = (JSONObject1.get("timestamp")).toString();
 	                    String datetime1 = (JSONObject1.get("candle_date_time_kst")).toString();
 	                    String open_price1 = (JSONObject1.get("opening_price")).toString();
 	                    String trade_price1 = (JSONObject1.get("trade_price")).toString();
-	                    String trade_volume1 = Double.toString(Math.round(Double.parseDouble(JSONObject1.get("candle_acc_trade_volume").toString())*1000)/1000);
-	                    String trade_volume_price1 = Double.toString(Math.round(Double.parseDouble(JSONObject1.get("candle_acc_trade_price").toString())*1000)/1000);
+	                    String trade_volume1 = JSONObject1.get("candle_acc_trade_volume").toString();
 	                    
 	                    BigDecimal BIGDECIMAL_TRADE_VOLUME0 = new BigDecimal(trade_volume0);
-                    	BigDecimal BIGDECIMAL_TRADE_VOLUME_PRICE0 = new BigDecimal(trade_volume_price0);
 	                    BigDecimal BIGDECIMAL_TRADE_PRICE0 = new BigDecimal(trade_price0);
 	                    BigDecimal BIGDECIMAL_OPEN_PRICE0 = new BigDecimal(open_price0);
 	                    BigDecimal BIGDECIMAL_TRADE_VOLUME1 = new BigDecimal(trade_volume1);
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME_PRICE1 = new BigDecimal(trade_volume_price1);
 	                    BigDecimal BIGDECIMAL_TRADE_PRICE1 = new BigDecimal(trade_price1);
 	                    BigDecimal BIGDECIMAL_OPEN_PRICE1 = new BigDecimal(open_price1);
 	                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE1.subtract(BIGDECIMAL_TRADE_PRICE0)).divide(BIGDECIMAL_TRADE_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
 	                    BigDecimal BIGDECIMAL_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME1.subtract(BIGDECIMAL_TRADE_VOLUME0)).divide(BIGDECIMAL_TRADE_VOLUME0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME_PRICE1.subtract(BIGDECIMAL_TRADE_VOLUME_PRICE0)).divide(BIGDECIMAL_TRADE_VOLUME_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
 	                    
 	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime0 + " " + open_price0 + " " + trade_price0 + " " + trade_volume_price0+ "  |  " + trade_volume0);
 	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime1 + " " + open_price1 + " " + trade_price1 + " " + trade_volume_price1+ "  |  " + trade_volume1);
@@ -251,17 +243,14 @@ public class Main {
 	                    map.put("eng_name", eng_name);
 	                    map.put("change_percent", BIGDECIMAL_CHANGE.toString());
 	                    map.put("volume_change_percent", BIGDECIMAL_VOLUME_CHANGE.toString());
-	                    map.put("trade_volume_change_percent", BIGDECIMAL_TRADE_VOLUME_CHANGE.toString());
 	                    map.put("timestamp0", timestamp0);
 	                    map.put("datetime0", datetime0);
 	                    map.put("open_price0", open_price0);
 	                    map.put("trade_price0", trade_price0);
-	                    map.put("trade_volume_price0", trade_volume_price0);
 	                    map.put("B_timestamp", timestamp1);
 	                    map.put("B_datetime", datetime1);
 	                    map.put("B_open_price", open_price1);
 	                    map.put("B_trade_price", trade_price1);
-	                    map.put("B_trade_volume_price", trade_volume_price1);
 	                    
 	                    coinlist.add(map);
 		                if (br.readLine() == null)
@@ -283,7 +272,6 @@ public class Main {
                 return second_value.compareTo(first_value);
             }
         });
-        */
 		return coinlist;
 	}
 	
@@ -292,7 +280,6 @@ public class Main {
 		System.out.println("/Main/upbit_60m");
 		ArrayList<HashMap<String, String>> coinlist = new ArrayList<HashMap<String, String>>();
 		
-		/*
 		try {
 			CloseableHttpClient httpclient = HttpClients.createDefault();
 			HttpGet httpGet = null;
@@ -300,7 +287,7 @@ public class Main {
 			
 			for(int i=0; i<coininfo.size(); i++) {
 				if(i > 0) {
-					Thread.sleep(150);
+					Thread.sleep(300);
 				}
 				String ticker = coininfo.get(i).get("coin_ticker");
 				String kor_name = coininfo.get(i).get("coin_kor_name");
@@ -330,27 +317,22 @@ public class Main {
 	                    String datetime0 = (JSONObject0.get("candle_date_time_kst")).toString();
 	                    String open_price0 = (JSONObject0.get("opening_price")).toString();
 	                    String trade_price0 = (JSONObject0.get("trade_price")).toString();
-	                    String trade_volume0 = Double.toString(Math.round(Double.parseDouble(JSONObject0.get("candle_acc_trade_volume").toString())*1000)/1000);
-	                    String trade_volume_price0 = Double.toString(Math.round(Double.parseDouble(JSONObject0.get("candle_acc_trade_price").toString())*1000)/1000);
+	                    String trade_volume0 = JSONObject1.get("candle_acc_trade_volume").toString();
 	                    
 	                    String timestamp1 = (JSONObject1.get("timestamp")).toString();
 	                    String datetime1 = (JSONObject1.get("candle_date_time_kst")).toString();
 	                    String open_price1 = (JSONObject1.get("opening_price")).toString();
 	                    String trade_price1 = (JSONObject1.get("trade_price")).toString();
-	                    String trade_volume1 = Double.toString(Math.round(Double.parseDouble(JSONObject1.get("candle_acc_trade_volume").toString())*1000)/1000);
-	                    String trade_volume_price1 = Double.toString(Math.round(Double.parseDouble(JSONObject1.get("candle_acc_trade_price").toString())*1000)/1000);
+	                    String trade_volume1 = JSONObject1.get("candle_acc_trade_volume").toString();
 	                    
 	                    BigDecimal BIGDECIMAL_TRADE_VOLUME0 = new BigDecimal(trade_volume0);
-                    	BigDecimal BIGDECIMAL_TRADE_VOLUME_PRICE0 = new BigDecimal(trade_volume_price0);
 	                    BigDecimal BIGDECIMAL_TRADE_PRICE0 = new BigDecimal(trade_price0);
 	                    BigDecimal BIGDECIMAL_OPEN_PRICE0 = new BigDecimal(open_price0);
 	                    BigDecimal BIGDECIMAL_TRADE_VOLUME1 = new BigDecimal(trade_volume1);
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME_PRICE1 = new BigDecimal(trade_volume_price1);
 	                    BigDecimal BIGDECIMAL_TRADE_PRICE1 = new BigDecimal(trade_price1);
 	                    BigDecimal BIGDECIMAL_OPEN_PRICE1 = new BigDecimal(open_price1);
 	                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE1.subtract(BIGDECIMAL_TRADE_PRICE0)).divide(BIGDECIMAL_TRADE_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
 	                    BigDecimal BIGDECIMAL_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME1.subtract(BIGDECIMAL_TRADE_VOLUME0)).divide(BIGDECIMAL_TRADE_VOLUME0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME_PRICE1.subtract(BIGDECIMAL_TRADE_VOLUME_PRICE0)).divide(BIGDECIMAL_TRADE_VOLUME_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
 	                    
 	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime0 + " " + open_price0 + " " + trade_price0 + " " + trade_volume_price0+ "  |  " + trade_volume0);
 	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime1 + " " + open_price1 + " " + trade_price1 + " " + trade_volume_price1+ "  |  " + trade_volume1);
@@ -362,17 +344,14 @@ public class Main {
 	                    map.put("eng_name", eng_name);
 	                    map.put("change_percent", BIGDECIMAL_CHANGE.toString());
 	                    map.put("volume_change_percent", BIGDECIMAL_VOLUME_CHANGE.toString());
-	                    map.put("trade_volume_change_percent", BIGDECIMAL_TRADE_VOLUME_CHANGE.toString());
 	                    map.put("timestamp0", timestamp0);
 	                    map.put("datetime0", datetime0);
 	                    map.put("open_price0", open_price0);
 	                    map.put("trade_price0", trade_price0);
-	                    map.put("trade_volume_price0", trade_volume_price0);
 	                    map.put("B_timestamp", timestamp1);
 	                    map.put("B_datetime", datetime1);
 	                    map.put("B_open_price", open_price1);
 	                    map.put("B_trade_price", trade_price1);
-	                    map.put("B_trade_volume_price", trade_volume_price1);
 	                    
 	                    coinlist.add(map);
 		                if (br.readLine() == null)
@@ -394,7 +373,6 @@ public class Main {
                 return second_value.compareTo(first_value);
             }
         });
-		*/
 		return coinlist;
 	}
 	
@@ -403,7 +381,6 @@ public class Main {
 		System.out.println("/Main/upbit_240m");
 		ArrayList<HashMap<String, String>> coinlist = new ArrayList<HashMap<String, String>>();
 		
-		/*
 		try {
 			CloseableHttpClient httpclient = HttpClients.createDefault();
 			HttpGet httpGet = null;
@@ -411,7 +388,7 @@ public class Main {
 			
 			for(int i=0; i<coininfo.size(); i++) {
 				if(i > 0) {
-					Thread.sleep(150);
+					Thread.sleep(300);
 				}
 				String ticker = coininfo.get(i).get("coin_ticker");
 				String kor_name = coininfo.get(i).get("coin_kor_name");
@@ -441,27 +418,22 @@ public class Main {
 	                    String datetime0 = (JSONObject0.get("candle_date_time_kst")).toString();
 	                    String open_price0 = (JSONObject0.get("opening_price")).toString();
 	                    String trade_price0 = (JSONObject0.get("trade_price")).toString();
-	                    String trade_volume0 = Double.toString(Math.round(Double.parseDouble(JSONObject0.get("candle_acc_trade_volume").toString())*1000)/1000);
-	                    String trade_volume_price0 = Double.toString(Math.round(Double.parseDouble(JSONObject0.get("candle_acc_trade_price").toString())*1000)/1000);
+	                    String trade_volume0 = JSONObject1.get("candle_acc_trade_volume").toString();
 	                    
 	                    String timestamp1 = (JSONObject1.get("timestamp")).toString();
 	                    String datetime1 = (JSONObject1.get("candle_date_time_kst")).toString();
 	                    String open_price1 = (JSONObject1.get("opening_price")).toString();
 	                    String trade_price1 = (JSONObject1.get("trade_price")).toString();
-	                    String trade_volume1 = Double.toString(Math.round(Double.parseDouble(JSONObject1.get("candle_acc_trade_volume").toString())*1000)/1000);
-	                    String trade_volume_price1 = Double.toString(Math.round(Double.parseDouble(JSONObject1.get("candle_acc_trade_price").toString())*1000)/1000);
+	                    String trade_volume1 = JSONObject1.get("candle_acc_trade_volume").toString();
 	                    
 	                    BigDecimal BIGDECIMAL_TRADE_VOLUME0 = new BigDecimal(trade_volume0);
-                    	BigDecimal BIGDECIMAL_TRADE_VOLUME_PRICE0 = new BigDecimal(trade_volume_price0);
 	                    BigDecimal BIGDECIMAL_TRADE_PRICE0 = new BigDecimal(trade_price0);
 	                    BigDecimal BIGDECIMAL_OPEN_PRICE0 = new BigDecimal(open_price0);
 	                    BigDecimal BIGDECIMAL_TRADE_VOLUME1 = new BigDecimal(trade_volume1);
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME_PRICE1 = new BigDecimal(trade_volume_price1);
 	                    BigDecimal BIGDECIMAL_TRADE_PRICE1 = new BigDecimal(trade_price1);
 	                    BigDecimal BIGDECIMAL_OPEN_PRICE1 = new BigDecimal(open_price1);
 	                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE1.subtract(BIGDECIMAL_TRADE_PRICE0)).divide(BIGDECIMAL_TRADE_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
 	                    BigDecimal BIGDECIMAL_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME1.subtract(BIGDECIMAL_TRADE_VOLUME0)).divide(BIGDECIMAL_TRADE_VOLUME0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME_PRICE1.subtract(BIGDECIMAL_TRADE_VOLUME_PRICE0)).divide(BIGDECIMAL_TRADE_VOLUME_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
 	                    
 	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime0 + " " + open_price0 + " " + trade_price0 + " " + trade_volume_price0+ "  |  " + trade_volume0);
 	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime1 + " " + open_price1 + " " + trade_price1 + " " + trade_volume_price1+ "  |  " + trade_volume1);
@@ -473,17 +445,14 @@ public class Main {
 	                    map.put("eng_name", eng_name);
 	                    map.put("change_percent", BIGDECIMAL_CHANGE.toString());
 	                    map.put("volume_change_percent", BIGDECIMAL_VOLUME_CHANGE.toString());
-	                    map.put("trade_volume_change_percent", BIGDECIMAL_TRADE_VOLUME_CHANGE.toString());
 	                    map.put("timestamp0", timestamp0);
 	                    map.put("datetime0", datetime0);
 	                    map.put("open_price0", open_price0);
 	                    map.put("trade_price0", trade_price0);
-	                    map.put("trade_volume_price0", trade_volume_price0);
 	                    map.put("B_timestamp", timestamp1);
 	                    map.put("B_datetime", datetime1);
 	                    map.put("B_open_price", open_price1);
 	                    map.put("B_trade_price", trade_price1);
-	                    map.put("B_trade_volume_price", trade_volume_price1);
 	                    
 	                    coinlist.add(map);
 		                if (br.readLine() == null)
@@ -505,7 +474,6 @@ public class Main {
                 return second_value.compareTo(first_value);
             }
         });
-		*/
 		return coinlist;
 	}
 }
