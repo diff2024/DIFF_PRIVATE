@@ -72,6 +72,7 @@ public class CoinService {
 				sub_map.put("date", map.get("date"));
 				
 				List<HashMap<String, String>> list_sub = CoinMapper.ExcelMake_Daily_Sub(sub_map);
+				
 				excel_map.put("btc_oclh_1_o_price", df.format(Double.parseDouble(list_sub.get(0).get("o_price_0_4"))));
 				excel_map.put("btc_oclh_1_c_price", df.format(Double.parseDouble(list_sub.get(0).get("c_price_0_4"))));
 				excel_map.put("btc_oclh_1_l_price", df.format(Double.parseDouble(list_sub.get(0).get("l_price_0_4"))));
@@ -279,7 +280,6 @@ public class CoinService {
 				excel_map.put("coin3_oclh_6_trade_volume", df.format(Double.parseDouble(list_sub.get(0).get("trade_volume_20_24"))));
 			}
 		}
-		
 		
 		return excel_map;
 	}

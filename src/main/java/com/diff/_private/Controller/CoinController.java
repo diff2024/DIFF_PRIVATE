@@ -372,6 +372,7 @@ public class CoinController {
 	        form_sheet.getRow(Sheet1_Row+11).getCell(12).setCellValue(excel_map.get("btc_oclh_1_h_price"));
 	        form_sheet.getRow(Sheet1_Row+11).getCell(13).setCellValue(excel_map.get("btc_oclh_1_c_price"));
 	        form_sheet.getRow(Sheet1_Row+11).getCell(14).setCellValue(excel_map.get("btc_oclh_1_trade_volume"));
+	        
 	        if((excel_map.get("btc_l_price")).equals(excel_map.get("btc_oclh_1_l_price"))) { form_sheet.getRow(Sheet1_Row+11).getCell(11).setCellStyle(cell_Blue); }
 	        if((excel_map.get("btc_h_price")).equals(excel_map.get("btc_oclh_1_h_price"))) { form_sheet.getRow(Sheet1_Row+11).getCell(12).setCellStyle(cell_Red); }
 	        
@@ -632,6 +633,7 @@ public class CoinController {
 	        	RankingRow.createCell(5);
 	        	RankingRow.createCell(6);
 	        	RankingRow.createCell(7);
+	        	RankingRow.createCell(8);
 	        	
 	        	String ranking_number = (ranking_list.get(x).get("ranking"));
 	        	String ranking_coin_name = (ranking_list.get(x).get("coin_name"));
@@ -640,6 +642,7 @@ public class CoinController {
 	        	String ranking_h_price = (ranking_list.get(x).get("h_price")).toString();
 	        	String ranking_c_price = (ranking_list.get(x).get("c_price")).toString();
 	        	String ranking_o_c_rate = (ranking_list.get(x).get("o_c_price_rate")).toString();
+	        	String ranking_l_h_rate = (ranking_list.get(x).get("l_h_price_rate")).toString();
 	        	
 	        	String yesterday_ranking_number = (ranking_list.get(x).get("before_ranking"));
 	        	String yesterday_ranking_o_price = (ranking_list.get(x).get("before_o_price")).toString();
@@ -647,6 +650,7 @@ public class CoinController {
 	        	String yesterday_ranking_h_price = (ranking_list.get(x).get("before_h_price")).toString();
 	        	String yesterday_ranking_c_price = (ranking_list.get(x).get("before_c_price")).toString();
 	        	String yesterday_ranking_o_c_rate = (ranking_list.get(x).get("before_o_c_price_rate")).toString();
+	        	String yesterday_ranking_l_h_rate = (ranking_list.get(x).get("before_l_h_price_rate")).toString();
 	        	
 	        	ranking_o_price = formatter.format(Double.parseDouble(ranking_o_price));
 	        	ranking_l_price = formatter.format(Double.parseDouble(ranking_l_price));
@@ -682,13 +686,38 @@ public class CoinController {
 	        		yesterday_ranking_o_c_rate = yesterday_ranking_o_c_rate.substring(0, yesterday_ranking_o_c_rate.length()-1);
 	        	}
 	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(yesterday_ranking_l_h_rate.contains(".") && ((yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("0") || (yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(yesterday_ranking_l_h_rate.contains(".") && ((yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("0") || (yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(yesterday_ranking_l_h_rate.contains(".") && ((yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("0") || (yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
+	        	}
+	        	
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellValue(ranking_number);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellValue(ranking_coin_name);
 	        	ranking_sheet.getRow(RowNumber).getCell(3).setCellValue(ranking_o_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(4).setCellValue(ranking_l_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(5).setCellValue(ranking_h_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellValue(ranking_c_price);
-	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate);
+	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate+"%");
+	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellValue(ranking_l_h_rate+"%");
 	        	
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(2).setCellStyle(cell_Ranking_Left);
@@ -697,6 +726,7 @@ public class CoinController {
         		ranking_sheet.getRow(RowNumber).getCell(5).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(6).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
+        		ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
         		
         		if(x == 0) {
         			today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
@@ -1424,6 +1454,7 @@ public class CoinController {
 	        	RankingRow.createCell(5);
 	        	RankingRow.createCell(6);
 	        	RankingRow.createCell(7);
+	        	RankingRow.createCell(8);
 
 	        	String ranking_number = (ranking_list.get(x).get("ranking"));
 	        	String ranking_coin_name = (ranking_list.get(x).get("coin_name"));
@@ -1432,6 +1463,7 @@ public class CoinController {
 	        	String ranking_h_price = (ranking_list.get(x).get("h_price")).toString();
 	        	String ranking_c_price = (ranking_list.get(x).get("c_price")).toString();
 	        	String ranking_o_c_rate = (ranking_list.get(x).get("o_c_price_rate")).toString();
+	        	String ranking_l_h_rate = (ranking_list.get(x).get("l_h_price_rate")).toString();
 
 	        	String past_ranking_number = (ranking_list.get(x).get("before_ranking"));
 	        	String past_ranking_o_price = (ranking_list.get(x).get("before_o_price")).toString();
@@ -1439,6 +1471,7 @@ public class CoinController {
 	        	String past_ranking_h_price = (ranking_list.get(x).get("before_h_price")).toString();
 	        	String past_ranking_c_price = (ranking_list.get(x).get("before_c_price")).toString();
 	        	String past_ranking_o_c_rate = (ranking_list.get(x).get("before_o_c_price_rate")).toString();
+	        	String past_ranking_l_h_rate = (ranking_list.get(x).get("before_l_h_price_rate")).toString();
 
 	        	ranking_o_price = formatter.format(Double.parseDouble(ranking_o_price));
 	        	ranking_l_price = formatter.format(Double.parseDouble(ranking_l_price));
@@ -1473,6 +1506,30 @@ public class CoinController {
 	        	if(past_ranking_o_c_rate.contains(".") && ((past_ranking_o_c_rate.substring(past_ranking_o_c_rate.length()-1)).equals("0") || (past_ranking_o_c_rate.substring(past_ranking_o_c_rate.length()-1)).equals("."))) {
 	        		past_ranking_o_c_rate = past_ranking_o_c_rate.substring(0, past_ranking_o_c_rate.length()-1);
 	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(past_ranking_l_h_rate.contains(".") && ((past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("0") || (past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		past_ranking_l_h_rate = past_ranking_l_h_rate.substring(0, past_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(past_ranking_l_h_rate.contains(".") && ((past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("0") || (past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		past_ranking_l_h_rate = past_ranking_l_h_rate.substring(0, past_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(past_ranking_l_h_rate.contains(".") && ((past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("0") || (past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		past_ranking_l_h_rate = past_ranking_l_h_rate.substring(0, past_ranking_l_h_rate.length()-1);
+	        	}
 
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellValue(ranking_number);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellValue(ranking_coin_name);
@@ -1480,7 +1537,8 @@ public class CoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(4).setCellValue(ranking_l_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(5).setCellValue(ranking_h_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellValue(ranking_c_price);
-	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate);
+	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate+"%");
+	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellValue(ranking_l_h_rate+"%");
 
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellStyle(cell_Ranking_Left);
@@ -1489,6 +1547,7 @@ public class CoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(5).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
+        		ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
 
 	        	if(x == 0) {
 	        		today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
@@ -2209,6 +2268,7 @@ public class CoinController {
 	        	RankingRow.createCell(5);
 	        	RankingRow.createCell(6);
 	        	RankingRow.createCell(7);
+	        	RankingRow.createCell(8);
 
 	        	String ranking_number = (ranking_list.get(x).get("ranking"));
 	        	String ranking_coin_name = (ranking_list.get(x).get("coin_name"));
@@ -2217,6 +2277,7 @@ public class CoinController {
 	        	String ranking_h_price = (ranking_list.get(x).get("h_price")).toString();
 	        	String ranking_c_price = (ranking_list.get(x).get("c_price")).toString();
 	        	String ranking_o_c_rate = (ranking_list.get(x).get("o_c_price_rate")).toString();
+	        	String ranking_l_h_rate = (ranking_list.get(x).get("l_h_price_rate")).toString();
 
 	        	String past_ranking_number = (ranking_list.get(x).get("before_ranking"));
 	        	String past_ranking_o_price = (ranking_list.get(x).get("before_o_price")).toString();
@@ -2224,6 +2285,7 @@ public class CoinController {
 	        	String past_ranking_h_price = (ranking_list.get(x).get("before_h_price")).toString();
 	        	String past_ranking_c_price = (ranking_list.get(x).get("before_c_price")).toString();
 	        	String past_ranking_o_c_rate = (ranking_list.get(x).get("before_o_c_price_rate")).toString();
+	        	String past_ranking_l_h_rate = (ranking_list.get(x).get("before_l_h_price_rate")).toString();
 
 	        	ranking_o_price = formatter.format(Double.parseDouble(ranking_o_price));
 	        	ranking_l_price = formatter.format(Double.parseDouble(ranking_l_price));
@@ -2259,6 +2321,30 @@ public class CoinController {
 	        		past_ranking_o_c_rate = past_ranking_o_c_rate.substring(0, past_ranking_o_c_rate.length()-1);
 	        	}
 
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(past_ranking_l_h_rate.contains(".") && ((past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("0") || (past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		past_ranking_l_h_rate = past_ranking_l_h_rate.substring(0, past_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(past_ranking_l_h_rate.contains(".") && ((past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("0") || (past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		past_ranking_l_h_rate = past_ranking_l_h_rate.substring(0, past_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(past_ranking_l_h_rate.contains(".") && ((past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("0") || (past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		past_ranking_l_h_rate = past_ranking_l_h_rate.substring(0, past_ranking_l_h_rate.length()-1);
+	        	}
+
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellValue(ranking_number);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellValue(ranking_coin_name);
 	        	ranking_sheet.getRow(RowNumber).getCell(3).setCellValue(ranking_o_price);
@@ -2266,6 +2352,7 @@ public class CoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(5).setCellValue(ranking_h_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellValue(ranking_c_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate);
+	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellValue(ranking_l_h_rate);
 
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellStyle(cell_Ranking_Left);
@@ -2274,6 +2361,7 @@ public class CoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(5).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
+	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
 
 	        	if(x == 0) {
 	        		today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
