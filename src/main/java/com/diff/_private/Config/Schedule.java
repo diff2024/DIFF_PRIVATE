@@ -214,6 +214,13 @@ public class Schedule {
 	        cell_Ranking_Right.setBorderLeft(BorderStyle.THIN);
 	        cell_Ranking_Right.setBorderRight(BorderStyle.THIN);
 	        
+	        CellStyle cell_Ranking_Center = form_wb.createCellStyle();
+	        cell_Ranking_Center.setAlignment(HorizontalAlignment.CENTER);
+	        cell_Ranking_Center.setBorderTop(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderBottom(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderLeft(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderRight(BorderStyle.THIN);
+	        
 	        CellStyle cell_Ranking_List = form_wb.createCellStyle();
 	        cell_Ranking_List.setAlignment(HorizontalAlignment.LEFT);
 	        cell_Ranking_List.setWrapText(true);
@@ -516,6 +523,7 @@ public class Schedule {
 	        	RankingRow.createCell(5);
 	        	RankingRow.createCell(6);
 	        	RankingRow.createCell(7);
+	        	RankingRow.createCell(8);
 	        	
 	        	String ranking_number = (ranking_list.get(x).get("ranking"));
 	        	String ranking_coin_name = (ranking_list.get(x).get("coin_name"));
@@ -524,6 +532,7 @@ public class Schedule {
 	        	String ranking_h_price = (ranking_list.get(x).get("h_price")).toString();
 	        	String ranking_c_price = (ranking_list.get(x).get("c_price")).toString();
 	        	String ranking_o_c_rate = (ranking_list.get(x).get("o_c_price_rate")).toString();
+	        	String ranking_l_h_rate = (ranking_list.get(x).get("l_h_price_rate")).toString();
 	        	
 	        	String yesterday_ranking_number = (ranking_list.get(x).get("before_ranking"));
 	        	String yesterday_ranking_o_price = (ranking_list.get(x).get("before_o_price")).toString();
@@ -531,6 +540,7 @@ public class Schedule {
 	        	String yesterday_ranking_h_price = (ranking_list.get(x).get("before_h_price")).toString();
 	        	String yesterday_ranking_c_price = (ranking_list.get(x).get("before_c_price")).toString();
 	        	String yesterday_ranking_o_c_rate = (ranking_list.get(x).get("before_o_c_price_rate")).toString();
+	        	String yesterday_ranking_l_h_rate = (ranking_list.get(x).get("before_l_h_price_rate")).toString();
 	        	
 	        	ranking_o_price = formatter.format(Double.parseDouble(ranking_o_price));
 	        	ranking_l_price = formatter.format(Double.parseDouble(ranking_l_price));
@@ -566,61 +576,95 @@ public class Schedule {
 	        		yesterday_ranking_o_c_rate = yesterday_ranking_o_c_rate.substring(0, yesterday_ranking_o_c_rate.length()-1);
 	        	}
 	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(yesterday_ranking_l_h_rate.contains(".") && ((yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("0") || (yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(yesterday_ranking_l_h_rate.contains(".") && ((yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("0") || (yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(yesterday_ranking_l_h_rate.contains(".") && ((yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("0") || (yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_number.equals("0")) {
+	        		ranking_number = "기준";
+	        	}
+	        	
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellValue(ranking_number);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellValue(ranking_coin_name);
 	        	ranking_sheet.getRow(RowNumber).getCell(3).setCellValue(ranking_o_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(4).setCellValue(ranking_l_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(5).setCellValue(ranking_h_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellValue(ranking_c_price);
-	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate);
+	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate+"%");
+	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellValue(ranking_l_h_rate+"%");
 	        	
-	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	if(ranking_number.equals("기준")) {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Center);
+	        	} else {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	}
         		ranking_sheet.getRow(RowNumber).getCell(2).setCellStyle(cell_Ranking_Left);
         		ranking_sheet.getRow(RowNumber).getCell(3).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(4).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(5).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(6).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
+        		ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
         		
-        		if(x == 0) {
+        		if(x == 1) {
         			today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
-        		} else if(x == 1) {
-        			today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 2) {
-        			today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 3) {
-        			today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 4) {
-        			today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 5) {
-        			today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 6) {
-        			today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 7) {
-        			today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 8) {
-        			today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 9) {
-        			today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 10) {
-        			today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 11) {
-        			today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 12) {
-        			today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 13) {
-        			today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 14) {
-        			today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 15) {
-        			today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 16) {
-        			today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 17) {
-        			today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 18) {
-        			today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 19) {
+        			today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        		} else if(x == 20) {
         			today20_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		}
 	        }
@@ -913,6 +957,13 @@ public class Schedule {
 	        cell_Ranking_Right.setBorderLeft(BorderStyle.THIN);
 	        cell_Ranking_Right.setBorderRight(BorderStyle.THIN);
 	        
+	        CellStyle cell_Ranking_Center = form_wb.createCellStyle();
+	        cell_Ranking_Center.setAlignment(HorizontalAlignment.CENTER);
+	        cell_Ranking_Center.setBorderTop(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderBottom(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderLeft(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderRight(BorderStyle.THIN);
+	        
 	        CellStyle cell_Ranking_List = form_wb.createCellStyle();
 	        cell_Ranking_List.setAlignment(HorizontalAlignment.LEFT);
 	        cell_Ranking_List.setWrapText(true);
@@ -932,7 +983,7 @@ public class Schedule {
 	        coopang_partner += "<br/>";
 	        
 	        String adfit = "";
-	        adfit += "<p><ins class=\"kakao_ad_area\" style=\"display: none;\" data-ad-unit=\"DAN-hdmSaJlIQKLvo3jR\" data-ad-width=\"320\" data-ad-height=\"100\"></ins></p>";
+	        adfit += "<p><ins class=\"kakao_ad_area\" style=\"display:none;\" data-ad-unit = \"DAN-djDi0AsDMOpTDFgY\" data-ad-width = \"300\" data-ad-height = \"250\"></ins></p>";
 	        adfit += "<script type=\"text/javascript\" src=\"//t1.daumcdn.net/kas/static/ba.min.js\"></script>";
 	        
 	        form_sheet.getRow(Sheet1_Row).getCell(1).setCellValue("빗썸 일일 분석 " + date);
@@ -1219,6 +1270,7 @@ public class Schedule {
 	        	RankingRow.createCell(5);
 	        	RankingRow.createCell(6);
 	        	RankingRow.createCell(7);
+	        	RankingRow.createCell(8);
 	        	
 	        	String ranking_number = (ranking_list.get(x).get("ranking"));
 	        	String ranking_coin_name = (ranking_list.get(x).get("coin_name"));
@@ -1227,6 +1279,7 @@ public class Schedule {
 	        	String ranking_h_price = (ranking_list.get(x).get("h_price")).toString();
 	        	String ranking_c_price = (ranking_list.get(x).get("c_price")).toString();
 	        	String ranking_o_c_rate = (ranking_list.get(x).get("o_c_price_rate")).toString();
+	        	String ranking_l_h_rate = (ranking_list.get(x).get("l_h_price_rate")).toString();
 	        	
 	        	String yesterday_ranking_number = (ranking_list.get(x).get("before_ranking"));
 	        	String yesterday_ranking_o_price = (ranking_list.get(x).get("before_o_price")).toString();
@@ -1234,6 +1287,7 @@ public class Schedule {
 	        	String yesterday_ranking_h_price = (ranking_list.get(x).get("before_h_price")).toString();
 	        	String yesterday_ranking_c_price = (ranking_list.get(x).get("before_c_price")).toString();
 	        	String yesterday_ranking_o_c_rate = (ranking_list.get(x).get("before_o_c_price_rate")).toString();
+	        	String yesterday_ranking_l_h_rate = (ranking_list.get(x).get("before_l_h_price_rate")).toString();
 	        	
 	        	ranking_o_price = formatter.format(Double.parseDouble(ranking_o_price));
 	        	ranking_l_price = formatter.format(Double.parseDouble(ranking_l_price));
@@ -1269,61 +1323,95 @@ public class Schedule {
 	        		yesterday_ranking_o_c_rate = yesterday_ranking_o_c_rate.substring(0, yesterday_ranking_o_c_rate.length()-1);
 	        	}
 	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_l_h_rate.contains(".") && ((ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("0") || (ranking_l_h_rate.substring(ranking_l_h_rate.length()-1)).equals("."))) {
+	        		ranking_l_h_rate = ranking_l_h_rate.substring(0, ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(yesterday_ranking_l_h_rate.contains(".") && ((yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("0") || (yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(yesterday_ranking_l_h_rate.contains(".") && ((yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("0") || (yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(yesterday_ranking_l_h_rate.contains(".") && ((yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("0") || (yesterday_ranking_l_h_rate.substring(yesterday_ranking_l_h_rate.length()-1)).equals("."))) {
+	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
+	        	}
+	        	
+	        	if(ranking_number.equals("0")) {
+	        		ranking_number = "기준";
+	        	}
+	        	
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellValue(ranking_number);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellValue(ranking_coin_name);
 	        	ranking_sheet.getRow(RowNumber).getCell(3).setCellValue(ranking_o_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(4).setCellValue(ranking_l_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(5).setCellValue(ranking_h_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellValue(ranking_c_price);
-	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate);
+	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate+"%");
+	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellValue(ranking_l_h_rate+"%");
 	        	
-	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	if(ranking_number.equals("기준")) {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Center);
+	        	} else {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	}
         		ranking_sheet.getRow(RowNumber).getCell(2).setCellStyle(cell_Ranking_Left);
         		ranking_sheet.getRow(RowNumber).getCell(3).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(4).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(5).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(6).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
+        		ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
         		
-        		if(x == 0) {
+        		if(x == 1) {
         			today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
-        		} else if(x == 1) {
-        			today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 2) {
-        			today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 3) {
-        			today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 4) {
-        			today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 5) {
-        			today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 6) {
-        			today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 7) {
-        			today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 8) {
-        			today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 9) {
-        			today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 10) {
-        			today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 11) {
-        			today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 12) {
-        			today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 13) {
-        			today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 14) {
-        			today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 15) {
-        			today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 16) {
-        			today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 17) {
-        			today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 18) {
-        			today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 19) {
+        			today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        		} else if(x == 20) {
         			today20_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		}
 	        }

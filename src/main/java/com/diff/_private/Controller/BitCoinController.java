@@ -332,6 +332,13 @@ public class BitCoinController {
 	        cell_Ranking_Right.setBorderLeft(BorderStyle.THIN);
 	        cell_Ranking_Right.setBorderRight(BorderStyle.THIN);
 	        
+	        CellStyle cell_Ranking_Center = form_wb.createCellStyle();
+	        cell_Ranking_Center.setAlignment(HorizontalAlignment.CENTER);
+	        cell_Ranking_Center.setBorderTop(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderBottom(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderLeft(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderRight(BorderStyle.THIN);
+	        
 	        CellStyle cell_Ranking_List = form_wb.createCellStyle();
 	        cell_Ranking_List.setAlignment(HorizontalAlignment.LEFT);
 	        cell_Ranking_List.setWrapText(true);
@@ -351,7 +358,7 @@ public class BitCoinController {
 	        coopang_partner += "<br/>";
 	        
 	        String adfit = "";
-	        adfit += "<p><ins class=\"kakao_ad_area\" style=\"display: none;\" data-ad-unit=\"DAN-hdmSaJlIQKLvo3jR\" data-ad-width=\"320\" data-ad-height=\"100\"></ins></p>";
+	        adfit += "<p><ins class=\"kakao_ad_area\" style=\"display:none;\" data-ad-unit = \"DAN-djDi0AsDMOpTDFgY\" data-ad-width = \"300\" data-ad-height = \"250\"></ins></p>";
 	        adfit += "<script type=\"text/javascript\" src=\"//t1.daumcdn.net/kas/static/ba.min.js\"></script>";
 	        
 	        form_sheet.getRow(Sheet1_Row).getCell(1).setCellValue("빗썸 일일 분석 " + date);
@@ -715,6 +722,10 @@ public class BitCoinController {
 	        		yesterday_ranking_l_h_rate = yesterday_ranking_l_h_rate.substring(0, yesterday_ranking_l_h_rate.length()-1);
 	        	}
 	        	
+	        	if(ranking_number.equals("0")) {
+	        		ranking_number = "기준";
+	        	}
+	        	
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellValue(ranking_number);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellValue(ranking_coin_name);
 	        	ranking_sheet.getRow(RowNumber).getCell(3).setCellValue(ranking_o_price);
@@ -724,7 +735,11 @@ public class BitCoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate+"%");
 	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellValue(ranking_l_h_rate+"%");
 	        	
-	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	if(ranking_number.equals("기준")) {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Center);
+	        	} else {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	}
         		ranking_sheet.getRow(RowNumber).getCell(2).setCellStyle(cell_Ranking_Left);
         		ranking_sheet.getRow(RowNumber).getCell(3).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(4).setCellStyle(cell_Ranking_Right);
@@ -733,45 +748,45 @@ public class BitCoinController {
         		ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
         		ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
         		
-        		if(x == 0) {
+        		if(x == 1) {
         			today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
-        		} else if(x == 1) {
-        			today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 2) {
-        			today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 3) {
-        			today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 4) {
-        			today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 5) {
-        			today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 6) {
-        			today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 7) {
-        			today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 8) {
-        			today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 9) {
-        			today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 10) {
-        			today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 11) {
-        			today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 12) {
-        			today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 13) {
-        			today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 14) {
-        			today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 15) {
-        			today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 16) {
-        			today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 17) {
-        			today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 18) {
-        			today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        			today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		} else if(x == 19) {
+        			today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
+        		} else if(x == 20) {
         			today20_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 어제[" + yesterday_short_kor_date + "]는 " + yesterday_ranking_o_c_rate + "%로 "+ yesterday_ranking_number +"등을 했습니다." ;
         		}
 	        }
@@ -1097,6 +1112,13 @@ public class BitCoinController {
 	        cell_Ranking_Right.setBorderLeft(BorderStyle.THIN);
 	        cell_Ranking_Right.setBorderRight(BorderStyle.THIN);
 	        
+	        CellStyle cell_Ranking_Center = form_wb.createCellStyle();
+	        cell_Ranking_Center.setAlignment(HorizontalAlignment.CENTER);
+	        cell_Ranking_Center.setBorderTop(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderBottom(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderLeft(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderRight(BorderStyle.THIN);
+	        
 	        CellStyle cell_Ranking_List = form_wb.createCellStyle();
 	        cell_Ranking_List.setAlignment(HorizontalAlignment.LEFT);
 	        cell_Ranking_List.setWrapText(true);
@@ -1116,7 +1138,7 @@ public class BitCoinController {
 	        coopang_partner += "<br/>";
 	        
 	        String adfit = "";
-	        adfit += "<p><ins class=\"kakao_ad_area\" style=\"display: none;\" data-ad-unit=\"DAN-hdmSaJlIQKLvo3jR\" data-ad-width=\"320\" data-ad-height=\"100\"></ins></p>";
+	        adfit += "<p><ins class=\"kakao_ad_area\" style=\"display:none;\" data-ad-unit = \"DAN-djDi0AsDMOpTDFgY\" data-ad-width = \"300\" data-ad-height = \"250\"></ins></p>";
 	        adfit += "<script type=\"text/javascript\" src=\"//t1.daumcdn.net/kas/static/ba.min.js\"></script>";
 	        
 	        form_sheet.getRow(Sheet1_Row).getCell(1).setCellValue("빗썸 주간 분석 " + std_date + " ~ " + end_date);
@@ -1435,10 +1457,10 @@ public class BitCoinController {
 	        if((excel_map.get("coin3_l_price")).equals(excel_map.get("coin3_oclh_7_l_price"))) { form_sheet.getRow(Sheet1_Row+44).getCell(11).setCellStyle(cell_Blue_Bottom); }
 	        if((excel_map.get("coin3_h_price")).equals(excel_map.get("coin3_oclh_7_h_price"))) { form_sheet.getRow(Sheet1_Row+44).getCell(12).setCellStyle(cell_Red_Bottom); }
 	        
-	        String kor_jucha_date = std_date.substring(0, 4) + "년 " + std_date.substring(5, 7)+"월 " + Integer.toString((int)(Integer.parseInt((std_date.substring(8, 9)).replace("0", "") + (std_date.substring(9, 10)))/31)+1	) + "주차";
+	        String kor_jucha_date = std_date.substring(0, 4) + "년 " + std_date.substring(5, 7)+"월 " + Integer.toString((int)(Integer.parseInt((std_date.substring(8, 9)).replace("0", "") + (std_date.substring(9, 10)))/7)+1) + "주차";
 	        String kor_date = "["+std_date.substring(5, 7)+"월 "+(std_date.substring(8, 9)).replace("0", "") + (std_date.substring(9, 10)) +"일 ~ "+ end_date.substring(5, 7)+"월 "+(end_date.substring(8, 9)).replace("0", "") + (end_date.substring(9, 10))+"일]";
 	        
-	        String past_kor_jucha_date = past_std_date.substring(0, 4) + "년 " + past_std_date.substring(5, 7)+"월 " + Integer.toString((int)(Integer.parseInt((past_std_date.substring(8, 9)).replace("0", "") + (past_std_date.substring(9, 10)))/31)+1	) + "주차";
+	        String past_kor_jucha_date = past_std_date.substring(0, 4) + "년 " + past_std_date.substring(5, 7)+"월 " + Integer.toString((int)(Integer.parseInt((past_std_date.substring(8, 9)).replace("0", "") + (past_std_date.substring(9, 10)))/7)+1) + "주차";
 	        String past_kor_date = "["+past_std_date.substring(5, 7)+"월 "+(past_std_date.substring(8, 9)).replace("0", "") + (past_std_date.substring(9, 10)) +"일 ~ "+ past_end_date.substring(5, 7)+"월 "+(past_end_date.substring(8, 9)).replace("0", "") + (past_end_date.substring(9, 10))+"일]";
 	        
 	        int RowNumber = 0;
@@ -1548,7 +1570,11 @@ public class BitCoinController {
 	        	if(past_ranking_l_h_rate.contains(".") && ((past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("0") || (past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("."))) {
 	        		past_ranking_l_h_rate = past_ranking_l_h_rate.substring(0, past_ranking_l_h_rate.length()-1);
 	        	}
-
+	        	
+	        	if(ranking_number.equals("0")) {
+	        		ranking_number = "기준";
+	        	}
+	        	
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellValue(ranking_number);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellValue(ranking_coin_name);
 	        	ranking_sheet.getRow(RowNumber).getCell(3).setCellValue(ranking_o_price);
@@ -1557,8 +1583,12 @@ public class BitCoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellValue(ranking_c_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate+"%");
 	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellValue(ranking_l_h_rate+"%");
-
-	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	
+	        	if(ranking_number.equals("기준")) {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Center);
+	        	} else {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	}
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellStyle(cell_Ranking_Left);
 	        	ranking_sheet.getRow(RowNumber).getCell(3).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(4).setCellStyle(cell_Ranking_Right);
@@ -1567,45 +1597,45 @@ public class BitCoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
 
-	        	if(x == 0) {
+	        	if(x == 1) {
 	        		today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
-	        	} else if(x == 1) {
-	        		today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 2) {
-	        		today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 3) {
-	        		today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 4) {
-	        		today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 5) {
-	        		today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 6) {
-	        		today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 7) {
-	        		today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 8) {
-	        		today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 9) {
-	        		today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 10) {
-	        		today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 11) {
-	        		today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 12) {
-	        		today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 13) {
-	        		today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 14) {
-	        		today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 15) {
-	        		today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 16) {
-	        		today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 17) {
-	        		today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 18) {
-	        		today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 19) {
+	        		today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        	} else if(x == 20) {
 	        		today20_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_jucha_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	}
 	        }
@@ -1924,6 +1954,13 @@ public class BitCoinController {
 	        cell_Ranking_Right.setBorderLeft(BorderStyle.THIN);
 	        cell_Ranking_Right.setBorderRight(BorderStyle.THIN);
 	        
+	        CellStyle cell_Ranking_Center = form_wb.createCellStyle();
+	        cell_Ranking_Center.setAlignment(HorizontalAlignment.CENTER);
+	        cell_Ranking_Center.setBorderTop(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderBottom(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderLeft(BorderStyle.THIN);
+	        cell_Ranking_Center.setBorderRight(BorderStyle.THIN);
+	        
 	        CellStyle cell_Ranking_List = form_wb.createCellStyle();
 	        cell_Ranking_List.setAlignment(HorizontalAlignment.LEFT);
 	        cell_Ranking_List.setWrapText(true);
@@ -1943,7 +1980,7 @@ public class BitCoinController {
 	        coopang_partner += "<br/>";
 	        
 	        String adfit = "";
-	        adfit += "<p><ins class=\"kakao_ad_area\" style=\"display: none;\" data-ad-unit=\"DAN-hdmSaJlIQKLvo3jR\" data-ad-width=\"320\" data-ad-height=\"100\"></ins></p>";
+	        adfit += "<p><ins class=\"kakao_ad_area\" style=\"display:none;\" data-ad-unit = \"DAN-djDi0AsDMOpTDFgY\" data-ad-width = \"300\" data-ad-height = \"250\"></ins></p>";
 	        adfit += "<script type=\"text/javascript\" src=\"//t1.daumcdn.net/kas/static/ba.min.js\"></script>";
 	        
 	        form_sheet.getRow(Sheet1_Row).getCell(1).setCellValue("빗썸 월간 분석 " + std_date + " ~ " + end_date);
@@ -2375,17 +2412,25 @@ public class BitCoinController {
 	        	if(past_ranking_l_h_rate.contains(".") && ((past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("0") || (past_ranking_l_h_rate.substring(past_ranking_l_h_rate.length()-1)).equals("."))) {
 	        		past_ranking_l_h_rate = past_ranking_l_h_rate.substring(0, past_ranking_l_h_rate.length()-1);
 	        	}
-
+	        	
+	        	if(ranking_number.equals("0")) {
+	        		ranking_number = "기준";
+	        	}
+	        	
 	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellValue(ranking_number);
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellValue(ranking_coin_name);
 	        	ranking_sheet.getRow(RowNumber).getCell(3).setCellValue(ranking_o_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(4).setCellValue(ranking_l_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(5).setCellValue(ranking_h_price);
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellValue(ranking_c_price);
-	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate);
-	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellValue(ranking_l_h_rate);
+	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellValue(ranking_o_c_rate+"%");
+	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellValue(ranking_l_h_rate+"%");
 
-	        	ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	if(ranking_number.equals("기준")) {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Center);
+	        	} else {
+	        		ranking_sheet.getRow(RowNumber).getCell(1).setCellStyle(cell_Ranking_Right);
+	        	}
 	        	ranking_sheet.getRow(RowNumber).getCell(2).setCellStyle(cell_Ranking_Left);
 	        	ranking_sheet.getRow(RowNumber).getCell(3).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(4).setCellStyle(cell_Ranking_Right);
@@ -2394,45 +2439,45 @@ public class BitCoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
 
-	        	if(x == 0) {
+	        	if(x == 1) {
 	        		today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
-	        	} else if(x == 1) {
-	        		today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 2) {
-	        		today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 3) {
-	        		today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 4) {
-	        		today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 5) {
-	        		today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 6) {
-	        		today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 7) {
-	        		today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 8) {
-	        		today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 9) {
-	        		today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 10) {
-	        		today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 11) {
-	        		today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 12) {
-	        		today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 13) {
-	        		today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 14) {
-	        		today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 15) {
-	        		today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 16) {
-	        		today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 17) {
-	        		today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 18) {
-	        		today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	} else if(x == 19) {
+	        		today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        	} else if(x == 20) {
 	        		today20_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
 	        	}
 	        }
