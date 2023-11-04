@@ -26,8 +26,11 @@
 							<v-btn depressed dark small color="primary" style="float:right; margin-top:17px; margin-left:10px;">
 								<v-icon small>search</v-icon>&nbsp;<span style="padding-bottom:2px;" @click="makeData">조회</span>
 							</v-btn>
-							<v-btn depressed dark small color="success" style="float:right; margin-top:17px;">
+							<v-btn depressed dark small color="success" style="float:right; margin-top:17px; margin-left:10px;">
 								<v-icon small>summarize</v-icon>&nbsp;<span style="padding-bottom:2px;" @click="openExcel">엑셀</span>
+							</v-btn>
+							<v-btn depressed dark small color="info" style="float:right; margin-top:17px;">
+								<v-icon small>menu</v-icon>&nbsp;<span style="padding-bottom:2px;" @click="makeReport">일일 리포트 생성</span>
 							</v-btn>
 						</v-col>
 						<v-col lg="1" md="1" sm="2" cols="2" style="padding-top:0px; padding-bottom:0px; text-align:right; vertical-align: middle;">
@@ -99,6 +102,7 @@ export default {
 			gridOptions: null,
 			columnDefs: null,
             rowData: [],
+			today_date: '',
 			std_date: '',
 			end_date: '',
 			isLoading: false,
@@ -169,9 +173,32 @@ export default {
 		}
 
 		this.end_date = year+'-'+month+'-'+date
+		this.today_date = year+'-'+month+'-'+date
 		this.makeData();
 	},
 	methods: {
+		makeReport(){
+			Swal.fire({
+				icon: 'question',
+				text: " 업비트 " + this.today_date + " 일일 리포트를 생성 하시겠습니까?",
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+  				cancelButtonColor: '#d33',
+				confirmButtonText: '생성',
+ 				cancelButtonText: '취소',
+				allowOutsideClick: false,
+			}).then(function (result) {
+				if (result.isConfirmed) {
+					axios.post('/Upbit/CoinDailyReportReg')
+					.then(response => {
+						Swal.fire({
+							title:'일일 리포트 생성이 완료되었습니다.',
+							icon: 'success'
+						});
+					});
+				}
+			});
+		},
 		openExcel() {
 			let today = new Date();
 			let year = today.getFullYear();

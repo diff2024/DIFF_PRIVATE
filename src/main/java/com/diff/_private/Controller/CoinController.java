@@ -28,7 +28,6 @@ import org.json.JSONTokener;
 import org.json.simple.parser.JSONParser;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
@@ -55,17 +54,22 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.diff._private.Service.MainService;
 import com.diff._private.Service.CoinService;
 
 @RestController
 @RequestMapping("/Upbit")
 public class CoinController {
-
+	
+	@Autowired
+	MainService MainService;
+	
 	@Autowired
 	CoinService CoinService;
 	
@@ -89,6 +93,130 @@ public class CoinController {
 		map.put("std_date", std_date);
 		map.put("end_date", end_date);
 		return CoinService.MainGridList(map);
+	}
+	
+	@Async
+	@PostMapping(path = "/CoinDailyReportReg")
+	public void CoinDailyReportReg(HttpServletRequest req) throws Exception {
+		Calendar day = Calendar.getInstance();
+		day.add(Calendar.HOUR, -9); // UTC 기준
+	    String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+	    day.add(Calendar.DATE , -1);
+	    String yesterday = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+	    HashMap<String, String> SettingMap = MainService.CoinReportDailySetting();
+	    String MainRankingCount = SettingMap.get("upbit_report_main_ranking");
+	    String SubRankingCount = SettingMap.get("upbit_report_sub_ranking");
+	    
+	    String BithumbReportAD1 = SettingMap.get("bithumb_report_ad1");
+	    String BithumbReportAD2 = SettingMap.get("bithumb_report_ad2");
+	    String BithumbReportAD3 = SettingMap.get("bithumb_report_ad3");
+	    String BithumbReportAD4 = SettingMap.get("bithumb_report_ad4");
+	    String BithumbReportAD5 = SettingMap.get("bithumb_report_ad5");
+	    
+	    String UpbitReportAD1 = SettingMap.get("upbit_report_ad1");
+	    String UpbitReportAD2 = SettingMap.get("upbit_report_ad2");
+	    String UpbitReportAD3 = SettingMap.get("upbit_report_ad3");
+	    String UpbitReportAD4 = SettingMap.get("upbit_report_ad4");
+	    String UpbitReportAD5 = SettingMap.get("upbit_report_ad5");
+	    
+	    date = "2023-11-03";
+	    yesterday = "2023-11-02";
+	    
+	    HashMap<String, String> map = new HashMap<String, String>();
+	    map.put("date", date);
+	    map.put("yyyymmdd", date);
+	    map.put("yesterday", yesterday);
+	    map.put("MainRankingCount", MainRankingCount);
+	    map.put("SubRankingCount", SubRankingCount);
+	    map.put("BithumbReportAD1", BithumbReportAD1);
+	    map.put("BithumbReportAD2", BithumbReportAD2);
+	    map.put("BithumbReportAD3", BithumbReportAD3);
+	    map.put("BithumbReportAD4", BithumbReportAD4);
+	    map.put("BithumbReportAD5", BithumbReportAD5);
+	    map.put("UpbitReportAD1", UpbitReportAD1);
+	    map.put("UpbitReportAD2", UpbitReportAD2);
+	    map.put("UpbitReportAD3", UpbitReportAD3);
+	    map.put("UpbitReportAD4", UpbitReportAD4);
+	    map.put("UpbitReportAD5", UpbitReportAD5);
+	    CoinService.CoinDailyReportDelete(map);
+	    Thread.sleep(1500);
+	    CoinService.CoinDailyReportReg(map);
+	    CoinService.CoinDailyReportScriptReg(map);
+	    
+	    date = "2023-11-02";
+	    yesterday = "2023-11-01";
+	    
+	    map = new HashMap<String, String>();
+	    map.put("date", date);
+	    map.put("yyyymmdd", date);
+	    map.put("yesterday", yesterday);
+	    map.put("MainRankingCount", MainRankingCount);
+	    map.put("SubRankingCount", SubRankingCount);
+	    map.put("BithumbReportAD1", BithumbReportAD1);
+	    map.put("BithumbReportAD2", BithumbReportAD2);
+	    map.put("BithumbReportAD3", BithumbReportAD3);
+	    map.put("BithumbReportAD4", BithumbReportAD4);
+	    map.put("BithumbReportAD5", BithumbReportAD5);
+	    map.put("UpbitReportAD1", UpbitReportAD1);
+	    map.put("UpbitReportAD2", UpbitReportAD2);
+	    map.put("UpbitReportAD3", UpbitReportAD3);
+	    map.put("UpbitReportAD4", UpbitReportAD4);
+	    map.put("UpbitReportAD5", UpbitReportAD5);
+	    CoinService.CoinDailyReportDelete(map);
+	    Thread.sleep(1500);
+	    CoinService.CoinDailyReportReg(map);
+	    CoinService.CoinDailyReportScriptReg(map);
+	    
+	    date = "2023-11-01";
+	    yesterday = "2023-10-31";
+	    
+	    map = new HashMap<String, String>();
+	    map.put("date", date);
+	    map.put("yyyymmdd", date);
+	    map.put("yesterday", yesterday);
+	    map.put("MainRankingCount", MainRankingCount);
+	    map.put("SubRankingCount", SubRankingCount);
+	    map.put("BithumbReportAD1", BithumbReportAD1);
+	    map.put("BithumbReportAD2", BithumbReportAD2);
+	    map.put("BithumbReportAD3", BithumbReportAD3);
+	    map.put("BithumbReportAD4", BithumbReportAD4);
+	    map.put("BithumbReportAD5", BithumbReportAD5);
+	    map.put("UpbitReportAD1", UpbitReportAD1);
+	    map.put("UpbitReportAD2", UpbitReportAD2);
+	    map.put("UpbitReportAD3", UpbitReportAD3);
+	    map.put("UpbitReportAD4", UpbitReportAD4);
+	    map.put("UpbitReportAD5", UpbitReportAD5);
+	    CoinService.CoinDailyReportDelete(map);
+	    Thread.sleep(1500);
+	    CoinService.CoinDailyReportReg(map);
+	    CoinService.CoinDailyReportScriptReg(map);
+	}
+	
+	@GetMapping(path = "/CoinReportList")
+	public List<HashMap<String, String>> CoinReportList() throws Exception {
+		return CoinService.CoinReportList();
+	}
+	
+	@GetMapping(path = "/CoinDailyReportList")
+	public List<HashMap<String, String>> CoinDailyReportList(HttpServletRequest req) throws Exception {
+		String yyyymmdd = (req.getParameter("yyyymmdd")==null)?"":req.getParameter("yyyymmdd");
+		String std_date = (req.getParameter("std_date")==null)?"":req.getParameter("std_date");
+		String end_date = (req.getParameter("end_date")==null)?"":req.getParameter("end_date");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("yyyymmdd", yyyymmdd);
+		map.put("std_date", std_date);
+		map.put("end_date", end_date);
+		return CoinService.CoinDailyReportList(map);
+	}
+	
+	@GetMapping(path = "/CoinDailyReportHTMLList")
+	public List<HashMap<String, String>> CoinDailyReportHTMLList(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		return CoinService.CoinDailyReportHTMLList(map);
 	}
 	
 	@GetMapping(path = "/MainLiveRankList")
@@ -927,7 +1055,7 @@ public class CoinController {
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+4);
 	        cell = row.createCell(1);
-	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 3~1순위를 알려드리겠습니다.");
+	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 순위를 알려드리겠습니다.");
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+5);
 	        cell = row.createCell(1);
@@ -1763,7 +1891,7 @@ public class CoinController {
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+4);
 	        cell = row.createCell(1);
-	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_jucha_date + kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 3~1순위를 알려드리겠습니다.");
+	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_jucha_date + kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 순위를 알려드리겠습니다.");
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+5);
 	        cell = row.createCell(1);
@@ -2407,47 +2535,54 @@ public class CoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
-
+	        	
+	        	String tmp_text = "";
+	        	if(past_ranking_o_price.equals("0") && past_ranking_l_price.equals("0") && past_ranking_h_price.equals("0") && past_ranking_c_price.equals("0")) {
+	        		tmp_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%입니다.";
+        		}else {
+        			tmp_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+        		}
+	        	
 	        	if(x == 1) {
-	        		today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today1_text = tmp_text;
 	        	} else if(x == 2) {
-	        		today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today2_text = tmp_text;
 	        	} else if(x == 3) {
-	        		today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today3_text = tmp_text;
 	        	} else if(x == 4) {
-	        		today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today4_text = tmp_text;
 	        	} else if(x == 5) {
-	        		today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today5_text = tmp_text;
 	        	} else if(x == 6) {
-	        		today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today6_text = tmp_text;
 	        	} else if(x == 7) {
-	        		today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today7_text = tmp_text;
 	        	} else if(x == 8) {
-	        		today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today8_text = tmp_text;
 	        	} else if(x == 9) {
-	        		today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today9_text = tmp_text;
 	        	} else if(x == 10) {
-	        		today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today10_text = tmp_text;
 	        	} else if(x == 11) {
-	        		today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today11_text = tmp_text;
 	        	} else if(x == 12) {
-	        		today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today12_text = tmp_text;
 	        	} else if(x == 13) {
-	        		today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today13_text = tmp_text;
 	        	} else if(x == 14) {
-	        		today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today14_text = tmp_text;
 	        	} else if(x == 15) {
-	        		today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today15_text = tmp_text;
 	        	} else if(x == 16) {
-	        		today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today16_text = tmp_text;
 	        	} else if(x == 17) {
-	        		today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today17_text = tmp_text;
 	        	} else if(x == 18) {
-	        		today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today18_text = tmp_text;
 	        	} else if(x == 19) {
-	        		today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today19_text = tmp_text;
 	        	} else if(x == 20) {
-	        		today20_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today20_text = tmp_text;
 	        	}
 	        }
 
@@ -2592,11 +2727,11 @@ public class CoinController {
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+4);
 	        cell = row.createCell(1);
-	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_month_date + kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 3~1순위를 알려드리겠습니다.");
+	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_month_date + kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 순위를 알려드리겠습니다.");
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+5);
 	        cell = row.createCell(1);
-	        summary_sheet.getRow(Sheet2_Row+5).getCell(1).setCellValue("이번주 코인 매매 시 한 번 고려 해보시기 바랍니다.");
+	        summary_sheet.getRow(Sheet2_Row+5).getCell(1).setCellValue("이번달 코인 매매 시 한 번 고려 해보시기 바랍니다.");
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+8);
 	        cell = row.createCell(1);

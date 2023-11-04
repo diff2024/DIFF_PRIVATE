@@ -16,9 +16,11 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import com.diff._private.Controller.CoinController;
+import com.diff._private.Service.MainService;
 import com.diff._private.Service.CoinService;
 import com.diff._private.Service.BitCoinService;
 import java.io.File;
@@ -50,10 +52,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class Schedule {
-	public final String username = "diff2024@naver.com";
-	public final String password = "VR6PRXMB5YRK";
-	public final String recipient = "diff2024@naver.com";
-	public final String recipient2 = "asaswq2002@naver.com";
+	@Autowired
+	MainService MainService;
 	
 	@Autowired
 	CoinService UpbitCoinService;
@@ -61,9 +61,100 @@ public class Schedule {
 	@Autowired
 	BitCoinService BitCoinService;
 	
-    //1시간마다 실행
+	@Async
 	@Scheduled(cron = "0 20 0/1 * * *")
+    public void Schedule_Report_Reg() throws Exception {
+		LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
+        String HHNow = now.format(formatter);
+        formatter = DateTimeFormatter.ofPattern("mm");
+        String MMNow = now.format(formatter);
+        
+		Calendar UpbitDay = Calendar.getInstance();
+		UpbitDay.add(Calendar.HOUR, -9); // UTC 기준
+		if(Integer.parseInt(HHNow) == 9) {
+			UpbitDay.add(Calendar.DATE , -1);
+	    }
+	    String UpbitDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(UpbitDay.getTime());
+	    UpbitDay.add(Calendar.DATE , -1);
+	    String UpbitYesterDay = new java.text.SimpleDateFormat("yyyy-MM-dd").format(UpbitDay.getTime());
+	    
+	    Calendar BitDay = Calendar.getInstance();
+	    if(Integer.parseInt(HHNow) == 0) {
+	    	BitDay.add(Calendar.DATE , -1);
+	    }
+	    String BitDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(BitDay.getTime());
+	    BitDay.add(Calendar.DATE , -1);
+	    String BitYesterDay = new java.text.SimpleDateFormat("yyyy-MM-dd").format(BitDay.getTime());
+	    
+	    HashMap<String, String> SettingMap = MainService.CoinReportDailySetting();
+	    String BithumbMainRankingCount = SettingMap.get("bithumb_report_main_ranking");
+	    String BithumbSubRankingCount = SettingMap.get("bithumb_report_sub_ranking");
+	    String BithumbReportAD1 = SettingMap.get("bithumb_report_ad1");
+	    String BithumbReportAD2 = SettingMap.get("bithumb_report_ad2");
+	    String BithumbReportAD3 = SettingMap.get("bithumb_report_ad3");
+	    String BithumbReportAD4 = SettingMap.get("bithumb_report_ad4");
+	    String BithumbReportAD5 = SettingMap.get("bithumb_report_ad5");
+	    String UpbitMainRankingCount = SettingMap.get("upbit_report_main_ranking");
+	    String UpbitSubRankingCount = SettingMap.get("upbit_report_sub_ranking");
+	    String UpbitReportAD1 = SettingMap.get("upbit_report_ad1");
+	    String UpbitReportAD2 = SettingMap.get("upbit_report_ad2");
+	    String UpbitReportAD3 = SettingMap.get("upbit_report_ad3");
+	    String UpbitReportAD4 = SettingMap.get("upbit_report_ad4");
+	    String UpbitReportAD5 = SettingMap.get("upbit_report_ad5");
+	    
+	    HashMap<String, String> BithumbMap = new HashMap<String, String>();
+	    BithumbMap.put("date", BitDate);
+	    BithumbMap.put("yyyymmdd", BitDate);
+	    BithumbMap.put("yesterday", BitYesterDay);
+	    BithumbMap.put("MainRankingCount", BithumbMainRankingCount);
+	    BithumbMap.put("SubRankingCount", BithumbMainRankingCount);
+	    BithumbMap.put("BithumbReportAD1", BithumbReportAD1);
+	    BithumbMap.put("BithumbReportAD2", BithumbReportAD2);
+	    BithumbMap.put("BithumbReportAD3", BithumbReportAD3);
+	    BithumbMap.put("BithumbReportAD4", BithumbReportAD4);
+	    BithumbMap.put("BithumbReportAD5", BithumbReportAD5);
+	    
+	    HashMap<String, String> UpbitMap = new HashMap<String, String>();
+	    UpbitMap.put("date", UpbitDate);
+	    UpbitMap.put("yyyymmdd", UpbitDate);
+	    UpbitMap.put("yesterday", UpbitYesterDay);
+	    UpbitMap.put("MainRankingCount", UpbitMainRankingCount);
+	    UpbitMap.put("SubRankingCount", UpbitMainRankingCount);
+	    UpbitMap.put("UpbitReportAD1", UpbitReportAD1);
+	    UpbitMap.put("UpbitReportAD2", UpbitReportAD2);
+	    UpbitMap.put("UpbitReportAD3", UpbitReportAD3);
+	    UpbitMap.put("UpbitReportAD4", UpbitReportAD4);
+	    UpbitMap.put("UpbitReportAD5", UpbitReportAD5);
+	    
+        if((Integer.parseInt(HHNow) >= 16) || (Integer.parseInt(HHNow) <= 2)) {
+        	BitCoinService.CoinDailyReportDelete(BithumbMap);
+    		Thread.sleep(1500);
+    		BitCoinService.CoinDailyReportReg(BithumbMap);
+		    BitCoinService.CoinDailyReportScriptReg(BithumbMap);
+		    UpbitCoinService.CoinDailyReportDelete(UpbitMap);
+		    Thread.sleep(1500);
+    		UpbitCoinService.CoinDailyReportReg(UpbitMap);
+        	UpbitCoinService.CoinDailyReportScriptReg(UpbitMap);
+        }else {
+        	UpbitCoinService.CoinDailyReportDelete(UpbitMap);
+    		Thread.sleep(1500);
+    		UpbitCoinService.CoinDailyReportReg(UpbitMap);
+        	UpbitCoinService.CoinDailyReportScriptReg(UpbitMap);
+        	BitCoinService.CoinDailyReportDelete(BithumbMap);
+        	Thread.sleep(1500);
+    		BitCoinService.CoinDailyReportReg(BithumbMap);
+		    BitCoinService.CoinDailyReportScriptReg(BithumbMap);
+        }
+	}
+	
+	@Scheduled(cron = "0 30 0/1 * * *")
     public void Schedule_MailSender() throws UnsupportedEncodingException {
+		String username = "diff2024@naver.com";
+		String password = "VR6PRXMB5YRK";
+		String recipient = "diff2024@naver.com";
+		String recipient2 = "asaswq2002@naver.com";
+		
     	Calendar day = Calendar.getInstance();
 	    day.add(Calendar.DATE , -1);
 	    String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
@@ -75,7 +166,6 @@ public class Schedule {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
         String HHNow = HHnow.format(formatter);
         
-	    System.out.println(date+" " + HHNow + "  MailSender....");
 	    if((Integer.parseInt(HHNow) == 9) || (Integer.parseInt(HHNow) == 0)) {
 	    	String TradeGubun = "";
 	    	try {
@@ -810,7 +900,7 @@ public class Schedule {
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+4);
 	        cell = row.createCell(1);
-	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 3~1순위를 알려드리겠습니다.");
+	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 순위를 알려드리겠습니다.");
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+6);
 	        cell = row.createCell(1);
@@ -1557,7 +1647,7 @@ public class Schedule {
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+4);
 	        cell = row.createCell(1);
-	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 3~1순위를 알려드리겠습니다.");
+	        summary_sheet.getRow(Sheet2_Row+4).getCell(1).setCellValue(kor_date + "에 투자했으면 가장 안정적으로 많이 벌 수 있었던 코인 순위를 알려드리겠습니다.");
 	        
 	        row = summary_sheet.createRow(Sheet2_Row+6);
 	        cell = row.createCell(1);

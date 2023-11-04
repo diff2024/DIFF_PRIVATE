@@ -32,15 +32,17 @@
 				</v-toolbar-title>
 				<v-spacer></v-spacer>
 				<v-spacer></v-spacer>
-					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('coinMainList')">업비트 통계</span>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/CoinMainList')">업비트 통계</span>
 				<v-spacer></v-spacer>
-					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('bithumbcoinMainList')">빗썸 통계</span>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BithumbCoinMainList')">빗썸 통계</span>
 				<v-spacer></v-spacer>
-					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('coinLiveList')">업비트 실시간 통계</span>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/CoinReport')">업비트 분석 Report</span>
 				<v-spacer></v-spacer>
-					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('bithumbcoinLiveList')">빗썸 실시간 통계</span>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BithumbCoinReport')">빗썸 분석 Report</span>
 				<v-spacer></v-spacer>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/CoinLiveList')">업비트 실시간 통계</span>
 				<v-spacer></v-spacer>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BithumbCoinLiveList')">빗썸 실시간 통계</span>
 				<v-spacer></v-spacer>
 				<v-spacer></v-spacer>
 				<v-spacer></v-spacer>

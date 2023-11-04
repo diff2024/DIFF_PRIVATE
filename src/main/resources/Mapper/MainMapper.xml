@@ -8,4 +8,11 @@
 		ON CONFLICT ON CONSTRAINT upbit_coin_min_pk DO UPDATE SET
 			o_price = #{open_price}, h_price = #{high_price},  l_price = #{low_price},  c_price = #{trade_price}, trade_volume = #{volume}
 	</insert>
+	
+	<select id="CoinReportDailySetting" resultType="HashMap">
+		select bithumb_report_main_ranking, bithumb_report_sub_ranking, upbit_report_main_ranking, upbit_report_sub_ranking
+			 , bithumb_report_ad1, bithumb_report_ad2, bithumb_report_ad3, bithumb_report_ad4, bithumb_report_ad5
+			 , upbit_report_ad1, upbit_report_ad2, upbit_report_ad3, upbit_report_ad4, upbit_report_ad5
+		  from coin_report_daily_setting
+	</select>
 </mapper>

@@ -250,6 +250,567 @@
 		 order by cast(y.c_price as numeric) desc
 	</select>
 	
+	<select id="CoinReportList" resultType="HashMap">
+		select yyyymmdd, 'D' as type, yyyymmdd as start_date, yyyymmdd as end_date
+		  from bithumb_coin_report_daily
+		 where delete_yn = 'N'
+		 group by yyyymmdd
+		 order by yyyymmdd desc
+	</select>
+	
+	<select id="CoinDailyReportList" resultType="HashMap" parameterType="HashMap">
+		select x.yyyymmdd, x.coin_ticker, y.coin_kor_name, (y.coin_kor_name || ' [' || y.coin_ticker || ']') coin_title, x.ranking, x.status
+			 , x.o_price, x.l_price, x.h_price, x.c_price
+			 , x.o_c_price, x.o_c_price_rate, x.l_h_price, x.l_h_price_rate, x.real_l_h_price, x.real_l_h_price_rate
+			 , x.lower_price_time, x.higher_price_time, x.lower_volume_time, x.higher_volume_time
+			 , x.o_0_4, x.l_0_4, x.h_0_4, x.c_0_4, x.v_0_4
+			 , x.o_4_8, x.l_4_8, x.h_4_8, x.c_4_8, x.v_4_8
+			 , x.o_8_12, x.l_8_12, x.h_8_12, x.c_8_12, x.v_8_12
+			 , x.o_12_16, x.l_12_16, x.h_12_16, x.c_12_16, x.v_12_16
+			 , x.o_16_20, x.l_16_20, x.h_16_20, x.c_16_20, x.v_16_20
+			 , x.o_20_24, x.l_20_24, x.h_20_24, x.c_20_24, x.v_20_24
+			 , x.complete_yn, x.delete_yn
+			 , coalesce((select ranking from bithumb_coin_report_daily z where x.coin_ticker=z.coin_ticker and yyyymmdd = #{yesterday}), '') yesterday_ranking
+			 , coalesce((select o_c_price_rate from bithumb_coin_report_daily z where x.coin_ticker=z.coin_ticker and yyyymmdd = #{yesterday}), '0.0') yesterday_o_c_price_rate
+		  from bithumb_coin_report_daily x, bithumb_coin_info y
+		 where x.coin_ticker = y.coin_ticker
+		   and x.delete_yn = 'N'
+		   and y.coin_delete_yn = 'N'
+		   and x.yyyymmdd = #{date}
+		 order by case when x.coin_ticker = 'BTC' then 0 else cast(x.ranking as integer) end
+	</select>
+	
+	<select id="CoinDailyReportHTMLList" resultType="HashMap" parameterType="HashMap">
+		select x.yyyymmdd, x.id, x.row, x.col, coalesce(x.html, '') html
+		  from bithumb_coin_report_daily_html x
+		 where x.yyyymmdd = #{date}
+		   and x.diff_yn = 'Y'
+		 order by cast(x.row as integer)
+	</select>
+	
+	<delete id="CoinDailyReportDelete" parameterType="HashMap">
+		delete from bithumb_coin_report_daily where yyyymmdd = #{date}
+	</delete>
+	
+	<insert id="CoinDailyReportReg" parameterType="HashMap">
+		insert into bithumb_coin_report_daily
+			(yyyymmdd, coin_ticker, o_price, l_price, h_price, c_price, ranking, status, o_c_price, o_c_price_rate, l_h_price, l_h_price_rate
+				, lower_price_time, higher_price_time, lower_volume_time, higher_volume_time, create_datetime
+				, o_0_4, l_0_4, h_0_4, c_0_4, v_0_4, o_4_8, l_4_8, h_4_8, c_4_8, v_4_8, o_8_12, l_8_12, h_8_12, c_8_12, v_8_12
+				, o_12_16, l_12_16, h_12_16, c_12_16, v_12_16, o_16_20, l_16_20, h_16_20, c_16_20, v_16_20, o_20_24, l_20_24, h_20_24, c_20_24, v_20_24)
+		select #{date} yyyymmdd, x.coin_ticker, x.o_price, x.l_price, x.h_price, x.c_price, x.ranking, x.status
+			 , x.o_c_price, x.o_c_price_rate, x.l_h_price, x.l_h_price_rate
+			 , x.lower_time, x.higher_time, x.volum_low_time, x.volum_high_time, to_char(now(), 'YYYY-MM-DD HH24:MI:SS')
+			 , x.o_price_0_4, x.l_price_0_4, x.h_price_0_4, x.c_price_0_4, x.trade_volume_0_4
+			 , x.o_price_4_8, x.l_price_4_8, x.h_price_4_8, x.c_price_4_8, x.trade_volume_4_8
+			 , x.o_price_8_12, x.l_price_8_12, x.h_price_8_12, x.c_price_8_12, x.trade_volume_8_12
+			 , x.o_price_12_16, x.l_price_12_16, x.h_price_12_16, x.c_price_12_16, x.trade_volume_12_16
+			 , x.o_price_16_20, x.l_price_16_20, x.h_price_16_20, x.c_price_16_20, x.trade_volume_16_20
+			 , x.o_price_20_24, x.l_price_20_24, x.h_price_20_24, x.c_price_20_24, x.trade_volume_20_24
+		  from (
+				select x.coin_ticker, x.o_price, x.c_price, x.l_price, x.h_price, '기준' AS ranking
+					 , case when cast(x.c_price as numeric) > cast(x.o_price as numeric) then '상승' when cast(x.c_price as numeric) <![CDATA[ < ]]> cast(x.o_price as numeric) then '하락' else '보합' end status
+					 , cast((cast(x.c_price as numeric) - cast(x.o_price as numeric)) as varchar) o_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(x.o_price as numeric))/cast(x.o_price as numeric))*100,2)) as varchar) o_c_price_rate
+					 , cast((cast(x.h_price as numeric) - cast(x.l_price as numeric)) as varchar) l_h_price
+					 , cast((ROUND(((cast(x.h_price as numeric)-cast(x.l_price as numeric))/cast(x.l_price as numeric))*100,2)) as varchar) l_h_price_rate
+					 , x.lower_time, x.higher_time, x.volum_low_time, x.volum_high_time
+					 , x.o_price_0_4, x.l_price_0_4, x.h_price_0_4, x.c_price_0_4, x.trade_volume_0_4
+					 , x.o_price_4_8, x.l_price_4_8, x.h_price_4_8, x.c_price_4_8, x.trade_volume_4_8
+					 , x.o_price_8_12, x.l_price_8_12, x.h_price_8_12, x.c_price_8_12, x.trade_volume_8_12
+					 , x.o_price_12_16, x.l_price_12_16, x.h_price_12_16, x.c_price_12_16, x.trade_volume_12_16
+					 , x.o_price_16_20, x.l_price_16_20, x.h_price_16_20, x.c_price_16_20, x.trade_volume_16_20
+					 , x.o_price_20_24, x.l_price_20_24, x.h_price_20_24, x.c_price_20_24, x.trade_volume_20_24
+				  from (
+					select x.coin_ticker
+						 , (select case when position('.0' in cast(cast(m.o_price as numeric) as varchar)) > (char_length(cast(cast(m.o_price as numeric) as varchar))-2) then replace((cast(cast(m.o_price as numeric) as varchar)), '.0', '') else cast(cast(m.o_price as numeric) as varchar) end from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by m.datetime_kst asc limit 1) o_price
+						 , (select case when position('.0' in cast(cast(m.c_price as numeric) as varchar)) > (char_length(cast(cast(m.c_price as numeric) as varchar))-2) then replace((cast(cast(m.c_price as numeric) as varchar)), '.0', '') else cast(cast(m.c_price as numeric) as varchar) end from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by m.datetime_kst desc limit 1) c_price
+						 , (select case when position('.0' in cast(cast(m.l_price as numeric) as varchar)) > (char_length(cast(cast(m.l_price as numeric) as varchar))-2) then replace((cast(cast(m.l_price as numeric) as varchar)), '.0', '') else cast(cast(m.l_price as numeric) as varchar) end from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by cast(m.l_price as numeric) limit 1) l_price
+						 , (select case when position('.0' in cast(cast(m.h_price as numeric) as varchar)) > (char_length(cast(cast(m.h_price as numeric) as varchar))-2) then replace((cast(cast(m.h_price as numeric) as varchar)), '.0', '') else cast(cast(m.h_price as numeric) as varchar) end from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by cast(m.h_price as numeric) desc limit 1) h_price
+						 , (select substring(m.datetime_kst, 12, 5) from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by cast(m.l_price as numeric) limit 1) lower_time
+						 , (select substring(m.datetime_kst, 12, 5) from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by cast(m.h_price as numeric) desc limit 1) higher_time
+						 , (select cast(cast(substring(m.datetime_kst, 12, 2) as integer) as varchar)||'시' from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} group by substring(m.datetime_kst, 12, 2) order by sum(cast(m.trade_volume as numeric)) asc limit 1) volum_low_time
+						 , (select cast(cast(substring(m.datetime_kst, 12, 2) as integer) as varchar)||'시' from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} group by substring(m.datetime_kst, 12, 2) order by sum(cast(m.trade_volume as numeric)) desc limit 1) volum_high_time
+						 , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						       	       from bithumb_coin_min z 
+						       	      where z.coin_ticker = x.coin_ticker
+						       	        and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						       	      order by z.datetime_kst 
+						     	      limit 1), '0') o_price_0_4
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						       	        and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						       	      order by z.datetime_kst 
+						        	   limit 1), '0') o_price_4_8
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						          	     and left(z.datetime_kst, 10) = #{date}
+						          	     and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						          	   order by z.datetime_kst 
+						        	   limit 1), '0') o_price_8_12
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						       	        and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	      order by z.datetime_kst 
+						     	      limit 1), '0') o_price_12_16
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						          	     and left(z.datetime_kst, 10) = #{date}
+						          	     and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						          	   order by z.datetime_kst 
+						        	   limit 1), '0') o_price_16_20
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						       	       from bithumb_coin_min z 
+						       	      where z.coin_ticker = x.coin_ticker
+						       	        and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	      order by z.datetime_kst 
+						        	   limit 1), '0') o_price_20_24
+				          , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						          	     and left(z.datetime_kst, 10) = #{date}
+						          	     and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						          	   order by z.datetime_kst desc 
+						        	   limit 1), '0') c_price_0_4
+				          , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						          	     and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						          	   order by z.datetime_kst desc 
+						     	       limit 1), '0') c_price_4_8
+				          , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						       	        from bithumb_coin_min z 
+						       	       where z.coin_ticker = x.coin_ticker
+						       	         and left(z.datetime_kst, 10) = #{date}
+						       	         and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						       	       order by z.datetime_kst desc 
+						     	       limit 1), '0') c_price_8_12
+				          , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						       	        from bithumb_coin_min z 
+						       	       where z.coin_ticker = x.coin_ticker
+						           	     and left(z.datetime_kst, 10) = #{date}
+						           	     and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	       order by z.datetime_kst desc 
+						         	   limit 1), '0') c_price_12_16
+				           , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						           	    from bithumb_coin_min z 
+						       	       where z.coin_ticker = x.coin_ticker
+						           	     and left(z.datetime_kst, 10) = #{date}
+						       	         and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						       	       order by z.datetime_kst desc 
+						     	       limit 1), '0') c_price_16_20
+				           , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						       	        from bithumb_coin_min z 
+						       	       where z.coin_ticker = x.coin_ticker
+						       	         and left(z.datetime_kst, 10) = #{date}
+						       	         and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	       order by z.datetime_kst desc 
+						     	       limit 1), '0') c_price_20_24
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end
+						           	     from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						           	    order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_0_4 
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_4_8
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_8_12
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_12_16
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_16_20
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_20_24
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_0_4
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						           	     from bithumb_coin_min z 
+						           	    where z.coin_ticker = x.coin_ticker
+						           	      and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_4_8
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_8_12
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_12_16
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_16_20
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_20_24
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_0_4
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						           	      and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_4_8
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						           	     from bithumb_coin_min z 
+						           	    where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_8_12
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_12_16
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_16_20
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_20_24
+					  from bithumb_coin_info x
+					 where x.coin_ticker = 'BTC'
+					   and x.coin_delete_yn = 'N'
+				) x
+				union all 
+				select x.coin_ticker, x.o_price, x.c_price, x.l_price, x.h_price
+					 , cast(ROW_NUMBER() OVER (ORDER BY ROUND(((cast(x.c_price as numeric)-cast(x.o_price as numeric))/cast(x.o_price as numeric))*100,2) desc) as varchar) AS ranking
+					 , case when cast(x.c_price as numeric) > cast(x.o_price as numeric) then '상승' when cast(x.c_price as numeric) <![CDATA[ < ]]> cast(x.o_price as numeric) then '하락' else '보합' end status
+					 , cast((cast(x.c_price as numeric) - cast(x.o_price as numeric)) as varchar) o_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(x.o_price as numeric))/cast(x.o_price as numeric))*100,2)) as varchar) o_c_price_rate
+					 , cast((cast(x.h_price as numeric) - cast(x.l_price as numeric)) as varchar) l_h_price
+					 , cast((ROUND(((cast(x.h_price as numeric)-cast(x.l_price as numeric))/cast(x.l_price as numeric))*100,2)) as varchar) l_h_price_rate
+					 , x.lower_time, x.higher_time, x.volum_low_time, x.volum_high_time
+					 , x.o_price_0_4, x.l_price_0_4, x.h_price_0_4, x.c_price_0_4, x.trade_volume_0_4
+					 , x.o_price_4_8, x.l_price_4_8, x.h_price_4_8, x.c_price_4_8, x.trade_volume_4_8
+					 , x.o_price_8_12, x.l_price_8_12, x.h_price_8_12, x.c_price_8_12, x.trade_volume_8_12
+					 , x.o_price_12_16, x.l_price_12_16, x.h_price_12_16, x.c_price_12_16, x.trade_volume_12_16
+					 , x.o_price_16_20, x.l_price_16_20, x.h_price_16_20, x.c_price_16_20, x.trade_volume_16_20
+					 , x.o_price_20_24, x.l_price_20_24, x.h_price_20_24, x.c_price_20_24, x.trade_volume_20_24
+				  from (
+					select x.coin_ticker
+						 , (select case when position('.0' in cast(cast(m.o_price as numeric) as varchar)) > (char_length(cast(cast(m.o_price as numeric) as varchar))-2) then replace((cast(cast(m.o_price as numeric) as varchar)), '.0', '') else cast(cast(m.o_price as numeric) as varchar) end from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by m.datetime_kst asc limit 1) o_price
+						 , (select case when position('.0' in cast(cast(m.c_price as numeric) as varchar)) > (char_length(cast(cast(m.c_price as numeric) as varchar))-2) then replace((cast(cast(m.c_price as numeric) as varchar)), '.0', '') else cast(cast(m.c_price as numeric) as varchar) end from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by m.datetime_kst desc limit 1) c_price
+						 , (select case when position('.0' in cast(cast(m.l_price as numeric) as varchar)) > (char_length(cast(cast(m.l_price as numeric) as varchar))-2) then replace((cast(cast(m.l_price as numeric) as varchar)), '.0', '') else cast(cast(m.l_price as numeric) as varchar) end from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by cast(m.l_price as numeric) limit 1) l_price
+						 , (select case when position('.0' in cast(cast(m.h_price as numeric) as varchar)) > (char_length(cast(cast(m.h_price as numeric) as varchar))-2) then replace((cast(cast(m.h_price as numeric) as varchar)), '.0', '') else cast(cast(m.h_price as numeric) as varchar) end from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by cast(m.h_price as numeric) desc limit 1) h_price
+						 , (select substring(m.datetime_kst, 12, 5) from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by cast(m.l_price as numeric) limit 1) lower_time
+						 , (select substring(m.datetime_kst, 12, 5) from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} order by cast(m.h_price as numeric) desc limit 1) higher_time
+						 , (select cast(cast(substring(m.datetime_kst, 12, 2) as integer) as varchar)||'시' from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} group by substring(m.datetime_kst, 12, 2) order by sum(cast(m.trade_volume as numeric)) asc limit 1) volum_low_time
+						 , (select cast(cast(substring(m.datetime_kst, 12, 2) as integer) as varchar)||'시' from bithumb_coin_min m where x.coin_ticker = m.coin_ticker and left(m.datetime_kst, 10) = #{date} group by substring(m.datetime_kst, 12, 2) order by sum(cast(m.trade_volume as numeric)) desc limit 1) volum_high_time
+						 , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						       	       from bithumb_coin_min z 
+						       	      where z.coin_ticker = x.coin_ticker
+						       	        and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						       	      order by z.datetime_kst 
+						     	      limit 1), '0') o_price_0_4
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						       	        and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						       	      order by z.datetime_kst 
+						        	   limit 1), '0') o_price_4_8
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						          	     and left(z.datetime_kst, 10) = #{date}
+						          	     and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						          	   order by z.datetime_kst 
+						        	   limit 1), '0') o_price_8_12
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						       	        and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	      order by z.datetime_kst 
+						     	      limit 1), '0') o_price_12_16
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						          	     and left(z.datetime_kst, 10) = #{date}
+						          	     and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						          	   order by z.datetime_kst 
+						        	   limit 1), '0') o_price_16_20
+				          , coalesce((select case when position('.0' in z.o_price) > (char_length(z.o_price)-2) then replace(z.o_price, '.0', '') else z.o_price end 
+						       	       from bithumb_coin_min z 
+						       	      where z.coin_ticker = x.coin_ticker
+						       	        and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	      order by z.datetime_kst 
+						        	   limit 1), '0') o_price_20_24
+				          , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						          	     and left(z.datetime_kst, 10) = #{date}
+						          	     and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						          	   order by z.datetime_kst desc 
+						        	   limit 1), '0') c_price_0_4
+				          , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						          	    from bithumb_coin_min z 
+						          	   where z.coin_ticker = x.coin_ticker
+						          	     and left(z.datetime_kst, 10) = #{date}
+						       	        and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						          	   order by z.datetime_kst desc 
+						     	       limit 1), '0') c_price_4_8
+				          , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						       	        from bithumb_coin_min z 
+						       	       where z.coin_ticker = x.coin_ticker
+						       	         and left(z.datetime_kst, 10) = #{date}
+						       	         and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						       	       order by z.datetime_kst desc 
+						     	       limit 1), '0') c_price_8_12
+				          , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						       	        from bithumb_coin_min z 
+						       	       where z.coin_ticker = x.coin_ticker
+						           	     and left(z.datetime_kst, 10) = #{date}
+						           	     and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	       order by z.datetime_kst desc 
+						         	   limit 1), '0') c_price_12_16
+				           , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						           	    from bithumb_coin_min z 
+						       	       where z.coin_ticker = x.coin_ticker
+						           	     and left(z.datetime_kst, 10) = #{date}
+						       	         and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						       	       order by z.datetime_kst desc 
+						     	       limit 1), '0') c_price_16_20
+				           , coalesce((select case when position('.0' in z.c_price) > (char_length(z.c_price)-2) then replace(z.c_price, '.0', '') else z.c_price end 
+						       	        from bithumb_coin_min z 
+						       	       where z.coin_ticker = x.coin_ticker
+						       	         and left(z.datetime_kst, 10) = #{date}
+						       	         and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	       order by z.datetime_kst desc 
+						     	       limit 1), '0') c_price_20_24
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end
+						           	     from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						           	    order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_0_4 
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_4_8
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_8_12
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_12_16
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_16_20
+				           , coalesce((select case when position('.0' in cast(cast(z.h_price as numeric) as varchar)) > (char_length(cast(cast(z.h_price as numeric) as varchar))-2) then replace((cast(cast(z.h_price as numeric) as varchar)), '.0', '') else cast(cast(z.h_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	        order by cast(z.h_price as numeric) desc
+						     	        limit 1), '0') h_price_20_24
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end 
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_0_4
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						           	     from bithumb_coin_min z 
+						           	    where z.coin_ticker = x.coin_ticker
+						           	      and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_4_8
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_8_12
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_12_16
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_16_20
+				           , coalesce((select case when position('.0' in cast(cast(z.l_price as numeric) as varchar)) > (char_length(cast(cast(z.l_price as numeric) as varchar))-2) then replace((cast(cast(z.l_price as numeric) as varchar)), '.0', '') else cast(cast(z.l_price as numeric) as varchar) end
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	        order by cast(z.l_price as numeric) asc
+						     	        limit 1), '0') l_price_20_24
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 0 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 4
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_0_4
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						           	      and cast(substring(z.datetime_kst, 12,2) as integer) >= 4 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 8
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_4_8
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						           	     from bithumb_coin_min z 
+						           	    where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 8 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 12
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_8_12
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 12 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 16
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_12_16
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 16 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 20
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_16_20
+				           , coalesce((select cast((round(sum(cast(z.trade_volume as numeric)),2)) as varchar)
+						       	         from bithumb_coin_min z 
+						       	        where z.coin_ticker = x.coin_ticker
+						       	          and left(z.datetime_kst, 10) = #{date}
+						       	          and cast(substring(z.datetime_kst, 12,2) as integer) >= 20 and cast(substring(z.datetime_kst, 12,2) as integer) <![CDATA[ < ]]> 24
+						       	        group by z.datetime_utc, z.datetime_kst
+						     	        order by z.datetime_kst desc
+						     	        limit 1), '0') trade_volume_20_24
+					  from bithumb_coin_info x
+					 where x.coin_ticker != 'BTC'
+					   and x.coin_delete_yn = 'N'
+				) x
+		) x
+		order by case when x.coin_ticker = 'BTC' then 0 else cast(x.ranking as integer) end
+	</insert>
+	
+	<delete id="CoinDailyReportHTMLDelete" parameterType="HashMap">
+		delete from bithumb_coin_report_daily_html where yyyymmdd = #{date}
+	</delete>
+	
+	<insert id="CoinDailyReportHTMLReg" parameterType="HashMap">
+		insert into bithumb_coin_report_daily_html
+			(yyyymmdd, id, row, col, html, diff_yn, blog_yn, create_datetime)
+		values
+			(#{yyyymmdd}, #{id}, #{row}, #{col}, #{html}, #{diff_yn}, #{blog_yn}, to_char(now(), 'YYYY-MM-DD HH24:MI:SS'))
+	</insert>
+	
 	<select id="MainLiveRankList" resultType="HashMap" parameterType="HashMap">
 		select cast(ROW_NUMBER() OVER (ORDER BY cast(x.o_c_price_rate as numeric) desc) as varchar) AS ranking
 			 , x.datetime_kst, x.coin_ticker, x.coin_kor_name, x.o_price, x.c_price, x.o_c_price_rate
@@ -286,10 +847,10 @@
 	
 	<select id="ExcelMake_Daily" resultType="HashMap" parameterType="HashMap">
 		select x.coin_ticker, x.coin_kor_name, x.coin_eng_name, x.o_price, x.c_price, x.l_price, x.h_price
-			 , substring(cast((cast(replace(x.coin_price_min_time,'T',' ') as timestamp) + '9 hour') as varchar), 12, 5) coin_price_min_time
-			 , substring(cast((cast(replace(x.coin_price_max_time,'T',' ') as timestamp) + '9 hour') as varchar), 12, 5) coin_price_max_time
-			 , substring(cast((cast((replace(x.coin_volume_min_time,'T',' ')||':00:00') as timestamp) + '9 hour') as varchar), 12, 2) coin_volume_min_time
-			 , substring(cast((cast((replace(x.coin_volume_max_time,'T',' ')||':00:00') as timestamp) + '9 hour') as varchar), 12, 2) coin_volume_max_time
+			 , substring(cast((cast(replace(x.coin_price_min_time,'T',' ') as timestamp)) as varchar), 12, 5) coin_price_min_time
+			 , substring(cast((cast(replace(x.coin_price_max_time,'T',' ') as timestamp)) as varchar), 12, 5) coin_price_max_time
+			 , substring(cast((cast((replace(x.coin_volume_min_time,'T',' ')||':00:00') as timestamp)) as varchar), 12, 2) coin_volume_min_time
+			 , substring(cast((cast((replace(x.coin_volume_max_time,'T',' ')||':00:00') as timestamp)) as varchar), 12, 2) coin_volume_max_time
 			 , cast((ROUND(((cast(x.c_price as numeric)-cast(x.o_price as numeric))/cast(x.o_price as numeric))*100,1)) as varchar) open_close_rate
 			 , cast((cast(x.c_price as numeric)-cast(x.o_price as numeric)) as varchar) open_close_calc
 			 , cast(ROUND(((((cast(x.max_price as numeric) - cast(x.min_price as numeric))/ cast(x.min_price as numeric))) * 100), 1) as varchar) lowest_highest_fluctuation
@@ -1084,13 +1645,13 @@
 		  from (
 				select x.coin_ticker, x.coin_kor_name || '[' || x.coin_ticker || ']' coin_name
 					 , x.o_price, x.l_price, x.lh_price, x.h_price, x.c_price
-					 , x.before_o_price, x.before_l_price, x.before_lh_price, x.before_h_price, x.before_c_price
+					 , coalesce(x.before_o_price, '0') before_o_price, coalesce(x.before_l_price, '0') before_l_price, coalesce(x.before_lh_price, '0') before_lh_price, coalesce(x.before_h_price, '0') before_h_price, coalesce(x.before_c_price, '0') before_c_price
 					 , cast(round((((cast(x.c_price as numeric) - cast(x.o_price as numeric))/cast(x.o_price as numeric))*100),2) as varchar) o_c_price_rate
-					 , cast(round((((cast(x.before_c_price as numeric) - cast(x.before_o_price as numeric))/cast(x.before_o_price as numeric))*100),2) as varchar) before_o_c_price_rate
+					 , cast(round((((cast(coalesce(x.before_c_price,'0') as numeric) - cast(coalesce(x.before_o_price,'0') as numeric))/cast(coalesce(x.before_o_price, '1') as numeric))*100),2) as varchar) before_o_c_price_rate
 					 , cast(round((((cast(x.h_price as numeric) - cast(x.l_price as numeric))/cast(x.l_price as numeric))*100),2) as varchar) l_h_price_rate
-					 , cast(round((((cast(x.before_h_price as numeric) - cast(x.before_l_price as numeric))/cast(x.before_l_price as numeric))*100),2) as varchar) before_l_h_price_rate
+					 , cast(round((((cast(coalesce(x.before_h_price,'0') as numeric) - cast(coalesce(x.before_l_price,'0') as numeric))/cast(coalesce(x.before_l_price, '1') as numeric))*100),2) as varchar) before_l_h_price_rate
 					 , cast(round((((cast(x.lh_price as numeric) - cast(x.l_price as numeric))/cast(x.l_price as numeric))*100),2) as varchar) l_lh_price_rate
-					 , cast(round((((cast(x.before_lh_price as numeric) - cast(x.before_l_price as numeric))/cast(x.before_l_price as numeric))*100),2) as varchar) before_l_lh_price_rate
+					 , cast(round((((cast(coalesce(x.before_lh_price,'0') as numeric) - cast(coalesce(x.before_l_price,'0') as numeric))/cast(coalesce(x.before_l_price, '1') as numeric))*100),2) as varchar) before_l_lh_price_rate
 					 , '0' ranking, '0' before_ranking
 				  from (
 						select x.coin_ticker, x.coin_kor_name
@@ -1178,19 +1739,19 @@
 						 where x.coin_delete_yn = 'N'
 						   and x.coin_ticker = 'BTC'
 				 	   ) x
-				  where x.o_price != '' and x.l_price != '' and x.h_price != '' and x.c_price != '' and x.before_o_price != '' and x.before_l_price != '' and x.before_h_price != '' and x.before_c_price != ''
+				  where x.o_price != '' and x.l_price != '' and x.h_price != '' and x.c_price != ''
 				  union all
 				  select x.coin_ticker, x.coin_kor_name || '[' || x.coin_ticker || ']' coin_name
 					   , x.o_price, x.l_price, x.lh_price, x.h_price, x.c_price
-					   , x.before_o_price, x.before_l_price, x.before_lh_price, x.before_h_price, x.before_c_price
+					   , coalesce(x.before_o_price, '0') before_o_price, coalesce(x.before_l_price, '0') before_l_price, coalesce(x.before_lh_price, '0') before_lh_price, coalesce(x.before_h_price, '0') before_h_price, coalesce(x.before_c_price, '0') before_c_price
 					   , cast(round((((cast(x.c_price as numeric) - cast(x.o_price as numeric))/cast(x.o_price as numeric))*100),2) as varchar) o_c_price_rate
-					   , cast(round((((cast(x.before_c_price as numeric) - cast(x.before_o_price as numeric))/cast(x.before_o_price as numeric))*100),2) as varchar) before_o_c_price_rate
+					   , cast(round((((cast(coalesce(x.before_c_price,'0') as numeric) - cast(coalesce(x.before_o_price,'0') as numeric))/cast(coalesce(x.before_o_price, '1') as numeric))*100),2) as varchar) before_o_c_price_rate
 					   , cast(round((((cast(x.h_price as numeric) - cast(x.l_price as numeric))/cast(x.l_price as numeric))*100),2) as varchar) l_h_price_rate
-					   , cast(round((((cast(x.before_h_price as numeric) - cast(x.before_l_price as numeric))/cast(x.before_l_price as numeric))*100),2) as varchar) before_l_h_price_rate
+					   , cast(round((((cast(coalesce(x.before_h_price,'0') as numeric) - cast(coalesce(x.before_l_price,'0') as numeric))/cast(coalesce(x.before_l_price, '1') as numeric))*100),2) as varchar) before_l_h_price_rate
 					   , cast(round((((cast(x.lh_price as numeric) - cast(x.l_price as numeric))/cast(x.l_price as numeric))*100),2) as varchar) l_lh_price_rate
-					   , cast(round((((cast(x.before_lh_price as numeric) - cast(x.before_l_price as numeric))/cast(x.before_l_price as numeric))*100),2) as varchar) before_l_lh_price_rate
+					   , cast(round((((cast(coalesce(x.before_lh_price,'0') as numeric) - cast(coalesce(x.before_l_price,'0') as numeric))/cast(coalesce(x.before_l_price, '1') as numeric))*100),2) as varchar) before_l_lh_price_rate
 					   , cast((RANK () OVER (ORDER BY round((((cast(x.c_price as numeric) - cast(x.o_price as numeric))/cast(x.o_price as numeric))*100),2) desc)) as varchar) ranking
-					   , cast((RANK () OVER (ORDER BY round((((cast(x.before_c_price as numeric) - cast(x.before_o_price as numeric))/cast(x.before_o_price as numeric))*100),2) desc)) as varchar) before_ranking
+					   , cast((RANK () OVER (ORDER BY round((((cast(coalesce(x.before_c_price, '0') as numeric) - cast(coalesce(x.before_o_price, '0') as numeric))/cast(coalesce(x.before_o_price, '1') as numeric))*100),2) desc)) as varchar) before_ranking
 				    from (
 						select x.coin_ticker, x.coin_kor_name
 							 , (select case when position('.0' in y.o_price) > (char_length(y.o_price)-2) then replace(y.o_price, '.0', '') else y.o_price end
@@ -1277,7 +1838,7 @@
 						 where x.coin_delete_yn = 'N'
 						   and x.coin_ticker != 'BTC'
 				 	   ) x
-				  where x.o_price != '' and x.l_price != '' and x.h_price != '' and x.c_price != '' and x.before_o_price != '' and x.before_l_price != '' and x.before_h_price != '' and x.before_c_price != ''
+				  where x.o_price != '' and x.l_price != '' and x.h_price != '' and x.c_price != ''
 			) x
 		order by cast(x.ranking as integer)
 	</select>

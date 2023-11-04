@@ -16,11 +16,17 @@ const Main = () => {
 const CoinMainList = () => {
 	return import("./views/Coin/CoinMainList.vue")	
 }
+const CoinReport = () => {
+	return import("./views/Coin/CoinReport.vue")	
+}
 const CoinLiveList = () => {
 	return import("./views/Coin/CoinLiveList.vue")	
 }
 const BithumbCoinMainList = () => {
 	return import("./views/Coin/BithumbCoinMainList.vue")	
+}
+const BithumbCoinReport = () => {
+	return import("./views/Coin/BithumbCoinReport.vue")	
 }
 const BithumbCoinLiveList = () => {
 	return import("./views/Coin/BithumbCoinLiveList.vue")	
@@ -44,6 +50,26 @@ export const router = new Router({
       path: '/BithumbCoinMainList',
       name: 'bithumbcoinMainList',
       component: BithumbCoinMainList
+    },
+    {
+      path: '/CoinReport',
+      name: 'coinReport',
+      component: CoinReport
+    },
+    {
+      path: '/CoinReport/:date',
+      name: 'coinReport',
+      component: CoinReport
+    },
+    {
+      path: '/BithumbCoinReport',
+      name: 'bithumbcoinReport',
+      component: BithumbCoinReport
+    },
+    {
+      path: '/BithumbCoinReport/:date',
+      name: 'bithumbcoinReport',
+      component: BithumbCoinReport
     },
     {
       path: '/CoinLiveList',

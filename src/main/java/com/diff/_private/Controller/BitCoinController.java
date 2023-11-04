@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,17 +56,24 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.diff._private.Service.MainService;
 import com.diff._private.Service.BitCoinService;
+
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 @RestController
 @RequestMapping("/Bithumb")
 public class BitCoinController {
 
+	@Autowired
+	MainService MainService;
+	
 	@Autowired
 	BitCoinService BitCoinService;
 	
@@ -91,144 +100,131 @@ public class BitCoinController {
 		return BitCoinService.MainGridList(map);
 	}
 	
-	@GetMapping(path = "/MainGridGraph")
-	public List<HashMap<String, String>> MainGridGraph(HttpServletRequest req) throws IOException {
-		ArrayList<HashMap<String, String>> coinlist = new ArrayList<HashMap<String, String>>();
-		
-		try {
-			CloseableHttpClient httpclient = HttpClients.createDefault();
-			HttpGet httpGet = null;
-			List<HashMap<String, String>> coininfo = BitCoinService.CoinInfo();
-			
-			for(int i=0; i<coininfo.size(); i++) {
-				if(i > 0) {
-					Thread.sleep(100);
-				}
-				String ticker = coininfo.get(i).get("coin_ticker");
-				String kor_name = coininfo.get(i).get("coin_kor_name");
-				String eng_name = coininfo.get(i).get("coin_eng_name");
-				
-		        httpGet = new HttpGet("https://api.upbit.com/v1/ticker?markets="+ticker);
-		        org.apache.http.Header header = new org.apache.http.message.BasicHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        CloseableHttpResponse response = httpclient.execute(httpGet);
-	
-		        try {
-		            InputStream ips = response.getEntity().getContent();
-		            InputStreamReader sr = new InputStreamReader(ips);
-		            BufferedReader br = new BufferedReader(sr);
-	
-		            while (true) {
-		            	String return_list = br.readLine();
-		            	return_list = return_list.replace("[", "").replace("]","");
-	                	JSONObject jsonObj = new JSONObject(return_list);
-	                    String market = (jsonObj.get("market")).toString();
-	                    String trade_price = (jsonObj.get("trade_price")).toString();
-	                    String open_price = (jsonObj.get("opening_price")).toString();
-	                    String change = (jsonObj.get("change")).toString();
-	                    String kst_date = (jsonObj.get("trade_date_kst")).toString();
-	                    String kst_time = (jsonObj.get("trade_time_kst")).toString();
-	                    String timestamp = (jsonObj.get("timestamp")).toString();
-	                    String change_percent = "";
-	                    if(change.equals("EVEN")) {
-	                    	change = "보합";
-	                    } else if(change.equals("FALL")) {
-	                    	change = "하락";
-	                    } else if(change.equals("RISE")) {
-	                    	change = "상승";
-	                    }
-	                    
-	                    BigDecimal BIGDECIMAL_TRADE_PRICE = new BigDecimal(trade_price);
-	                    BigDecimal BIGDECIMAL_OPEN_PRICE = new BigDecimal(open_price);
-	                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE.subtract(BIGDECIMAL_OPEN_PRICE)).divide(BIGDECIMAL_TRADE_PRICE, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    change_percent = BIGDECIMAL_CHANGE.toString();
-	                    
-	                    HashMap<String, String> map = new HashMap<String, String>();
-	                    map.put("id", ticker);
-	                    map.put("kor_name", kor_name);
-	                    map.put("eng_name", eng_name);
-	                    map.put("trade_price", trade_price);
-	                    map.put("change", change);
-	                    map.put("change_percent", change_percent);
-	                    map.put("datetime", kst_date + kst_time);
-	                    map.put("timestamp", timestamp);
-	                    coinlist.add(map);
+	@Async
+	@PostMapping(path = "/CoinDailyReportReg")
+	public void CoinDailyReportReg(HttpServletRequest req) throws Exception {
+		Calendar day = Calendar.getInstance();
+	    String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+	    day.add(Calendar.DATE , -1);
+	    String yesterday = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+	    HashMap<String, String> SettingMap = MainService.CoinReportDailySetting();
+	    String MainRankingCount = SettingMap.get("bithumb_report_main_ranking");
+	    String SubRankingCount = SettingMap.get("bithumb_report_sub_ranking");
+	    String BithumbReportAD1 = SettingMap.get("bithumb_report_ad1");
+	    String BithumbReportAD2 = SettingMap.get("bithumb_report_ad2");
+	    String BithumbReportAD3 = SettingMap.get("bithumb_report_ad3");
+	    String BithumbReportAD4 = SettingMap.get("bithumb_report_ad4");
+	    String BithumbReportAD5 = SettingMap.get("bithumb_report_ad5");
+	    String UpbitReportAD1 = SettingMap.get("upbit_report_ad1");
+	    String UpbitReportAD2 = SettingMap.get("upbit_report_ad2");
+	    String UpbitReportAD3 = SettingMap.get("upbit_report_ad3");
+	    String UpbitReportAD4 = SettingMap.get("upbit_report_ad4");
+	    String UpbitReportAD5 = SettingMap.get("upbit_report_ad5");
+	    
+	    date = "2023-11-01";
+	    yesterday = "2023-10-31";
+	    
+	    System.out.println("> date : " + date + " | yesterday : " + yesterday);
+	    
+	    HashMap<String, String> map = new HashMap<String, String>();
+	    map.put("date", date);
+	    map.put("yyyymmdd", date);
+	    map.put("yesterday", yesterday);
+	    map.put("MainRankingCount", MainRankingCount);
+	    map.put("SubRankingCount", SubRankingCount);
+	    map.put("BithumbReportAD1", BithumbReportAD1);
+	    map.put("BithumbReportAD2", BithumbReportAD2);
+	    map.put("BithumbReportAD3", BithumbReportAD3);
+	    map.put("BithumbReportAD4", BithumbReportAD4);
+	    map.put("BithumbReportAD5", BithumbReportAD5);
+	    map.put("UpbitReportAD1", UpbitReportAD1);
+	    map.put("UpbitReportAD2", UpbitReportAD2);
+	    map.put("UpbitReportAD3", UpbitReportAD3);
+	    map.put("UpbitReportAD4", UpbitReportAD4);
+	    map.put("UpbitReportAD5", UpbitReportAD5);
+	    BitCoinService.CoinDailyReportDelete(map);
+	    Thread.sleep(1500);
+	    BitCoinService.CoinDailyReportReg(map);
+	    BitCoinService.CoinDailyReportScriptReg(map);
 
-		                if (br.readLine() == null)
-		                    break;
-		            }
-		        } finally {
-		        	response.close();
-		        }
-			}
-		} catch (Exception e){
-			System.err.println(e.toString());
-		}
-		return coinlist;
+	    date = "2023-11-02";
+	    yesterday = "2023-11-01";
+	    
+	    System.out.println("> date : " + date + " | yesterday : " + yesterday);
+	    
+	    map = new HashMap<String, String>();
+	    map.put("date", date);
+	    map.put("yyyymmdd", date);
+	    map.put("yesterday", yesterday);
+	    map.put("MainRankingCount", MainRankingCount);
+	    map.put("SubRankingCount", SubRankingCount);
+	    map.put("BithumbReportAD1", BithumbReportAD1);
+	    map.put("BithumbReportAD2", BithumbReportAD2);
+	    map.put("BithumbReportAD3", BithumbReportAD3);
+	    map.put("BithumbReportAD4", BithumbReportAD4);
+	    map.put("BithumbReportAD5", BithumbReportAD5);
+	    map.put("UpbitReportAD1", UpbitReportAD1);
+	    map.put("UpbitReportAD2", UpbitReportAD2);
+	    map.put("UpbitReportAD3", UpbitReportAD3);
+	    map.put("UpbitReportAD4", UpbitReportAD4);
+	    map.put("UpbitReportAD5", UpbitReportAD5);
+	    BitCoinService.CoinDailyReportDelete(map);
+	    Thread.sleep(1500);
+	    BitCoinService.CoinDailyReportReg(map);
+	    BitCoinService.CoinDailyReportScriptReg(map);
+	    
+	    date = "2023-11-03";
+	    yesterday = "2023-11-02";
+	    
+	    System.out.println("> date : " + date + " | yesterday : " + yesterday);
+	    
+	    map = new HashMap<String, String>();
+	    map.put("date", date);
+	    map.put("yyyymmdd", date);
+	    map.put("yesterday", yesterday);
+	    map.put("MainRankingCount", MainRankingCount);
+	    map.put("SubRankingCount", SubRankingCount);
+	    map.put("BithumbReportAD1", BithumbReportAD1);
+	    map.put("BithumbReportAD2", BithumbReportAD2);
+	    map.put("BithumbReportAD3", BithumbReportAD3);
+	    map.put("BithumbReportAD4", BithumbReportAD4);
+	    map.put("BithumbReportAD5", BithumbReportAD5);
+	    map.put("UpbitReportAD1", UpbitReportAD1);
+	    map.put("UpbitReportAD2", UpbitReportAD2);
+	    map.put("UpbitReportAD3", UpbitReportAD3);
+	    map.put("UpbitReportAD4", UpbitReportAD4);
+	    map.put("UpbitReportAD5", UpbitReportAD5);
+	    BitCoinService.CoinDailyReportDelete(map);
+	    Thread.sleep(1500);
+	    BitCoinService.CoinDailyReportReg(map);
+	    BitCoinService.CoinDailyReportScriptReg(map);
 	}
 	
-	@GetMapping(path = "/MainDetailGraph")
-	public List<HashMap<String, String>> MainDetailGraph(HttpServletRequest req) throws IOException {
-		ArrayList<HashMap<String, String>> coinDetaillist = new ArrayList<HashMap<String, String>>();
-		String ticker = req.getParameter("ticker") == null? "":req.getParameter("ticker");
-		if(!ticker.equals("") && !ticker.equals("undefined")) {
-			System.out.println("> ticker : " + ticker);
-			try {
-				CloseableHttpClient httpclient = HttpClients.createDefault();
-				HttpGet httpGet = null;
-				
-				httpGet = new HttpGet("https://api.upbit.com/v1/candles/minutes/1?market="+ticker+"&count=150");
-		        org.apache.http.Header header = new org.apache.http.message.BasicHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        CloseableHttpResponse response = httpclient.execute(httpGet);
+	@GetMapping(path = "/CoinReportList")
+	public List<HashMap<String, String>> CoinReportList() throws Exception {
+		return BitCoinService.CoinReportList();
+	}
 	
-		        try {
-		            InputStream ips = response.getEntity().getContent();
-		            InputStreamReader sr = new InputStreamReader(ips);
-		            BufferedReader br = new BufferedReader(sr);
+	@GetMapping(path = "/CoinDailyReportList")
+	public List<HashMap<String, String>> CoinDailyReportList(HttpServletRequest req) throws Exception {
+		String yyyymmdd = (req.getParameter("yyyymmdd")==null)?"":req.getParameter("yyyymmdd");
+		String std_date = (req.getParameter("std_date")==null)?"":req.getParameter("std_date");
+		String end_date = (req.getParameter("end_date")==null)?"":req.getParameter("end_date");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("yyyymmdd", yyyymmdd);
+		map.put("std_date", std_date);
+		map.put("end_date", end_date);
+		return BitCoinService.CoinDailyReportList(map);
+	}
 	
-		            while (true) {
-		            	String return_list = br.readLine();
-		                JSONArray jsonArr = new JSONArray(return_list);
-		                for (int j = 0; j < jsonArr.length(); j++) {
-		                    JSONObject jsonObj = jsonArr.getJSONObject(j);
-		                    String datetime = ((jsonObj.get("candle_date_time_kst")).toString()).replace("T", " ");
-		                    String timestamp = ((jsonObj.get("timestamp")).toString());
-		                    String open_price = (jsonObj.get("opening_price")).toString();
-		                    String high_price = (jsonObj.get("high_price")).toString();
-		                    String low_price = (jsonObj.get("low_price")).toString();
-		                    String trade_price = (jsonObj.get("trade_price")).toString();
-		                    String trade_volume = (jsonObj.get("candle_acc_trade_volume")).toString();
-		                    String change_percent = "";
-		                    
-		                    BigDecimal BIGDECIMAL_TRADE_PRICE = new BigDecimal(trade_price);
-		                    BigDecimal BIGDECIMAL_OPEN_PRICE = new BigDecimal(open_price);
-		                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE.subtract(BIGDECIMAL_OPEN_PRICE)).divide(BIGDECIMAL_TRADE_PRICE, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-		                    change_percent = BIGDECIMAL_CHANGE.toString();
-		                    
-		                    HashMap<String, String> map = new HashMap<String, String>();
-		                    map.put("datetime", datetime);
-		                    map.put("timestamp", timestamp);
-		                    map.put("open_price", open_price);
-		                    map.put("high_price", high_price);
-		                    map.put("low_price", low_price);
-		                    map.put("close_price", trade_price);
-		                    map.put("trade_volume", trade_volume);
-		                    map.put("change_percent", change_percent);
-		                    coinDetaillist.add(map);
-		                }
-	
-		                if (br.readLine() == null)
-		                    break;
-		            }
-		        } finally {
-		        	response.close();
-		        }
-			} catch (Exception e){
-				System.err.println(e.toString());
-			}
-		}
-		return coinDetaillist;
+	@GetMapping(path = "/CoinDailyReportHTMLList")
+	public List<HashMap<String, String>> CoinDailyReportHTMLList(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		return BitCoinService.CoinDailyReportHTMLList(map);
 	}
 	
 	@GetMapping(path = "/MainLiveRankList")
@@ -2327,6 +2323,9 @@ public class BitCoinController {
 	        String today19_text = "";
 	        String today20_text = "";
 	        for(int x=0; x<ranking_list.size(); x++) {
+	        	System.out.println("["+ranking_list.get(x).get("ranking")+"] "+ranking_list.get(x).get("coin_name"));
+	        }
+	        for(int x=0; x<ranking_list.size(); x++) {
 	        	RowNumber = (x+2);
 	        	Row RankingRow = ranking_sheet.createRow(x+2);
 	        	RankingRow.createCell(1);
@@ -2438,47 +2437,54 @@ public class BitCoinController {
 	        	ranking_sheet.getRow(RowNumber).getCell(6).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(7).setCellStyle(cell_Ranking_Right);
 	        	ranking_sheet.getRow(RowNumber).getCell(8).setCellStyle(cell_Ranking_Right);
-
+	        	
+	        	String tmp_text = "";
+	        	if(past_ranking_o_price.equals("0") && past_ranking_l_price.equals("0") && past_ranking_h_price.equals("0") && past_ranking_c_price.equals("0")) {
+	        		tmp_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%입니다.";
+        		}else {
+        			tmp_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+        		}
+	        	
 	        	if(x == 1) {
-	        		today1_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today1_text = tmp_text;
 	        	} else if(x == 2) {
-	        		today2_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today2_text = tmp_text;
 	        	} else if(x == 3) {
-	        		today3_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today3_text = tmp_text;
 	        	} else if(x == 4) {
-	        		today4_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today4_text = tmp_text;
 	        	} else if(x == 5) {
-	        		today5_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today5_text = tmp_text;
 	        	} else if(x == 6) {
-	        		today6_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today6_text = tmp_text;
 	        	} else if(x == 7) {
-	        		today7_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today7_text = tmp_text;
 	        	} else if(x == 8) {
-	        		today8_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today8_text = tmp_text;
 	        	} else if(x == 9) {
-	        		today9_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today9_text = tmp_text;
 	        	} else if(x == 10) {
-	        		today10_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today10_text = tmp_text;
 	        	} else if(x == 11) {
-	        		today11_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today11_text = tmp_text;
 	        	} else if(x == 12) {
-	        		today12_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today12_text = tmp_text;
 	        	} else if(x == 13) {
-	        		today13_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today13_text = tmp_text;
 	        	} else if(x == 14) {
-	        		today14_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today14_text = tmp_text;
 	        	} else if(x == 15) {
-	        		today15_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today15_text = tmp_text;
 	        	} else if(x == 16) {
-	        		today16_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today16_text = tmp_text;
 	        	} else if(x == 17) {
-	        		today17_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today17_text = tmp_text;
 	        	} else if(x == 18) {
-	        		today18_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today18_text = tmp_text;
 	        	} else if(x == 19) {
-	        		today19_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today19_text = tmp_text;
 	        	} else if(x == 20) {
-	        		today20_text = "상승률 "+ranking_number+"위는 " + ranking_coin_name + "로 " + ranking_o_c_rate +"%이며, 지난[" + past_kor_month_date + "]는 " + past_ranking_o_c_rate + "%로 "+ past_ranking_number +"등을 했습니다." ;
+	        		today20_text = tmp_text;
 	        	}
 	        }
 

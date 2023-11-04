@@ -72,6 +72,11 @@ public class Main {
 	@Autowired
 	MainService MainService;
 	
+	@GetMapping(path = "/BithumbReportDailySetting")
+	public HashMap<String, String> CoinReportDailySetting() throws Exception{
+		return MainService.CoinReportDailySetting();
+	}
+	
 	@GetMapping(path = "/upbit_5m")
 	public List<HashMap<String, String>> upbit_5m(HttpServletRequest req) throws Exception {
 		System.out.println("/Main/upbit_5m");

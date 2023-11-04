@@ -28,6 +28,7 @@
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.1",
     "vue-session": "^1.0.0",
+    "vue2-highcharts": "^1.2.5",
     "vuetify": "^2.5.2",
     "vuetify-dialog": "^2.0.14",
     "webpack": "^4.47.0"

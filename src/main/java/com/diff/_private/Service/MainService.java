@@ -24,4 +24,8 @@ public class MainService {
 	public void UpbitCoinMIN(HashMap<String, String> map) throws Exception{
 		MainMapper.UpbitCoinMIN(map);
 	}
+	
+	public HashMap<String, String> CoinReportDailySetting() throws Exception{
+		return MainMapper.CoinReportDailySetting();
+	}
 }
