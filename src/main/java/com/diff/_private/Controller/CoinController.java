@@ -98,79 +98,34 @@ public class CoinController {
 	@Async
 	@PostMapping(path = "/CoinDailyReportReg")
 	public void CoinDailyReportReg(HttpServletRequest req) throws Exception {
-		Calendar day = Calendar.getInstance();
-		day.add(Calendar.HOUR, -9); // UTC 기준
-	    String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
-	    day.add(Calendar.DATE , -1);
-	    String yesterday = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		String yesterday = (req.getParameter("yesterday")==null)?"":req.getParameter("yesterday");
+		
+		if(date.equals("") || yesterday.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		    day.add(Calendar.DATE , -1);
+		    yesterday = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		System.out.println("> date " +date + " | yesterday : " + yesterday);
+	    
 	    HashMap<String, String> SettingMap = MainService.CoinReportDailySetting();
 	    String MainRankingCount = SettingMap.get("upbit_report_main_ranking");
 	    String SubRankingCount = SettingMap.get("upbit_report_sub_ranking");
-	    
 	    String BithumbReportAD1 = SettingMap.get("bithumb_report_ad1");
 	    String BithumbReportAD2 = SettingMap.get("bithumb_report_ad2");
 	    String BithumbReportAD3 = SettingMap.get("bithumb_report_ad3");
 	    String BithumbReportAD4 = SettingMap.get("bithumb_report_ad4");
 	    String BithumbReportAD5 = SettingMap.get("bithumb_report_ad5");
-	    
 	    String UpbitReportAD1 = SettingMap.get("upbit_report_ad1");
 	    String UpbitReportAD2 = SettingMap.get("upbit_report_ad2");
 	    String UpbitReportAD3 = SettingMap.get("upbit_report_ad3");
 	    String UpbitReportAD4 = SettingMap.get("upbit_report_ad4");
 	    String UpbitReportAD5 = SettingMap.get("upbit_report_ad5");
 	    
-	    date = "2023-11-03";
-	    yesterday = "2023-11-02";
-	    
 	    HashMap<String, String> map = new HashMap<String, String>();
-	    map.put("date", date);
-	    map.put("yyyymmdd", date);
-	    map.put("yesterday", yesterday);
-	    map.put("MainRankingCount", MainRankingCount);
-	    map.put("SubRankingCount", SubRankingCount);
-	    map.put("BithumbReportAD1", BithumbReportAD1);
-	    map.put("BithumbReportAD2", BithumbReportAD2);
-	    map.put("BithumbReportAD3", BithumbReportAD3);
-	    map.put("BithumbReportAD4", BithumbReportAD4);
-	    map.put("BithumbReportAD5", BithumbReportAD5);
-	    map.put("UpbitReportAD1", UpbitReportAD1);
-	    map.put("UpbitReportAD2", UpbitReportAD2);
-	    map.put("UpbitReportAD3", UpbitReportAD3);
-	    map.put("UpbitReportAD4", UpbitReportAD4);
-	    map.put("UpbitReportAD5", UpbitReportAD5);
-	    CoinService.CoinDailyReportDelete(map);
-	    Thread.sleep(1500);
-	    CoinService.CoinDailyReportReg(map);
-	    CoinService.CoinDailyReportScriptReg(map);
-	    
-	    date = "2023-11-02";
-	    yesterday = "2023-11-01";
-	    
-	    map = new HashMap<String, String>();
-	    map.put("date", date);
-	    map.put("yyyymmdd", date);
-	    map.put("yesterday", yesterday);
-	    map.put("MainRankingCount", MainRankingCount);
-	    map.put("SubRankingCount", SubRankingCount);
-	    map.put("BithumbReportAD1", BithumbReportAD1);
-	    map.put("BithumbReportAD2", BithumbReportAD2);
-	    map.put("BithumbReportAD3", BithumbReportAD3);
-	    map.put("BithumbReportAD4", BithumbReportAD4);
-	    map.put("BithumbReportAD5", BithumbReportAD5);
-	    map.put("UpbitReportAD1", UpbitReportAD1);
-	    map.put("UpbitReportAD2", UpbitReportAD2);
-	    map.put("UpbitReportAD3", UpbitReportAD3);
-	    map.put("UpbitReportAD4", UpbitReportAD4);
-	    map.put("UpbitReportAD5", UpbitReportAD5);
-	    CoinService.CoinDailyReportDelete(map);
-	    Thread.sleep(1500);
-	    CoinService.CoinDailyReportReg(map);
-	    CoinService.CoinDailyReportScriptReg(map);
-	    
-	    date = "2023-11-01";
-	    yesterday = "2023-10-31";
-	    
-	    map = new HashMap<String, String>();
 	    map.put("date", date);
 	    map.put("yyyymmdd", date);
 	    map.put("yesterday", yesterday);
@@ -731,10 +686,10 @@ public class CoinController {
 	        if((excel_map.get("coin3_l_price")).equals(excel_map.get("coin3_oclh_6_l_price"))) { form_sheet.getRow(Sheet1_Row+40).getCell(11).setCellStyle(cell_Blue_Bottom); }
 	        if((excel_map.get("coin3_h_price")).equals(excel_map.get("coin3_oclh_6_h_price"))) { form_sheet.getRow(Sheet1_Row+40).getCell(12).setCellStyle(cell_Red_Bottom); }
 	        
-	        String kor_date = date.substring(0, 4) + "년 "+date.substring(5, 7)+"월 "+(date.substring(8, 9)).replace("0", "") + (date.substring(9, 10)) +"일";
+	        String kor_date = date.substring(2, 4) + "년 "+date.substring(5, 7)+"월 "+(date.substring(8, 9)).replace("0", "") + (date.substring(9, 10)) +"일";
 	        String short_kor_date = date.substring(5, 7)+"월 "+(date.substring(8, 9)).replace("0", "") + (date.substring(9, 10)) +"일";
 
-	        String yesterday_kor_date = yesterday.substring(0, 4) + "년 "+yesterday.substring(5, 7)+"월 "+(yesterday.substring(8, 9)).replace("0", "") + (yesterday.substring(9, 10)) +"일";
+	        String yesterday_kor_date = yesterday.substring(2, 4) + "년 "+yesterday.substring(5, 7)+"월 "+(yesterday.substring(8, 9)).replace("0", "") + (yesterday.substring(9, 10)) +"일";
 	        String yesterday_short_kor_date = yesterday.substring(5, 7)+"월 "+(yesterday.substring(8, 9)).replace("0", "") + (yesterday.substring(9, 10)) +"일";
 	        
 	        int RowNumber = 0;
@@ -1567,10 +1522,10 @@ public class CoinController {
 	        if((excel_map.get("coin3_l_price")).equals(excel_map.get("coin3_oclh_7_l_price"))) { form_sheet.getRow(Sheet1_Row+44).getCell(11).setCellStyle(cell_Blue_Bottom); }
 	        if((excel_map.get("coin3_h_price")).equals(excel_map.get("coin3_oclh_7_h_price"))) { form_sheet.getRow(Sheet1_Row+44).getCell(12).setCellStyle(cell_Red_Bottom); }
 	        
-	        String kor_jucha_date = std_date.substring(0, 4) + "년 " + std_date.substring(5, 7)+"월 " + Integer.toString((int)(Integer.parseInt((std_date.substring(8, 9)).replace("0", "") + (std_date.substring(9, 10)))/7)+1	) + "주차";
+	        String kor_jucha_date = std_date.substring(2, 4) + "년 " + std_date.substring(5, 7)+"월 " + Integer.toString((int)(Integer.parseInt((std_date.substring(8, 9)).replace("0", "") + (std_date.substring(9, 10)))/7)+1	) + "주차";
 	        String kor_date = "["+std_date.substring(5, 7)+"월 "+(std_date.substring(8, 9)).replace("0", "") + (std_date.substring(9, 10)) +"일 ~ "+ end_date.substring(5, 7)+"월 "+(end_date.substring(8, 9)).replace("0", "") + (end_date.substring(9, 10))+"일]";
 	        
-	        String past_kor_jucha_date = past_std_date.substring(0, 4) + "년 " + past_std_date.substring(5, 7)+"월 " + Integer.toString((int)(Integer.parseInt((past_std_date.substring(8, 9)).replace("0", "") + (past_std_date.substring(9, 10)))/7)+1	) + "주차";
+	        String past_kor_jucha_date = past_std_date.substring(2, 4) + "년 " + past_std_date.substring(5, 7)+"월 " + Integer.toString((int)(Integer.parseInt((past_std_date.substring(8, 9)).replace("0", "") + (past_std_date.substring(9, 10)))/7)+1	) + "주차";
 	        String past_kor_date = "["+past_std_date.substring(5, 7)+"월 "+(past_std_date.substring(8, 9)).replace("0", "") + (past_std_date.substring(9, 10)) +"일 ~ "+ past_end_date.substring(5, 7)+"월 "+(past_end_date.substring(8, 9)).replace("0", "") + (past_end_date.substring(9, 10))+"일]";
 	        
 	        int RowNumber = 0;
@@ -2396,10 +2351,10 @@ public class CoinController {
 	        if((excel_map.get("coin3_l_price")).equals(excel_map.get("coin3_oclh_7_l_price"))) { form_sheet.getRow(Sheet1_Row+44).getCell(11).setCellStyle(cell_Blue_Bottom); }
 	        if((excel_map.get("coin3_h_price")).equals(excel_map.get("coin3_oclh_7_h_price"))) { form_sheet.getRow(Sheet1_Row+44).getCell(12).setCellStyle(cell_Red_Bottom); }
 	        
-	        String kor_month_date = std_date.substring(0, 4) + "년 " + std_date.substring(5, 7)+"월";
+	        String kor_month_date = std_date.substring(2, 4) + "년 " + std_date.substring(5, 7)+"월";
 	        String kor_date = "["+std_date.substring(5, 7)+"월 "+(std_date.substring(8, 9)).replace("0", "") + (std_date.substring(9, 10)) +"일 ~ "+ end_date.substring(5, 7)+"월 "+(end_date.substring(8, 9)).replace("0", "") + (end_date.substring(9, 10))+"일]";
 	        
-	        String past_kor_month_date = past_std_date.substring(0, 4) + "년 " + past_std_date.substring(5, 7)+"월";
+	        String past_kor_month_date = past_std_date.substring(2, 4) + "년 " + past_std_date.substring(5, 7)+"월";
 	        String past_kor_date = "["+past_std_date.substring(5, 7)+"월 "+(past_std_date.substring(8, 9)).replace("0", "") + (past_std_date.substring(9, 10)) +"일 ~ "+ past_end_date.substring(5, 7)+"월 "+(past_end_date.substring(8, 9)).replace("0", "") + (past_end_date.substring(9, 10))+"일]";
 	        
 	        int RowNumber = 0;

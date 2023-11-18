@@ -30,7 +30,7 @@
 								<v-icon small>summarize</v-icon>&nbsp;<span style="padding-bottom:2px;" @click="openExcel">엑셀</span>
 							</v-btn>
 							<v-btn depressed dark small color="info" style="float:right; margin-top:17px;">
-								<v-icon small>menu</v-icon>&nbsp;<span style="padding-bottom:2px;" @click="makeReport">일일 리포트 생성</span>
+								<v-icon small>menu</v-icon>&nbsp;<span id="btn_make_report" style="padding-bottom:2px;" @click="makeReport">일일 리포트 생성</span>
 							</v-btn>
 						</v-col>
 						<v-col lg="1" md="1" sm="2" cols="2" style="padding-top:0px; padding-bottom:0px; text-align:right; vertical-align: middle;">
@@ -103,6 +103,7 @@ export default {
 			columnDefs: null,
             rowData: [],
 			today_date: '',
+			yesterday: '',
 			std_date: '',
 			end_date: '',
 			isLoading: false,
@@ -174,30 +175,80 @@ export default {
 
 		this.end_date = year+'-'+month+'-'+date
 		this.today_date = year+'-'+month+'-'+date
+		if(this.$route.params.date !== undefined){
+			this.today_date = this.$route.params.date
+			var today_date_split = (this.today_date).split('-');
+			var tmp0 = today_date_split[0]
+			var tmp1 = today_date_split[1]
+			var tmp2 = today_date_split[2]
+
+			if(Number(tmp1) < 10){
+				tmp1 = '0'+tmp1
+			}
+			if(Number(tmp2) < 10){
+				tmp2 = '0'+tmp2
+			}
+
+			this.today_date = tmp0 + '-' + tmp1 + '-' + tmp2
+
+			var yesterday_date = new Date(Number(this.today_date.substring(0,4)), Number(this.today_date.substring(5,7)), Number(this.today_date.substring(8,10)));
+			yesterday_date = new Date(yesterday_date.setDate(yesterday_date.getDate() - 1));
+			var yesterday_year = yesterday_date.getFullYear();
+			var yesterday_month = yesterday_date.getMonth();
+			var yesterday_day = yesterday_date.getDate();
+
+			if(Number(yesterday_month) < 10){
+				yesterday_month = '0'+yesterday_month
+			}
+			if(Number(yesterday_day) < 10){
+				yesterday_day = '0'+yesterday_day
+			}
+			this.yesterday = yesterday_year+'-'+yesterday_month+'-'+yesterday_day
+		}
 		this.makeData();
 	},
 	methods: {
 		makeReport(){
-			Swal.fire({
-				icon: 'question',
-				text: " 업비트 " + this.today_date + " 일일 리포트를 생성 하시겠습니까?",
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-  				cancelButtonColor: '#d33',
-				confirmButtonText: '생성',
- 				cancelButtonText: '취소',
-				allowOutsideClick: false,
-			}).then(function (result) {
-				if (result.isConfirmed) {
-					axios.post('/Upbit/CoinDailyReportReg')
-					.then(response => {
-						Swal.fire({
-							title:'일일 리포트 생성이 완료되었습니다.',
-							icon: 'success'
-						});
+			if(this.$route.params.date !== undefined){
+				axios.post('/Upbit/CoinDailyReportReg', null,{
+				params: {
+						date: this.today_date,
+						yesterday: this.yesterday
+					}
+				})
+				.then(response => {
+					Swal.fire({
+						title:'일일 리포트 생성이 완료되었습니다.',
+						icon: 'success'
 					});
-				}
-			});
+				});
+			}else{
+				Swal.fire({
+					icon: 'question',
+					text: " 업비트 " + this.today_date + " 일일 리포트를 생성 하시겠습니까?",
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '생성',
+					cancelButtonText: '취소',
+					allowOutsideClick: false,
+				}).then(function (result) {
+					if (result.isConfirmed) {
+						axios.post('/Upbit/CoinDailyReportReg', null,{
+						params: {
+								date: this.today_date,
+								yesterday: this.yesterday
+							}
+						})
+						.then(response => {
+							Swal.fire({
+								title:'일일 리포트 생성이 완료되었습니다.',
+								icon: 'success'
+							});
+						});
+					}
+				});
+			}
 		},
 		openExcel() {
 			let today = new Date();

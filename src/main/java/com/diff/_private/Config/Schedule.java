@@ -62,13 +62,15 @@ public class Schedule {
 	BitCoinService BitCoinService;
 	
 	@Async
-	@Scheduled(cron = "0 20 0/1 * * *")
+	@Scheduled(cron = "0 25 0/1 * * *")
     public void Schedule_Report_Reg() throws Exception {
 		LocalTime now = LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
         String HHNow = now.format(formatter);
         formatter = DateTimeFormatter.ofPattern("mm");
         String MMNow = now.format(formatter);
+        
+        System.out.println("HHNow ["+HHNow+"]");
         
 		Calendar UpbitDay = Calendar.getInstance();
 		UpbitDay.add(Calendar.HOUR, -9); // UTC 기준
@@ -108,7 +110,7 @@ public class Schedule {
 	    BithumbMap.put("yyyymmdd", BitDate);
 	    BithumbMap.put("yesterday", BitYesterDay);
 	    BithumbMap.put("MainRankingCount", BithumbMainRankingCount);
-	    BithumbMap.put("SubRankingCount", BithumbMainRankingCount);
+	    BithumbMap.put("SubRankingCount", BithumbSubRankingCount);
 	    BithumbMap.put("BithumbReportAD1", BithumbReportAD1);
 	    BithumbMap.put("BithumbReportAD2", BithumbReportAD2);
 	    BithumbMap.put("BithumbReportAD3", BithumbReportAD3);
@@ -120,14 +122,14 @@ public class Schedule {
 	    UpbitMap.put("yyyymmdd", UpbitDate);
 	    UpbitMap.put("yesterday", UpbitYesterDay);
 	    UpbitMap.put("MainRankingCount", UpbitMainRankingCount);
-	    UpbitMap.put("SubRankingCount", UpbitMainRankingCount);
+	    UpbitMap.put("SubRankingCount", UpbitSubRankingCount);
 	    UpbitMap.put("UpbitReportAD1", UpbitReportAD1);
 	    UpbitMap.put("UpbitReportAD2", UpbitReportAD2);
 	    UpbitMap.put("UpbitReportAD3", UpbitReportAD3);
 	    UpbitMap.put("UpbitReportAD4", UpbitReportAD4);
 	    UpbitMap.put("UpbitReportAD5", UpbitReportAD5);
 	    
-        if((Integer.parseInt(HHNow) >= 16) || (Integer.parseInt(HHNow) <= 2)) {
+	    if((Integer.parseInt(HHNow) >= 16) || (Integer.parseInt(HHNow) <= 2)) {
         	BitCoinService.CoinDailyReportDelete(BithumbMap);
     		Thread.sleep(1500);
     		BitCoinService.CoinDailyReportReg(BithumbMap);
@@ -204,7 +206,7 @@ public class Schedule {
 		         javax.mail.Message mimeMessage = new MimeMessage(mailsession);
 		         mimeMessage.setFrom(new InternetAddress(username));
 		         mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-		         mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient2));
+		         //mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient2));
 		         mimeMessage.setSubject(MimeUtility.encodeText("["+date+"] "+TradeGubun+" 일일 분석", "UTF-8", "B"));
 		         
 		         MimeMultipart multipart = new MimeMultipart();

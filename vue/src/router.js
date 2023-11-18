@@ -47,7 +47,17 @@ export const router = new Router({
       component: CoinMainList
     },
     {
+      path: '/CoinMainList/:date',
+      name: 'coinMainList',
+      component: CoinMainList
+    },
+    {
       path: '/BithumbCoinMainList',
+      name: 'bithumbcoinMainList',
+      component: BithumbCoinMainList
+    },
+    {
+      path: '/BithumbCoinMainList/:date',
       name: 'bithumbcoinMainList',
       component: BithumbCoinMainList
     },

@@ -101,7 +101,7 @@ export default {
 
 			this.search_date = year+'-'+month+'-'+date
 		}
-		this.getHTMLSearchr();
+		this.getHTMLSearch();
 	},
 	mounted (){
 		this.makeDay();
@@ -126,9 +126,9 @@ export default {
 		onRowClicked(params) {
 			this.search_date = params.data.id;
 			this.$router.push('/CoinReport/'+this.search_date)
-			this.getHTMLSearchr();
+			this.getHTMLSearch();
 		},
-		getHTMLSearchr(){
+		getHTMLSearch(){
 			axios.get('/Upbit/CoinDailyReportHTMLList',{
 			params: {
 					date: this.search_date

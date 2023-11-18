@@ -137,7 +137,6 @@ export default {
 				for(var x=0; x<response.data.length; x++){
 					this.report_html += (response.data[x].html)
 				}
-				console.log(this.report_html)
 			})
 		},
 		gridSizeFit (params) {

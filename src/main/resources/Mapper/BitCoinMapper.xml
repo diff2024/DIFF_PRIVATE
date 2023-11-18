@@ -277,6 +277,7 @@
 		   and x.delete_yn = 'N'
 		   and y.coin_delete_yn = 'N'
 		   and x.yyyymmdd = #{date}
+		   and x.o_price is not null and x.l_price is not null and x.h_price is not null and x.c_price is not null
 		 order by case when x.coin_ticker = 'BTC' then 0 else cast(x.ranking as integer) end
 	</select>
 	
@@ -796,6 +797,7 @@
 					 where x.coin_ticker != 'BTC'
 					   and x.coin_delete_yn = 'N'
 				) x
+			where x.o_price is not null and x.l_price is not null and x.h_price is not null and x.c_price is not null
 		) x
 		order by case when x.coin_ticker = 'BTC' then 0 else cast(x.ranking as integer) end
 	</insert>

@@ -43,10 +43,10 @@ public class BitCoinService {
 	public void CoinDailyReportScriptReg(HashMap<String, String> map) throws Exception{
 		DecimalFormat formatter = new DecimalFormat("###,###.########");
 		String date = map.get("date");
-		String kor_date = (map.get("date")).substring(0, 4) + "년 "+(map.get("date")).substring(5, 7)+"월 "+((map.get("date")).substring(8, 9)).replace("0", "") + ((map.get("date")).substring(9, 10)) +"일";
+		String kor_date = (map.get("date")).substring(2, 4) + "년 "+(map.get("date")).substring(5, 7)+"월 "+((map.get("date")).substring(8, 9)).replace("0", "") + ((map.get("date")).substring(9, 10)) +"일";
         String short_kor_date = (map.get("date")).substring(5, 7)+"월 "+((map.get("date")).substring(8, 9)).replace("0", "") + ((map.get("date")).substring(9, 10)) +"일";
         
-        String yesterday_kor_date = (map.get("yesterday")).substring(0, 4) + "년 "+(map.get("yesterday")).substring(5, 7)+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
+        String yesterday_kor_date = (map.get("yesterday")).substring(2, 4) + "년 "+(map.get("yesterday")).substring(5, 7)+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
         String yesterday_short_kor_date = (map.get("yesterday")).substring(5, 7)+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
         
         String MainRankingCount = map.get("MainRankingCount");
@@ -68,7 +68,7 @@ public class BitCoinService {
     	String flat_coin = "";
     	
         for(int x=0; x<coinDailyReportList.size(); x++) {
-        	if (Double.compare(Double.parseDouble(coinDailyReportList.get(x).get("o_price")), Double.parseDouble(coinDailyReportList.get(x).get("c_price"))) == 0) {
+        	if ((coinDailyReportList.get(x).get("status")).equals("보합")) {
         		int_flat_count = int_flat_count+1;
         		
         		if(flat_coin.equals("")) {
@@ -76,7 +76,7 @@ public class BitCoinService {
         		} else {
         			flat_coin = flat_coin + ", " + coinDailyReportList.get(x).get("coin_ticker");
         		}
-        	} else if (Double.compare(Double.parseDouble(coinDailyReportList.get(x).get("o_price")), Double.parseDouble(coinDailyReportList.get(x).get("c_price"))) > 0) {
+        	} else if ((coinDailyReportList.get(x).get("status")).equals("하락")) {
         		int_degradation_count = int_degradation_count+1;
         		
         		if(degradation_coin.equals("")) {
@@ -767,7 +767,7 @@ public class BitCoinService {
 			
 			row = row+1;
 			ReportNum = ReportNum+1;
-			html = "<p id=\"report_"+Integer.toString(ReportNum)+"\" style=\"font-size:16px; color:black; margin:0px;\">"+kor_date+ranking+"순위는 "+coinKorName+"로, 시가 대비 종가가 "+o_c_price_rate+"%, 저가 대비 고가가 "+l_h_price_rate+"%이며, 가장 좋은 타이밍은 "+lower_price_time+"에 "+l_price+"원으로 매수하여 "+higher_price_time+"에 "+h_price+"원으로 매도하면 대략 "+l_h_price_rate+"%의 수익을 얻을 수 있었습니다.</p>";
+			html = "<p id=\"report_"+Integer.toString(ReportNum)+"\" style=\"font-size:16px; color:black; margin:0px;\">"+kor_date+" "+ranking+"순위는 "+coinKorName+"로, 시가 대비 종가가 "+o_c_price_rate+"%, 저가 대비 고가가 "+l_h_price_rate+"%이며, 가장 좋은 타이밍은 "+lower_price_time.replace(":","시 ")+"분에 "+l_price+"원으로 매수하여 "+higher_price_time.replace(":","시 ")+"분에 "+h_price+"원으로 매도하면 대략 "+l_h_price_rate+"%의 수익을 얻을 수 있었습니다.</p>";
 			htmlMap = new HashMap<String, String>();
 			htmlMap.put("id", "report_"+Integer.toString(ReportNum));
 			htmlMap.put("row", Integer.toString(row));
@@ -848,105 +848,151 @@ public class BitCoinService {
 		htmlMap.put("blog_yn", "Y");
 		list.add(htmlMap);
 		
-		html = "";
-		html += "<table id=\"rank_tbl\" style=\"color:black; border-spacing:0px; border-color:black; font-size:13px;\">";
-		html += "<colgroup>";
-		html += "<col style=\"width: 50px\">";
-		html += "<col style=\"width: 180px\">";
-		html += "<col style=\"width: 105px\">";
-		html += "<col style=\"width: 105px\">";
-		html += "<col style=\"width: 90px\">";
-		html += "<col style=\"width: 90px\">";
-		html += "<col style=\"width: 90px\">";
-		html += "<col style=\"width: 90px\">";
-		html += "</colgroup>";
-		html += "<tr>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; text-align:center; font-size:15px; font-weight:bold;\">순위</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-left:3px; text-align:center; font-size:15px; font-weight:bold;\">코인</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">시가대비종가</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가대비고가</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">시가</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">고가</td>";
-		html += "<td style=\"border: 1px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">종가</td>";
-		
-		html += "</tr>";
-		
-		for(int x=0; x<=Integer.parseInt(SubRankingCount); x++) {
-			String ranking_coin_title = coinDailyReportList.get(x).get("coin_title");
-			String ranking_ranking = coinDailyReportList.get(x).get("ranking");
-			String ranking_o_price = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("o_price")));
-			String ranking_l_price = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("l_price")));
-			String ranking_h_price = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("h_price")));
-			String ranking_c_price = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("c_price")));
-			String ranking_o_c_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("o_c_price_rate")));
-			String ranking_l_h_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("l_h_price_rate")));
-			
-			html += "<tr>";
-			if(x==0) {
-				html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">"+ranking_ranking+"</td>";
-			} else {
-				html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-weight:bold; padding-right:3px; \">"+ranking_ranking+"</td>";
-			}
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-left:3px; text-align:left;\">"+ranking_coin_title+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_o_c_price_rate+"%</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_l_h_price_rate+"%</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_o_price+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_l_price+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_h_price+"</td>";
-			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_c_price+"</td>";
-			html += "</tr>";
+		String ranking_btc_coin_title = coinDailyReportList.get(0).get("coin_title");
+		String ranking_btc_ranking = coinDailyReportList.get(0).get("ranking");
+		String ranking_btc_o_price = formatter.format(Double.parseDouble(coinDailyReportList.get(0).get("o_price")));
+		String ranking_btc_l_price = formatter.format(Double.parseDouble(coinDailyReportList.get(0).get("l_price")));
+		String ranking_btc_h_price = formatter.format(Double.parseDouble(coinDailyReportList.get(0).get("h_price")));
+		String ranking_btc_c_price = formatter.format(Double.parseDouble(coinDailyReportList.get(0).get("c_price")));
+		String ranking_btc_o_c_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(0).get("o_c_price_rate")));
+		String ranking_btc_l_h_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(0).get("l_h_price_rate")));
+		String ranking_btc_html = "";
+		ranking_btc_html += "<tr>";
+		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">"+ranking_btc_ranking+"</td>";
+		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-left:3px; text-align:left;\">"+ranking_btc_coin_title+"</td>";
+		if(ranking_btc_o_c_price_rate.contains("-")) {
+			ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:blue;\">"+ranking_btc_o_c_price_rate+"%</td>";
+		} else {
+			ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:red;\">"+ranking_btc_o_c_price_rate+"%</td>";
 		}
-		html += "</table><br/>";
+		if(ranking_btc_l_h_price_rate.contains("-")) {
+			ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:blue;\">"+ranking_btc_l_h_price_rate+"%</td>";
+		} else {
+			ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:red;\">"+ranking_btc_l_h_price_rate+"%</td>";
+		}
+		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_o_price+"</td>";
+		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_l_price+"</td>";
+		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_h_price+"</td>";
+		ranking_btc_html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_c_price+"</td>";
+		ranking_btc_html += "</tr>";
 		
-		row = row+1;
-		htmlMap = new HashMap<String, String>();
-		htmlMap.put("id", "rank_tbl");
-		htmlMap.put("row", Integer.toString(row));
-		htmlMap.put("col", "0");
-		htmlMap.put("html", html);
-		htmlMap.put("diff_yn", "Y");
-		htmlMap.put("blog_yn", "N");
-		list.add(htmlMap);
-		
-		htmlMap = new HashMap<String, String>();
-		htmlMap.put("id", "image");
-		htmlMap.put("row", Integer.toString(row));
-		htmlMap.put("col", "0");
-		htmlMap.put("html", "bithumb_rank.png");
-		htmlMap.put("diff_yn", "N");
-		htmlMap.put("blog_yn", "Y");
-		list.add(htmlMap);
-		
-		html = "";
-		for(int x=1; x<=Integer.parseInt(SubRankingCount); x++) {
-			String ranking_coin_title = coinDailyReportList.get(x).get("coin_title");
-			String ranking_ranking = coinDailyReportList.get(x).get("ranking");
-			String ranking_o_price = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("o_price")));
-			String ranking_l_price = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("l_price")));
-			String ranking_h_price = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("h_price")));
-			String ranking_c_price = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("c_price")));
-			String ranking_o_c_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("o_c_price_rate")));
-			String ranking_l_h_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("l_h_price_rate")));
-			String ranking_yesterday_ranking = coinDailyReportList.get(x).get("yesterday_ranking");
-			String ranking_yesterday_o_c_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(x).get("yesterday_o_c_price_rate")));
+		int SubRankingMok = (Integer.parseInt(SubRankingCount)/Integer.parseInt("20"));
+		for(int x=1; x<=SubRankingMok; x++) {
+			html = "";
+			html += "<table id=\"rank_tbl_"+x+"\" style=\"color:black; border-spacing:0px; border-color:black; font-size:13px;\">";
+			html += "<colgroup>";
+			html += "<col style=\"width: 40px\">";
+			html += "<col style=\"width: 220px\">";
+			html += "<col style=\"width: 105px\">";
+			html += "<col style=\"width: 105px\">";
+			html += "<col style=\"width: 90px\">";
+			html += "<col style=\"width: 90px\">";
+			html += "<col style=\"width: 90px\">";
+			html += "<col style=\"width: 90px\">";
+			html += "</colgroup>";
+			html += "<tr>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; text-align:center; font-size:15px; font-weight:bold;\">순위</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-left:3px; text-align:center; font-size:15px; font-weight:bold;\">코인</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">시가대비종가</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가대비고가</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">시가</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">고가</td>";
+			html += "<td style=\"border: 1px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">종가</td>";
+			html += "</tr>";
+			html += ranking_btc_html;
+			for(int y=0; y<20; y++) {
+				int TMPy = ((x-1)*20)+y+1;
+				if(TMPy > (Integer.parseInt(SubRankingCount)+1)) {
+					break;
+				}else {
+					String ranking_coin_title = coinDailyReportList.get(TMPy).get("coin_title");
+					String ranking_ranking = coinDailyReportList.get(TMPy).get("ranking");
+					String ranking_o_price = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("o_price")));
+					String ranking_l_price = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("l_price")));
+					String ranking_h_price = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("h_price")));
+					String ranking_c_price = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("c_price")));
+					String ranking_o_c_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("o_c_price_rate")));
+					String ranking_l_h_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("l_h_price_rate")));
+					
+					html += "<tr>";
+					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-weight:bold; padding-right:3px; \">"+ranking_ranking+"</td>";
+					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-left:3px; text-align:left;\">"+ranking_coin_title+"</td>";
+					if(ranking_o_c_price_rate.contains("-")) {
+						html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:blue;\">"+ranking_o_c_price_rate+"%</td>";
+					} else {
+						html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:red;\">"+ranking_o_c_price_rate+"%</td>";
+					}
+					if(ranking_l_h_price_rate.contains("-")) {
+						html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:blue;\">"+ranking_l_h_price_rate+"%</td>";
+					} else {
+						html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:red;\">"+ranking_l_h_price_rate+"%</td>";
+					}
+					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_o_price+"</td>";
+					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_l_price+"</td>";
+					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_h_price+"</td>";
+					html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_c_price+"</td>";
+					html += "</tr>";
+				}
+			}
+			html += "</table><br/>";
 			
 			row = row+1;
-			ReportNum = ReportNum+1;
-			if(ranking_yesterday_ranking.equals("")) {
-				html = "<p id=\"report_"+Integer.toString(ReportNum)+"\" style=\"color:black; font-size:15px; margin-top:5px; margin-bottom:5px;\">"+short_kor_date+" 상승률 "+ranking_ranking+"위는 "+ranking_coin_title+"로 "+ranking_o_c_price_rate+"%입니다.</p>";
-			} else {
-				html = "<p id=\"report_"+Integer.toString(ReportNum)+"\" style=\"color:black; font-size:15px; margin-top:5px; margin-bottom:5px;\">"+short_kor_date+" 상승률 "+ranking_ranking+"위는 "+ranking_coin_title+"로 "+ranking_o_c_price_rate+"%이며, 어제["+yesterday_short_kor_date+"]는 "+ranking_yesterday_o_c_price_rate+"%로 "+ranking_yesterday_ranking+"등을 했습니다.</p>";
-			}
-			
 			htmlMap = new HashMap<String, String>();
-			htmlMap.put("id", "report_"+Integer.toString(ReportNum));
+			htmlMap.put("id", "rank_tbl_"+Integer.toString(x));
 			htmlMap.put("row", Integer.toString(row));
 			htmlMap.put("col", "0");
 			htmlMap.put("html", html);
 			htmlMap.put("diff_yn", "Y");
+			htmlMap.put("blog_yn", "N");
+			list.add(htmlMap);
+			
+			htmlMap = new HashMap<String, String>();
+			htmlMap.put("id", "image");
+			htmlMap.put("row", Integer.toString(row));
+			htmlMap.put("col", "0");
+			htmlMap.put("html", "bithumb_rank_"+Integer.toString(x)+".png");
+			htmlMap.put("diff_yn", "N");
 			htmlMap.put("blog_yn", "Y");
 			list.add(htmlMap);
+			
+			for(int y=0; y<20; y++) {
+				int TMPy = ((x-1)*20)+y+1;
+				if(TMPy > (Integer.parseInt(SubRankingCount)+1)) {
+					break;
+				}else {
+					String ranking_coin_title = coinDailyReportList.get(TMPy).get("coin_title");
+					String ranking_ranking = coinDailyReportList.get(TMPy).get("ranking");
+					String ranking_o_price = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("o_price")));
+					String ranking_l_price = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("l_price")));
+					String ranking_h_price = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("h_price")));
+					String ranking_c_price = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("c_price")));
+					String ranking_o_c_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("o_c_price_rate")));
+					String ranking_l_h_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("l_h_price_rate")));
+					String ranking_yesterday_ranking = coinDailyReportList.get(TMPy).get("yesterday_ranking");
+					String ranking_yesterday_o_c_price_rate = formatter.format(Double.parseDouble(coinDailyReportList.get(TMPy).get("yesterday_o_c_price_rate")));
+					
+					row = row+1;
+					ReportNum = ReportNum+1;
+					if(ranking_yesterday_ranking.equals("")) {
+						html = "<p id=\"report_"+Integer.toString(ReportNum)+"\" style=\"color:black; font-size:15px; margin-top:5px; margin-bottom:5px;\">"+ranking_ranking+"위는 "+ranking_coin_title+"로 "+ranking_o_c_price_rate+"%입니다.</p>";
+					} else {
+						html = "<p id=\"report_"+Integer.toString(ReportNum)+"\" style=\"color:black; font-size:15px; margin-top:5px; margin-bottom:5px;\">"+ranking_ranking+"위는 "+ranking_coin_title+"로 "+ranking_o_c_price_rate+"%이며, 어제["+yesterday_short_kor_date+"]는 "+ranking_yesterday_o_c_price_rate+"%로 "+ranking_yesterday_ranking+"등을 했습니다.</p>";
+					}
+					if(y == 19) {
+						html += "<br/>";
+					}
+					
+					htmlMap = new HashMap<String, String>();
+					htmlMap.put("id", "report_"+Integer.toString(ReportNum));
+					htmlMap.put("row", Integer.toString(row));
+					htmlMap.put("col", "0");
+					htmlMap.put("html", html);
+					htmlMap.put("diff_yn", "Y");
+					htmlMap.put("blog_yn", "Y");
+					list.add(htmlMap);
+				}
+			}
 		}
 		
 		html = "</div>";
