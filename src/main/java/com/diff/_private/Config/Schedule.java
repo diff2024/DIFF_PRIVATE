@@ -23,6 +23,8 @@ import com.diff._private.Controller.CoinController;
 import com.diff._private.Service.MainService;
 import com.diff._private.Service.CoinService;
 import com.diff._private.Service.BitCoinService;
+import com.diff._private.Service.BinanceCoinService;
+import com.diff._private.Service.BinanceFuturesCoinService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -61,8 +63,14 @@ public class Schedule {
 	@Autowired
 	BitCoinService BitCoinService;
 	
+	@Autowired
+	BinanceCoinService BinanceCoinService;
+	
+	@Autowired
+	BinanceFuturesCoinService BinanceFuturesCoinService;
+	
 	@Async
-	@Scheduled(cron = "0 25 0/1 * * *")
+	@Scheduled(cron = "0 20 0/1 * * *")
     public void Schedule_Report_Reg() throws Exception {
 		LocalTime now = LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
@@ -89,7 +97,7 @@ public class Schedule {
 	    BitDay.add(Calendar.DATE , -1);
 	    String BitYesterDay = new java.text.SimpleDateFormat("yyyy-MM-dd").format(BitDay.getTime());
 	    
-	    HashMap<String, String> SettingMap = MainService.CoinReportDailySetting();
+	    HashMap<String, String> SettingMap = MainService.CoinAnalysisSetting();
 	    String BithumbMainRankingCount = SettingMap.get("bithumb_report_main_ranking");
 	    String BithumbSubRankingCount = SettingMap.get("bithumb_report_sub_ranking");
 	    String BithumbReportAD1 = SettingMap.get("bithumb_report_ad1");
@@ -104,6 +112,13 @@ public class Schedule {
 	    String UpbitReportAD3 = SettingMap.get("upbit_report_ad3");
 	    String UpbitReportAD4 = SettingMap.get("upbit_report_ad4");
 	    String UpbitReportAD5 = SettingMap.get("upbit_report_ad5");
+	    String BinanceMainRankingCount = SettingMap.get("binance_report_main_ranking");
+	    String BinanceSubRankingCount = SettingMap.get("binance_report_sub_ranking");
+	    String BinanceReportAD1 = SettingMap.get("binance_report_ad1");
+	    String BinanceReportAD2 = SettingMap.get("binance_report_ad2");
+	    String BinanceReportAD3 = SettingMap.get("binance_report_ad3");
+	    String BinanceReportAD4 = SettingMap.get("binance_report_ad4");
+	    String BinanceReportAD5 = SettingMap.get("binance_report_ad5");
 	    
 	    HashMap<String, String> BithumbMap = new HashMap<String, String>();
 	    BithumbMap.put("date", BitDate);
@@ -129,27 +144,102 @@ public class Schedule {
 	    UpbitMap.put("UpbitReportAD4", UpbitReportAD4);
 	    UpbitMap.put("UpbitReportAD5", UpbitReportAD5);
 	    
+	    HashMap<String, String> BinanceMap = new HashMap<String, String>();
+	    BinanceMap.put("date", UpbitDate);
+	    BinanceMap.put("yyyymmdd", UpbitDate);
+	    BinanceMap.put("yesterday", UpbitYesterDay);
+	    BinanceMap.put("MainRankingCount", UpbitMainRankingCount);
+	    BinanceMap.put("SubRankingCount", UpbitSubRankingCount);
+	    BinanceMap.put("BinanceReportAD1", BinanceReportAD1);
+	    BinanceMap.put("BinanceReportAD2", BinanceReportAD2);
+	    BinanceMap.put("BinanceReportAD3", BinanceReportAD3);
+	    BinanceMap.put("BinanceReportAD4", BinanceReportAD4);
+	    BinanceMap.put("BinanceReportAD5", BinanceReportAD5);
+	    
 	    if((Integer.parseInt(HHNow) >= 16) || (Integer.parseInt(HHNow) <= 2)) {
-        	BitCoinService.CoinDailyReportDelete(BithumbMap);
+        	BitCoinService.CoinAnalysisDelete(BithumbMap);
     		Thread.sleep(1500);
-    		BitCoinService.CoinDailyReportReg(BithumbMap);
-		    BitCoinService.CoinDailyReportScriptReg(BithumbMap);
-		    UpbitCoinService.CoinDailyReportDelete(UpbitMap);
+    		BitCoinService.CoinAnalysisCreate(BithumbMap);
+    		BitCoinService.CoinAnalysisHourGraphCreate(BithumbMap);
+    	    BitCoinService.CoinAnalysis4HourGraphCreate(BithumbMap);
+    	    BithumbMap.put("blog_id", "1");
+		    BitCoinService.WordPressReportHTMLCreate(BithumbMap);
+		    BithumbMap.put("blog_id", "2");
+		    BitCoinService.TiStoryReportHTMLCreate(BithumbMap);
+		    
+		    UpbitCoinService.CoinAnalysisDelete(UpbitMap);
 		    Thread.sleep(1500);
-    		UpbitCoinService.CoinDailyReportReg(UpbitMap);
-        	UpbitCoinService.CoinDailyReportScriptReg(UpbitMap);
+    		UpbitCoinService.CoinAnalysisCreate(UpbitMap);
+    		UpbitCoinService.CoinAnalysisHourGraphCreate(UpbitMap);
+    		UpbitCoinService.CoinAnalysis4HourGraphCreate(UpbitMap);
+    		UpbitMap.put("blog_id", "1");
+    	    UpbitCoinService.WordPressReportHTMLCreate(UpbitMap);
+    	    UpbitMap.put("blog_id", "3");
+    	    UpbitCoinService.TiStoryReportHTMLCreate(UpbitMap);
+    	    
+    	    BinanceCoinService.CoinAnalysisDelete(BinanceMap);
+		    Thread.sleep(1500);
+		    BinanceCoinService.CoinAnalysisCreate(BinanceMap);
+		    BinanceCoinService.CoinAnalysisHourGraphCreate(BinanceMap);
+		    BinanceCoinService.CoinAnalysis4HourGraphCreate(BinanceMap);
+    		BinanceMap.put("blog_id", "1");
+    		BinanceCoinService.WordPressReportHTMLCreate(BinanceMap);
+    	    BinanceMap.put("blog_id", "4");
+    	    BinanceCoinService.TiStoryReportHTMLCreate(BinanceMap);
+    	    
+    	    BinanceFuturesCoinService.CoinAnalysisDelete(BinanceMap);
+		    Thread.sleep(1500);
+		    BinanceFuturesCoinService.CoinAnalysisCreate(BinanceMap);
+		    BinanceFuturesCoinService.CoinAnalysisHourGraphCreate(BinanceMap);
+		    BinanceFuturesCoinService.CoinAnalysis4HourGraphCreate(BinanceMap);
+    		BinanceMap.put("blog_id", "1");
+    		BinanceFuturesCoinService.WordPressReportHTMLCreate(BinanceMap);
+    	    BinanceMap.put("blog_id", "5");
+    	    BinanceFuturesCoinService.TiStoryReportHTMLCreate(BinanceMap);
         }else {
-        	UpbitCoinService.CoinDailyReportDelete(UpbitMap);
+        	UpbitCoinService.CoinAnalysisDelete(UpbitMap);
+		    Thread.sleep(1500);
+    		UpbitCoinService.CoinAnalysisCreate(UpbitMap);
+    		UpbitCoinService.CoinAnalysisHourGraphCreate(UpbitMap);
+    		UpbitCoinService.CoinAnalysis4HourGraphCreate(UpbitMap);
+    		UpbitMap.put("blog_id", "1");
+    	    UpbitCoinService.WordPressReportHTMLCreate(UpbitMap);
+    	    UpbitMap.put("blog_id", "3");
+    	    UpbitCoinService.TiStoryReportHTMLCreate(UpbitMap);
+        	
+    	    BinanceCoinService.CoinAnalysisDelete(BinanceMap);
+		    Thread.sleep(1500);
+		    BinanceCoinService.CoinAnalysisCreate(BinanceMap);
+		    BinanceCoinService.CoinAnalysisHourGraphCreate(BinanceMap);
+		    BinanceCoinService.CoinAnalysis4HourGraphCreate(BinanceMap);
+    		BinanceMap.put("blog_id", "1");
+    		BinanceCoinService.WordPressReportHTMLCreate(BinanceMap);
+    	    BinanceMap.put("blog_id", "4");
+    	    BinanceCoinService.TiStoryReportHTMLCreate(BinanceMap);
+    	    
+    	    BinanceFuturesCoinService.CoinAnalysisDelete(BinanceMap);
+		    Thread.sleep(1500);
+		    BinanceFuturesCoinService.CoinAnalysisCreate(BinanceMap);
+		    BinanceFuturesCoinService.CoinAnalysisHourGraphCreate(BinanceMap);
+		    BinanceFuturesCoinService.CoinAnalysis4HourGraphCreate(BinanceMap);
+    		BinanceMap.put("blog_id", "1");
+    		BinanceFuturesCoinService.WordPressReportHTMLCreate(BinanceMap);
+    	    BinanceMap.put("blog_id", "5");
+    	    BinanceFuturesCoinService.TiStoryReportHTMLCreate(BinanceMap);
+    	    
+    	    BitCoinService.CoinAnalysisDelete(BithumbMap);
     		Thread.sleep(1500);
-    		UpbitCoinService.CoinDailyReportReg(UpbitMap);
-        	UpbitCoinService.CoinDailyReportScriptReg(UpbitMap);
-        	BitCoinService.CoinDailyReportDelete(BithumbMap);
-        	Thread.sleep(1500);
-    		BitCoinService.CoinDailyReportReg(BithumbMap);
-		    BitCoinService.CoinDailyReportScriptReg(BithumbMap);
+    		BitCoinService.CoinAnalysisCreate(BithumbMap);
+    		BitCoinService.CoinAnalysisHourGraphCreate(BithumbMap);
+    	    BitCoinService.CoinAnalysis4HourGraphCreate(BithumbMap);
+    	    BithumbMap.put("blog_id", "1");
+		    BitCoinService.WordPressReportHTMLCreate(BithumbMap);
+		    BithumbMap.put("blog_id", "2");
+		    BitCoinService.TiStoryReportHTMLCreate(BithumbMap);
         }
 	}
 	
+	/*
 	@Scheduled(cron = "0 30 0/1 * * *")
     public void Schedule_MailSender() throws UnsupportedEncodingException {
 		String username = "diff2024@naver.com";
@@ -1726,4 +1816,5 @@ public class Schedule {
 	        e.printStackTrace();
 	    }
 	}
+	*/
 }

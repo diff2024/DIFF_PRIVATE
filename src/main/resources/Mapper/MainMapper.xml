@@ -9,10 +9,932 @@
 			o_price = #{open_price}, h_price = #{high_price},  l_price = #{low_price},  c_price = #{trade_price}, trade_volume = #{volume}
 	</insert>
 	
-	<select id="CoinReportDailySetting" resultType="HashMap">
-		select bithumb_report_main_ranking, bithumb_report_sub_ranking, upbit_report_main_ranking, upbit_report_sub_ranking
+	<select id="CoinAnalysisSetting" resultType="HashMap">
+		select bithumb_report_main_ranking, bithumb_report_sub_ranking
+			 , upbit_report_main_ranking, upbit_report_sub_ranking
+			 , binance_report_main_ranking, binance_report_sub_ranking
 			 , bithumb_report_ad1, bithumb_report_ad2, bithumb_report_ad3, bithumb_report_ad4, bithumb_report_ad5
 			 , upbit_report_ad1, upbit_report_ad2, upbit_report_ad3, upbit_report_ad4, upbit_report_ad5
+			 , binance_report_ad1, binance_report_ad2, binance_report_ad3, binance_report_ad4, binance_report_ad5
 		  from coin_report_daily_setting
+	</select>
+	
+	<select id="UPBIT_BTC_HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select upbit_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker,'') rank1_coin_ticker, coalesce(rank1_o_price,'') rank1_o_price, coalesce(rank1_c_price,'') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker,'') rank2_coin_ticker, coalesce(rank2_o_price,'') rank2_o_price, coalesce(rank2_c_price,'') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker,'') rank3_coin_ticker, coalesce(rank3_o_price,'') rank3_o_price, coalesce(rank3_c_price,'') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker,'') rank4_coin_ticker, coalesce(rank4_o_price,'') rank4_o_price, coalesce(rank4_c_price,'') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker,'') rank5_coin_ticker, coalesce(rank5_o_price,'') rank5_o_price, coalesce(rank5_c_price,'') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker,'') rank6_coin_ticker, coalesce(rank6_o_price,'') rank6_o_price, coalesce(rank6_c_price,'') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker,'') rank7_coin_ticker, coalesce(rank7_o_price,'') rank7_o_price, coalesce(rank7_c_price,'') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker,'') rank8_coin_ticker, coalesce(rank8_o_price,'') rank8_o_price, coalesce(rank8_c_price,'') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker,'') rank9_coin_ticker, coalesce(rank9_o_price,'') rank9_o_price, coalesce(rank9_c_price,'') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker,'') rank10_coin_ticker, coalesce(rank10_o_price,'') rank10_o_price, coalesce(rank10_c_price,'') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select datetime_kst, coin_ticker as btc_coin_ticker, o_price as btc_o_price, c_price as btc_c_price, o_c_percent as btc_o_c_percent
+				  from upbit_coin_report_hour_graph
+				 where yyyymmdd = #{date}
+				   and coin_ticker = 'KRW-BTC'
+		   	   ) x
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, x.o_price as rank1_o_price, x.c_price as rank1_c_price, x.o_c_percent as rank1_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, x.o_price as rank2_o_price, x.c_price as rank2_c_price, x.o_c_percent as rank2_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, x.o_price as rank3_o_price, x.c_price as rank3_c_price, x.o_c_percent as rank3_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, x.o_price as rank4_o_price, x.c_price as rank4_c_price, x.o_c_percent as rank4_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, x.o_price as rank5_o_price, x.c_price as rank5_c_price, x.o_c_percent as rank5_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, x.o_price as rank6_o_price, x.c_price as rank6_c_price, x.o_c_percent as rank6_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, x.o_price as rank7_o_price, x.c_price as rank7_c_price, x.o_c_percent as rank7_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, x.o_price as rank8_o_price, x.c_price as rank8_c_price, x.o_c_percent as rank8_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, x.o_price as rank9_o_price, x.c_price as rank9_c_price, x.o_c_percent as rank9_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, x.o_price as rank10_o_price, x.c_price as rank10_c_price, x.o_c_percent as rank10_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="UPBIT_BTC_4HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select upbit_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker, '') rank1_coin_ticker, coalesce(rank1_o_price, '') rank1_o_price, coalesce(rank1_c_price, '') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker, '') rank2_coin_ticker, coalesce(rank2_o_price, '') rank2_o_price, coalesce(rank2_c_price, '') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker, '') rank3_coin_ticker, coalesce(rank3_o_price, '') rank3_o_price, coalesce(rank3_c_price, '') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker, '') rank4_coin_ticker, coalesce(rank4_o_price, '') rank4_o_price, coalesce(rank4_c_price, '') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker, '') rank5_coin_ticker, coalesce(rank5_o_price, '') rank5_o_price, coalesce(rank5_c_price, '') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker, '') rank6_coin_ticker, coalesce(rank6_o_price, '') rank6_o_price, coalesce(rank6_c_price, '') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker, '') rank7_coin_ticker, coalesce(rank7_o_price, '') rank7_o_price, coalesce(rank7_c_price, '') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker, '') rank8_coin_ticker, coalesce(rank8_o_price, '') rank8_o_price, coalesce(rank8_c_price, '') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker, '') rank9_coin_ticker, coalesce(rank9_o_price, '') rank9_o_price, coalesce(rank9_c_price, '') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker, '') rank10_coin_ticker, coalesce(rank10_o_price, '') rank10_o_price, coalesce(rank10_c_price, '') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select datetime_kst, coin_ticker as btc_coin_ticker, o_price as btc_o_price, c_price as btc_c_price, o_c_percent as btc_o_c_percent
+				  from upbit_coin_report_4hour_graph
+				 where yyyymmdd = #{date}
+				   and coin_ticker = 'KRW-BTC'
+		   	   ) x
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, x.o_price as rank1_o_price, x.c_price as rank1_c_price, x.o_c_percent as rank1_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, x.o_price as rank2_o_price, x.c_price as rank2_c_price, x.o_c_percent as rank2_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, x.o_price as rank3_o_price, x.c_price as rank3_c_price, x.o_c_percent as rank3_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, x.o_price as rank4_o_price, x.c_price as rank4_c_price, x.o_c_percent as rank4_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, x.o_price as rank5_o_price, x.c_price as rank5_c_price, x.o_c_percent as rank5_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, x.o_price as rank6_o_price, x.c_price as rank6_c_price, x.o_c_percent as rank6_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, x.o_price as rank7_o_price, x.c_price as rank7_c_price, x.o_c_percent as rank7_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, x.o_price as rank8_o_price, x.c_price as rank8_c_price, x.o_c_percent as rank8_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, x.o_price as rank9_o_price, x.c_price as rank9_c_price, x.o_c_percent as rank9_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, x.o_price as rank10_o_price, x.c_price as rank10_c_price, x.o_c_percent as rank10_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="UPBIT_DAY_RANKING" parameterType="HashMap" resultType="HashMap">
+		select replace(x.coin_ticker, 'KRW-', '') coin_ticker, y.coin_kor_name, x.ranking
+			 , case when x.status = '상승' then 'red' when x.status = '하락' then 'blue' when x.status = '보합' then 'black' end color
+			 , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate
+		  from upbit_coin_report_daily x, upbit_coin_info y
+		 where x.coin_ticker = y.coin_ticker
+		   and y.coin_delete_yn = 'N'
+		   and x.yyyymmdd = #{date}
+		 order by cast(replace(x.ranking, '기준', '0') as integer)
+	</select>
+	
+	<select id="BITHUMB_BTC_HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select bithumb_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker,'') rank1_coin_ticker, coalesce(rank1_o_price,'') rank1_o_price, coalesce(rank1_c_price,'') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker,'') rank2_coin_ticker, coalesce(rank2_o_price,'') rank2_o_price, coalesce(rank2_c_price,'') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker,'') rank3_coin_ticker, coalesce(rank3_o_price,'') rank3_o_price, coalesce(rank3_c_price,'') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker,'') rank4_coin_ticker, coalesce(rank4_o_price,'') rank4_o_price, coalesce(rank4_c_price,'') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker,'') rank5_coin_ticker, coalesce(rank5_o_price,'') rank5_o_price, coalesce(rank5_c_price,'') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker,'') rank6_coin_ticker, coalesce(rank6_o_price,'') rank6_o_price, coalesce(rank6_c_price,'') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker,'') rank7_coin_ticker, coalesce(rank7_o_price,'') rank7_o_price, coalesce(rank7_c_price,'') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker,'') rank8_coin_ticker, coalesce(rank8_o_price,'') rank8_o_price, coalesce(rank8_c_price,'') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker,'') rank9_coin_ticker, coalesce(rank9_o_price,'') rank9_o_price, coalesce(rank9_c_price,'') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker,'') rank10_coin_ticker, coalesce(rank10_o_price,'') rank10_o_price, coalesce(rank10_c_price,'') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select datetime_kst, coin_ticker as btc_coin_ticker, o_price as btc_o_price, c_price as btc_c_price, o_c_percent as btc_o_c_percent
+				  from bithumb_coin_report_hour_graph
+				 where yyyymmdd = #{date}
+				   and coin_ticker = 'BTC'
+		   	   ) x
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, x.o_price as rank1_o_price, x.c_price as rank1_c_price, x.o_c_percent as rank1_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, x.o_price as rank2_o_price, x.c_price as rank2_c_price, x.o_c_percent as rank2_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, x.o_price as rank3_o_price, x.c_price as rank3_c_price, x.o_c_percent as rank3_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, x.o_price as rank4_o_price, x.c_price as rank4_c_price, x.o_c_percent as rank4_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, x.o_price as rank5_o_price, x.c_price as rank5_c_price, x.o_c_percent as rank5_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, x.o_price as rank6_o_price, x.c_price as rank6_c_price, x.o_c_percent as rank6_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, x.o_price as rank7_o_price, x.c_price as rank7_c_price, x.o_c_percent as rank7_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, x.o_price as rank8_o_price, x.c_price as rank8_c_price, x.o_c_percent as rank8_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, x.o_price as rank9_o_price, x.c_price as rank9_c_price, x.o_c_percent as rank9_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, x.o_price as rank10_o_price, x.c_price as rank10_c_price, x.o_c_percent as rank10_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="BITHUMB_BTC_4HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select bithumb_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker, '') rank1_coin_ticker, coalesce(rank1_o_price, '') rank1_o_price, coalesce(rank1_c_price, '') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker, '') rank2_coin_ticker, coalesce(rank2_o_price, '') rank2_o_price, coalesce(rank2_c_price, '') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker, '') rank3_coin_ticker, coalesce(rank3_o_price, '') rank3_o_price, coalesce(rank3_c_price, '') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker, '') rank4_coin_ticker, coalesce(rank4_o_price, '') rank4_o_price, coalesce(rank4_c_price, '') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker, '') rank5_coin_ticker, coalesce(rank5_o_price, '') rank5_o_price, coalesce(rank5_c_price, '') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker, '') rank6_coin_ticker, coalesce(rank6_o_price, '') rank6_o_price, coalesce(rank6_c_price, '') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker, '') rank7_coin_ticker, coalesce(rank7_o_price, '') rank7_o_price, coalesce(rank7_c_price, '') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker, '') rank8_coin_ticker, coalesce(rank8_o_price, '') rank8_o_price, coalesce(rank8_c_price, '') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker, '') rank9_coin_ticker, coalesce(rank9_o_price, '') rank9_o_price, coalesce(rank9_c_price, '') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker, '') rank10_coin_ticker, coalesce(rank10_o_price, '') rank10_o_price, coalesce(rank10_c_price, '') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select datetime_kst, coin_ticker as btc_coin_ticker, o_price as btc_o_price, c_price as btc_c_price, o_c_percent as btc_o_c_percent
+				  from bithumb_coin_report_4hour_graph
+				 where yyyymmdd = #{date}
+				   and coin_ticker = 'BTC'
+		   	   ) x
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, x.o_price as rank1_o_price, x.c_price as rank1_c_price, x.o_c_percent as rank1_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, x.o_price as rank2_o_price, x.c_price as rank2_c_price, x.o_c_percent as rank2_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, x.o_price as rank3_o_price, x.c_price as rank3_c_price, x.o_c_percent as rank3_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, x.o_price as rank4_o_price, x.c_price as rank4_c_price, x.o_c_percent as rank4_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, x.o_price as rank5_o_price, x.c_price as rank5_c_price, x.o_c_percent as rank5_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, x.o_price as rank6_o_price, x.c_price as rank6_c_price, x.o_c_percent as rank6_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, x.o_price as rank7_o_price, x.c_price as rank7_c_price, x.o_c_percent as rank7_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, x.o_price as rank8_o_price, x.c_price as rank8_c_price, x.o_c_percent as rank8_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, x.o_price as rank9_o_price, x.c_price as rank9_c_price, x.o_c_percent as rank9_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, x.o_price as rank10_o_price, x.c_price as rank10_c_price, x.o_c_percent as rank10_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="BITHUMB_DAY_RANKING" parameterType="HashMap" resultType="HashMap">
+		select x.coin_ticker coin_ticker, y.coin_kor_name, x.ranking
+			 , case when x.status = '상승' then 'red' when x.status = '하락' then 'blue' when x.status = '보합' then 'black' end color
+			 , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate
+		  from bithumb_coin_report_daily x, bithumb_coin_info y
+		 where x.coin_ticker = y.coin_ticker
+		   and y.coin_delete_yn = 'N'
+		   and x.yyyymmdd = #{date}
+		 order by cast(replace(x.ranking, '기준', '0') as integer)
+	</select>
+	
+	<select id="BINANCE_BTC_HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select binance_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker,'') rank1_coin_ticker, coalesce(rank1_o_price,'') rank1_o_price, coalesce(rank1_c_price,'') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker,'') rank2_coin_ticker, coalesce(rank2_o_price,'') rank2_o_price, coalesce(rank2_c_price,'') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker,'') rank3_coin_ticker, coalesce(rank3_o_price,'') rank3_o_price, coalesce(rank3_c_price,'') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker,'') rank4_coin_ticker, coalesce(rank4_o_price,'') rank4_o_price, coalesce(rank4_c_price,'') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker,'') rank5_coin_ticker, coalesce(rank5_o_price,'') rank5_o_price, coalesce(rank5_c_price,'') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker,'') rank6_coin_ticker, coalesce(rank6_o_price,'') rank6_o_price, coalesce(rank6_c_price,'') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker,'') rank7_coin_ticker, coalesce(rank7_o_price,'') rank7_o_price, coalesce(rank7_c_price,'') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker,'') rank8_coin_ticker, coalesce(rank8_o_price,'') rank8_o_price, coalesce(rank8_c_price,'') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker,'') rank9_coin_ticker, coalesce(rank9_o_price,'') rank9_o_price, coalesce(rank9_c_price,'') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker,'') rank10_coin_ticker, coalesce(rank10_o_price,'') rank10_o_price, coalesce(rank10_c_price,'') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select datetime_kst, coin_ticker as btc_coin_ticker, o_price as btc_o_price, c_price as btc_c_price, o_c_percent as btc_o_c_percent
+				  from binance_coin_report_hour_graph
+				 where yyyymmdd = #{date}
+				   and coin_ticker = 'BTCUSDT'
+		   	   ) x
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, x.o_price as rank1_o_price, x.c_price as rank1_c_price, x.o_c_percent as rank1_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, x.o_price as rank2_o_price, x.c_price as rank2_c_price, x.o_c_percent as rank2_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, x.o_price as rank3_o_price, x.c_price as rank3_c_price, x.o_c_percent as rank3_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, x.o_price as rank4_o_price, x.c_price as rank4_c_price, x.o_c_percent as rank4_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, x.o_price as rank5_o_price, x.c_price as rank5_c_price, x.o_c_percent as rank5_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, x.o_price as rank6_o_price, x.c_price as rank6_c_price, x.o_c_percent as rank6_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, x.o_price as rank7_o_price, x.c_price as rank7_c_price, x.o_c_percent as rank7_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, x.o_price as rank8_o_price, x.c_price as rank8_c_price, x.o_c_percent as rank8_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, x.o_price as rank9_o_price, x.c_price as rank9_c_price, x.o_c_percent as rank9_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, x.o_price as rank10_o_price, x.c_price as rank10_c_price, x.o_c_percent as rank10_o_c_percent
+				  from binance_coin_report_hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="BINANCE_BTC_4HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select binance_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker, '') rank1_coin_ticker, coalesce(rank1_o_price, '') rank1_o_price, coalesce(rank1_c_price, '') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker, '') rank2_coin_ticker, coalesce(rank2_o_price, '') rank2_o_price, coalesce(rank2_c_price, '') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker, '') rank3_coin_ticker, coalesce(rank3_o_price, '') rank3_o_price, coalesce(rank3_c_price, '') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker, '') rank4_coin_ticker, coalesce(rank4_o_price, '') rank4_o_price, coalesce(rank4_c_price, '') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker, '') rank5_coin_ticker, coalesce(rank5_o_price, '') rank5_o_price, coalesce(rank5_c_price, '') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker, '') rank6_coin_ticker, coalesce(rank6_o_price, '') rank6_o_price, coalesce(rank6_c_price, '') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker, '') rank7_coin_ticker, coalesce(rank7_o_price, '') rank7_o_price, coalesce(rank7_c_price, '') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker, '') rank8_coin_ticker, coalesce(rank8_o_price, '') rank8_o_price, coalesce(rank8_c_price, '') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker, '') rank9_coin_ticker, coalesce(rank9_o_price, '') rank9_o_price, coalesce(rank9_c_price, '') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker, '') rank10_coin_ticker, coalesce(rank10_o_price, '') rank10_o_price, coalesce(rank10_c_price, '') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select datetime_kst, coin_ticker as btc_coin_ticker, o_price as btc_o_price, c_price as btc_c_price, o_c_percent as btc_o_c_percent
+				  from binance_coin_report_4hour_graph
+				 where yyyymmdd = #{date}
+				   and coin_ticker = 'BTCUSDT'
+		   	   ) x
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, x.o_price as rank1_o_price, x.c_price as rank1_c_price, x.o_c_percent as rank1_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, x.o_price as rank2_o_price, x.c_price as rank2_c_price, x.o_c_percent as rank2_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, x.o_price as rank3_o_price, x.c_price as rank3_c_price, x.o_c_percent as rank3_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, x.o_price as rank4_o_price, x.c_price as rank4_c_price, x.o_c_percent as rank4_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, x.o_price as rank5_o_price, x.c_price as rank5_c_price, x.o_c_percent as rank5_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, x.o_price as rank6_o_price, x.c_price as rank6_c_price, x.o_c_percent as rank6_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, x.o_price as rank7_o_price, x.c_price as rank7_c_price, x.o_c_percent as rank7_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, x.o_price as rank8_o_price, x.c_price as rank8_c_price, x.o_c_percent as rank8_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, x.o_price as rank9_o_price, x.c_price as rank9_c_price, x.o_c_percent as rank9_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, x.o_price as rank10_o_price, x.c_price as rank10_c_price, x.o_c_percent as rank10_o_c_percent
+				  from binance_coin_report_4hour_graph x, binance_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="BINANCE_DAY_RANKING" parameterType="HashMap" resultType="HashMap">
+		select replace(x.coin_ticker, 'USDT', '') coin_ticker, y.coin_kor_name, x.ranking
+			 , case when x.status = '상승' then 'red' when x.status = '하락' then 'blue' when x.status = '보합' then 'black' end color
+			 , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate
+		  from binance_coin_report_daily x, binance_coin_info y
+		 where x.coin_ticker = y.coin_ticker
+		   and y.coin_delete_yn = 'N'
+		   and x.yyyymmdd = #{date}
+		 order by cast(replace(x.ranking, '기준', '0') as integer)
+	</select>
+	
+	<select id="BINANCE_FUTURES_BTC_HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select binance_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker,'') rank1_coin_ticker, coalesce(rank1_o_price,'') rank1_o_price, coalesce(rank1_c_price,'') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker,'') rank2_coin_ticker, coalesce(rank2_o_price,'') rank2_o_price, coalesce(rank2_c_price,'') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker,'') rank3_coin_ticker, coalesce(rank3_o_price,'') rank3_o_price, coalesce(rank3_c_price,'') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker,'') rank4_coin_ticker, coalesce(rank4_o_price,'') rank4_o_price, coalesce(rank4_c_price,'') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker,'') rank5_coin_ticker, coalesce(rank5_o_price,'') rank5_o_price, coalesce(rank5_c_price,'') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker,'') rank6_coin_ticker, coalesce(rank6_o_price,'') rank6_o_price, coalesce(rank6_c_price,'') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker,'') rank7_coin_ticker, coalesce(rank7_o_price,'') rank7_o_price, coalesce(rank7_c_price,'') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker,'') rank8_coin_ticker, coalesce(rank8_o_price,'') rank8_o_price, coalesce(rank8_c_price,'') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker,'') rank9_coin_ticker, coalesce(rank9_o_price,'') rank9_o_price, coalesce(rank9_c_price,'') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker,'') rank10_coin_ticker, coalesce(rank10_o_price,'') rank10_o_price, coalesce(rank10_c_price,'') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select datetime_kst, coin_ticker as btc_coin_ticker, o_price as btc_o_price, c_price as btc_c_price, o_c_percent as btc_o_c_percent
+				  from binance_futures_coin_report_hour_graph
+				 where yyyymmdd = #{date}
+				   and coin_ticker = 'BTCUSDT'
+		   	   ) x
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, x.o_price as rank1_o_price, x.c_price as rank1_c_price, x.o_c_percent as rank1_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, x.o_price as rank2_o_price, x.c_price as rank2_c_price, x.o_c_percent as rank2_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, x.o_price as rank3_o_price, x.c_price as rank3_c_price, x.o_c_percent as rank3_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, x.o_price as rank4_o_price, x.c_price as rank4_c_price, x.o_c_percent as rank4_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, x.o_price as rank5_o_price, x.c_price as rank5_c_price, x.o_c_percent as rank5_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, x.o_price as rank6_o_price, x.c_price as rank6_c_price, x.o_c_percent as rank6_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, x.o_price as rank7_o_price, x.c_price as rank7_c_price, x.o_c_percent as rank7_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, x.o_price as rank8_o_price, x.c_price as rank8_c_price, x.o_c_percent as rank8_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, x.o_price as rank9_o_price, x.c_price as rank9_c_price, x.o_c_percent as rank9_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, x.o_price as rank10_o_price, x.c_price as rank10_c_price, x.o_c_percent as rank10_o_c_percent
+				  from binance_futures_coin_report_hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="BINANCE_FUTURES_BTC_4HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select binance_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker, '') rank1_coin_ticker, coalesce(rank1_o_price, '') rank1_o_price, coalesce(rank1_c_price, '') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker, '') rank2_coin_ticker, coalesce(rank2_o_price, '') rank2_o_price, coalesce(rank2_c_price, '') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker, '') rank3_coin_ticker, coalesce(rank3_o_price, '') rank3_o_price, coalesce(rank3_c_price, '') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker, '') rank4_coin_ticker, coalesce(rank4_o_price, '') rank4_o_price, coalesce(rank4_c_price, '') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker, '') rank5_coin_ticker, coalesce(rank5_o_price, '') rank5_o_price, coalesce(rank5_c_price, '') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker, '') rank6_coin_ticker, coalesce(rank6_o_price, '') rank6_o_price, coalesce(rank6_c_price, '') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker, '') rank7_coin_ticker, coalesce(rank7_o_price, '') rank7_o_price, coalesce(rank7_c_price, '') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker, '') rank8_coin_ticker, coalesce(rank8_o_price, '') rank8_o_price, coalesce(rank8_c_price, '') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker, '') rank9_coin_ticker, coalesce(rank9_o_price, '') rank9_o_price, coalesce(rank9_c_price, '') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker, '') rank10_coin_ticker, coalesce(rank10_o_price, '') rank10_o_price, coalesce(rank10_c_price, '') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select datetime_kst, coin_ticker as btc_coin_ticker, o_price as btc_o_price, c_price as btc_c_price, o_c_percent as btc_o_c_percent
+				  from binance_futures_coin_report_4hour_graph
+				 where yyyymmdd = #{date}
+				   and coin_ticker = 'BTCUSDT'
+		   	   ) x
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, x.o_price as rank1_o_price, x.c_price as rank1_c_price, x.o_c_percent as rank1_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, x.o_price as rank2_o_price, x.c_price as rank2_c_price, x.o_c_percent as rank2_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, x.o_price as rank3_o_price, x.c_price as rank3_c_price, x.o_c_percent as rank3_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, x.o_price as rank4_o_price, x.c_price as rank4_c_price, x.o_c_percent as rank4_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, x.o_price as rank5_o_price, x.c_price as rank5_c_price, x.o_c_percent as rank5_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, x.o_price as rank6_o_price, x.c_price as rank6_c_price, x.o_c_percent as rank6_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, x.o_price as rank7_o_price, x.c_price as rank7_c_price, x.o_c_percent as rank7_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, x.o_price as rank8_o_price, x.c_price as rank8_c_price, x.o_c_percent as rank8_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, x.o_price as rank9_o_price, x.c_price as rank9_c_price, x.o_c_percent as rank9_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, x.o_price as rank10_o_price, x.c_price as rank10_c_price, x.o_c_percent as rank10_o_c_percent
+				  from binance_futures_coin_report_4hour_graph x, binance_futures_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="BINANCE_FUTURES_DAY_RANKING" parameterType="HashMap" resultType="HashMap">
+		select replace(x.coin_ticker, 'USDT', '') coin_ticker, y.coin_kor_name, x.ranking
+			 , case when x.status = '상승' then 'red' when x.status = '하락' then 'blue' when x.status = '보합' then 'black' end color
+			 , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate
+		  from binance_futures_coin_report_daily x, binance_futures_coin_info y
+		 where x.coin_ticker = y.coin_ticker
+		   and y.coin_delete_yn = 'N'
+		   and x.yyyymmdd = #{date}
+		 order by cast(replace(x.ranking, '기준', '0') as integer)
+	</select>
+	
+	<select id="ReportList" resultType="HashMap">
+		select x.yyyymmdd, x.blog_id, x.market, x.market_name, x.blog_gubun, x.blog_gubun_name
+			 , '['|| x.yyyymmdd || '] [' || x.market_name || '] [' || x.blog_gubun_name || ']' report_name
+		  from (
+				select x.yyyymmdd, x.blog_id, 'upbit' market, '업비트' market_name
+					 , y.blog_gubun, case y.blog_gubun when 'wordpress' then '워드프레스' when 'tistory' then '티스토리' end blog_gubun_name
+				  from upbit_coin_report_daily_html x, blog_setting y 
+				 where x.blog_id = y.blog_id 
+				 group by x.yyyymmdd, x.blog_id, y.blog_gubun 
+				 union all 
+				select x.yyyymmdd, x.blog_id, 'bithumb' market, '빗썸' market_name
+					 , y.blog_gubun, case y.blog_gubun when 'wordpress' then '워드프레스' when 'tistory' then '티스토리' end blog_gubun_name
+				  from bithumb_coin_report_daily_html x, blog_setting y 
+				 where x.blog_id = y.blog_id 
+				 group by x.yyyymmdd, x.blog_id, y.blog_gubun
+				  union all 
+				select x.yyyymmdd, x.blog_id, 'binance' market, '바이낸스' market_name
+					 , y.blog_gubun, case y.blog_gubun when 'wordpress' then '워드프레스' when 'tistory' then '티스토리' end blog_gubun_name
+				  from binance_coin_report_daily_html x, blog_setting y 
+				 where x.blog_id = y.blog_id 
+				 group by x.yyyymmdd, x.blog_id, y.blog_gubun
+				  union all 
+				select x.yyyymmdd, x.blog_id, 'binance_futures' market, '바이낸스 선물' market_name
+					 , y.blog_gubun, case y.blog_gubun when 'wordpress' then '워드프레스' when 'tistory' then '티스토리' end blog_gubun_name
+				  from binance_futures_coin_report_daily_html x, blog_setting y 
+				 where x.blog_id = y.blog_id 
+				 group by x.yyyymmdd, x.blog_id, y.blog_gubun
+			   ) x
+		 order by x.yyyymmdd desc, x.market_name, x.blog_gubun_name
+	</select>
+	
+	<select id="ReportHTMLList" resultType="HashMap">
+		select x.yyyymmdd, x.id, x.row, x.col, coalesce(x.html, '') html
+		<if test='market == "bithumb" '>
+		  from bithumb_coin_report_daily_html x
+		</if>
+		<if test='market == "upbit" '>
+		  from upbit_coin_report_daily_html x
+		</if>
+		<if test='market == "binance" '>
+		  from binance_coin_report_daily_html x
+		</if>
+		<if test='market == "binance_futures" '>
+		  from binance_futures_coin_report_daily_html x
+		</if>
+		 where x.yyyymmdd = #{date}
+		   and x.diff_yn = 'Y'
+		   and x.blog_id = #{blog}
+		 order by cast(x.row as integer)
 	</select>
 </mapper>

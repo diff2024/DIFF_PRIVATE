@@ -96,8 +96,8 @@ public class CoinController {
 	}
 	
 	@Async
-	@PostMapping(path = "/CoinDailyReportReg")
-	public void CoinDailyReportReg(HttpServletRequest req) throws Exception {
+	@PostMapping(path = "/CoinAnalysisCreate")
+	public void CoinAnalysisCreate(HttpServletRequest req) throws Exception {
 		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
 		String yesterday = (req.getParameter("yesterday")==null)?"":req.getParameter("yesterday");
 		
@@ -109,9 +109,7 @@ public class CoinController {
 		    yesterday = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
 		}
 		
-		System.out.println("> date " +date + " | yesterday : " + yesterday);
-	    
-	    HashMap<String, String> SettingMap = MainService.CoinReportDailySetting();
+	    HashMap<String, String> SettingMap = MainService.CoinAnalysisSetting();
 	    String MainRankingCount = SettingMap.get("upbit_report_main_ranking");
 	    String SubRankingCount = SettingMap.get("upbit_report_sub_ranking");
 	    String BithumbReportAD1 = SettingMap.get("bithumb_report_ad1");
@@ -124,6 +122,11 @@ public class CoinController {
 	    String UpbitReportAD3 = SettingMap.get("upbit_report_ad3");
 	    String UpbitReportAD4 = SettingMap.get("upbit_report_ad4");
 	    String UpbitReportAD5 = SettingMap.get("upbit_report_ad5");
+	    String BinanceReportAD1 = SettingMap.get("binance_report_ad1");
+	    String BinanceReportAD2 = SettingMap.get("binance_report_ad2");
+	    String BinanceReportAD3 = SettingMap.get("binance_report_ad3");
+	    String BinanceReportAD4 = SettingMap.get("binance_report_ad4");
+	    String BinanceReportAD5 = SettingMap.get("binance_report_ad5");
 	    
 	    HashMap<String, String> map = new HashMap<String, String>();
 	    map.put("date", date);
@@ -141,15 +144,21 @@ public class CoinController {
 	    map.put("UpbitReportAD3", UpbitReportAD3);
 	    map.put("UpbitReportAD4", UpbitReportAD4);
 	    map.put("UpbitReportAD5", UpbitReportAD5);
-	    CoinService.CoinDailyReportDelete(map);
+	    map.put("BinanceReportAD1", BinanceReportAD1);
+	    map.put("BinanceReportAD2", BinanceReportAD2);
+	    map.put("BinanceReportAD3", BinanceReportAD3);
+	    map.put("BinanceReportAD4", BinanceReportAD4);
+	    map.put("BinanceReportAD5", BinanceReportAD5);
+	    
+	    CoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
-	    CoinService.CoinDailyReportReg(map);
-	    CoinService.CoinDailyReportScriptReg(map);
-	}
-	
-	@GetMapping(path = "/CoinReportList")
-	public List<HashMap<String, String>> CoinReportList() throws Exception {
-		return CoinService.CoinReportList();
+	    CoinService.CoinAnalysisCreate(map);
+	    CoinService.CoinAnalysisHourGraphCreate(map);
+	    CoinService.CoinAnalysis4HourGraphCreate(map);
+	    map.put("blog_id", "1");
+	    CoinService.WordPressReportHTMLCreate(map);
+	    map.put("blog_id", "3");
+	    CoinService.TiStoryReportHTMLCreate(map);
 	}
 	
 	@GetMapping(path = "/CoinDailyReportList")
@@ -163,15 +172,6 @@ public class CoinController {
 		map.put("std_date", std_date);
 		map.put("end_date", end_date);
 		return CoinService.CoinDailyReportList(map);
-	}
-	
-	@GetMapping(path = "/CoinDailyReportHTMLList")
-	public List<HashMap<String, String>> CoinDailyReportHTMLList(HttpServletRequest req) throws Exception {
-		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
-		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("date", date);
-		return CoinService.CoinDailyReportHTMLList(map);
 	}
 	
 	@GetMapping(path = "/MainLiveRankList")

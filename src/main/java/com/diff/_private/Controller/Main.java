@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -72,9 +73,201 @@ public class Main {
 	@Autowired
 	MainService MainService;
 	
-	@GetMapping(path = "/BithumbReportDailySetting")
-	public HashMap<String, String> CoinReportDailySetting() throws Exception{
-		return MainService.CoinReportDailySetting();
+	@GetMapping(path = "/CoinAnalysisSetting")
+	public HashMap<String, String> CoinAnalysisSetting() throws Exception{
+		return MainService.CoinAnalysisSetting();
+	}
+	
+	@GetMapping(path = "/UPBIT_BTC_HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> UPBIT_BTC_HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.UPBIT_BTC_HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/UPBIT_BTC_4HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> UPBIT_BTC_4HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.UPBIT_BTC_4HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/UPBIT_DAY_RANKING")
+	public List<HashMap<String, String>> UPBIT_DAY_RANKING(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.UPBIT_DAY_RANKING(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BITHUMB_BTC_HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> BITHUMB_BTC_HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BITHUMB_BTC_HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BITHUMB_BTC_4HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> BITHUMB_BTC_4HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BITHUMB_BTC_4HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BITHUMB_DAY_RANKING")
+	public List<HashMap<String, String>> BITHUMB_DAY_RANKING(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BITHUMB_DAY_RANKING(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BINANCE_BTC_HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> BINANCE_BTC_HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BINANCE_BTC_HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BINANCE_BTC_4HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> BINANCE_BTC_4HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BINANCE_BTC_4HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BINANCE_DAY_RANKING")
+	public List<HashMap<String, String>> BINANCE_DAY_RANKING(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BINANCE_DAY_RANKING(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BINANCE_FUTURES_BTC_HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> BINANCE_FUTURES_BTC_HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BINANCE_FUTURES_BTC_HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BINANCE_FUTURES_BTC_4HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> BINANCE_FUTURES_BTC_4HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BINANCE_FUTURES_BTC_4HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BINANCE_FUTURES_DAY_RANKING")
+	public List<HashMap<String, String>> BINANCE_FUTURES_DAY_RANKING(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BINANCE_FUTURES_DAY_RANKING(map);
+		return list;
 	}
 	
 	@GetMapping(path = "/upbit_5m")
@@ -480,5 +673,23 @@ public class Main {
             }
         });
 		return coinlist;
+	}
+	
+	@GetMapping(path = "/ReportList")
+	public List<HashMap<String, String>> ReportList() throws Exception {
+		return MainService.ReportList();
+	}
+	
+	@GetMapping(path = "/ReportHTMLList")
+	public List<HashMap<String, String>> ReportHTMLList(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		String market = (req.getParameter("market")==null)?"":req.getParameter("market");
+		String blog = (req.getParameter("blog")==null)?"":req.getParameter("blog");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		map.put("market", market);
+		map.put("blog", blog);
+		return MainService.ReportHTMLList(map);
 	}
 }

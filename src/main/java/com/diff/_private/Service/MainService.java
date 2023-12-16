@@ -25,7 +25,63 @@ public class MainService {
 		MainMapper.UpbitCoinMIN(map);
 	}
 	
-	public HashMap<String, String> CoinReportDailySetting() throws Exception{
-		return MainMapper.CoinReportDailySetting();
+	public HashMap<String, String> CoinAnalysisSetting() throws Exception{
+		return MainMapper.CoinAnalysisSetting();
+	}
+	
+	public List<HashMap<String, String>> UPBIT_BTC_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.UPBIT_BTC_HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> UPBIT_BTC_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.UPBIT_BTC_4HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> UPBIT_DAY_RANKING(HashMap<String, String> map) throws Exception{
+		return MainMapper.UPBIT_DAY_RANKING(map);
+	}
+	
+	public List<HashMap<String, String>> BITHUMB_BTC_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BITHUMB_BTC_HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> BITHUMB_BTC_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BITHUMB_BTC_4HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> BITHUMB_DAY_RANKING(HashMap<String, String> map) throws Exception{
+		return MainMapper.BITHUMB_DAY_RANKING(map);
+	}
+	
+	public List<HashMap<String, String>> BINANCE_BTC_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BINANCE_BTC_HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> BINANCE_BTC_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BINANCE_BTC_4HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> BINANCE_DAY_RANKING(HashMap<String, String> map) throws Exception{
+		return MainMapper.BINANCE_DAY_RANKING(map);
+	}
+	
+	public List<HashMap<String, String>> BINANCE_FUTURES_BTC_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BINANCE_FUTURES_BTC_HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> BINANCE_FUTURES_BTC_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BINANCE_FUTURES_BTC_4HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> BINANCE_FUTURES_DAY_RANKING(HashMap<String, String> map) throws Exception{
+		return MainMapper.BINANCE_FUTURES_DAY_RANKING(map);
+	}
+	
+	public List<HashMap<String, String>> ReportList() throws Exception{
+		return MainMapper.ReportList();
+	}
+	
+	public List<HashMap<String, String>> ReportHTMLList(HashMap<String, String> map) throws Exception{
+		return MainMapper.ReportHTMLList(map);
 	}
 }

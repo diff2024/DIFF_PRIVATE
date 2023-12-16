@@ -36,13 +36,11 @@
 				<v-spacer></v-spacer>
 					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BithumbCoinMainList')">빗썸 통계</span>
 				<v-spacer></v-spacer>
-					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/CoinReport')">업비트 분석 Report</span>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BinanceCoinMainList')">바이낸스 통계</span>
 				<v-spacer></v-spacer>
-					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BithumbCoinReport')">빗썸 분석 Report</span>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BinanceFuturesCoinMainList')">바이낸스 선물 통계</span>
 				<v-spacer></v-spacer>
-					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/CoinLiveList')">업비트 실시간 통계</span>
-				<v-spacer></v-spacer>
-					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BithumbCoinLiveList')">빗썸 실시간 통계</span>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/Report')">Report</span>
 				<v-spacer></v-spacer>
 				<v-spacer></v-spacer>
 				<v-spacer></v-spacer>

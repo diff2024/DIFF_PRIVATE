@@ -13,11 +13,14 @@ Vue.use(VueSession, sessionOptions)
 const Main = () => {
 	return import("./views/Main.vue")
 }
+const Test = () => {
+	return import("./views/Test.vue")
+}
+const Report = () => {
+	return import("./views/Coin/Report.vue")	
+}
 const CoinMainList = () => {
 	return import("./views/Coin/CoinMainList.vue")	
-}
-const CoinReport = () => {
-	return import("./views/Coin/CoinReport.vue")	
 }
 const CoinLiveList = () => {
 	return import("./views/Coin/CoinLiveList.vue")	
@@ -25,11 +28,20 @@ const CoinLiveList = () => {
 const BithumbCoinMainList = () => {
 	return import("./views/Coin/BithumbCoinMainList.vue")	
 }
-const BithumbCoinReport = () => {
-	return import("./views/Coin/BithumbCoinReport.vue")	
-}
 const BithumbCoinLiveList = () => {
 	return import("./views/Coin/BithumbCoinLiveList.vue")	
+}
+const BinanceCoinMainList = () => {
+	return import("./views/Coin/BinanceCoinMainList.vue")	
+}
+const BinanceCoinLiveList = () => {
+	return import("./views/Coin/BinanceCoinLiveList.vue")	
+}
+const BinanceFuturesCoinMainList = () => {
+	return import("./views/Coin/BinanceFuturesCoinMainList.vue")	
+}
+const BinanceFuturesCoinLiveList = () => {
+	return import("./views/Coin/BinanceFuturesCoinLiveList.vue")	
 }
 
 export const router = new Router({
@@ -40,6 +52,11 @@ export const router = new Router({
       path: '/',
       name: 'main',
       component: Main,
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: Test,
     },
     {
       path: '/CoinMainList',
@@ -62,24 +79,34 @@ export const router = new Router({
       component: BithumbCoinMainList
     },
     {
-      path: '/CoinReport',
-      name: 'coinReport',
-      component: CoinReport
+      path: '/BinanceCoinMainList',
+      name: 'binancecoinMainList',
+      component: BinanceCoinMainList
     },
     {
-      path: '/CoinReport/:date',
-      name: 'coinReport',
-      component: CoinReport
+      path: '/BinanceCoinMainList/:date',
+      name: 'binancecoinMainList',
+      component: BinanceCoinMainList
     },
     {
-      path: '/BithumbCoinReport',
-      name: 'bithumbcoinReport',
-      component: BithumbCoinReport
+      path: '/BinanceFuturesCoinMainList',
+      name: 'binancefuturescoinMainList',
+      component: BinanceFuturesCoinMainList
     },
     {
-      path: '/BithumbCoinReport/:date',
-      name: 'bithumbcoinReport',
-      component: BithumbCoinReport
+      path: '/BinanceFuturesCoinMainList/:date',
+      name: 'binancefuturescoinMainList',
+      component: BinanceFuturesCoinMainList
+    },
+    {
+      path: '/Report',
+      name: 'Report',
+      component: Report
+    },
+    {
+      path: '/Report/:date/:market/:blog',
+      name: 'Report',
+      component: Report
     },
     {
       path: '/CoinLiveList',
@@ -90,6 +117,16 @@ export const router = new Router({
       path: '/BithumbCoinLiveList',
       name: 'bithumbcoinLiveList',
       component: BithumbCoinLiveList
+    },
+    {
+      path: '/BinanceCoinLiveList',
+      name: 'binancecoinLiveList',
+      component: BinanceCoinLiveList
+    },
+    {
+      path: '/BinanceFuturesCoinLiveList',
+      name: 'binancefuturescoinLiveList',
+      component: BinanceFuturesCoinLiveList
     }
   ]
 });

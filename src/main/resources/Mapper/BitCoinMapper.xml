@@ -250,16 +250,11 @@
 		 order by cast(y.c_price as numeric) desc
 	</select>
 	
-	<select id="CoinReportList" resultType="HashMap">
-		select yyyymmdd, 'D' as type, yyyymmdd as start_date, yyyymmdd as end_date
-		  from bithumb_coin_report_daily
-		 where delete_yn = 'N'
-		 group by yyyymmdd
-		 order by yyyymmdd desc
-	</select>
-	
 	<select id="CoinDailyReportList" resultType="HashMap" parameterType="HashMap">
-		select x.yyyymmdd, x.coin_ticker, y.coin_kor_name, (y.coin_kor_name || ' [' || y.coin_ticker || ']') coin_title, x.ranking, x.status
+		select x.yyyymmdd, x.coin_ticker, y.coin_kor_name, y.coin_eng_name, x.ranking, x.status 
+			 , case when coalesce(y.coin_kor_name, '') != '' then (y.coin_kor_name || ' [' || y.coin_ticker || ']') 
+			        when coalesce(y.coin_eng_name, '') != '' then (y.coin_eng_name || ' [' || y.coin_ticker || ']') 
+			        else '[' || y.coin_ticker || ']' end coin_title
 			 , x.o_price, x.l_price, x.h_price, x.c_price
 			 , x.o_c_price, x.o_c_price_rate, x.l_h_price, x.l_h_price_rate, x.real_l_h_price, x.real_l_h_price_rate
 			 , x.lower_price_time, x.higher_price_time, x.lower_volume_time, x.higher_volume_time
@@ -281,19 +276,11 @@
 		 order by case when x.coin_ticker = 'BTC' then 0 else cast(x.ranking as integer) end
 	</select>
 	
-	<select id="CoinDailyReportHTMLList" resultType="HashMap" parameterType="HashMap">
-		select x.yyyymmdd, x.id, x.row, x.col, coalesce(x.html, '') html
-		  from bithumb_coin_report_daily_html x
-		 where x.yyyymmdd = #{date}
-		   and x.diff_yn = 'Y'
-		 order by cast(x.row as integer)
-	</select>
-	
-	<delete id="CoinDailyReportDelete" parameterType="HashMap">
+	<delete id="CoinAnalysisDelete" parameterType="HashMap">
 		delete from bithumb_coin_report_daily where yyyymmdd = #{date}
 	</delete>
 	
-	<insert id="CoinDailyReportReg" parameterType="HashMap">
+	<insert id="CoinAnalysisCreate" parameterType="HashMap">
 		insert into bithumb_coin_report_daily
 			(yyyymmdd, coin_ticker, o_price, l_price, h_price, c_price, ranking, status, o_c_price, o_c_price_rate, l_h_price, l_h_price_rate
 				, lower_price_time, higher_price_time, lower_volume_time, higher_volume_time, create_datetime
@@ -802,15 +789,132 @@
 		order by case when x.coin_ticker = 'BTC' then 0 else cast(x.ranking as integer) end
 	</insert>
 	
-	<delete id="CoinDailyReportHTMLDelete" parameterType="HashMap">
-		delete from bithumb_coin_report_daily_html where yyyymmdd = #{date}
+	<delete id="CoinAnalysisHourGraphDelete" parameterType="HashMap">
+		delete from bithumb_coin_report_hour_graph where yyyymmdd = #{date}
 	</delete>
 	
-	<insert id="CoinDailyReportHTMLReg" parameterType="HashMap">
+	<insert id="CoinAnalysisHourGraphCreate" parameterType="HashMap">
+		insert into bithumb_coin_report_hour_graph
+			(yyyymmdd, coin_ticker, datetime_kst, o_price, c_price, o_c_percent, create_datetime)
+		select #{yyyymmdd} yyyymmdd, x.coin_ticker, x.datetime_kst, x.o_price, x.c_price, x.o_c_percent, to_char(now(), 'YYYY-MM-DD HH24:MI:SS')
+		  from (
+				select y.coin_ticker, (replace(replace(substring(replace(x1.datetime_kst, 'T', ' '), 6, 8),' ', '일 '),'-','월 ') || '시') datetime_kst
+					 , case when position('.0' in cast(cast(x1.o_price as numeric) as varchar)) > (char_length(cast(cast(x1.o_price as numeric) as varchar))-2) then replace((cast(cast(x1.o_price as numeric) as varchar)), '.0', '') else cast(cast(x1.o_price as numeric) as varchar) end o_price
+					 , case when position('.0' in cast(cast(x2.c_price as numeric) as varchar)) > (char_length(cast(cast(x2.c_price as numeric) as varchar))-2) then replace((cast(cast(x2.c_price as numeric) as varchar)), '.0', '') else cast(cast(x2.c_price as numeric) as varchar) end c_price
+					 , cast((ROUND(((cast(x2.c_price as numeric)-cast(x1.o_price as numeric))/cast(x1.o_price as numeric))*100,2)) as varchar) o_c_percent
+				  from bithumb_coin_min x1, bithumb_coin_min x2,
+				  	   (
+						select x.coin_ticker, min(x.datetime_kst) min_datetime_kst, max(x.datetime_kst) max_datetime_kst
+						  from bithumb_coin_min x, bithumb_coin_report_daily y
+						 where y.yyyymmdd = #{yyyymmdd}
+						   and x.coin_ticker = y.coin_ticker 
+						   and x.datetime_kst like '${yyyymmdd}%'
+						group by x.coin_ticker, substring(replace(x.datetime_kst, 'T', ' '), 6, 8)
+						order by substring(replace(x.datetime_kst, 'T', ' '), 6, 8)
+				  	   ) y
+				 where x1.coin_ticker = y.coin_ticker
+				   and x2.coin_ticker = y.coin_ticker
+				   and y.min_datetime_kst = x1.datetime_kst
+				   and y.max_datetime_kst = x2.datetime_kst 
+				 order by (replace(replace(substring(replace(x1.datetime_kst, 'T', ' '), 6, 8),' ', '일 '),'-','월 ') || '시')
+		  	   ) x
+		 order by x.coin_ticker, x.datetime_kst
+	</insert>
+	
+	<delete id="CoinAnalysis4HourGraphDelete" parameterType="HashMap">
+		delete from bithumb_coin_report_4hour_graph where yyyymmdd = #{date}
+	</delete>
+	
+	<insert id="CoinAnalysis4HourGraphCreate" parameterType="HashMap">
+		insert into bithumb_coin_report_4hour_graph
+			(yyyymmdd, coin_ticker, datetime_kst, o_price, c_price, o_c_percent, create_datetime)
+		 select #{yyyymmdd} yyyymmdd, x.coin_ticker, x.datetime_kst, x.o_price, x.c_price, x.o_c_percent, to_char(now(), 'YYYY-MM-DD HH24:MI:SS')
+		  from (
+				select y.coin_ticker, (replace(replace(substring(replace(x1.datetime_kst, 'T', ' '), 6, 8),' ', '일 '),'-','월 ') || '시') datetime_kst
+					 , case when position('.0' in cast(cast(x1.o_price as numeric) as varchar)) > (char_length(cast(cast(x1.o_price as numeric) as varchar))-2) then replace((cast(cast(x1.o_price as numeric) as varchar)), '.0', '') else cast(cast(x1.o_price as numeric) as varchar) end o_price
+					 , case when position('.0' in cast(cast(x2.c_price as numeric) as varchar)) > (char_length(cast(cast(x2.c_price as numeric) as varchar))-2) then replace((cast(cast(x2.c_price as numeric) as varchar)), '.0', '') else cast(cast(x2.c_price as numeric) as varchar) end c_price
+					 , cast((ROUND(((cast(x2.c_price as numeric)-cast(x1.o_price as numeric))/cast(x1.o_price as numeric))*100,2)) as varchar) o_c_percent
+				  from bithumb_coin_min x1, bithumb_coin_min x2,
+				  	   (
+						select x.coin_ticker, min(x.datetime_kst) min_datetime_kst, max(x.datetime_kst) max_datetime_kst
+						  from bithumb_coin_min x, bithumb_coin_report_daily y
+						 where y.yyyymmdd = #{yyyymmdd}
+						   and x.coin_ticker = y.coin_ticker 
+						   and x.datetime_kst like '${yyyymmdd}%'
+						   and cast((substring(replace(x.datetime_kst, 'T', ' '), 12, 2)) as integer) in (0, 1, 2, 3)
+						 group by x.coin_ticker
+						 union all
+						select x.coin_ticker, min(x.datetime_kst) min_datetime_kst, max(x.datetime_kst) max_datetime_kst
+						  from bithumb_coin_min x, bithumb_coin_report_daily y
+						 where y.yyyymmdd = #{yyyymmdd}
+						   and x.coin_ticker = y.coin_ticker 
+						   and x.datetime_kst like '${yyyymmdd}%'
+						   and cast((substring(replace(x.datetime_kst, 'T', ' '), 12, 2)) as integer) in (4, 5, 6, 7)
+						 group by x.coin_ticker
+						 union all
+						select x.coin_ticker, min(x.datetime_kst) min_datetime_kst, max(x.datetime_kst) max_datetime_kst
+						  from bithumb_coin_min x, bithumb_coin_report_daily y
+						 where y.yyyymmdd = #{yyyymmdd}
+						   and x.coin_ticker = y.coin_ticker 
+						   and x.datetime_kst like '${yyyymmdd}%'
+						   and cast((substring(replace(x.datetime_kst, 'T', ' '), 12, 2)) as integer) in (8, 9, 10, 11)
+						 group by x.coin_ticker
+						 union all
+						select x.coin_ticker, min(x.datetime_kst) min_datetime_kst, max(x.datetime_kst) max_datetime_kst
+						  from bithumb_coin_min x, bithumb_coin_report_daily y
+						 where y.yyyymmdd = #{yyyymmdd}
+						   and x.coin_ticker = y.coin_ticker 
+						   and x.datetime_kst like '${yyyymmdd}%'
+						   and cast((substring(replace(x.datetime_kst, 'T', ' '), 12, 2)) as integer) in (12, 13, 14, 15)
+						 group by x.coin_ticker
+						 union all
+						select x.coin_ticker, min(x.datetime_kst) min_datetime_kst, max(x.datetime_kst) max_datetime_kst
+						  from bithumb_coin_min x, bithumb_coin_report_daily y
+						 where y.yyyymmdd = #{yyyymmdd}
+						   and x.coin_ticker = y.coin_ticker 
+						   and x.datetime_kst like '${yyyymmdd}%'
+						   and cast((substring(replace(x.datetime_kst, 'T', ' '), 12, 2)) as integer) in (16, 17, 18, 19)
+						 group by x.coin_ticker
+						 union all
+						select x.coin_ticker, min(x.datetime_kst) min_datetime_kst, max(x.datetime_kst) max_datetime_kst
+						  from bithumb_coin_min x, bithumb_coin_report_daily y
+						 where y.yyyymmdd = #{yyyymmdd}
+						   and x.coin_ticker = y.coin_ticker 
+						   and x.datetime_kst like '${yyyymmdd}%'
+						   and cast((substring(replace(x.datetime_kst, 'T', ' '), 12, 2)) as integer) in (20, 21, 22, 23)
+						 group by x.coin_ticker
+				  	   ) y
+				 where x1.coin_ticker = y.coin_ticker
+				   and x2.coin_ticker = y.coin_ticker
+				   and y.min_datetime_kst = x1.datetime_kst
+				   and y.max_datetime_kst = x2.datetime_kst 
+				 order by (replace(replace(substring(replace(x1.datetime_kst, 'T', ' '), 6, 8),' ', '일 '),'-','월 ') || '시')
+		  	   ) x
+		 order by x.coin_ticker, x.datetime_kst
+	</insert>
+	
+	<delete id="WordPressReportHTMLDelete" parameterType="HashMap">
+		delete from bithumb_coin_report_daily_html where yyyymmdd = #{date}
+		   and blog_id in (select blog_id from blog_setting where blog_gubun = 'wordpress')
+	</delete>
+	
+	<insert id="WordPressReportHTMLCreate" parameterType="HashMap">
 		insert into bithumb_coin_report_daily_html
-			(yyyymmdd, id, row, col, html, diff_yn, blog_yn, create_datetime)
+			(yyyymmdd, id, row, col, html, diff_yn, blog_yn, blog_id, create_datetime)
 		values
-			(#{yyyymmdd}, #{id}, #{row}, #{col}, #{html}, #{diff_yn}, #{blog_yn}, to_char(now(), 'YYYY-MM-DD HH24:MI:SS'))
+			(#{yyyymmdd}, #{id}, #{row}, #{col}, #{html}, #{diff_yn}, #{blog_yn}, #{blog_id}, to_char(now(), 'YYYY-MM-DD HH24:MI:SS'))
+	</insert>
+	
+	<delete id="TiStoryReportHTMLDelete" parameterType="HashMap">
+		delete from bithumb_coin_report_daily_html where yyyymmdd = #{date}
+		   and blog_id in (select blog_id from blog_setting where blog_gubun = 'tistory' and blog_url = 'https://diff2024.tistory.com')
+	</delete>
+	
+	<insert id="TiStoryReportHTMLCreate" parameterType="HashMap">
+		insert into bithumb_coin_report_daily_html
+			(yyyymmdd, id, row, col, html, diff_yn, blog_yn, blog_id, create_datetime)
+		values
+			(#{yyyymmdd}, #{id}, #{row}, #{col}, #{html}, #{diff_yn}, #{blog_yn}, #{blog_id}, to_char(now(), 'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 	
 	<select id="MainLiveRankList" resultType="HashMap" parameterType="HashMap">

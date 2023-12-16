@@ -181,26 +181,26 @@ export default {
 			var tmp0 = today_date_split[0]
 			var tmp1 = today_date_split[1]
 			var tmp2 = today_date_split[2]
-
-			if(Number(tmp1) < 10){
+			
+			if(Number(tmp1) < 10 && tmp1.length == 1){
 				tmp1 = '0'+tmp1
 			}
-			if(Number(tmp2) < 10){
+			if(Number(tmp2) < 10 && String(tmp2).length == 1){
 				tmp2 = '0'+tmp2
 			}
-
 			this.today_date = tmp0 + '-' + tmp1 + '-' + tmp2
-
+			
 			var yesterday_date = new Date(Number(this.today_date.substring(0,4)), Number(this.today_date.substring(5,7)), Number(this.today_date.substring(8,10)));
+			yesterday_date = new Date(yesterday_date.setMonth(yesterday_date.getMonth() - 1));
 			yesterday_date = new Date(yesterday_date.setDate(yesterday_date.getDate() - 1));
 			var yesterday_year = yesterday_date.getFullYear();
-			var yesterday_month = yesterday_date.getMonth();
+			var yesterday_month = yesterday_date.getMonth()+1;
 			var yesterday_day = yesterday_date.getDate();
-
-			if(Number(yesterday_month) < 10){
+			
+			if(Number(yesterday_month) < 10 && yesterday_month.length == 1){
 				yesterday_month = '0'+yesterday_month
 			}
-			if(Number(yesterday_day) < 10){
+			if(Number(yesterday_day) < 10 && String(yesterday_day).length == 1){
 				yesterday_day = '0'+yesterday_day
 			}
 			this.yesterday = yesterday_year+'-'+yesterday_month+'-'+yesterday_day
@@ -210,7 +210,12 @@ export default {
 	methods: {
 		makeReport(){
 			if(this.$route.params.date !== undefined){
-				axios.post('/Upbit/CoinDailyReportReg', null,{
+				Swal.fire({
+					title:this.$route.params.date+' 리포트를 생성 하겠습니다.',
+					icon: 'success'
+				});
+				
+				axios.post('/Upbit/CoinAnalysisCreate', null,{
 				params: {
 						date: this.today_date,
 						yesterday: this.yesterday
@@ -234,10 +239,10 @@ export default {
 					allowOutsideClick: false,
 				}).then(function (result) {
 					if (result.isConfirmed) {
-						axios.post('/Upbit/CoinDailyReportReg', null,{
+						axios.post('/Upbit/CoinAnalysisCreate', null,{
 						params: {
-								date: this.today_date,
-								yesterday: this.yesterday
+								date: '',
+								yesterday: ''
 							}
 						})
 						.then(response => {
