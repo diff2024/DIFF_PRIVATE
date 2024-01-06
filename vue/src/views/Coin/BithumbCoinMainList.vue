@@ -7,7 +7,8 @@
 }
 </style>
 <template>
-	<v-layout wrap row>
+	<LoadingVue v-if="isLoading"></LoadingVue>
+	<v-layout v-else wrap row>
 		<v-flex xs12 sm12 md12 style="margin-bottom:20px;">
 			<v-card xs12 sm12 md12>
 				<v-card-title xs12 sm12 md12 class="fontBold" style="font-size:18px; font-weight:bold; padding-left: 60px; padding-top: 20px; padding-bottom: 10px;">
@@ -96,9 +97,13 @@
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import {AgGridVue} from 'ag-grid-vue'
+import LoadingVue from '../../components/LoadingSpinner.vue';
+
 export default {
 	data () {
 		return {
+			isLoading: false,
+			timeout: 600000,
 			gridOptions: null,
 			columnDefs: null,
             rowData: [],
@@ -106,7 +111,6 @@ export default {
 			yesterday: '',
 			std_date: '',
 			end_date: '',
-			isLoading: false,
 			coinInfo: [{}],
 			excel_std_date: '',
 			excel_end_date: '',
@@ -114,7 +118,8 @@ export default {
 		}
 	},
 	components: {
-		AgGridVue
+		AgGridVue,
+		LoadingVue
 	},
 	beforeMount() {
        this.columnDefs = [
@@ -181,6 +186,13 @@ export default {
 			var tmp0 = today_date_split[0]
 			var tmp1 = today_date_split[1]
 			var tmp2 = today_date_split[2]
+
+			if(Number(tmp1) < 10 && String(tmp1).length == 1){
+				tmp1 = '0'+tmp1
+			}
+			if(Number(tmp2) < 10 && String(tmp2).length == 1){
+				tmp2 = '0'+tmp2
+			}
 			this.today_date = tmp0 + '-' + tmp1 + '-' + tmp2
 			
 			var yesterday_date = new Date(Number(this.today_date.substring(0,4)), Number(this.today_date.substring(5,7)), Number(this.today_date.substring(8,10)));
@@ -190,7 +202,7 @@ export default {
 			var yesterday_month = yesterday_date.getMonth()+1;
 			var yesterday_day = yesterday_date.getDate();
 			
-			if(Number(yesterday_month) < 10 && yesterday_month.length == 1){
+			if(Number(yesterday_month) < 10 && String(yesterday_month).length == 1){
 				yesterday_month = '0'+yesterday_month
 			}
 			if(Number(yesterday_day) < 10 && String(yesterday_day).length == 1){
@@ -203,22 +215,31 @@ export default {
 	methods: {
 		makeReport(){
 			if(this.$route.params.date !== undefined){
-				Swal.fire({
-					title:this.$route.params.date+' 리포트를 생성 하겠습니다.',
-					icon: 'success'
-				});
+				this.isLoading = true;
 				
 				axios.post('/Bithumb/CoinAnalysisCreate', null,{
-				params: {
+					params: {
 						date: this.today_date,
 						yesterday: this.yesterday
-					}
+					},
+					timeout: this.timeout
 				})
 				.then(response => {
+					this.isLoading = false;
+
 					Swal.fire({
 						title:'일일 리포트 생성이 완료되었습니다.',
 						icon: 'success'
 					});
+				})
+				.catch(error => {
+					this.isLoading = false;
+					
+					if (error.code === 'ECONNABORTED') {
+						console.log('요청이 타임아웃되었습니다.');
+					} else {
+						console.error('요청 실패:', error);
+					}
 				});
 			}else{
 				Swal.fire({
@@ -232,17 +253,31 @@ export default {
 					allowOutsideClick: false,
 				}).then(function (result) {
 					if (result.isConfirmed) {
+						this.isLoading = true;
+
 						axios.post('/Bithumb/CoinAnalysisCreate', null,{
-						params: {
+							params: {
 								date: '',
 								yesterday: ''
-							}
+							},
+							timeout: this.timeout
 						})
 						.then(response => {
+							this.isLoading = false;
+
 							Swal.fire({
 								title:'일일 리포트 생성이 완료되었습니다.',
 								icon: 'success'
 							});
+						})
+						.catch(error => {
+							this.isLoading = false;
+							
+							if (error.code === 'ECONNABORTED') {
+								console.log('요청이 타임아웃되었습니다.');
+							} else {
+								console.error('요청 실패:', error);
+							}
 						});
 					}
 				});

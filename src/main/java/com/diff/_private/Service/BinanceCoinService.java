@@ -16,7 +16,8 @@ import javax.net.ssl.HttpsURLConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.diff._private.Mapper.BinanceCoinMapper;
+
+import com.diff._private.Mapper.Main.BinanceCoinMapper;
 
 @Service
 @Transactional
@@ -57,12 +58,10 @@ public class BinanceCoinService {
 		DecimalFormat formatter = new DecimalFormat("###,###.########");
 		String blog_id = map.get("blog_id");
 		String date = map.get("date");
-		String kor_date = (map.get("date")).substring(2, 4) + "년 "+(map.get("date")).substring(5, 7)+"월 "+((map.get("date")).substring(8, 9)).replace("0", "") + ((map.get("date")).substring(9, 10)) +"일";
-		String short_kor_date = (map.get("date")).substring(5, 7)+"월 "+((map.get("date")).substring(8, 9)).replace("0", "") + ((map.get("date")).substring(9, 10)) +"일";
-        
-        String yesterday_kor_date = (map.get("yesterday")).substring(2, 4) + "년 "+(map.get("yesterday")).substring(5, 7)+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
-        String yesterday_short_kor_date = (map.get("yesterday")).substring(5, 7)+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
-        
+		String kor_date = (map.get("date")).substring(2, 4) + "년 "+((map.get("date")).substring(5, 6)).replace("0", "")+((map.get("date")).substring(6, 7))+"월 "+((map.get("date")).substring(8, 9)).replace("0", "")+((map.get("date")).substring(9, 10))+"일";
+		String short_kor_date = ((map.get("date")).substring(5, 6)).replace("0", "")+((map.get("date")).substring(6, 7))+"월 "+((map.get("date")).substring(8, 9)).replace("0", "") + ((map.get("date")).substring(9, 10)) +"일";
+		String yesterday_kor_date = (map.get("yesterday")).substring(2, 4) + "년 "+((map.get("yesterday")).substring(5, 6)).replace("0", "")+((map.get("yesterday")).substring(6, 7))+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
+		String yesterday_short_kor_date = ((map.get("yesterday")).substring(5, 6)).replace("0", "")+((map.get("yesterday")).substring(6, 7))+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
         String MainRankingCount = map.get("MainRankingCount");
         String SubRankingCount = map.get("SubRankingCount");
         List<HashMap<String, String>> coinDailyReportList = BinanceCoinMapper.CoinDailyReportList(map);
@@ -366,8 +365,8 @@ public class BinanceCoinService {
 		html += "<tr>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">기준시간</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">시가</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">저가</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">고가</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">저가</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">종가</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">거래량</td>";
 		html += "</tr>";
@@ -375,15 +374,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">09:00 ~ 12:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_0_4+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_0_4)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_0_4+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_0_4)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_0_4+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_0_4)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_0_4+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_0_4+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_0_4+"</td>";
 		html += "</tr>";
@@ -391,15 +390,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">13:00 ~ 16:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_4_8+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_4_8)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_4_8+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_4_8)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_4_8+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_4_8)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_4_8+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_4_8+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_4_8+"</td>";
 		html += "</tr>";
@@ -407,15 +406,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">17:00 ~ 20:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_8_12+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_8_12)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_8_12+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_8_12)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_8_12+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_8_12)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_8_12+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_8_12+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_8_12+"</td>";
 		html += "</tr>";
@@ -423,15 +422,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">21:00 ~ 00:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_12_16+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_12_16)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_12_16+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_12_16)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_12_16+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_12_16)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_12_16+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_12_16+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_12_16+"</td>";
 		html += "</tr>";
@@ -439,15 +438,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">01:00 ~ 04:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_16_20+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_16_20)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_16_20+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_16_20)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_16_20+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_16_20)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_16_20+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_16_20+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_16_20+"</td>";
 		html += "</tr>";
@@ -455,15 +454,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">05:00 ~ 08:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_20_24+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_20_24)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_20_24+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_20_24)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_20_24+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_20_24)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_20_24+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_20_24+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_20_24+"</td>";
 		html += "</tr>";
@@ -667,8 +666,8 @@ public class BinanceCoinService {
 			html += "<tr>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">기준시간</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">시가</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">저가</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">고가</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">저가</td>";			
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">종가</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">거래량</td>";
 			html += "</tr>";
@@ -676,15 +675,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">09:00 ~ 12:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_0_4+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_0_4)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_0_4+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_0_4)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_0_4+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_0_4)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_0_4+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_0_4+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_0_4+"</td>";
 			html += "</tr>";
@@ -692,15 +691,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">13:00 ~ 16:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_4_8+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_4_8)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_4_8+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_4_8)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_4_8+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_4_8)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_4_8+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_4_8+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_4_8+"</td>";
 			html += "</tr>";
@@ -708,15 +707,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">17:00 ~ 20:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_8_12+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_8_12)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_8_12+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_8_12)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_8_12+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_8_12)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_8_12+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_8_12+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_8_12+"</td>";
 			html += "</tr>";
@@ -724,15 +723,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">21:00 ~ 00:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_12_16+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_12_16)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_12_16+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_12_16)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_12_16+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_12_16)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_12_16+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_12_16+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_12_16+"</td>";
 			html += "</tr>";
@@ -740,15 +739,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">01:00 ~ 04:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_16_20+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_16_20)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_16_20+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_16_20)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_16_20+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_16_20)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_16_20+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_16_20+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_16_20+"</td>";
 			html += "</tr>";
@@ -756,15 +755,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">05:00 ~ 08:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_20_24+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_20_24)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_20_24+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_20_24)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_20_24+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_20_24)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_20_24+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_20_24+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_20_24+"</td>";
 			html += "</tr>";
@@ -916,8 +915,8 @@ public class BinanceCoinService {
 			ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:red;\">"+ranking_btc_l_h_price_rate+"%</td>";
 		}
 		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_o_price+"</td>";
-		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_l_price+"</td>";
 		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_h_price+"</td>";
+		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_l_price+"</td>";
 		ranking_btc_html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_c_price+"</td>";
 		ranking_btc_html += "</tr>";
 		
@@ -945,8 +944,8 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">시가대비종가</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가대비고가</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">시가</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">고가</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가</td>";
 			html += "<td style=\"border: 1px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">종가</td>";
 			html += "</tr>";
 			html += ranking_btc_html;
@@ -982,8 +981,8 @@ public class BinanceCoinService {
 						html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:red;\">"+ranking_l_h_price_rate+"%</td>";
 					}
 					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_o_price+"</td>";
-					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_l_price+"</td>";
 					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_h_price+"</td>";
+					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_l_price+"</td>";
 					html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_c_price+"</td>";
 					html += "</tr>";
 				}
@@ -1086,12 +1085,10 @@ public class BinanceCoinService {
 		DecimalFormat formatter = new DecimalFormat("###,###.########");
 		String blog_id = map.get("blog_id");
 		String date = map.get("date");
-		String kor_date = (map.get("date")).substring(2, 4) + "년 "+(map.get("date")).substring(5, 7)+"월 "+((map.get("date")).substring(8, 9)).replace("0", "") + ((map.get("date")).substring(9, 10)) +"일";
-		String short_kor_date = (map.get("date")).substring(5, 7)+"월 "+((map.get("date")).substring(8, 9)).replace("0", "") + ((map.get("date")).substring(9, 10)) +"일";
-        
-        String yesterday_kor_date = (map.get("yesterday")).substring(2, 4) + "년 "+(map.get("yesterday")).substring(5, 7)+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
-        String yesterday_short_kor_date = (map.get("yesterday")).substring(5, 7)+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
-        
+		String kor_date = (map.get("date")).substring(2, 4) + "년 "+((map.get("date")).substring(5, 6)).replace("0", "")+((map.get("date")).substring(6, 7))+"월 "+((map.get("date")).substring(8, 9)).replace("0", "")+((map.get("date")).substring(9, 10))+"일";
+		String short_kor_date = ((map.get("date")).substring(5, 6)).replace("0", "")+((map.get("date")).substring(6, 7))+"월 "+((map.get("date")).substring(8, 9)).replace("0", "") + ((map.get("date")).substring(9, 10)) +"일";
+		String yesterday_kor_date = (map.get("yesterday")).substring(2, 4) + "년 "+((map.get("yesterday")).substring(5, 6)).replace("0", "")+((map.get("yesterday")).substring(6, 7))+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
+		String yesterday_short_kor_date = ((map.get("yesterday")).substring(5, 6)).replace("0", "")+((map.get("yesterday")).substring(6, 7))+"월 "+((map.get("yesterday")).substring(8, 9)).replace("0", "") + ((map.get("yesterday")).substring(9, 10)) +"일";
         String MainRankingCount = map.get("MainRankingCount");
         String SubRankingCount = map.get("SubRankingCount");
         
@@ -1429,8 +1426,8 @@ public class BinanceCoinService {
 		html += "<tr>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">기준시간</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">시가</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">저가</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">고가</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">저가</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">종가</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">거래량</td>";
 		html += "</tr>";
@@ -1438,15 +1435,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">00:00 ~ 03:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_0_4+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_0_4)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_0_4+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_0_4)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_0_4+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_0_4)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_0_4+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_0_4+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_0_4+"</td>";
 		html += "</tr>";
@@ -1454,15 +1451,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">04:00 ~ 07:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_4_8+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_4_8)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_4_8+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_4_8)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_4_8+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_4_8)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_4_8+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_4_8+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_4_8+"</td>";
 		html += "</tr>";
@@ -1470,15 +1467,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">08:00 ~ 11:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_8_12+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_8_12)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_8_12+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_8_12)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_8_12+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_8_12)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_8_12+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_8_12+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_8_12+"</td>";
 		html += "</tr>";
@@ -1486,15 +1483,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">12:00 ~ 15:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_12_16+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_12_16)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_12_16+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_12_16)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_12_16+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_12_16)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_12_16+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_12_16+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_12_16+"</td>";
 		html += "</tr>";
@@ -1502,15 +1499,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">16:00 ~ 19:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_16_20+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_16_20)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_16_20+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_16_20)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_16_20+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_16_20)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_16_20+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_16_20+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_16_20+"</td>";
 		html += "</tr>";
@@ -1518,15 +1515,15 @@ public class BinanceCoinService {
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">20:00 ~ 23:59</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_20_24+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-		if(l_price.equals(l_20_24)) {
-			html += "color:#0000FF";
-		}
-		html += " \">"+l_20_24+"</td>";
-		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 		if(h_price.equals(h_20_24)) {
 			html += "color:#FF0000";
 		}
 		html += " \">"+h_20_24+"</td>";
+		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+		if(l_price.equals(l_20_24)) {
+			html += "color:#0000FF";
+		}
+		html += " \">"+l_20_24+"</td>";
 		html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_20_24+"</td>";
 		html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_20_24+"</td>";
 		html += "</tr>";
@@ -1719,8 +1716,8 @@ public class BinanceCoinService {
 			html += "<tr>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">기준시간</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">시가</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">저가</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">고가</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">저가</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">종가</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">거래량</td>";
 			html += "</tr>";
@@ -1728,15 +1725,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">00:00 ~ 03:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_0_4+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_0_4)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_0_4+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_0_4)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_0_4+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_0_4)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_0_4+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_0_4+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_0_4+"</td>";
 			html += "</tr>";
@@ -1744,15 +1741,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">04:00 ~ 07:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_4_8+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_4_8)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_4_8+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_4_8)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_4_8+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_4_8)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_4_8+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_4_8+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_4_8+"</td>";
 			html += "</tr>";
@@ -1760,15 +1757,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">08:00 ~ 11:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_8_12+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_8_12)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_8_12+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_8_12)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_8_12+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_8_12)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_8_12+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_8_12+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_8_12+"</td>";
 			html += "</tr>";
@@ -1776,15 +1773,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">12:00 ~ 15:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_12_16+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_12_16)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_12_16+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_12_16)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_12_16+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_12_16)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_12_16+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_12_16+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_12_16+"</td>";
 			html += "</tr>";
@@ -1792,15 +1789,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">16:00 ~ 19:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_16_20+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_16_20)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_16_20+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_16_20)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_16_20+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_16_20)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_16_20+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_16_20+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_16_20+"</td>";
 			html += "</tr>";
@@ -1808,15 +1805,15 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-weight:bold;\">20:00 ~ 23:59</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+o_20_24+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
-			if(l_price.equals(l_20_24)) {
-				html += "color:#0000FF";
-			}
-			html += " \">"+l_20_24+"</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
 			if(h_price.equals(h_20_24)) {
 				html += "color:#FF0000";
 			}
 			html += " \">"+h_20_24+"</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; ";
+			if(l_price.equals(l_20_24)) {
+				html += "color:#0000FF";
+			}
+			html += " \">"+l_20_24+"</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+c_20_24+"</td>";
 			html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+v_20_24+"</td>";
 			html += "</tr>";
@@ -1991,8 +1988,8 @@ public class BinanceCoinService {
 			ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:red;\">"+ranking_btc_l_h_price_rate+"%</td>";
 		}
 		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_o_price+"</td>";
-		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_l_price+"</td>";
 		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_h_price+"</td>";
+		ranking_btc_html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_l_price+"</td>";
 		ranking_btc_html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_btc_c_price+"</td>";
 		ranking_btc_html += "</tr>";
 		
@@ -2020,8 +2017,8 @@ public class BinanceCoinService {
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">시가대비종가</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가대비고가</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">시가</td>";
-			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가</td>";
 			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">고가</td>";
+			html += "<td style=\"border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">저가</td>";
 			html += "<td style=\"border: 1px solid black; padding-right:3px; text-align:center; font-size:15px; font-weight:bold;\">종가</td>";
 			html += "</tr>";
 			html += ranking_btc_html;
@@ -2063,8 +2060,8 @@ public class BinanceCoinService {
 						html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right; color:red;\">"+ranking_l_h_price_rate+"%</td>";
 					}
 					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_o_price+"</td>";
-					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_l_price+"</td>";
 					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_h_price+"</td>";
+					html += "<td style=\"border: 1px solid black; border-right:0px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_l_price+"</td>";
 					html += "<td style=\"border: 1px solid black; border-top:0px solid black; padding-right:3px; text-align:right;\">"+ranking_c_price+"</td>";
 					html += "</tr>";
 				}

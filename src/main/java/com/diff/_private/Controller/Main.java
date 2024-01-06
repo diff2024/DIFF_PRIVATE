@@ -270,6 +270,54 @@ public class Main {
 		return list;
 	}
 	
+	@GetMapping(path = "/BYBIT_BTC_HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> BYBIT_BTC_HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BYBIT_BTC_HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BYBIT_BTC_4HOUR_Ticker_Comparison")
+	public List<HashMap<String, String>> BYBIT_BTC_4HOUR_Ticker_Comparison(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BYBIT_BTC_4HOUR_Ticker_Comparison(map);
+		return list;
+	}
+	
+	@GetMapping(path = "/BYBIT_DAY_RANKING")
+	public List<HashMap<String, String>> BYBIT_DAY_RANKING(HttpServletRequest req) throws Exception {
+		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		if(date.equals("")) {
+			Calendar day = Calendar.getInstance();
+			day.add(Calendar.HOUR, -9); // UTC 기준
+		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		}
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("date", date);
+		List<HashMap<String, String>> list = MainService.BYBIT_DAY_RANKING(map);
+		return list;
+	}
+	
 	@GetMapping(path = "/upbit_5m")
 	public List<HashMap<String, String>> upbit_5m(HttpServletRequest req) throws Exception {
 		System.out.println("/Main/upbit_5m");

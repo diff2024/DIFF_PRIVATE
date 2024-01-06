@@ -12,7 +12,8 @@ import javax.net.ssl.HttpsURLConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.diff._private.Mapper.MainMapper;
+
+import com.diff._private.Mapper.Main.MainMapper;
 
 @Service
 @Transactional
@@ -75,6 +76,18 @@ public class MainService {
 	
 	public List<HashMap<String, String>> BINANCE_FUTURES_DAY_RANKING(HashMap<String, String> map) throws Exception{
 		return MainMapper.BINANCE_FUTURES_DAY_RANKING(map);
+	}
+	
+	public List<HashMap<String, String>> BYBIT_BTC_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BYBIT_BTC_HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> BYBIT_BTC_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BYBIT_BTC_4HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> BYBIT_DAY_RANKING(HashMap<String, String> map) throws Exception{
+		return MainMapper.BYBIT_DAY_RANKING(map);
 	}
 	
 	public List<HashMap<String, String>> ReportList() throws Exception{

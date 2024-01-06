@@ -1,5 +1,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.diff._private.Mapper.BinanceFuturesCoinMapper">
+<mapper namespace="com.diff._private.Mapper.Main.BinanceFuturesCoinMapper">
 	<select id="MainGridList" resultType="HashMap" parameterType="HashMap">
 		select x.coin_ticker id, x.gijun_date, x.coin_kor_name, x.coin_eng_name, x.max_price, x.min_price, x.max_date, x.min_date, x.o_price, x.c_price, x.l_price, x.h_price, x.trade_volume
 			 , coalesce(x.o_c_price_rate_5_date, '') o_c_price_rate_5_date, coalesce(x.o_c_price_rate_10_date, '') o_c_price_rate_10_date, coalesce(x.o_c_price_rate_15_date, '') o_c_price_rate_15_date

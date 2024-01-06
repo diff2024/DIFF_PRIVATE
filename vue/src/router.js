@@ -43,6 +43,12 @@ const BinanceFuturesCoinMainList = () => {
 const BinanceFuturesCoinLiveList = () => {
 	return import("./views/Coin/BinanceFuturesCoinLiveList.vue")	
 }
+const BybitCoinMainList = () => {
+	return import("./views/Coin/BybitCoinMainList.vue")	
+}
+const BybitCoinLiveList = () => {
+	return import("./views/Coin/BybitCoinLiveList.vue")	
+}
 
 export const router = new Router({
   mode: 'history',
@@ -99,6 +105,16 @@ export const router = new Router({
       component: BinanceFuturesCoinMainList
     },
     {
+      path: '/BybitCoinMainList',
+      name: 'bybitcoinMainList',
+      component: BybitCoinMainList
+    },
+    {
+      path: '/BybitCoinMainList/:date',
+      name: 'bybitcoinMainList',
+      component: BybitCoinMainList
+    },
+    {
       path: '/Report',
       name: 'Report',
       component: Report
@@ -127,6 +143,11 @@ export const router = new Router({
       path: '/BinanceFuturesCoinLiveList',
       name: 'binancefuturescoinLiveList',
       component: BinanceFuturesCoinLiveList
+    },
+    {
+      path: '/BybitCoinLiveList',
+      name: 'bybitcoinLiveList',
+      component: BybitCoinLiveList
     }
   ]
 });

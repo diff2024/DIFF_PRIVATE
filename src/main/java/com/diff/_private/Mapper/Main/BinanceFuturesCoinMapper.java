@@ -1,4 +1,4 @@
-package com.diff._private.Mapper;
+package com.diff._private.Mapper.Main;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface BitCoinMapper {
+public interface BinanceFuturesCoinMapper {
 	public List<HashMap<String, String>> MainGridList(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> MainLiveRankList(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> CoinInfo() throws Exception;

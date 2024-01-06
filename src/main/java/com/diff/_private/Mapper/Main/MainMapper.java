@@ -1,4 +1,4 @@
-package com.diff._private.Mapper;
+package com.diff._private.Mapper.Main;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +21,9 @@ public interface MainMapper {
 	public List<HashMap<String, String>> BINANCE_FUTURES_BTC_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> BINANCE_FUTURES_BTC_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> BINANCE_FUTURES_DAY_RANKING(HashMap<String, String> map) throws Exception;
+	public List<HashMap<String, String>> BYBIT_BTC_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;
+	public List<HashMap<String, String>> BYBIT_BTC_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;
+	public List<HashMap<String, String>> BYBIT_DAY_RANKING(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> ReportList() throws Exception;
 	public List<HashMap<String, String>> ReportHTMLList(HashMap<String, String> map) throws Exception;
 }

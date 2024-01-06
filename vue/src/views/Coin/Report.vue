@@ -78,7 +78,7 @@ export default {
 	},
 	beforeMount() {
        this.columnDefs = [
-           {headerName: 'Report', field:"id", width:250, cellStyle: {textAlign: "center"}, sortable: false, filter: true, resizable:true},
+           {headerName: 'Report', field:"id", width:250, cellStyle: {textAlign: "left"}, sortable: false, filter: true, resizable:true},
 		   {headerName: '일자', field:"yyyymmdd", hide:true, sortable: false, filter: true, resizable:true},
 		   {headerName: '거래소', field:"market", hide:true, sortable: false, filter: true, resizable:true},
 		   {headerName: '블로그ID', field:"blog", hide:true, sortable: false, filter: true, resizable:true},
@@ -146,7 +146,7 @@ export default {
 					this.report_html += (response.data[x].html)
 				}
 				
-				if(this.search_blog == '2' || this.search_blog == '3' || this.search_blog == '4' || this.search_blog == '5'){
+				if(this.search_blog == '2' || this.search_blog == '3' || this.search_blog == '4' || this.search_blog == '5' || this.search_blog == '6'){
 					if(this.search_market == 'upbit'){
 						setTimeout(function() {
 							var head = document.getElementById("upbit_hour_graph_script");
@@ -226,6 +226,26 @@ export default {
 							script12.type = 'application/javascript';
 							script12.src = '../../../binance_futures_day_graph_script.js';
 							head12.appendChild(script12);
+						}, 1500);
+					}else if(this.search_market == 'bybit'){
+						setTimeout(function() {
+							var head13 = document.getElementById("bybit_hour_graph_script");
+							var script13 = document.createElement('script');
+							script13.type = 'application/javascript';
+							script13.src = '../../../bybit_hour_graph_script.js';
+							head13.appendChild(script13);
+							/*
+							var head14 = document.getElementById("bybit_4hour_graph_script");
+							var script14 = document.createElement('script');
+							script14.type = 'application/javascript';
+							script14.src = '../../../bybit_4hour_graph_script.js';
+							head14.appendChild(script14);
+							*/
+							var head15 = document.getElementById("bybit_day_graph_script");
+							var script15 = document.createElement('script');
+							script15.type = 'application/javascript';
+							script15.src = '../../../bybit_day_graph_script.js';
+							head15.appendChild(script15);
 						}, 1500);
 					}
 				}
