@@ -25,6 +25,7 @@ import com.diff._private.Service.CoinService;
 import com.diff._private.Service.BitCoinService;
 import com.diff._private.Service.BinanceCoinService;
 import com.diff._private.Service.BinanceFuturesCoinService;
+import com.diff._private.Service.BybitCoinService;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -68,6 +69,9 @@ public class Schedule {
 	
 	@Autowired
 	BinanceFuturesCoinService BinanceFuturesCoinService;
+	
+	@Autowired
+	BybitCoinService BybitCoinService;
 	
 	@Async
 	@Scheduled(cron = "0 20 0/1 * * *")
@@ -119,6 +123,13 @@ public class Schedule {
 	    String BinanceReportAD3 = SettingMap.get("binance_report_ad3");
 	    String BinanceReportAD4 = SettingMap.get("binance_report_ad4");
 	    String BinanceReportAD5 = SettingMap.get("binance_report_ad5");
+	    String BybitMainRankingCount = SettingMap.get("bybit_report_main_ranking");
+	    String BybitSubRankingCount = SettingMap.get("bybit_report_sub_ranking");
+	    String BybitReportAD1 = SettingMap.get("bybit_report_ad1");
+	    String BybitReportAD2 = SettingMap.get("bybit_report_ad2");
+	    String BybitReportAD3 = SettingMap.get("bybit_report_ad3");
+	    String BybitReportAD4 = SettingMap.get("bybit_report_ad4");
+	    String BybitReportAD5 = SettingMap.get("bybit_report_ad5");
 	    
 	    HashMap<String, String> BithumbMap = new HashMap<String, String>();
 	    BithumbMap.put("date", BitDate);
@@ -155,6 +166,18 @@ public class Schedule {
 	    BinanceMap.put("BinanceReportAD3", BinanceReportAD3);
 	    BinanceMap.put("BinanceReportAD4", BinanceReportAD4);
 	    BinanceMap.put("BinanceReportAD5", BinanceReportAD5);
+	    
+	    HashMap<String, String> BybitMap = new HashMap<String, String>();
+	    BybitMap.put("date", UpbitDate);
+	    BybitMap.put("yyyymmdd", UpbitDate);
+	    BybitMap.put("yesterday", UpbitYesterDay);
+	    BybitMap.put("MainRankingCount", BybitMainRankingCount);
+	    BybitMap.put("SubRankingCount", BybitSubRankingCount);
+	    BybitMap.put("BybitReportAD1", BybitReportAD1);
+	    BybitMap.put("BybitReportAD2", BybitReportAD2);
+	    BybitMap.put("BybitReportAD3", BybitReportAD3);
+	    BybitMap.put("BybitReportAD4", BybitReportAD4);
+	    BybitMap.put("BybitReportAD5", BybitReportAD5);
 	    
 	    if((Integer.parseInt(HHNow) >= 16) || (Integer.parseInt(HHNow) <= 2)) {
         	BitCoinService.CoinAnalysisDelete(BithumbMap);
@@ -196,6 +219,16 @@ public class Schedule {
     		BinanceFuturesCoinService.WordPressReportHTMLCreate(BinanceMap);
     	    BinanceMap.put("blog_id", "5");
     	    BinanceFuturesCoinService.TiStoryReportHTMLCreate(BinanceMap);
+    	    
+    	    BybitCoinService.CoinAnalysisDelete(BybitMap);
+		    Thread.sleep(1500);
+		    BybitCoinService.CoinAnalysisCreate(BybitMap);
+		    BybitCoinService.CoinAnalysisHourGraphCreate(BybitMap);
+		    BybitCoinService.CoinAnalysis4HourGraphCreate(BybitMap);
+		    BybitMap.put("blog_id", "1");
+    		BybitCoinService.WordPressReportHTMLCreate(BybitMap);
+    		BybitMap.put("blog_id", "6");
+    	    BybitCoinService.TiStoryReportHTMLCreate(BybitMap);
         }else {
         	UpbitCoinService.CoinAnalysisDelete(UpbitMap);
 		    Thread.sleep(1500);
@@ -226,6 +259,16 @@ public class Schedule {
     		BinanceFuturesCoinService.WordPressReportHTMLCreate(BinanceMap);
     	    BinanceMap.put("blog_id", "5");
     	    BinanceFuturesCoinService.TiStoryReportHTMLCreate(BinanceMap);
+    	    
+    	    BybitCoinService.CoinAnalysisDelete(BybitMap);
+		    Thread.sleep(1500);
+		    BybitCoinService.CoinAnalysisCreate(BybitMap);
+		    BybitCoinService.CoinAnalysisHourGraphCreate(BybitMap);
+		    BybitCoinService.CoinAnalysis4HourGraphCreate(BybitMap);
+		    BybitMap.put("blog_id", "1");
+    		BybitCoinService.WordPressReportHTMLCreate(BybitMap);
+    		BybitMap.put("blog_id", "6");
+    	    BybitCoinService.TiStoryReportHTMLCreate(BybitMap);
     	    
     	    BitCoinService.CoinAnalysisDelete(BithumbMap);
     		Thread.sleep(1500);
