@@ -23,10 +23,8 @@
 				<!-- <Upbit5M :key="Upbit5MKey" ref="ref_Upbit5M" /> -->
 			</v-col>
 			<v-col xl="2" md="2" sm="2" style="text-align:center; padding-top:40px;">
-				<!--
+				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" @click="btn_test" />
 				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
-				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
-				-->
 			</v-col>
 			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
 				<!-- <Upbit15M :key="Upbit15MKey" ref="ref_Upbit15M" /> -->
@@ -34,13 +32,11 @@
 		</v-row>
 		<v-row>
 			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
-				<!-- <Upbit60M :key="Upbit60MKey" ref="ref_Upbit60M" /> -->
+				<Upbit60M :key="Upbit60MKey" ref="ref_Upbit60M" />
 			</v-col>
 			<v-col xl="2" md="2" sm="2" style="text-align:center; padding-top:40px;">
-				<!--
 				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
 				<img width="320px" height="240px" src="@/assets/advertise/TOP_AD.jpg" />
-				-->
 			</v-col>
 			<v-col xl="5" md="5" sm="5" style="text-align:center; padding-top:40px;">
 				<!-- <Upbit240M  :key="Upbit240MKey" ref="ref_Upbit240M" /> -->
@@ -85,6 +81,12 @@ export default {
 		setInterval(this.CurrentDataTime.bind(this) , 1000);
 	},
 	methods: {
+		btn_test(){
+			axios.get('/Main/MainTest')
+			.then(response => {
+				console.log('MainTest')
+			})
+		},
 		CurrentDataTime() {
 			let ss = new Date().getSeconds() < 10? "0" + new Date().getSeconds(): new Date().getSeconds();
 

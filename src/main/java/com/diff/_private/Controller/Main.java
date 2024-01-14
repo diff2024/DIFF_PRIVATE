@@ -3,6 +3,7 @@ package com.diff._private.Controller;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
+import java.sql.Timestamp;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
@@ -27,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.simple.parser.JSONParser;
+
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.http.HttpHeaders;
@@ -62,6 +65,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.diff._private.Service.CoinService;
 import com.diff._private.Service.MainService;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/Main")
@@ -72,6 +78,164 @@ public class Main {
 	
 	@Autowired
 	MainService MainService;
+	
+	@GetMapping(path = "/MainTest")
+	public void MainTest() throws Exception{
+	    String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + START_DATETIME + "] MainTest 시작");
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		
+		long TIMESTMAP = System.currentTimeMillis();
+		String DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
+        System.out.println(TIMESTMAP);
+        System.out.println(DATETIME_KST);
+        
+        // 5분전
+        long TIMESTMAP_5 = TIMESTMAP - (60000*5);
+		String DATETIME_KST_5 = simpleDateFormat.format(TIMESTMAP_5);
+        System.out.println("[TIMESTMAP_5] " + TIMESTMAP_5);
+        System.out.println("[DATETIME_KST_5] " + DATETIME_KST_5);
+        
+        // 15분전
+        long TIMESTMAP_15 = TIMESTMAP - (60000*15);
+		String DATETIME_KST_15 = simpleDateFormat.format(TIMESTMAP_15);
+        System.out.println("[TIMESTMAP_15] " + TIMESTMAP_15);
+        System.out.println("[DATETIME_KST_15] " + DATETIME_KST_15);
+        
+        // 60분전
+        long TIMESTMAP_60 = TIMESTMAP - (60000*60);
+		String DATETIME_KST_60 = simpleDateFormat.format(TIMESTMAP_60);
+        System.out.println("[TIMESTMAP_60] " + TIMESTMAP_60);
+        System.out.println("[DATETIME_KST_60] " + DATETIME_KST_60);
+        
+        // 240분전
+        long TIMESTMAP_240 = TIMESTMAP - (60000*240);
+		String DATETIME_KST_240 = simpleDateFormat.format(TIMESTMAP_240);
+        System.out.println("[TIMESTMAP_240] " + TIMESTMAP_240);
+        System.out.println("[DATETIME_KST_240] " + DATETIME_KST_240);
+        
+        // 600분전
+        long TIMESTMAP_600 = TIMESTMAP - (60000*600);
+		String DATETIME_KST_600 = simpleDateFormat.format(TIMESTMAP_600);
+        System.out.println("[TIMESTMAP_600] " + TIMESTMAP_600);
+        System.out.println("[DATETIME_KST_600] " + DATETIME_KST_600);
+        
+        String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_600)).substring(0, 10);
+        String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
+        
+        
+		//URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=60&from=1704871966&to=1704894026");
+        //URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=5&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
+        //URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=15&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
+        //URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=60&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
+        URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=240&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
+        
+        HttpsURLConnection conn = (HttpsURLConnection)url.openConnection(); 
+        conn.setRequestMethod("GET");
+        conn.setConnectTimeout(3000); // 연결 타임아웃 설정 (3초)
+        conn.setReadTimeout(3000); // 읽기 타임아웃 설정 (3초)
+        conn.connect();
+        
+        String RESPONSE_DATA = "";
+        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = null;
+            while(true){
+                line = reader.readLine();
+                if(line == null)
+                    break;
+                
+                RESPONSE_DATA += line;
+            }
+            reader.close();
+        }
+        System.out.println("=========RESPONSE_DATA=========");
+        System.out.println(RESPONSE_DATA);
+        JSONObject jObject = new JSONObject(RESPONSE_DATA);
+        Calendar TMP_CAL = Calendar.getInstance();
+        if((jObject.getString("s")).equals("ok")) {
+        	JSONArray jArray_t = jObject.getJSONArray("t");
+        	JSONArray jArray_o = jObject.getJSONArray("o");
+        	JSONArray jArray_l = jObject.getJSONArray("l");
+        	JSONArray jArray_h = jObject.getJSONArray("h");
+        	JSONArray jArray_c = jObject.getJSONArray("c");
+        	JSONArray jArray_v = jObject.getJSONArray("v");
+        	for (int i = 0; i < jArray_t.length(); i++) {
+        		String timestamp = (jArray_t.get(i)).toString();
+        		String datetime_kst = simpleDateFormat.format(new Date(Long.parseLong(timestamp)));
+        		String datetime_utc = simpleDateFormat.format(new Date(Long.parseLong(timestamp) - (60000*540)));
+        		
+        		String o_price = (jArray_o.get(i)).toString();
+        		String l_price = (jArray_l.get(i)).toString();
+        		String h_price = (jArray_h.get(i)).toString();
+        		String c_price = (jArray_c.get(i)).toString();
+        		String volume = (jArray_v.get(i)).toString();
+        		
+        		BigDecimal BI_C_PRICE = new BigDecimal(c_price);
+        		BigDecimal BI_VOLUME = new BigDecimal(volume);
+        		BigDecimal BI_PRICE_VOLUME = BI_C_PRICE.multiply(BI_VOLUME);
+        		
+        		String volume_price = (BI_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
+        		
+        		System.out.println("===============================================================");
+        		System.out.println("> TIMESTAMP : " + timestamp);
+        		System.out.println("> DATETIME KST : " + datetime_kst);
+        		System.out.println("> DATETIME UTC : " + datetime_utc);
+        		System.out.println("> 시가 : " + o_price);
+        		System.out.println("> 저가 : " + l_price);
+        		System.out.println("> 고가 : " + h_price);
+        		System.out.println("> 종가 : " + c_price);
+        		System.out.println("> 거래량 : " + volume);
+        		System.out.println("> 거래대금 : " + volume_price);
+        	}
+        }
+        
+
+        /*
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(RESPONSE_DATA);
+        System.out.println(obj);
+        JSONObject jsonMain = (JSONObject) obj;
+        */
+        conn.disconnect();
+		
+        /*
+        JSONParser jsonParser = new JSONParser();
+		JSONObject resultJsonObj = new JSONObject(); //최초 깊이 1의 제이슨 객체
+		resultJsonObj = (JSONObject) jsonParser.parse(RESPONSE_DATA);
+		System.out.println(resultJsonObj.toString());
+		
+		System.out.println("----------------------------------------");
+		JSONObject resultJsonObj2 = (JSONObject) resultJsonObj.get("s"); //깊이 2의 제이슨 객체
+		System.out.println(resultJsonObj2);
+		*/
+        
+		/*
+		JSONArray resultJsonArray = new JSONArray(); //깊이 2에 존재하는 제이슨 배열을 가져올 객체
+		resultJsonArray = (JSONArray) resultJsonObj2.get("jsonList"); 	
+		
+		//배열에 있는 제이슨 객체를 받을 임시 제이슨 객체
+		JSONObject tempJson = new JSONObject();
+		for (int i = 0; i < resultJsonArray.size(); i++) { //배열에 있는 제이슨 수많큼 반복한다.
+			tempJson = (JSONObject) resultJsonArray.get(i);	
+			System.out.println(tempJson.toString());
+		}
+		*/
+		
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + END_DATETIME + "] MainTest 종료");
+	}
+	
+	@GetMapping(path = "/Main_5MIN")
+	public void Main_5MIN() throws Exception{
+		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+		
+		for(int x=0; x<CoinList.size(); x++) {
+			System.out.println("> CoinTicker : " + CoinList.get(x).get("coin_ticker"));
+			System.out.println("> APICoinTicker : " + CoinList.get(x).get("api_coin_ticker"));
+		}
+	}
 	
 	@GetMapping(path = "/CoinAnalysisSetting")
 	public HashMap<String, String> CoinAnalysisSetting() throws Exception{

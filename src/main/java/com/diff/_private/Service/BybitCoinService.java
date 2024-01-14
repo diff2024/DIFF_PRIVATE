@@ -925,6 +925,10 @@ public class BybitCoinService {
 		
 		int SubRankingMok = (Integer.parseInt(SubRankingCount)/Integer.parseInt("20"))+1;
 		for(int x=1; x<=SubRankingMok; x++) {
+			//다음 Ranking이 있는지 없는지 체크한다.
+			if(coinDailyReportList.size() <= ((x-1)*20)+1) {
+				break;
+			}
 			html = "";
 			html += "<table id=\"rank_tbl_"+x+"\" style=\"color:black; border-spacing:0px; border-color:black; font-size:13px; padding: 15px;\">";
 			html += "<colgroup>";
@@ -1998,6 +2002,10 @@ public class BybitCoinService {
 		
 		int SubRankingMok = (Integer.parseInt(SubRankingCount)/Integer.parseInt("20"))+1;
 		for(int x=1; x<=SubRankingMok; x++) {
+			//다음 Ranking이 있는지 없는지 체크한다.
+			if(coinDailyReportList.size() <= ((x-1)*20)+1) {
+				break;
+			}
 			html = "";
 			html += "<table id=\"rank_tbl_"+x+"\" style=\"color:black; border-spacing:0px; border-color:black; font-size:13px;\">";
 			html += "<colgroup>";

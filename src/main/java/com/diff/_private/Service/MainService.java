@@ -97,4 +97,8 @@ public class MainService {
 	public List<HashMap<String, String>> ReportHTMLList(HashMap<String, String> map) throws Exception{
 		return MainMapper.ReportHTMLList(map);
 	}
+	
+	public List<HashMap<String, String>> UpbitCoinList() throws Exception{
+		return MainMapper.UpbitCoinList();
+	}
 }

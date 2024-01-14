@@ -26,4 +26,5 @@ public interface MainMapper {
 	public List<HashMap<String, String>> BYBIT_DAY_RANKING(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> ReportList() throws Exception;
 	public List<HashMap<String, String>> ReportHTMLList(HashMap<String, String> map) throws Exception;
+	public List<HashMap<String, String>> UpbitCoinList() throws Exception;
 }

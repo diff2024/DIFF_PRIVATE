@@ -1166,4 +1166,11 @@
 		   and x.blog_id = #{blog}
 		 order by cast(x.row as integer)
 	</select>
+	
+	<select id="UpbitCoinList" resultType="HashMap">
+		select x.coin_ticker, replace(x.coin_ticker, 'KRW-', '') api_coin_ticker
+		  from upbit_coin_info x
+		 where x.coin_delete_yn = 'N'
+		 order by x.coin_ticker
+	</select>
 </mapper>
