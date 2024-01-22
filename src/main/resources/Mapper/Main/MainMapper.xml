@@ -1168,7 +1168,7 @@
 	</select>
 	
 	<select id="UpbitCoinList" resultType="HashMap">
-		select x.coin_ticker, replace(x.coin_ticker, 'KRW-', '') api_coin_ticker
+		select x.coin_ticker, replace(x.coin_ticker, 'KRW-', '') api_coin_ticker, x.coin_kor_name
 		  from upbit_coin_info x
 		 where x.coin_delete_yn = 'N'
 		 order by x.coin_ticker
