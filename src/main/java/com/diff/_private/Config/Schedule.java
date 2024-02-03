@@ -74,8 +74,9 @@ public class Schedule {
 	BybitCoinService BybitCoinService;
 	
 	@Async
-	@Scheduled(cron = "0 20 0/1 * * *")
+	@Scheduled(cron = "0 30 0/1 * * *")
     public void Schedule_Report_Reg() throws Exception {
+		/*
 		LocalTime now = LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
         String HHNow = now.format(formatter);
@@ -280,6 +281,7 @@ public class Schedule {
 		    BithumbMap.put("blog_id", "2");
 		    BitCoinService.TiStoryReportHTMLCreate(BithumbMap);
         }
+        */
 	}
 	
 	

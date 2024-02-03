@@ -16,6 +16,9 @@ const Main = () => {
 const Test = () => {
 	return import("./views/Test.vue")
 }
+const UpbitFullLive = () => {
+  return import("./views/Coin/UpbitFullLive.vue")
+}
 const Report = () => {
 	return import("./views/Coin/Report.vue")	
 }
@@ -58,6 +61,11 @@ export const router = new Router({
       path: '/',
       name: 'main',
       component: Main,
+    },
+    {
+      path: '/UpbitFullLive',
+      name: 'upbitfulllive',
+      component: UpbitFullLive
     },
     {
       path: '/test',

@@ -105,12 +105,19 @@ public class BitCoinController {
 	public void CoinAnalysisCreate(HttpServletRequest req) throws Exception {
 		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
 		String yesterday = (req.getParameter("yesterday")==null)?"":req.getParameter("yesterday");
-		 
-		if(date.equals("") || yesterday.equals("")) {
+		
+		if(date.equals("")) {
 			Calendar day = Calendar.getInstance();
 		    date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
 		    day.add(Calendar.DATE , -1);
 		    yesterday = new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime());
+		} else {
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date SetDate = transFormat.parse(date);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(SetDate);
+			cal.add(Calendar.DATE , -1);
+			yesterday = new java.text.SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
 		}
 		
 	    HashMap<String, String> SettingMap = MainService.CoinAnalysisSetting();

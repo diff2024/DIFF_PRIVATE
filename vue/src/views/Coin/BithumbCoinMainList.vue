@@ -103,7 +103,7 @@ export default {
 	data () {
 		return {
 			isLoading: false,
-			timeout: 600000,
+			timeout: 1000000,
 			gridOptions: null,
 			columnDefs: null,
             rowData: [],
@@ -219,8 +219,7 @@ export default {
 				
 				axios.post('/Bithumb/CoinAnalysisCreate', null,{
 					params: {
-						date: this.today_date,
-						yesterday: this.yesterday
+						date: this.today_date
 					},
 					timeout: this.timeout
 				})
@@ -257,8 +256,7 @@ export default {
 
 						axios.post('/Bithumb/CoinAnalysisCreate', null,{
 							params: {
-								date: '',
-								yesterday: ''
+								date: ''
 							},
 							timeout: this.timeout
 						})

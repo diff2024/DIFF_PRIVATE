@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MainMapper {
+	public String SelectCodeData(String parameter) throws Exception;
 	public void UpbitCoinMIN(HashMap<String, String> map) throws Exception;
 	public HashMap<String, String> CoinAnalysisSetting() throws Exception;
 	public List<HashMap<String, String>> UPBIT_BTC_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;

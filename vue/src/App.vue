@@ -26,7 +26,7 @@
 	<!--<div id="app" v-if="$route.name !== 'main'">-->
 	<div id="app">
 		<v-app id="inspire">
-			<v-app-bar color="#283345" dark class="fontDefault v-HeadClass" :clipped-left="$vuetify.breakpoint.lgAndUp">
+			<v-app-bar color="#283345" dark class="fontDefault v-HeadClass" :clipped-left="$vuetify.breakpoint.lgAndUp" v-if="$route.name !== 'upbitfulllive'">
 				<v-toolbar-title v-on:click="goMainURL" class="fontDefault ml-2 pl-4" style="cursor:pointer;">
 					<img src="./assets/logo.jpg" width="90px" style="vertical-align:middle;" />
 				</v-toolbar-title>
@@ -57,7 +57,7 @@
 				<router-view></router-view>
 			</v-main>
 			<footer style="padding-bottom: 6px; padding-left:30px;">
-				<span style="font-size:20px;">DIFF</span>
+				<span style="font-size:20px;"></span>
 			</footer>
 		</v-app>
 	</div>

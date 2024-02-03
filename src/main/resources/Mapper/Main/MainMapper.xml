@@ -1,5 +1,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.diff._private.Mapper.Main.MainMapper">
+	<select id="SelectCodeData" parameterType="String" resultType="String">
+		select coalesce(max(code_value), '') code_value
+		  from code_data
+		 where 1=1 
+		   and code_id = #{value}
+	</select>
+	
 	<insert id="UpbitCoinMIN" parameterType="HashMap">
 		insert into upbit_coin_min
 			(coin_ticker, datetime_utc, datetime_kst, o_price, h_price, l_price, c_price, trade_volume, trade_price_volume)

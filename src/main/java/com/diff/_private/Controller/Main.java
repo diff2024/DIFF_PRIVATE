@@ -87,153 +87,29 @@ public class Main {
 	    String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
 		System.out.println("[" + START_DATETIME + "] MainTest 시작");
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-		
-		long TIMESTMAP = System.currentTimeMillis();
-		String DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
-        System.out.println(TIMESTMAP);
-        System.out.println(DATETIME_KST);
-        
-        // 5분전
-        long TIMESTMAP_5 = TIMESTMAP - (60000*5);
-		String DATETIME_KST_5 = simpleDateFormat.format(TIMESTMAP_5);
-        System.out.println("[TIMESTMAP_5] " + TIMESTMAP_5);
-        System.out.println("[DATETIME_KST_5] " + DATETIME_KST_5);
-        
-        // 15분전
-        long TIMESTMAP_15 = TIMESTMAP - (60000*15);
-		String DATETIME_KST_15 = simpleDateFormat.format(TIMESTMAP_15);
-        System.out.println("[TIMESTMAP_15] " + TIMESTMAP_15);
-        System.out.println("[DATETIME_KST_15] " + DATETIME_KST_15);
-        
-        // 60분전
-        long TIMESTMAP_60 = TIMESTMAP - (60000*60);
-		String DATETIME_KST_60 = simpleDateFormat.format(TIMESTMAP_60);
-        System.out.println("[TIMESTMAP_60] " + TIMESTMAP_60);
-        System.out.println("[DATETIME_KST_60] " + DATETIME_KST_60);
-        
-        // 240분전
-        long TIMESTMAP_240 = TIMESTMAP - (60000*240);
-		String DATETIME_KST_240 = simpleDateFormat.format(TIMESTMAP_240);
-        System.out.println("[TIMESTMAP_240] " + TIMESTMAP_240);
-        System.out.println("[DATETIME_KST_240] " + DATETIME_KST_240);
-        
-        // 600분전
-        long TIMESTMAP_600 = TIMESTMAP - (60000*600);
-		String DATETIME_KST_600 = simpleDateFormat.format(TIMESTMAP_600);
-        System.out.println("[TIMESTMAP_600] " + TIMESTMAP_600);
-        System.out.println("[DATETIME_KST_600] " + DATETIME_KST_600);
-        
-        String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_600)).substring(0, 10);
-        String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
-        
-        
-		//URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=60&from=1704871966&to=1704894026");
-        //URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=5&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
-        //URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=15&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
-        //URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=60&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
-        URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol=TFUELKRW&resolution=240&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
-        
-        HttpsURLConnection conn = (HttpsURLConnection)url.openConnection(); 
-        conn.setRequestMethod("GET");
-        conn.setConnectTimeout(3000); // 연결 타임아웃 설정 (3초)
-        conn.setReadTimeout(3000); // 읽기 타임아웃 설정 (3초)
-        conn.connect();
-        
-        String RESPONSE_DATA = "";
-        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = null;
-            while(true){
-                line = reader.readLine();
-                if(line == null)
-                    break;
-                
-                RESPONSE_DATA += line;
-            }
-            reader.close();
-        }
-        
-        JSONObject jObject = new JSONObject(RESPONSE_DATA);
-        Calendar TMP_CAL = Calendar.getInstance();
-        if((jObject.getString("s")).equals("ok")) {
-        	JSONArray jArray_t = jObject.getJSONArray("t");
-        	JSONArray jArray_o = jObject.getJSONArray("o");
-        	JSONArray jArray_l = jObject.getJSONArray("l");
-        	JSONArray jArray_h = jObject.getJSONArray("h");
-        	JSONArray jArray_c = jObject.getJSONArray("c");
-        	JSONArray jArray_v = jObject.getJSONArray("v");
-        	for (int i = 0; i < jArray_t.length(); i++) {
-        		String timestamp = (jArray_t.get(i)).toString();
-        		String datetime_kst = simpleDateFormat.format(new Date(Long.parseLong(timestamp)));
-        		String datetime_utc = simpleDateFormat.format(new Date(Long.parseLong(timestamp) - (60000*540)));
-        		
-        		String o_price = (jArray_o.get(i)).toString();
-        		String l_price = (jArray_l.get(i)).toString();
-        		String h_price = (jArray_h.get(i)).toString();
-        		String c_price = (jArray_c.get(i)).toString();
-        		String volume = (jArray_v.get(i)).toString();
-        		
-        		BigDecimal BI_C_PRICE = new BigDecimal(c_price);
-        		BigDecimal BI_VOLUME = new BigDecimal(volume);
-        		BigDecimal BI_PRICE_VOLUME = BI_C_PRICE.multiply(BI_VOLUME);
-        		
-        		String volume_price = (BI_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
-        		
-        		System.out.println("===============================================================");
-        		System.out.println("> TIMESTAMP : " + timestamp);
-        		System.out.println("> DATETIME KST : " + datetime_kst);
-        		System.out.println("> DATETIME UTC : " + datetime_utc);
-        		System.out.println("> 시가 : " + o_price);
-        		System.out.println("> 저가 : " + l_price);
-        		System.out.println("> 고가 : " + h_price);
-        		System.out.println("> 종가 : " + c_price);
-        		System.out.println("> 거래량 : " + volume);
-        		System.out.println("> 거래대금 : " + volume_price);
-        	}
-        }
-        
-
-        /*
-        JSONParser parser = new JSONParser();
-        Object obj = parser.parse(RESPONSE_DATA);
-        System.out.println(obj);
-        JSONObject jsonMain = (JSONObject) obj;
-        */
-        conn.disconnect();
-		
-        /*
-        JSONParser jsonParser = new JSONParser();
-		JSONObject resultJsonObj = new JSONObject(); //최초 깊이 1의 제이슨 객체
-		resultJsonObj = (JSONObject) jsonParser.parse(RESPONSE_DATA);
-		System.out.println(resultJsonObj.toString());
-		
-		System.out.println("----------------------------------------");
-		JSONObject resultJsonObj2 = (JSONObject) resultJsonObj.get("s"); //깊이 2의 제이슨 객체
-		System.out.println(resultJsonObj2);
-		*/
-        
-		/*
-		JSONArray resultJsonArray = new JSONArray(); //깊이 2에 존재하는 제이슨 배열을 가져올 객체
-		resultJsonArray = (JSONArray) resultJsonObj2.get("jsonList"); 	
-		
-		//배열에 있는 제이슨 객체를 받을 임시 제이슨 객체
-		JSONObject tempJson = new JSONObject();
-		for (int i = 0; i < resultJsonArray.size(); i++) { //배열에 있는 제이슨 수많큼 반복한다.
-			tempJson = (JSONObject) resultJsonArray.get(i);	
-			System.out.println(tempJson.toString());
-		}
-		*/
-		
 		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
 		System.out.println("[" + END_DATETIME + "] MainTest 종료");
 	}
 	
+	@GetMapping(path = "/SelectCodeData")
+	public String SelectCodeData(HttpServletRequest req) throws Exception{
+		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + START_DATETIME + "] SelectCodeData 시작");
+		
+		String code_id = (req.getParameter("code_id")==null)?"":req.getParameter("code_id");
+		
+		String CodeValue =  MainService.SelectCodeData(code_id);
+		
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + END_DATETIME + "] SelectCodeData 종료");
+		
+		return CodeValue;
+	}
+	 
 	@GetMapping(path = "/Main_5MIN")
 	public List<HashMap<String, String>> Main_5MIN() throws Exception{
 		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
 		System.out.println("[" + START_DATETIME + "] 5MIN 시작");
-		
 		String GIJUN_DATETIME = "";
 		LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -380,24 +256,9 @@ public class Main {
 	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		
 	        		if(API_HH.equals(datetime_kst_hh) && API_MM.equals(datetime_kst_mm)) {
-	        			/*
-	        			System.out.println("=================================["+Coin_Ticker+"]==============================");
-	        			System.out.println("> URL : " + url);
-	        			System.out.println("> TIMESTAMP : " + timestamp);
-		        		System.out.println("> DATETIME KST : " + datetime_kst);
-		        		System.out.println("> DATETIME UTC : " + datetime_utc);
-		        		System.out.println("> 시가 : " + o_price);
-		        		System.out.println("> 저가 : " + l_price);
-		        		System.out.println("> 고가 : " + h_price);
-		        		System.out.println("> 종가 : " + c_price);
-		        		System.out.println("> 시가대비종가(Percent) : " + o_c_rate);
-		        		System.out.println("> 시가대비종가(Won) : " + o_c_subtract);
-		        		System.out.println("> 거래량 : " + volume);
-		        		System.out.println("> 거래대금 : " + volume_price);
-		        		System.out.println("> 거래대금(포맷) : " + format_volume_price);
-		        		*/
-			        	
+	        			
 		        		HashMap<String, String> map = new HashMap<String, String>();
+		        		map.put("API_DATETIME_KST", GIJUN_DATETIME);
 		        		map.put("CURRENT_DATETIME_KST", CURRENT_DATETIME_KST);
 		        		map.put("Coin_Ticker", Coin_Ticker);
 		        		map.put("API_Coin_Ticker", API_Coin_Ticker);
@@ -432,12 +293,6 @@ public class Main {
 			}
 		});
 		
-		/*
-		System.out.println("============================================================================================================");
-		for(int x=0; x<APICoinList.size(); x++) {
-			System.out.println("[변경후] [" + APICoinList.get(x).get("Coin_Ticker") + "] ["+ APICoinList.get(x).get("Coin_Kor_Name") +"] "+APICoinList.get(x).get("format_volume_price"));
-		}
-		*/
 		
 		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
 		System.out.println("[" + END_DATETIME + "] 5MIN 종료");
@@ -481,7 +336,7 @@ public class Main {
         
         // 15분전
         long TIMESTMAP_15 = TIMESTMAP - (60000*15);
-		String DATETIME_KST_5 = simpleDateFormat.format(TIMESTMAP_15);
+		String DATETIME_KST_15 = simpleDateFormat.format(TIMESTMAP_15);
         
         String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_15)).substring(0, 10);
         String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
@@ -598,6 +453,7 @@ public class Main {
 		        		*/
 			        	
 		        		HashMap<String, String> map = new HashMap<String, String>();
+		        		map.put("API_DATETIME_KST", GIJUN_DATETIME);
 		        		map.put("CURRENT_DATETIME_KST", CURRENT_DATETIME_KST);
 		        		map.put("Coin_Ticker", Coin_Ticker);
 		        		map.put("API_Coin_Ticker", API_Coin_Ticker);
@@ -641,6 +497,407 @@ public class Main {
 		
 		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
 		System.out.println("[" + END_DATETIME + "] 15MIN 종료");
+		
+		return APICoinList;
+	}
+	
+	@GetMapping(path = "/Main_60MIN")
+	public List<HashMap<String, String>> Main_60MIN() throws Exception{
+		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + START_DATETIME + "] 60MIN 시작");
+		
+		String GIJUN_DATETIME = "";
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String DateNow = now.format(formatter);
+        formatter = DateTimeFormatter.ofPattern("HH");
+        String HHNow = now.format(formatter);
+        formatter = DateTimeFormatter.ofPattern("mm");
+        String MMNow = now.format(formatter);
+        String API_Date = DateNow;
+        String API_HH = HHNow;
+        String API_MM = "00";
+        
+        GIJUN_DATETIME = API_Date + " " + API_HH + ":" + API_MM;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		
+		// 현재
+		long TIMESTMAP = System.currentTimeMillis();
+		String CURRENT_DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
+        
+        // 60분전
+        long TIMESTMAP_60 = TIMESTMAP - (60000*60);
+		String DATETIME_KST_60 = simpleDateFormat.format(TIMESTMAP_60);
+        
+        String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_60)).substring(0, 10);
+        String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
+        
+		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		for(int x=0; x<CoinList.size(); x++) {
+			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
+			String API_Coin_Ticker = CoinList.get(x).get("api_coin_ticker");
+			String Coin_Kor_Name = CoinList.get(x).get("coin_kor_name");
+			
+			URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol="+API_Coin_Ticker+"KRW&resolution=60&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
+			
+			HttpsURLConnection conn = (HttpsURLConnection)url.openConnection(); 
+	        conn.setRequestMethod("GET");
+	        conn.setConnectTimeout(3000); // 연결 타임아웃 설정 (3초)
+	        conn.setReadTimeout(3000); // 읽기 타임아웃 설정 (3초)
+	        conn.connect();
+	        
+	        String RESPONSE_DATA = "";
+	        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+	            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	            String line = null;
+	            while(true){
+	                line = reader.readLine();
+	                if(line == null)
+	                    break;
+	                
+	                RESPONSE_DATA += line;
+	            }
+	            reader.close();
+	        }
+	        
+	        JSONObject jObject = new JSONObject(RESPONSE_DATA);
+	        Calendar TMP_CAL = Calendar.getInstance();
+	        if((jObject.getString("s")).equals("ok")) {
+	        	JSONArray jArray_t = jObject.getJSONArray("t");
+	        	JSONArray jArray_o = jObject.getJSONArray("o");
+	        	JSONArray jArray_l = jObject.getJSONArray("l");
+	        	JSONArray jArray_h = jObject.getJSONArray("h");
+	        	JSONArray jArray_c = jObject.getJSONArray("c");
+	        	JSONArray jArray_v = jObject.getJSONArray("v");
+	        	
+	        	for (int i = 0; i < jArray_t.length(); i++) {
+	        		String timestamp = (jArray_t.get(i)).toString();
+	        		String datetime_kst = simpleDateFormat.format(new Date(Long.parseLong(timestamp)));
+	        		String datetime_kst_hh = datetime_kst.substring(11, 13);
+	        		String datetime_kst_mm = datetime_kst.substring(14, 16);
+	        		String datetime_utc = simpleDateFormat.format(new Date(Long.parseLong(timestamp) - (60000*540)));
+	        		String o_price = Double_ReFresh((jArray_o.get(i)).toString());
+	        		String l_price = Double_ReFresh((jArray_l.get(i)).toString());
+	        		String h_price = Double_ReFresh((jArray_h.get(i)).toString());
+	        		String c_price = Double_ReFresh((jArray_c.get(i)).toString());
+	        		String volume = Double_ReFresh((jArray_v.get(i)).toString());
+	        		String gubun = "";
+	        		
+	        		if(o_price.contains("E") || l_price.contains("E") || h_price.contains("E") || c_price.contains("E")) {
+	        			BigDecimal BD_O = new BigDecimal(Double.parseDouble((jArray_o.get(i)).toString()));
+	        			BigDecimal BD_L = new BigDecimal(Double.parseDouble((jArray_l.get(i)).toString()));
+		        		BigDecimal BD_H = new BigDecimal(Double.parseDouble((jArray_h.get(i)).toString()));
+		        		BigDecimal BD_C = new BigDecimal(Double.parseDouble((jArray_c.get(i)).toString()));
+		        		
+	        			o_price = Double_ReFresh((BD_O).toString());
+	        			l_price = Double_ReFresh((BD_L).toString());
+		        		h_price = Double_ReFresh((BD_H).toString());
+		        		c_price = Double_ReFresh((BD_C).toString());
+	        		}
+	        		
+	        		if(volume.contains("E")) {
+	        			BigDecimal BD_V = new BigDecimal(Double.parseDouble((jArray_v.get(i)).toString()));
+	        			volume = Double_ReFresh((BD_V).toString());
+	        		}
+	        		
+	        		BigDecimal BD_O_PRICE = new BigDecimal(o_price);
+	        		BigDecimal BD_C_PRICE = new BigDecimal(c_price);
+	        		BigDecimal BD_VOLUME = new BigDecimal(volume);
+	        		BigDecimal BD_100 = new BigDecimal("100");
+	        		
+	        		if(BD_O_PRICE.compareTo(BD_C_PRICE) == -1) {
+	        			gubun = "상승";
+	        		} else if(BD_O_PRICE.compareTo(BD_C_PRICE) == 1) {
+	        			gubun = "하락";
+	        		} else {
+	        			gubun = "보합";
+	        		}
+	        		
+	        		BigDecimal BD_O_C_SUBTRACT = BD_C_PRICE.subtract(BD_O_PRICE);
+	        		BigDecimal BD_O_C_RATE = ((BD_C_PRICE.subtract(BD_O_PRICE)).divide(BD_O_PRICE, 6, RoundingMode.HALF_UP)).multiply(BD_100);
+	        		BigDecimal BD_PRICE_VOLUME = BD_C_PRICE.multiply(BD_VOLUME);
+	        		
+	        		String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
+	        		String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
+	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		
+	        		if(API_HH.equals(datetime_kst_hh) && API_MM.equals(datetime_kst_mm)) {
+	        			/*
+	        			System.out.println("=================================["+Coin_Ticker+"]==============================");
+	        			System.out.println("> URL : " + url);
+	        			System.out.println("> TIMESTAMP : " + timestamp);
+		        		System.out.println("> DATETIME KST : " + datetime_kst);
+		        		System.out.println("> DATETIME UTC : " + datetime_utc);
+		        		System.out.println("> 시가 : " + o_price);
+		        		System.out.println("> 저가 : " + l_price);
+		        		System.out.println("> 고가 : " + h_price);
+		        		System.out.println("> 종가 : " + c_price);
+		        		System.out.println("> 시가대비종가(Percent) : " + o_c_rate);
+		        		System.out.println("> 시가대비종가(Won) : " + o_c_subtract);
+		        		System.out.println("> 거래량 : " + volume);
+		        		System.out.println("> 거래대금 : " + volume_price);
+		        		System.out.println("> 거래대금(포맷) : " + format_volume_price);
+		        		*/
+			        	
+		        		HashMap<String, String> map = new HashMap<String, String>();
+		        		map.put("API_DATETIME_KST", GIJUN_DATETIME);
+		        		map.put("CURRENT_DATETIME_KST", CURRENT_DATETIME_KST);
+		        		map.put("Coin_Ticker", Coin_Ticker);
+		        		map.put("API_Coin_Ticker", API_Coin_Ticker);
+		        		map.put("Coin_Kor_Name", Coin_Kor_Name);
+		        		map.put("timestamp", timestamp);
+		        		map.put("datetime_kst", datetime_kst);
+		        		map.put("datetime_utc", datetime_utc);
+		        		map.put("gubun", gubun);
+		        		map.put("o_price", o_price);
+		        		map.put("l_price", l_price);
+		        		map.put("h_price", h_price);
+		        		map.put("c_price", c_price);
+		        		map.put("format_c_price", format_c_price);
+		        		map.put("o_c_rate", o_c_rate);
+		        		map.put("o_c_subtract", o_c_subtract);
+		        		map.put("volume", volume);
+		        		map.put("volume_price", volume_price);
+		        		map.put("format_volume_price", format_volume_price);
+		        		APICoinList.add(map);
+	        		}
+	        	}
+	        }
+	        
+	        conn.disconnect();
+		}
+		
+		Collections.sort(APICoinList, new Comparator<HashMap<String,String>>(){
+			public int compare(HashMap<String,String> map1, HashMap<String,String> map2){
+				if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 1) return 1;
+                else if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 0) return 0;
+                else return -1;
+			}
+		});
+		
+		/*
+		System.out.println("============================================================================================================");
+		for(int x=0; x<APICoinList.size(); x++) {
+			System.out.println("[변경후] [" + APICoinList.get(x).get("Coin_Ticker") + "] ["+ APICoinList.get(x).get("Coin_Kor_Name") +"] "+APICoinList.get(x).get("format_volume_price"));
+		}
+		*/
+		
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + END_DATETIME + "] 60MIN 종료");
+		
+		return APICoinList;
+	}
+	
+	@GetMapping(path = "/Main_240MIN")
+	public List<HashMap<String, String>> Main_240MIN() throws Exception{
+		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + START_DATETIME + "] 240MIN 시작");
+		
+		String GIJUN_DATETIME = "";
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String DateNow = now.format(formatter);
+        formatter = DateTimeFormatter.ofPattern("HH");
+        String HHNow = now.format(formatter);
+        formatter = DateTimeFormatter.ofPattern("mm");
+        String MMNow = now.format(formatter);
+        String API_Date = DateNow;
+        String API_HH = "";
+        String API_MM = "00";
+        
+        if(Integer.parseInt(HHNow) >= 21) {
+        	API_HH = "21";
+        } else if(Integer.parseInt(HHNow) >= 17) {
+        	API_HH = "17";
+        } else if(Integer.parseInt(HHNow) >= 13) {
+        	API_HH = "13";
+        } else if(Integer.parseInt(HHNow) >= 9) {
+        	API_HH = "09";
+        } else if(Integer.parseInt(HHNow) >= 5) {
+        	API_HH = "05";
+        } else if(Integer.parseInt(HHNow) >= 1) {
+        	API_HH = "01";
+        } else {
+        	Calendar Yesterdate = Calendar.getInstance();
+        	Yesterdate.add(Calendar.DATE , -1);
+        	API_Date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(Yesterdate.getTime());
+        	API_HH = "21";
+        }
+        
+        GIJUN_DATETIME = API_Date	 + " " + API_HH + ":" + API_MM;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		
+		// 현재
+		long TIMESTMAP = System.currentTimeMillis();
+		String CURRENT_DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
+        
+        // 240분전
+        long TIMESTMAP_240 = TIMESTMAP - (60000*240);
+		String DATETIME_KST_240 = simpleDateFormat.format(TIMESTMAP_240);
+        
+        String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_240)).substring(0, 10);
+        String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
+        
+		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		for(int x=0; x<CoinList.size(); x++) {
+			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
+			String API_Coin_Ticker = CoinList.get(x).get("api_coin_ticker");
+			String Coin_Kor_Name = CoinList.get(x).get("coin_kor_name");
+			
+			URL url = new URL("https://crix-api-tv.upbit.com/v1/crix/tradingview/history?symbol="+API_Coin_Ticker+"KRW&resolution=240&from="+FROM_TIMESTAMP+"&to="+TO_TIMESTAMP);
+			
+			HttpsURLConnection conn = (HttpsURLConnection)url.openConnection(); 
+	        conn.setRequestMethod("GET");
+	        conn.setConnectTimeout(3000); // 연결 타임아웃 설정 (3초)
+	        conn.setReadTimeout(3000); // 읽기 타임아웃 설정 (3초)
+	        conn.connect();
+	        
+	        String RESPONSE_DATA = "";
+	        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+	            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	            String line = null;
+	            while(true){
+	                line = reader.readLine();
+	                if(line == null)
+	                    break;
+	                
+	                RESPONSE_DATA += line;
+	            }
+	            reader.close();
+	        }
+	        
+	        JSONObject jObject = new JSONObject(RESPONSE_DATA);
+	        Calendar TMP_CAL = Calendar.getInstance();
+	        if((jObject.getString("s")).equals("ok")) {
+	        	JSONArray jArray_t = jObject.getJSONArray("t");
+	        	JSONArray jArray_o = jObject.getJSONArray("o");
+	        	JSONArray jArray_l = jObject.getJSONArray("l");
+	        	JSONArray jArray_h = jObject.getJSONArray("h");
+	        	JSONArray jArray_c = jObject.getJSONArray("c");
+	        	JSONArray jArray_v = jObject.getJSONArray("v");
+	        	
+	        	for (int i = 0; i < jArray_t.length(); i++) {
+	        		String timestamp = (jArray_t.get(i)).toString();
+	        		String datetime_kst = simpleDateFormat.format(new Date(Long.parseLong(timestamp)));
+	        		String datetime_kst_hh = datetime_kst.substring(11, 13);
+	        		String datetime_kst_mm = datetime_kst.substring(14, 16);
+	        		String datetime_utc = simpleDateFormat.format(new Date(Long.parseLong(timestamp) - (60000*540)));
+	        		String o_price = Double_ReFresh((jArray_o.get(i)).toString());
+	        		String l_price = Double_ReFresh((jArray_l.get(i)).toString());
+	        		String h_price = Double_ReFresh((jArray_h.get(i)).toString());
+	        		String c_price = Double_ReFresh((jArray_c.get(i)).toString());
+	        		String volume = Double_ReFresh((jArray_v.get(i)).toString());
+	        		String gubun = "";
+	        		
+	        		if(o_price.contains("E") || l_price.contains("E") || h_price.contains("E") || c_price.contains("E")) {
+	        			BigDecimal BD_O = new BigDecimal(Double.parseDouble((jArray_o.get(i)).toString()));
+	        			BigDecimal BD_L = new BigDecimal(Double.parseDouble((jArray_l.get(i)).toString()));
+		        		BigDecimal BD_H = new BigDecimal(Double.parseDouble((jArray_h.get(i)).toString()));
+		        		BigDecimal BD_C = new BigDecimal(Double.parseDouble((jArray_c.get(i)).toString()));
+		        		
+	        			o_price = Double_ReFresh((BD_O).toString());
+	        			l_price = Double_ReFresh((BD_L).toString());
+		        		h_price = Double_ReFresh((BD_H).toString());
+		        		c_price = Double_ReFresh((BD_C).toString());
+	        		}
+	        		
+	        		if(volume.contains("E")) {
+	        			BigDecimal BD_V = new BigDecimal(Double.parseDouble((jArray_v.get(i)).toString()));
+	        			volume = Double_ReFresh((BD_V).toString());
+	        		}
+	        		
+	        		BigDecimal BD_O_PRICE = new BigDecimal(o_price);
+	        		BigDecimal BD_C_PRICE = new BigDecimal(c_price);
+	        		BigDecimal BD_VOLUME = new BigDecimal(volume);
+	        		BigDecimal BD_100 = new BigDecimal("100");
+	        		
+	        		if(BD_O_PRICE.compareTo(BD_C_PRICE) == -1) {
+	        			gubun = "상승";
+	        		} else if(BD_O_PRICE.compareTo(BD_C_PRICE) == 1) {
+	        			gubun = "하락";
+	        		} else {
+	        			gubun = "보합";
+	        		}
+	        		
+	        		BigDecimal BD_O_C_SUBTRACT = BD_C_PRICE.subtract(BD_O_PRICE);
+	        		BigDecimal BD_O_C_RATE = ((BD_C_PRICE.subtract(BD_O_PRICE)).divide(BD_O_PRICE, 6, RoundingMode.HALF_UP)).multiply(BD_100);
+	        		BigDecimal BD_PRICE_VOLUME = BD_C_PRICE.multiply(BD_VOLUME);
+	        		
+	        		String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
+	        		String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
+	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		
+	        		if(API_HH.equals(datetime_kst_hh) && API_MM.equals(datetime_kst_mm)) {
+	        			/*
+	        			System.out.println("=================================["+Coin_Ticker+"]==============================");
+	        			System.out.println("> URL : " + url);
+	        			System.out.println("> TIMESTAMP : " + timestamp);
+		        		System.out.println("> DATETIME KST : " + datetime_kst);
+		        		System.out.println("> DATETIME UTC : " + datetime_utc);
+		        		System.out.println("> 시가 : " + o_price);
+		        		System.out.println("> 저가 : " + l_price);
+		        		System.out.println("> 고가 : " + h_price);
+		        		System.out.println("> 종가 : " + c_price);
+		        		System.out.println("> 시가대비종가(Percent) : " + o_c_rate);
+		        		System.out.println("> 시가대비종가(Won) : " + o_c_subtract);
+		        		System.out.println("> 거래량 : " + volume);
+		        		System.out.println("> 거래대금 : " + volume_price);
+		        		System.out.println("> 거래대금(포맷) : " + format_volume_price);
+		        		*/
+			        	
+		        		HashMap<String, String> map = new HashMap<String, String>();
+		        		map.put("API_DATETIME_KST", GIJUN_DATETIME);
+		        		map.put("CURRENT_DATETIME_KST", CURRENT_DATETIME_KST);
+		        		map.put("Coin_Ticker", Coin_Ticker);
+		        		map.put("API_Coin_Ticker", API_Coin_Ticker);
+		        		map.put("Coin_Kor_Name", Coin_Kor_Name);
+		        		map.put("timestamp", timestamp);
+		        		map.put("datetime_kst", datetime_kst);
+		        		map.put("datetime_utc", datetime_utc);
+		        		map.put("gubun", gubun);
+		        		map.put("o_price", o_price);
+		        		map.put("l_price", l_price);
+		        		map.put("h_price", h_price);
+		        		map.put("c_price", c_price);
+		        		map.put("format_c_price", format_c_price);
+		        		map.put("o_c_rate", o_c_rate);
+		        		map.put("o_c_subtract", o_c_subtract);
+		        		map.put("volume", volume);
+		        		map.put("volume_price", volume_price);
+		        		map.put("format_volume_price", format_volume_price);
+		        		APICoinList.add(map);
+	        		}
+	        	}
+	        }
+	        
+	        conn.disconnect();
+		}
+		
+		Collections.sort(APICoinList, new Comparator<HashMap<String,String>>(){
+			public int compare(HashMap<String,String> map1, HashMap<String,String> map2){
+				if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 1) return 1;
+                else if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 0) return 0;
+                else return -1;
+			}
+		});
+		
+		/*
+		System.out.println("============================================================================================================");
+		for(int x=0; x<APICoinList.size(); x++) {
+			System.out.println("[변경후] [" + APICoinList.get(x).get("Coin_Ticker") + "] ["+ APICoinList.get(x).get("Coin_Kor_Name") +"] "+APICoinList.get(x).get("format_volume_price"));
+		}
+		*/
+		
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + END_DATETIME + "] 240MIN 종료");
 		
 		return APICoinList;
 	}
@@ -888,411 +1145,6 @@ public class Main {
 		map.put("date", date);
 		List<HashMap<String, String>> list = MainService.BYBIT_DAY_RANKING(map);
 		return list;
-	}
-	
-	@GetMapping(path = "/upbit_5m")
-	public List<HashMap<String, String>> upbit_5m(HttpServletRequest req) throws Exception {
-		System.out.println("/Main/upbit_5m");
-		
-		ArrayList<HashMap<String, String>> coinlist = new ArrayList<HashMap<String, String>>();
-		try {
-			CloseableHttpClient httpclient = HttpClients.createDefault();
-			HttpGet httpGet = null;
-			List<HashMap<String, String>> coininfo = CoinService.CoinInfo();
-			
-			for(int i=0; i<coininfo.size(); i++) {
-				if(i > 0) {
-					Thread.sleep(300);
-				}
-				String ticker = coininfo.get(i).get("coin_ticker");
-				String kor_name = coininfo.get(i).get("coin_kor_name");
-				String eng_name = coininfo.get(i).get("coin_eng_name");
-			
-		        httpGet = new HttpGet("https://api.upbit.com/v1/candles/minutes/5?market="+ticker+"&count=2");
-		        org.apache.http.Header header = new org.apache.http.message.BasicHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        CloseableHttpResponse response = httpclient.execute(httpGet);
-	
-		        try {
-		            InputStream ips = response.getEntity().getContent();
-		            InputStreamReader sr = new InputStreamReader(ips);
-		            BufferedReader br = new BufferedReader(sr);
-	
-		            while (true) {
-		            	String return_list = br.readLine();
-		            	JSONArray JSONarray = new JSONArray(return_list);
-		            	JSONObject JSONObject0 = JSONarray.getJSONObject(0);
-		            	JSONObject JSONObject1 = JSONarray.getJSONObject(1);
-		            	
-		            	//System.out.println("> 현재 " + JSONObject0);
-		            	//System.out.println("> 이전 " + JSONObject1);
-		            	
-	                    String market = (JSONObject0.get("market")).toString();
-	                    String timestamp0 = (JSONObject0.get("timestamp")).toString();
-	                    String datetime0 = (JSONObject0.get("candle_date_time_kst")).toString();
-	                    String open_price0 = (JSONObject0.get("opening_price")).toString();
-	                    String trade_price0 = (JSONObject0.get("trade_price")).toString();
-	                    String trade_volume0 = JSONObject1.get("candle_acc_trade_volume").toString();
-	                    
-	                    String timestamp1 = (JSONObject1.get("timestamp")).toString();
-	                    String datetime1 = (JSONObject1.get("candle_date_time_kst")).toString();
-	                    String open_price1 = (JSONObject1.get("opening_price")).toString();
-	                    String trade_price1 = (JSONObject1.get("trade_price")).toString();
-	                    String trade_volume1 = JSONObject1.get("candle_acc_trade_volume").toString();
-	                    
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME0 = new BigDecimal(trade_volume0);
-	                    BigDecimal BIGDECIMAL_TRADE_PRICE0 = new BigDecimal(trade_price0);
-	                    BigDecimal BIGDECIMAL_OPEN_PRICE0 = new BigDecimal(open_price0);
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME1 = new BigDecimal(trade_volume1);
-	                    BigDecimal BIGDECIMAL_TRADE_PRICE1 = new BigDecimal(trade_price1);
-	                    BigDecimal BIGDECIMAL_OPEN_PRICE1 = new BigDecimal(open_price1);
-	                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE1.subtract(BIGDECIMAL_TRADE_PRICE0)).divide(BIGDECIMAL_TRADE_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    BigDecimal BIGDECIMAL_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME1.subtract(BIGDECIMAL_TRADE_VOLUME0)).divide(BIGDECIMAL_TRADE_VOLUME0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime0 + " " + open_price0 + " " + trade_price0 + " " + trade_volume_price0+ "  |  " + trade_volume0);
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime1 + " " + open_price1 + " " + trade_price1 + " " + trade_volume_price1+ "  |  " + trade_volume1);
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] TRADE_VOLUME_CHANGE ["+BIGDECIMAL_TRADE_VOLUME_CHANGE.toString()+"] TRADE_VOLUME_PRICE0 ["+BIGDECIMAL_TRADE_VOLUME_PRICE0.toString()+"] TRADE_VOLUME_PRICE1 ["+BIGDECIMAL_TRADE_VOLUME_PRICE1.toString()+"]");
-	                    
-	                    HashMap<String, String> map = new HashMap<String, String>();
-	                    map.put("id", ticker.replace("KRW-", ""));
-	                    map.put("kor_name", kor_name);
-	                    map.put("eng_name", eng_name);
-	                    map.put("change_percent", BIGDECIMAL_CHANGE.toString());
-	                    map.put("volume_change_percent", BIGDECIMAL_VOLUME_CHANGE.toString());
-	                    map.put("timestamp0", timestamp0);
-	                    map.put("datetime0", datetime0);
-	                    map.put("open_price0", open_price0);
-	                    map.put("trade_price0", trade_price0);
-	                    map.put("B_timestamp", timestamp1);
-	                    map.put("B_datetime", datetime1);
-	                    map.put("B_open_price", open_price1);
-	                    map.put("B_trade_price", trade_price1);
-	                    
-	                    //MainService.UpbitCoinMIN(map);
-	                    
-	                    coinlist.add(map);
-		                if (br.readLine() == null)
-		                    break;
-		            }
-		        } finally {
-		        	response.close();
-		        }
-			}
-		} catch (Exception e){
-			System.err.println(e.toString());
-		}
-		
-		Collections.sort(coinlist, new Comparator<HashMap<String, String>>() {
-            @Override
-            public int compare(HashMap<String, String> first, HashMap<String, String> second) {
-            	Double first_value = Double.parseDouble(first.get("change_percent"));
-            	Double second_value = Double.parseDouble(second.get("change_percent"));
-                return second_value.compareTo(first_value);
-            }
-        });
-		return coinlist;
-	}
-	
-	@GetMapping(path = "/upbit_15m")
-	public List<HashMap<String, String>> upbit_15m(HttpServletRequest req) throws Exception {
-		System.out.println("/Main/upbit_15m");
-		ArrayList<HashMap<String, String>> coinlist = new ArrayList<HashMap<String, String>>();
-		try {
-			CloseableHttpClient httpclient = HttpClients.createDefault();
-			HttpGet httpGet = null;
-			List<HashMap<String, String>> coininfo = CoinService.CoinInfo();
-			
-			for(int i=0; i<coininfo.size(); i++) {
-				if(i > 0) {
-					Thread.sleep(300);
-				}
-				String ticker = coininfo.get(i).get("coin_ticker");
-				String kor_name = coininfo.get(i).get("coin_kor_name");
-				String eng_name = coininfo.get(i).get("coin_eng_name");
-			
-		        httpGet = new HttpGet("https://api.upbit.com/v1/candles/minutes/15?market="+ticker+"&count=2");
-		        org.apache.http.Header header = new org.apache.http.message.BasicHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        CloseableHttpResponse response = httpclient.execute(httpGet);
-	
-		        try {
-		            InputStream ips = response.getEntity().getContent();
-		            InputStreamReader sr = new InputStreamReader(ips);
-		            BufferedReader br = new BufferedReader(sr);
-	
-		            while (true) {
-		            	String return_list = br.readLine();
-		            	JSONArray JSONarray = new JSONArray(return_list);
-		            	JSONObject JSONObject0 = JSONarray.getJSONObject(0);
-		            	JSONObject JSONObject1 = JSONarray.getJSONObject(1);
-		            	
-		            	//System.out.println("> 현재 " + JSONObject0);
-		            	//System.out.println("> 이전 " + JSONObject1);
-		            	
-	                    String market = (JSONObject0.get("market")).toString();
-	                    String timestamp0 = (JSONObject0.get("timestamp")).toString();
-	                    String datetime0 = (JSONObject0.get("candle_date_time_kst")).toString();
-	                    String open_price0 = (JSONObject0.get("opening_price")).toString();
-	                    String trade_price0 = (JSONObject0.get("trade_price")).toString();
-	                    String trade_volume0 = JSONObject1.get("candle_acc_trade_volume").toString();
-	                    
-	                    String timestamp1 = (JSONObject1.get("timestamp")).toString();
-	                    String datetime1 = (JSONObject1.get("candle_date_time_kst")).toString();
-	                    String open_price1 = (JSONObject1.get("opening_price")).toString();
-	                    String trade_price1 = (JSONObject1.get("trade_price")).toString();
-	                    String trade_volume1 = JSONObject1.get("candle_acc_trade_volume").toString();
-	                    
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME0 = new BigDecimal(trade_volume0);
-	                    BigDecimal BIGDECIMAL_TRADE_PRICE0 = new BigDecimal(trade_price0);
-	                    BigDecimal BIGDECIMAL_OPEN_PRICE0 = new BigDecimal(open_price0);
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME1 = new BigDecimal(trade_volume1);
-	                    BigDecimal BIGDECIMAL_TRADE_PRICE1 = new BigDecimal(trade_price1);
-	                    BigDecimal BIGDECIMAL_OPEN_PRICE1 = new BigDecimal(open_price1);
-	                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE1.subtract(BIGDECIMAL_TRADE_PRICE0)).divide(BIGDECIMAL_TRADE_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    BigDecimal BIGDECIMAL_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME1.subtract(BIGDECIMAL_TRADE_VOLUME0)).divide(BIGDECIMAL_TRADE_VOLUME0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime0 + " " + open_price0 + " " + trade_price0 + " " + trade_volume_price0+ "  |  " + trade_volume0);
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime1 + " " + open_price1 + " " + trade_price1 + " " + trade_volume_price1+ "  |  " + trade_volume1);
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] TRADE_VOLUME_CHANGE ["+BIGDECIMAL_TRADE_VOLUME_CHANGE.toString()+"] TRADE_VOLUME_PRICE0 ["+BIGDECIMAL_TRADE_VOLUME_PRICE0.toString()+"] TRADE_VOLUME_PRICE1 ["+BIGDECIMAL_TRADE_VOLUME_PRICE1.toString()+"]");
-	                    
-	                    HashMap<String, String> map = new HashMap<String, String>();
-	                    map.put("id", ticker.replace("KRW-", ""));
-	                    map.put("kor_name", kor_name);
-	                    map.put("eng_name", eng_name);
-	                    map.put("change_percent", BIGDECIMAL_CHANGE.toString());
-	                    map.put("volume_change_percent", BIGDECIMAL_VOLUME_CHANGE.toString());
-	                    map.put("timestamp0", timestamp0);
-	                    map.put("datetime0", datetime0);
-	                    map.put("open_price0", open_price0);
-	                    map.put("trade_price0", trade_price0);
-	                    map.put("B_timestamp", timestamp1);
-	                    map.put("B_datetime", datetime1);
-	                    map.put("B_open_price", open_price1);
-	                    map.put("B_trade_price", trade_price1);
-	                    
-	                    coinlist.add(map);
-		                if (br.readLine() == null)
-		                    break;
-		            }
-		        } finally {
-		        	response.close();
-		        }
-			}
-		} catch (Exception e){
-			System.err.println(e.toString());
-		}
-		
-		Collections.sort(coinlist, new Comparator<HashMap<String, String>>() {
-            @Override
-            public int compare(HashMap<String, String> first, HashMap<String, String> second) {
-            	Double first_value = Double.parseDouble(first.get("change_percent"));
-            	Double second_value = Double.parseDouble(second.get("change_percent"));
-                return second_value.compareTo(first_value);
-            }
-        });
-		return coinlist;
-	}
-	
-	@GetMapping(path = "/upbit_60m")
-	public List<HashMap<String, String>> upbit_60m(HttpServletRequest req) throws Exception {
-		System.out.println("/Main/upbit_60m");
-		ArrayList<HashMap<String, String>> coinlist = new ArrayList<HashMap<String, String>>();
-		
-		try {
-			CloseableHttpClient httpclient = HttpClients.createDefault();
-			HttpGet httpGet = null;
-			List<HashMap<String, String>> coininfo = CoinService.CoinInfo();
-			
-			for(int i=0; i<coininfo.size(); i++) {
-				if(i > 0) {
-					Thread.sleep(300);
-				}
-				String ticker = coininfo.get(i).get("coin_ticker");
-				String kor_name = coininfo.get(i).get("coin_kor_name");
-				String eng_name = coininfo.get(i).get("coin_eng_name");
-			
-		        httpGet = new HttpGet("https://api.upbit.com/v1/candles/minutes/60?market="+ticker+"&count=2");
-		        org.apache.http.Header header = new org.apache.http.message.BasicHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        CloseableHttpResponse response = httpclient.execute(httpGet);
-	
-		        try {
-		            InputStream ips = response.getEntity().getContent();
-		            InputStreamReader sr = new InputStreamReader(ips);
-		            BufferedReader br = new BufferedReader(sr);
-	
-		            while (true) {
-		            	String return_list = br.readLine();
-		            	JSONArray JSONarray = new JSONArray(return_list);
-		            	JSONObject JSONObject0 = JSONarray.getJSONObject(0);
-		            	JSONObject JSONObject1 = JSONarray.getJSONObject(1);
-		            	
-		            	//System.out.println("> 현재 " + JSONObject0);
-		            	//System.out.println("> 이전 " + JSONObject1);
-		            	
-	                    String market = (JSONObject0.get("market")).toString();
-	                    String timestamp0 = (JSONObject0.get("timestamp")).toString();
-	                    String datetime0 = (JSONObject0.get("candle_date_time_kst")).toString();
-	                    String open_price0 = (JSONObject0.get("opening_price")).toString();
-	                    String trade_price0 = (JSONObject0.get("trade_price")).toString();
-	                    String trade_volume0 = JSONObject1.get("candle_acc_trade_volume").toString();
-	                    
-	                    String timestamp1 = (JSONObject1.get("timestamp")).toString();
-	                    String datetime1 = (JSONObject1.get("candle_date_time_kst")).toString();
-	                    String open_price1 = (JSONObject1.get("opening_price")).toString();
-	                    String trade_price1 = (JSONObject1.get("trade_price")).toString();
-	                    String trade_volume1 = JSONObject1.get("candle_acc_trade_volume").toString();
-	                    
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME0 = new BigDecimal(trade_volume0);
-	                    BigDecimal BIGDECIMAL_TRADE_PRICE0 = new BigDecimal(trade_price0);
-	                    BigDecimal BIGDECIMAL_OPEN_PRICE0 = new BigDecimal(open_price0);
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME1 = new BigDecimal(trade_volume1);
-	                    BigDecimal BIGDECIMAL_TRADE_PRICE1 = new BigDecimal(trade_price1);
-	                    BigDecimal BIGDECIMAL_OPEN_PRICE1 = new BigDecimal(open_price1);
-	                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE1.subtract(BIGDECIMAL_TRADE_PRICE0)).divide(BIGDECIMAL_TRADE_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    BigDecimal BIGDECIMAL_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME1.subtract(BIGDECIMAL_TRADE_VOLUME0)).divide(BIGDECIMAL_TRADE_VOLUME0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime0 + " " + open_price0 + " " + trade_price0 + " " + trade_volume_price0+ "  |  " + trade_volume0);
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime1 + " " + open_price1 + " " + trade_price1 + " " + trade_volume_price1+ "  |  " + trade_volume1);
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] TRADE_VOLUME_CHANGE ["+BIGDECIMAL_TRADE_VOLUME_CHANGE.toString()+"] TRADE_VOLUME_PRICE0 ["+BIGDECIMAL_TRADE_VOLUME_PRICE0.toString()+"] TRADE_VOLUME_PRICE1 ["+BIGDECIMAL_TRADE_VOLUME_PRICE1.toString()+"]");
-	                    
-	                    HashMap<String, String> map = new HashMap<String, String>();
-	                    map.put("id", ticker.replace("KRW-", ""));
-	                    map.put("kor_name", kor_name);
-	                    map.put("eng_name", eng_name);
-	                    map.put("change_percent", BIGDECIMAL_CHANGE.toString());
-	                    map.put("volume_change_percent", BIGDECIMAL_VOLUME_CHANGE.toString());
-	                    map.put("timestamp0", timestamp0);
-	                    map.put("datetime0", datetime0);
-	                    map.put("open_price0", open_price0);
-	                    map.put("trade_price0", trade_price0);
-	                    map.put("B_timestamp", timestamp1);
-	                    map.put("B_datetime", datetime1);
-	                    map.put("B_open_price", open_price1);
-	                    map.put("B_trade_price", trade_price1);
-	                    
-	                    coinlist.add(map);
-		                if (br.readLine() == null)
-		                    break;
-		            }
-		        } finally {
-		        	response.close();
-		        }
-			}
-		} catch (Exception e){
-			System.err.println(e.toString());
-		}
-		
-		Collections.sort(coinlist, new Comparator<HashMap<String, String>>() {
-            @Override
-            public int compare(HashMap<String, String> first, HashMap<String, String> second) {
-            	Double first_value = Double.parseDouble(first.get("change_percent"));
-            	Double second_value = Double.parseDouble(second.get("change_percent"));
-                return second_value.compareTo(first_value);
-            }
-        });
-		return coinlist;
-	}
-	
-	@GetMapping(path = "/upbit_240m")
-	public List<HashMap<String, String>> upbit_240m(HttpServletRequest req) throws Exception {
-		System.out.println("/Main/upbit_240m");
-		ArrayList<HashMap<String, String>> coinlist = new ArrayList<HashMap<String, String>>();
-		
-		try {
-			CloseableHttpClient httpclient = HttpClients.createDefault();
-			HttpGet httpGet = null;
-			List<HashMap<String, String>> coininfo = CoinService.CoinInfo();
-			
-			for(int i=0; i<coininfo.size(); i++) {
-				if(i > 0) {
-					Thread.sleep(300);
-				}
-				String ticker = coininfo.get(i).get("coin_ticker");
-				String kor_name = coininfo.get(i).get("coin_kor_name");
-				String eng_name = coininfo.get(i).get("coin_eng_name");
-			
-		        httpGet = new HttpGet("https://api.upbit.com/v1/candles/minutes/240?market="+ticker+"&count=2");
-		        org.apache.http.Header header = new org.apache.http.message.BasicHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-		        CloseableHttpResponse response = httpclient.execute(httpGet);
-	
-		        try {
-		            InputStream ips = response.getEntity().getContent();
-		            InputStreamReader sr = new InputStreamReader(ips);
-		            BufferedReader br = new BufferedReader(sr);
-	
-		            while (true) {
-		            	String return_list = br.readLine();
-		            	JSONArray JSONarray = new JSONArray(return_list);
-		            	JSONObject JSONObject0 = JSONarray.getJSONObject(0);
-		            	JSONObject JSONObject1 = JSONarray.getJSONObject(1);
-		            	
-		            	//System.out.println("> 현재 " + JSONObject0);
-		            	//System.out.println("> 이전 " + JSONObject1);
-		            	
-	                    String market = (JSONObject0.get("market")).toString();
-	                    String timestamp0 = (JSONObject0.get("timestamp")).toString();
-	                    String datetime0 = (JSONObject0.get("candle_date_time_kst")).toString();
-	                    String open_price0 = (JSONObject0.get("opening_price")).toString();
-	                    String trade_price0 = (JSONObject0.get("trade_price")).toString();
-	                    String trade_volume0 = JSONObject1.get("candle_acc_trade_volume").toString();
-	                    
-	                    String timestamp1 = (JSONObject1.get("timestamp")).toString();
-	                    String datetime1 = (JSONObject1.get("candle_date_time_kst")).toString();
-	                    String open_price1 = (JSONObject1.get("opening_price")).toString();
-	                    String trade_price1 = (JSONObject1.get("trade_price")).toString();
-	                    String trade_volume1 = JSONObject1.get("candle_acc_trade_volume").toString();
-	                    
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME0 = new BigDecimal(trade_volume0);
-	                    BigDecimal BIGDECIMAL_TRADE_PRICE0 = new BigDecimal(trade_price0);
-	                    BigDecimal BIGDECIMAL_OPEN_PRICE0 = new BigDecimal(open_price0);
-	                    BigDecimal BIGDECIMAL_TRADE_VOLUME1 = new BigDecimal(trade_volume1);
-	                    BigDecimal BIGDECIMAL_TRADE_PRICE1 = new BigDecimal(trade_price1);
-	                    BigDecimal BIGDECIMAL_OPEN_PRICE1 = new BigDecimal(open_price1);
-	                    BigDecimal BIGDECIMAL_CHANGE = ((BIGDECIMAL_TRADE_PRICE1.subtract(BIGDECIMAL_TRADE_PRICE0)).divide(BIGDECIMAL_TRADE_PRICE0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    BigDecimal BIGDECIMAL_VOLUME_CHANGE = ((BIGDECIMAL_TRADE_VOLUME1.subtract(BIGDECIMAL_TRADE_VOLUME0)).divide(BIGDECIMAL_TRADE_VOLUME0, 4, RoundingMode.CEILING)).multiply(new BigDecimal("100"));
-	                    
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime0 + " " + open_price0 + " " + trade_price0 + " " + trade_volume_price0+ "  |  " + trade_volume0);
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] "+ datetime1 + " " + open_price1 + " " + trade_price1 + " " + trade_volume_price1+ "  |  " + trade_volume1);
-	                    //System.out.println("["+ticker.replace("KRW-", "")+"-"+kor_name+"] TRADE_VOLUME_CHANGE ["+BIGDECIMAL_TRADE_VOLUME_CHANGE.toString()+"] TRADE_VOLUME_PRICE0 ["+BIGDECIMAL_TRADE_VOLUME_PRICE0.toString()+"] TRADE_VOLUME_PRICE1 ["+BIGDECIMAL_TRADE_VOLUME_PRICE1.toString()+"]");
-	                    
-	                    HashMap<String, String> map = new HashMap<String, String>();
-	                    map.put("id", ticker.replace("KRW-", ""));
-	                    map.put("kor_name", kor_name);
-	                    map.put("eng_name", eng_name);
-	                    map.put("change_percent", BIGDECIMAL_CHANGE.toString());
-	                    map.put("volume_change_percent", BIGDECIMAL_VOLUME_CHANGE.toString());
-	                    map.put("timestamp0", timestamp0);
-	                    map.put("datetime0", datetime0);
-	                    map.put("open_price0", open_price0);
-	                    map.put("trade_price0", trade_price0);
-	                    map.put("B_timestamp", timestamp1);
-	                    map.put("B_datetime", datetime1);
-	                    map.put("B_open_price", open_price1);
-	                    map.put("B_trade_price", trade_price1);
-	                    
-	                    coinlist.add(map);
-		                if (br.readLine() == null)
-		                    break;
-		            }
-		        } finally {
-		        	response.close();
-		        }
-			}
-		} catch (Exception e){
-			System.err.println(e.toString());
-		}
-		
-		Collections.sort(coinlist, new Comparator<HashMap<String, String>>() {
-            @Override
-            public int compare(HashMap<String, String> first, HashMap<String, String> second) {
-            	Double first_value = Double.parseDouble(first.get("change_percent"));
-            	Double second_value = Double.parseDouble(second.get("change_percent"));
-                return second_value.compareTo(first_value);
-            }
-        });
-		return coinlist;
 	}
 	
 	@GetMapping(path = "/ReportList")

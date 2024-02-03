@@ -22,6 +22,10 @@ public class MainService {
 	@Autowired
 	MainMapper MainMapper;
 	
+	public String SelectCodeData(String parameter) throws Exception{
+		return MainMapper.SelectCodeData(parameter);
+	}
+	
 	public void UpbitCoinMIN(HashMap<String, String> map) throws Exception{
 		MainMapper.UpbitCoinMIN(map);
 	}
