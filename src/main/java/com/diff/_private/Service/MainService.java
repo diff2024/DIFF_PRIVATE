@@ -105,4 +105,8 @@ public class MainService {
 	public List<HashMap<String, String>> UpbitCoinList() throws Exception{
 		return MainMapper.UpbitCoinList();
 	}
+	
+	public List<HashMap<String, String>> BithumbCoinList() throws Exception{
+		return MainMapper.BithumbCoinList();
+	}
 }

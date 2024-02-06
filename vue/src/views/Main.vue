@@ -1645,10 +1645,10 @@ export default {
 			}
 
 			if(ss == 3 || ss == 8 || ss == 13 || ss == 18 || ss == 23 || ss == 28 || ss == 33 || ss == 38 || ss == 43 || ss == 48 || ss == 53 || ss == 58){
-				this.Data_MIN5_Make();
-				this.Data_MIN15_Make();
-				this.Data_MIN60_Make();
-				this.Data_MIN240_Make();
+				//this.Data_MIN5_Make();
+				//this.Data_MIN15_Make();
+				//this.Data_MIN60_Make();
+				//this.Data_MIN240_Make();
 			}
 		},
 		Data_Notice(){

@@ -1180,4 +1180,11 @@
 		 where x.coin_delete_yn = 'N'
 		 order by x.coin_ticker
 	</select>
+	
+	<select id="BithumbCoinList" resultType="HashMap">
+		select x.coin_ticker, x.coin_kor_name, x.coin_number
+		  from bithumb_coin_info x
+		 where x.coin_delete_yn = 'N'
+		 order by x.coin_ticker
+	</select>
 </mapper>

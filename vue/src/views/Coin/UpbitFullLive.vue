@@ -53,7 +53,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min5_rank1_border_color }">
 						{{ min5_rank1_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -92,7 +92,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min5_rank2_border_color }">
 						{{ min5_rank2_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -131,7 +131,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min5_rank3_border_color }">
 						{{ min5_rank3_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -170,7 +170,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min5_rank4_border_color }">
 						{{ min5_rank4_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -209,7 +209,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min5_rank5_border_color }">
 						{{ min5_rank5_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -273,7 +273,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_rank1_border_color }">
 						{{ min15_rank1_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -312,7 +312,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:36px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_rank2_border_color }">
 						{{ min15_rank2_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -351,7 +351,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_rank3_border_color }">
 						{{ min15_rank3_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -390,7 +390,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_rank4_border_color }">
 						{{ min15_rank4_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -429,7 +429,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_rank5_border_color }">
 						{{ min15_rank5_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -510,7 +510,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank1_border_color }">
 						{{ min60_rank1_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -549,7 +549,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank2_border_color }">
 						{{ min60_rank2_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -588,7 +588,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank3_border_color }">
 						{{ min60_rank3_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -627,7 +627,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank4_border_color }">
 						{{ min60_rank4_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -666,7 +666,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank5_border_color }">
 						{{ min60_rank5_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -730,7 +730,7 @@
 					</v-col>
 				</v-row>
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank1_border_color }">
 						{{ min240_rank1_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -769,7 +769,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank2_border_color }">
 						{{ min240_rank2_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -808,7 +808,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank3_border_color }">
 						{{ min240_rank3_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -847,7 +847,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank4_border_color }">
 						{{ min240_rank4_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -886,7 +886,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank5_border_color }">
 						{{ min240_rank5_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
@@ -947,6 +947,7 @@ export default {
 
 			min5_rank1_coin : '',
 			min5_rank1_coin_name : '',
+			min5_rank1_border_color : 'white',
 			min5_rank1_gubun : '',
 			min5_rank1_open : '',
 			min5_rank1_low : '',
@@ -958,6 +959,7 @@ export default {
 
 			min5_rank2_coin : '',
 			min5_rank2_coin_name : '',
+			min5_rank2_border_color : 'white',
 			min5_rank2_gubun : '',
 			min5_rank2_open : '',
 			min5_rank2_low : '',
@@ -969,6 +971,7 @@ export default {
 
 			min5_rank3_coin : '',
 			min5_rank3_coin_name : '',
+			min5_rank3_border_color : 'white',
 			min5_rank3_gubun : '',
 			min5_rank3_open : '',
 			min5_rank3_low : '',
@@ -980,6 +983,7 @@ export default {
 
 			min5_rank4_coin : '',
 			min5_rank4_coin_name : '',
+			min5_rank4_border_color : 'white',
 			min5_rank4_gubun : '',
 			min5_rank4_open : '',
 			min5_rank4_low : '',
@@ -991,6 +995,7 @@ export default {
 
 			min5_rank5_coin : '',
 			min5_rank5_coin_name : '',
+			min5_rank5_border_color : 'white',
 			min5_rank5_gubun : '',
 			min5_rank5_open : '',
 			min5_rank5_low : '',
@@ -1006,6 +1011,7 @@ export default {
 
 			min15_rank1_coin : '',
 			min15_rank1_coin_name : '',
+			min15_rank1_border_color : 'white',
 			min15_rank1_gubun : '',
 			min15_rank1_open : '',
 			min15_rank1_low : '',
@@ -1017,6 +1023,7 @@ export default {
 
 			min15_rank2_coin : '',
 			min15_rank2_coin_name : '',
+			min15_rank2_border_color : 'white',
 			min15_rank2_gubun : '',
 			min15_rank2_open : '',
 			min15_rank2_low : '',
@@ -1028,6 +1035,7 @@ export default {
 
 			min15_rank3_coin : '',
 			min15_rank3_coin_name : '',
+			min15_rank3_border_color : 'white',
 			min15_rank3_gubun : '',
 			min15_rank3_open : '',
 			min15_rank3_low : '',
@@ -1039,6 +1047,7 @@ export default {
 
 			min15_rank4_coin : '',
 			min15_rank4_coin_name : '',
+			min15_rank4_border_color : 'white',
 			min15_rank4_gubun : '',
 			min15_rank4_open : '',
 			min15_rank4_low : '',
@@ -1050,6 +1059,7 @@ export default {
 
 			min15_rank5_coin : '',
 			min15_rank5_coin_name : '',
+			min15_rank5_border_color : 'white',
 			min15_rank5_gubun : '',
 			min15_rank5_open : '',
 			min15_rank5_low : '',
@@ -1065,6 +1075,7 @@ export default {
 
 			min60_rank1_coin : '',
 			min60_rank1_coin_name : '',
+			min60_rank1_border_color : 'white',
 			min60_rank1_gubun : '',
 			min60_rank1_open : '',
 			min60_rank1_low : '',
@@ -1076,6 +1087,7 @@ export default {
 
 			min60_rank2_coin : '',
 			min60_rank2_coin_name : '',
+			min60_rank2_border_color : 'white',
 			min60_rank2_gubun : '',
 			min60_rank2_open : '',
 			min60_rank2_low : '',
@@ -1087,6 +1099,7 @@ export default {
 
 			min60_rank3_coin : '',
 			min60_rank3_coin_name : '',
+			min60_rank3_border_color : 'white',
 			min60_rank3_gubun : '',
 			min60_rank3_open : '',
 			min60_rank3_low : '',
@@ -1098,6 +1111,7 @@ export default {
 
 			min60_rank4_coin : '',
 			min60_rank4_coin_name : '',
+			min60_rank4_border_color : 'white',
 			min60_rank4_gubun : '',
 			min60_rank4_open : '',
 			min60_rank4_low : '',
@@ -1109,6 +1123,7 @@ export default {
 
 			min60_rank5_coin : '',
 			min60_rank5_coin_name : '',
+			min60_rank5_border_color : 'white',
 			min60_rank5_gubun : '',
 			min60_rank5_open : '',
 			min60_rank5_low : '',
@@ -1124,6 +1139,7 @@ export default {
 
 			min240_rank1_coin : '',
 			min240_rank1_coin_name : '',
+			min240_rank1_border_color : 'white',
 			min240_rank1_gubun : '',
 			min240_rank1_open : '',
 			min240_rank1_low : '',
@@ -1135,6 +1151,7 @@ export default {
 
 			min240_rank2_coin : '',
 			min240_rank2_coin_name : '',
+			min240_rank2_border_color : 'white',
 			min240_rank2_gubun : '',
 			min240_rank2_open : '',
 			min240_rank2_low : '',
@@ -1146,6 +1163,7 @@ export default {
 
 			min240_rank3_coin : '',
 			min240_rank3_coin_name : '',
+			min240_rank3_border_color : 'white',
 			min240_rank3_gubun : '',
 			min240_rank3_open : '',
 			min240_rank3_low : '',
@@ -1157,6 +1175,7 @@ export default {
 
 			min240_rank4_coin : '',
 			min240_rank4_coin_name : '',
+			min240_rank4_border_color : 'white',
 			min240_rank4_gubun : '',
 			min240_rank4_open : '',
 			min240_rank4_low : '',
@@ -1168,6 +1187,7 @@ export default {
 
 			min240_rank5_coin : '',
 			min240_rank5_coin_name : '',
+			min240_rank5_border_color : 'white',
 			min240_rank5_gubun : '',
 			min240_rank5_open : '',
 			min240_rank5_low : '',
@@ -1191,7 +1211,7 @@ export default {
 	},
 	methods: {
 		Data_MIN5_Make(){
-			axios.get('/UpbitFullLive/Main_5MIN')
+			axios.get('/UpbitLive/Main_5MIN')
 			.then(response => {
 				if(response.status == 200){
 					console.log('Main_5MIN')
@@ -1199,9 +1219,27 @@ export default {
 
 					this.min5_api_datetime_kst = response.data[0].API_DATETIME_KST;
 					this.min5_gijun_datetime_kst = response.data[0].CURRENT_DATETIME_KST;
+					
+					if(this.min5_rank1_coin_name != response.data[0].Coin_Kor_Name){
+						if(!(Number(new Date().getMinutes())%5==0 && Number(new Date().getSeconds()) < 5)){
+							this.min5_rank1_coin = response.data[0].API_Coin_Ticker;
+							this.min5_rank1_coin_name = response.data[0].Coin_Kor_Name;
 
-					this.min5_rank1_coin = response.data[0].API_Coin_Ticker;
-					this.min5_rank1_coin_name = response.data[0].Coin_Kor_Name;
+							if(this.min5_rank1_coin_name != ''){
+								if(response.data[0].gubun == '상승'){
+									this.min5_rank1_border_color = 'red';
+								}else if(response.data[0].gubun == '하락'){
+									this.min5_rank1_border_color = 'blue';
+								}else if(response.data[0].gubun == '보합'){
+									this.min5_rank1_border_color = 'black';
+								}
+
+								setTimeout(() => 
+									this.min5_rank1_border_color = 'white'
+								, 500);
+							}
+						}
+					}
 					this.min5_rank1_gubun = response.data[0].gubun;
 					this.min5_rank1_open = response.data[0].o_price;
 					this.min5_rank1_low = response.data[0].l_price;
@@ -1211,8 +1249,24 @@ export default {
 					this.min5_rank1_o_c_subtract = response.data[0].o_c_subtract;
 					this.min5_rank1_price_volume = response.data[0].format_volume_price;
 
-					this.min5_rank2_coin = response.data[1].API_Coin_Ticker;
-					this.min5_rank2_coin_name = response.data[1].Coin_Kor_Name;
+					if(this.min5_rank2_coin_name != response.data[1].Coin_Kor_Name){
+						this.min5_rank2_coin = response.data[1].API_Coin_Ticker;
+						this.min5_rank2_coin_name = response.data[1].Coin_Kor_Name;
+
+						if(this.min5_rank2_coin_name != ''){
+							if(response.data[1].gubun == '상승'){
+								this.min5_rank2_border_color = 'red';
+							}else if(response.data[1].gubun == '하락'){
+								this.min5_rank2_border_color = 'blue';
+							}else if(response.data[1].gubun == '보합'){
+								this.min5_rank2_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min5_rank2_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min5_rank2_gubun = response.data[1].gubun;
 					this.min5_rank2_open = response.data[1].o_price;
 					this.min5_rank2_low = response.data[1].l_price;
@@ -1222,8 +1276,24 @@ export default {
 					this.min5_rank2_o_c_subtract = response.data[1].o_c_subtract;
 					this.min5_rank2_price_volume = response.data[1].format_volume_price;
 
-					this.min5_rank3_coin = response.data[2].API_Coin_Ticker;
-					this.min5_rank3_coin_name = response.data[2].Coin_Kor_Name;
+					if(this.min5_rank3_coin_name != response.data[2].Coin_Kor_Name){
+						this.min5_rank3_coin = response.data[2].API_Coin_Ticker;
+						this.min5_rank3_coin_name = response.data[2].Coin_Kor_Name;
+
+						if(this.min5_rank3_coin_name != ''){
+							if(response.data[2].gubun == '상승'){
+								this.min5_rank3_border_color = 'red';
+							}else if(response.data[2].gubun == '하락'){
+								this.min5_rank3_border_color = 'blue';
+							}else if(response.data[2].gubun == '보합'){
+								this.min5_rank3_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min5_rank3_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min5_rank3_gubun = response.data[2].gubun;
 					this.min5_rank3_open = response.data[2].o_price;
 					this.min5_rank3_low = response.data[2].l_price;
@@ -1233,8 +1303,24 @@ export default {
 					this.min5_rank3_o_c_subtract = response.data[2].o_c_subtract;
 					this.min5_rank3_price_volume = response.data[2].format_volume_price;
 					
-					this.min5_rank4_coin = response.data[3].API_Coin_Ticker;
-					this.min5_rank4_coin_name = response.data[3].Coin_Kor_Name;
+					if(this.min5_rank4_coin_name != response.data[3].Coin_Kor_Name){
+						this.min5_rank4_coin = response.data[3].API_Coin_Ticker;
+						this.min5_rank4_coin_name = response.data[3].Coin_Kor_Name;
+
+						if(this.min5_rank4_coin_name != ''){
+							if(response.data[3].gubun == '상승'){
+								this.min5_rank4_border_color = 'red';
+							}else if(response.data[3].gubun == '하락'){
+								this.min5_rank4_border_color = 'blue';
+							}else if(response.data[3].gubun == '보합'){
+								this.min5_rank4_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min5_rank4_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min5_rank4_gubun = response.data[3].gubun;
 					this.min5_rank4_open = response.data[3].o_price;
 					this.min5_rank4_low = response.data[3].l_price;
@@ -1244,8 +1330,24 @@ export default {
 					this.min5_rank4_o_c_subtract = response.data[3].o_c_subtract;
 					this.min5_rank4_price_volume = response.data[3].format_volume_price;
 					
-					this.min5_rank5_coin = response.data[4].API_Coin_Ticker;
-					this.min5_rank5_coin_name = response.data[4].Coin_Kor_Name;
+					if(this.min5_rank5_coin_name != response.data[4].Coin_Kor_Name){
+						this.min5_rank5_coin = response.data[4].API_Coin_Ticker;
+						this.min5_rank5_coin_name = response.data[4].Coin_Kor_Name;
+
+						if(this.min5_rank5_coin_name != ''){
+							if(response.data[4].gubun == '상승'){
+								this.min5_rank5_border_color = 'red';
+							}else if(response.data[4].gubun == '하락'){
+								this.min5_rank5_border_color = 'blue';
+							}else if(response.data[4].gubun == '보합'){
+								this.min5_rank5_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min5_rank5_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min5_rank5_gubun = response.data[4].gubun;
 					this.min5_rank5_open = response.data[4].o_price;
 					this.min5_rank5_low = response.data[4].l_price;
@@ -1255,10 +1357,12 @@ export default {
 					this.min5_rank5_o_c_subtract = response.data[4].o_c_subtract;
 					this.min5_rank5_price_volume = response.data[4].format_volume_price;
 				}
+
+				this.Data_MIN5_Make();
 			})
 		},
 		Data_MIN15_Make(){
-			axios.get('/UpbitFullLive/Main_15MIN')
+			axios.get('/UpbitLive/Main_15MIN')
 			.then(response => {
 				if(response.status == 200){
 					console.log('Main_15MIN')
@@ -1267,8 +1371,24 @@ export default {
 					this.min15_api_datetime_kst = response.data[0].API_DATETIME_KST;
 					this.min15_gijun_datetime_kst = response.data[0].CURRENT_DATETIME_KST;
 
-					this.min15_rank1_coin = response.data[0].API_Coin_Ticker;
-					this.min15_rank1_coin_name = response.data[0].Coin_Kor_Name;
+					if(this.min15_rank1_coin_name != response.data[0].Coin_Kor_Name){
+						this.min15_rank1_coin = response.data[0].API_Coin_Ticker;
+						this.min15_rank1_coin_name = response.data[0].Coin_Kor_Name;
+
+						if(this.min15_rank1_coin_name != ''){
+							if(response.data[0].gubun == '상승'){
+								this.min15_rank1_border_color = 'red';
+							}else if(response.data[0].gubun == '하락'){
+								this.min15_rank1_border_color = 'blue';
+							}else if(response.data[0].gubun == '보합'){
+								this.min15_rank1_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min15_rank1_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min15_rank1_gubun = response.data[0].gubun;
 					this.min15_rank1_open = response.data[0].o_price;
 					this.min15_rank1_low = response.data[0].l_price;
@@ -1278,8 +1398,24 @@ export default {
 					this.min15_rank1_o_c_subtract = response.data[0].o_c_subtract;
 					this.min15_rank1_price_volume = response.data[0].format_volume_price;
 
-					this.min15_rank2_coin = response.data[1].API_Coin_Ticker;
-					this.min15_rank2_coin_name = response.data[1].Coin_Kor_Name;
+					if(this.min15_rank2_coin_name != response.data[1].Coin_Kor_Name){
+						this.min15_rank2_coin = response.data[1].API_Coin_Ticker;
+						this.min15_rank2_coin_name = response.data[1].Coin_Kor_Name;
+
+						if(this.min15_rank2_coin_name != ''){
+							if(response.data[1].gubun == '상승'){
+								this.min15_rank2_border_color = 'red';
+							}else if(response.data[1].gubun == '하락'){
+								this.min15_rank2_border_color = 'blue';
+							}else if(response.data[1].gubun == '보합'){
+								this.min15_rank2_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min15_rank2_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min15_rank2_gubun = response.data[1].gubun;
 					this.min15_rank2_open = response.data[1].o_price;
 					this.min15_rank2_low = response.data[1].l_price;
@@ -1289,6 +1425,24 @@ export default {
 					this.min15_rank2_o_c_subtract = response.data[1].o_c_subtract;
 					this.min15_rank2_price_volume = response.data[1].format_volume_price;
 
+					if(this.min15_rank3_coin_name != response.data[2].Coin_Kor_Name){
+						this.min15_rank3_coin = response.data[2].API_Coin_Ticker;
+						this.min15_rank3_coin_name = response.data[2].Coin_Kor_Name;
+
+						if(this.min15_rank3_coin_name != ''){
+							if(response.data[2].gubun == '상승'){
+								this.min15_rank3_border_color = 'red';
+							}else if(response.data[2].gubun == '하락'){
+								this.min15_rank3_border_color = 'blue';
+							}else if(response.data[2].gubun == '보합'){
+								this.min15_rank3_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min15_rank3_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min15_rank3_coin = response.data[2].API_Coin_Ticker;
 					this.min15_rank3_coin_name = response.data[2].Coin_Kor_Name;
 					this.min15_rank3_gubun = response.data[2].gubun;
@@ -1300,8 +1454,24 @@ export default {
 					this.min15_rank3_o_c_subtract = response.data[2].o_c_subtract;
 					this.min15_rank3_price_volume = response.data[2].format_volume_price;
 					
-					this.min15_rank4_coin = response.data[3].API_Coin_Ticker;
-					this.min15_rank4_coin_name = response.data[3].Coin_Kor_Name;
+					if(this.min15_rank4_coin_name != response.data[3].Coin_Kor_Name){
+						this.min15_rank4_coin = response.data[3].API_Coin_Ticker;
+						this.min15_rank4_coin_name = response.data[3].Coin_Kor_Name;
+
+						if(this.min15_rank4_coin_name != ''){
+							if(response.data[3].gubun == '상승'){
+								this.min15_rank4_border_color = 'red';
+							}else if(response.data[3].gubun == '하락'){
+								this.min15_rank4_border_color = 'blue';
+							}else if(response.data[3].gubun == '보합'){
+								this.min15_rank4_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min15_rank4_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min15_rank4_gubun = response.data[3].gubun;
 					this.min15_rank4_open = response.data[3].o_price;
 					this.min15_rank4_low = response.data[3].l_price;
@@ -1311,8 +1481,24 @@ export default {
 					this.min15_rank4_o_c_subtract = response.data[3].o_c_subtract;
 					this.min15_rank4_price_volume = response.data[3].format_volume_price;
 					
-					this.min15_rank5_coin = response.data[4].API_Coin_Ticker;
-					this.min15_rank5_coin_name = response.data[4].Coin_Kor_Name;
+					if(this.min15_rank5_coin_name != response.data[4].Coin_Kor_Name){
+						this.min15_rank5_coin = response.data[4].API_Coin_Ticker;
+						this.min15_rank5_coin_name = response.data[4].Coin_Kor_Name;
+
+						if(this.min15_rank5_coin_name != ''){
+							if(response.data[4].gubun == '상승'){
+								this.min15_rank5_border_color = 'red';
+							}else if(response.data[4].gubun == '하락'){
+								this.min15_rank5_border_color = 'blue';
+							}else if(response.data[4].gubun == '보합'){
+								this.min15_rank5_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min15_rank5_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min15_rank5_gubun = response.data[4].gubun;
 					this.min15_rank5_open = response.data[4].o_price;
 					this.min15_rank5_low = response.data[4].l_price;
@@ -1322,10 +1508,12 @@ export default {
 					this.min15_rank5_o_c_subtract = response.data[4].o_c_subtract;
 					this.min15_rank5_price_volume = response.data[4].format_volume_price;
 				}
+
+				this.Data_MIN15_Make();
 			})
 		},
 		Data_MIN60_Make(){
-			axios.get('/UpbitFullLive/Main_60MIN')
+			axios.get('/UpbitLive/Main_60MIN')
 			.then(response => {
 				if(response.status == 200){
 					console.log('Main_60MIN')
@@ -1334,8 +1522,24 @@ export default {
 					this.min60_api_datetime_kst = response.data[0].API_DATETIME_KST;
 					this.min60_gijun_datetime_kst = response.data[0].CURRENT_DATETIME_KST;
 
-					this.min60_rank1_coin = response.data[0].API_Coin_Ticker;
-					this.min60_rank1_coin_name = response.data[0].Coin_Kor_Name;
+					if(this.min60_rank1_coin_name != response.data[0].Coin_Kor_Name){
+						this.min60_rank1_coin = response.data[0].API_Coin_Ticker;
+						this.min60_rank1_coin_name = response.data[0].Coin_Kor_Name;
+
+						if(this.min60_rank1_coin_name != ''){
+							if(response.data[0].gubun == '상승'){
+								this.min60_rank1_border_color = 'red';
+							}else if(response.data[0].gubun == '하락'){
+								this.min60_rank1_border_color = 'blue';
+							}else if(response.data[0].gubun == '보합'){
+								this.min60_rank1_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min60_rank1_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min60_rank1_gubun = response.data[0].gubun;
 					this.min60_rank1_open = response.data[0].o_price;
 					this.min60_rank1_low = response.data[0].l_price;
@@ -1345,8 +1549,24 @@ export default {
 					this.min60_rank1_o_c_subtract = response.data[0].o_c_subtract;
 					this.min60_rank1_price_volume = response.data[0].format_volume_price;
 
-					this.min60_rank2_coin = response.data[1].API_Coin_Ticker;
-					this.min60_rank2_coin_name = response.data[1].Coin_Kor_Name;
+					if(this.min60_rank2_coin_name != response.data[1].Coin_Kor_Name){
+						this.min60_rank2_coin = response.data[1].API_Coin_Ticker;
+						this.min60_rank2_coin_name = response.data[1].Coin_Kor_Name;
+
+						if(this.min60_rank2_coin_name != ''){
+							if(response.data[1].gubun == '상승'){
+								this.min60_rank2_border_color = 'red';
+							}else if(response.data[1].gubun == '하락'){
+								this.min60_rank2_border_color = 'blue';
+							}else if(response.data[1].gubun == '보합'){
+								this.min60_rank2_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min60_rank2_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min60_rank2_gubun = response.data[1].gubun;
 					this.min60_rank2_open = response.data[1].o_price;
 					this.min60_rank2_low = response.data[1].l_price;
@@ -1356,8 +1576,24 @@ export default {
 					this.min60_rank2_o_c_subtract = response.data[1].o_c_subtract;
 					this.min60_rank2_price_volume = response.data[1].format_volume_price;
 
-					this.min60_rank3_coin = response.data[2].API_Coin_Ticker;
-					this.min60_rank3_coin_name = response.data[2].Coin_Kor_Name;
+					if(this.min60_rank3_coin_name != response.data[2].Coin_Kor_Name){
+						this.min60_rank3_coin = response.data[2].API_Coin_Ticker;
+						this.min60_rank3_coin_name = response.data[2].Coin_Kor_Name;
+
+						if(this.min60_rank3_coin_name != ''){
+							if(response.data[2].gubun == '상승'){
+								this.min60_rank3_border_color = 'red';
+							}else if(response.data[2].gubun == '하락'){
+								this.min60_rank3_border_color = 'blue';
+							}else if(response.data[2].gubun == '보합'){
+								this.min60_rank3_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min60_rank3_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min60_rank3_gubun = response.data[2].gubun;
 					this.min60_rank3_open = response.data[2].o_price;
 					this.min60_rank3_low = response.data[2].l_price;
@@ -1367,8 +1603,24 @@ export default {
 					this.min60_rank3_o_c_subtract = response.data[2].o_c_subtract;
 					this.min60_rank3_price_volume = response.data[2].format_volume_price;
 					
-					this.min60_rank4_coin = response.data[3].API_Coin_Ticker;
-					this.min60_rank4_coin_name = response.data[3].Coin_Kor_Name;
+					if(this.min60_rank4_coin_name != response.data[3].Coin_Kor_Name){
+						this.min60_rank4_coin = response.data[3].API_Coin_Ticker;
+						this.min60_rank4_coin_name = response.data[3].Coin_Kor_Name;
+
+						if(this.min60_rank4_coin_name != ''){
+							if(response.data[3].gubun == '상승'){
+								this.min60_rank4_border_color = 'red';
+							}else if(response.data[3].gubun == '하락'){
+								this.min60_rank4_border_color = 'blue';
+							}else if(response.data[3].gubun == '보합'){
+								this.min60_rank4_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min60_rank4_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min60_rank4_gubun = response.data[3].gubun;
 					this.min60_rank4_open = response.data[3].o_price;
 					this.min60_rank4_low = response.data[3].l_price;
@@ -1378,8 +1630,24 @@ export default {
 					this.min60_rank4_o_c_subtract = response.data[3].o_c_subtract;
 					this.min60_rank4_price_volume = response.data[3].format_volume_price;
 					
-					this.min60_rank5_coin = response.data[4].API_Coin_Ticker;
-					this.min60_rank5_coin_name = response.data[4].Coin_Kor_Name;
+					if(this.min60_rank5_coin_name != response.data[4].Coin_Kor_Name){
+						this.min60_rank5_coin = response.data[4].API_Coin_Ticker;
+						this.min60_rank5_coin_name = response.data[4].Coin_Kor_Name;
+
+						if(this.min60_rank5_coin_name != ''){
+							if(response.data[4].gubun == '상승'){
+								this.min60_rank5_border_color = 'red';
+							}else if(response.data[4].gubun == '하락'){
+								this.min60_rank5_border_color = 'blue';
+							}else if(response.data[4].gubun == '보합'){
+								this.min60_rank5_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min60_rank5_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min60_rank5_gubun = response.data[4].gubun;
 					this.min60_rank5_open = response.data[4].o_price;
 					this.min60_rank5_low = response.data[4].l_price;
@@ -1389,10 +1657,12 @@ export default {
 					this.min60_rank5_o_c_subtract = response.data[4].o_c_subtract;
 					this.min60_rank5_price_volume = response.data[4].format_volume_price;
 				}
+
+				this.Data_MIN60_Make();
 			})
 		},
 		Data_MIN240_Make(){
-			axios.get('/UpbitFullLive/Main_240MIN')
+			axios.get('/UpbitLive/Main_240MIN')
 			.then(response => {
 				if(response.status == 200){
 					console.log('Main_240MIN')
@@ -1401,8 +1671,24 @@ export default {
 					this.min240_api_datetime_kst = response.data[0].API_DATETIME_KST;
 					this.min240_gijun_datetime_kst = response.data[0].CURRENT_DATETIME_KST;
 
-					this.min240_rank1_coin = response.data[0].API_Coin_Ticker;
-					this.min240_rank1_coin_name = response.data[0].Coin_Kor_Name;
+					if(this.min240_rank1_coin_name != response.data[0].Coin_Kor_Name){
+						this.min240_rank1_coin = response.data[0].API_Coin_Ticker;
+						this.min240_rank1_coin_name = response.data[0].Coin_Kor_Name;
+
+						if(this.min240_rank1_coin_name != ''){
+							if(response.data[0].gubun == '상승'){
+								this.min240_rank1_border_color = 'red';
+							}else if(response.data[0].gubun == '하락'){
+								this.min240_rank1_border_color = 'blue';
+							}else if(response.data[0].gubun == '보합'){
+								this.min240_rank1_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min240_rank1_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min240_rank1_gubun = response.data[0].gubun;
 					this.min240_rank1_open = response.data[0].o_price;
 					this.min240_rank1_low = response.data[0].l_price;
@@ -1412,8 +1698,24 @@ export default {
 					this.min240_rank1_o_c_subtract = response.data[0].o_c_subtract;
 					this.min240_rank1_price_volume = response.data[0].format_volume_price;
 
-					this.min240_rank2_coin = response.data[1].API_Coin_Ticker;
-					this.min240_rank2_coin_name = response.data[1].Coin_Kor_Name;
+					if(this.min240_rank2_coin_name != response.data[1].Coin_Kor_Name){
+						this.min240_rank2_coin = response.data[1].API_Coin_Ticker;
+						this.min240_rank2_coin_name = response.data[1].Coin_Kor_Name;
+
+						if(this.min240_rank2_coin_name != ''){
+							if(response.data[1].gubun == '상승'){
+								this.min240_rank2_border_color = 'red';
+							}else if(response.data[1].gubun == '하락'){
+								this.min240_rank2_border_color = 'blue';
+							}else if(response.data[1].gubun == '보합'){
+								this.min240_rank2_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min240_rank2_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min240_rank2_gubun = response.data[1].gubun;
 					this.min240_rank2_open = response.data[1].o_price;
 					this.min240_rank2_low = response.data[1].l_price;
@@ -1423,8 +1725,24 @@ export default {
 					this.min240_rank2_o_c_subtract = response.data[1].o_c_subtract;
 					this.min240_rank2_price_volume = response.data[1].format_volume_price;
 
-					this.min240_rank3_coin = response.data[2].API_Coin_Ticker;
-					this.min240_rank3_coin_name = response.data[2].Coin_Kor_Name;
+					if(this.min240_rank3_coin_name != response.data[2].Coin_Kor_Name){
+						this.min240_rank3_coin = response.data[2].API_Coin_Ticker;
+						this.min240_rank3_coin_name = response.data[2].Coin_Kor_Name;
+
+						if(this.min240_rank3_coin_name != ''){
+							if(response.data[2].gubun == '상승'){
+								this.min240_rank3_border_color = 'red';
+							}else if(response.data[2].gubun == '하락'){
+								this.min240_rank3_border_color = 'blue';
+							}else if(response.data[2].gubun == '보합'){
+								this.min240_rank3_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min240_rank3_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min240_rank3_gubun = response.data[2].gubun;
 					this.min240_rank3_open = response.data[2].o_price;
 					this.min240_rank3_low = response.data[2].l_price;
@@ -1434,8 +1752,24 @@ export default {
 					this.min240_rank3_o_c_subtract = response.data[2].o_c_subtract;
 					this.min240_rank3_price_volume = response.data[2].format_volume_price;
 					
-					this.min240_rank4_coin = response.data[3].API_Coin_Ticker;
-					this.min240_rank4_coin_name = response.data[3].Coin_Kor_Name;
+					if(this.min240_rank4_coin_name != response.data[3].Coin_Kor_Name){
+						this.min240_rank4_coin = response.data[3].API_Coin_Ticker;
+						this.min240_rank4_coin_name = response.data[3].Coin_Kor_Name;
+
+						if(this.min240_rank4_coin_name != ''){
+							if(response.data[3].gubun == '상승'){
+								this.min240_rank4_border_color = 'red';
+							}else if(response.data[3].gubun == '하락'){
+								this.min240_rank4_border_color = 'blue';
+							}else if(response.data[3].gubun == '보합'){
+								this.min240_rank4_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min240_rank4_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min240_rank4_gubun = response.data[3].gubun;
 					this.min240_rank4_open = response.data[3].o_price;
 					this.min240_rank4_low = response.data[3].l_price;
@@ -1445,8 +1779,24 @@ export default {
 					this.min240_rank4_o_c_subtract = response.data[3].o_c_subtract;
 					this.min240_rank4_price_volume = response.data[3].format_volume_price;
 					
-					this.min240_rank5_coin = response.data[4].API_Coin_Ticker;
-					this.min240_rank5_coin_name = response.data[4].Coin_Kor_Name;
+					if(this.min240_rank5_coin_name != response.data[4].Coin_Kor_Name){
+						this.min240_rank5_coin = response.data[4].API_Coin_Ticker;
+						this.min240_rank5_coin_name = response.data[4].Coin_Kor_Name;
+
+						if(this.min240_rank5_coin_name != ''){
+							if(response.data[4].gubun == '상승'){
+								this.min240_rank5_border_color = 'red';
+							}else if(response.data[4].gubun == '하락'){
+								this.min240_rank5_border_color = 'blue';
+							}else if(response.data[4].gubun == '보합'){
+								this.min240_rank5_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.min240_rank5_border_color = 'white'
+							, 500);
+						}
+					}
 					this.min240_rank5_gubun = response.data[4].gubun;
 					this.min240_rank5_open = response.data[4].o_price;
 					this.min240_rank5_low = response.data[4].l_price;
@@ -1455,23 +1805,56 @@ export default {
 					this.min240_rank5_o_c_rate = response.data[4].o_c_rate;
 					this.min240_rank5_o_c_subtract = response.data[4].o_c_subtract;
 					this.min240_rank5_price_volume = response.data[4].format_volume_price;
+
+					this.Data_MIN240_Make();
 				}
 			})
 		},
 		CurrentDataTime() {
-			let mi = new Date().getMinutes() < 10? "0" + new Date().getMinutes(): new Date().getMinutes();
-			let ss = new Date().getSeconds() < 10? "0" + new Date().getSeconds(): new Date().getSeconds();
+			var mi = new Date().getMinutes() < 10? "0" + new Date().getMinutes(): new Date().getMinutes();
+			var ss = new Date().getSeconds() < 10? "0" + new Date().getSeconds(): new Date().getSeconds();
 			
 			if(Number(ss) == 0){
 				this.Data_Notice();
 			}
+			
 
+			var min5_mi = (this.min5_gijun_datetime_kst).substr(14, 2)
+			if(Number(min5_mi) == 0 && Number(mi) == 2){
+				this.Data_MIN5_Make();
+			}else if((Number(min5_mi) < Number(mi)-1) || (Number(min5_mi) > Number(mi)+1)){
+				this.Data_MIN5_Make();
+			}
+
+			var min15_mi = (this.min15_gijun_datetime_kst).substr(14, 2)
+			if(Number(min15_mi) == 0 && Number(mi) == 2){
+				this.Data_MIN15_Make();
+			}else if((Number(min15_mi) < Number(mi)-1) || (Number(min15_mi) > Number(mi)+1)){
+				this.Data_MIN15_Make();
+			}
+
+			var min60_mi = (this.min60_gijun_datetime_kst).substr(14, 2)
+			if(Number(min60_mi) == 0 && Number(mi) == 2){
+				this.Data_MIN60_Make();
+			}else if((Number(min60_mi) < Number(mi)-1) || (Number(min60_mi) > Number(mi)+1)){
+				this.Data_MIN60_Make();
+			}
+
+			var min240_mi = (this.min240_gijun_datetime_kst).substr(14, 2)
+			if(Number(min240_mi) == 0 && Number(mi) == 2){
+				this.Data_MIN240_Make();
+			}else if((Number(min240_mi) < Number(mi)-1) || (Number(min240_mi) > Number(mi)+1)){
+				this.Data_MIN240_Make();
+			}
+
+			/*
 			if(Number(ss) == 0 || Number(ss) == 5 || Number(ss) == 10 || Number(ss) == 15 || Number(ss) == 20 || Number(ss) == 25 || Number(ss) == 30 || Number(ss) == 35 || Number(ss) == 40 || Number(ss) == 45 || Number(ss) == 50 || Number(ss) == 55){
 				this.Data_MIN5_Make();
 				this.Data_MIN15_Make();
 				this.Data_MIN60_Make();
 				this.Data_MIN240_Make();
 			}
+			*/
 		},
 		Data_Notice(){
 			axios.get('/Main/SelectCodeData',{

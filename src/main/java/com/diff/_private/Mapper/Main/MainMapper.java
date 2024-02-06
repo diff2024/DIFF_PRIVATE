@@ -28,4 +28,5 @@ public interface MainMapper {
 	public List<HashMap<String, String>> ReportList() throws Exception;
 	public List<HashMap<String, String>> ReportHTMLList(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> UpbitCoinList() throws Exception;
+	public List<HashMap<String, String>> BithumbCoinList() throws Exception;
 }

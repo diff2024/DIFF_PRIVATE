@@ -71,8 +71,8 @@ import java.util.Date;
 import java.util.Locale;
 
 @RestController
-@RequestMapping("/UpbitFullLive")
-public class UpbitFullLive {
+@RequestMapping("/UpbitLive")
+public class UpbitLive {
 	
 	@Autowired
 	MainService MainService;
