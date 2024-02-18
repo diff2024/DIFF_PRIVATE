@@ -20,29 +20,29 @@
   <div>
 	<v-flex xs12 sm12 md12>
 		<v-row>
-			<v-col xl="12" md="12" sm="12" style="height:60px; padding-top:0px;"></v-col>
+			<v-col xl="12" md="12" sm="12" style="height:70px; padding-top:0px;"></v-col>
 		</v-row>
 		<v-row>
 			<v-col xl="6" md="6" sm="6" style="text-align:center; padding-top:0px; padding-right:40px; padding-left:25px;">
 				<v-row>
-					<v-col xl="7" md="7" sm="7" style="padding-left:20px; text-align:left; font-weight:bold; font-size:40px;">
+					<v-col xl="7" md="7" sm="7" style="padding-left:20px; text-align:left; font-weight:bold; font-size:35px;">
 						업비트 60분 [{{ min60_api_datetime_kst }}]
 					</v-col>
-					<v-col xl="5" md="5" sm="5" style="padding-right:0px; text-align:right; font-weight:bold; font-size:40px;">
+					<v-col xl="5" md="5" sm="5" style="padding-right:0px; text-align:right; font-weight:bold; font-size:35px;">
 						{{ min60_gijun_datetime_kst }}
 					</v-col>
 				</v-row>
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 30px; font-weight:bold; padding: 0px; padding-top: 5px;">
+					<v-col xl="4" md="4" sm="4" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 25px; font-weight:bold; padding: 0px; padding-top: 10px;">
 						코인
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 30px; font-weight:bold; padding: 0px; padding-top: 5px;">
+					<v-col xl="2" md="2" sm="2" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 25px; font-weight:bold; padding: 0px; padding-top: 10px;">
 						현재가
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 30px; font-weight:bold; padding: 0px; padding-top: 5px;">
+					<v-col xl="2" md="2" sm="2" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 25px; font-weight:bold; padding: 0px; padding-top: 10px;">
 						변동률(60분)
 					</v-col>
-					<v-col xl="4" md="4" sm="4" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 30px; font-weight:bold; padding: 0px; padding-top: 5px;">
+					<v-col xl="4" md="4" sm="4" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 25px; font-weight:bold; padding: 0px; padding-top: 10px;">
 						추정 거래대금(60분)
 					</v-col>
 				</v-row>
@@ -441,24 +441,24 @@
 			<v-col xl="6" md="6" sm="6" style="text-align:center; padding-top:0px; padding-left:40px; padding-right:25px;">
 				
 				<v-row>
-					<v-col xl="7" md="7" sm="7" style="padding-left:0px; text-align:left; font-weight:bold; font-size:40px;">
+					<v-col xl="7" md="7" sm="7" style="padding-left:0px; text-align:left; font-weight:bold; font-size:35px;">
 						업비트 240분 [{{ min240_api_datetime_kst }}]
 					</v-col>
-					<v-col xl="5" md="5" sm="5" style="padding-right:25px; text-align:right; font-weight:bold; font-size:40px;">
+					<v-col xl="5" md="5" sm="5" style="padding-right:25px; text-align:right; font-weight:bold; font-size:35px;">
 						{{ min240_gijun_datetime_kst }}
 					</v-col>
 				</v-row>
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 30px; font-weight:bold; padding: 0px; padding-top: 5px;">
+					<v-col xl="4" md="4" sm="4" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 25px; font-weight:bold; padding: 0px; padding-top: 10px;">
 						코인
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 30px; font-weight:bold; padding: 0px; padding-top: 5px;">
+					<v-col xl="2" md="2" sm="2" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 25px; font-weight:bold; padding: 0px; padding-top: 10px;">
 						현재가
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 30px; font-weight:bold; padding: 0px; padding-top: 5px;">
+					<v-col xl="2" md="2" sm="2" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 25px; font-weight:bold; padding: 0px; padding-top: 10px;">
 						변동률(240분)
 					</v-col>
-					<v-col xl="4" md="4" sm="4" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 30px; font-weight:bold; padding: 0px; padding-top: 5px;">
+					<v-col xl="4" md="4" sm="4" style="height: 60px; background-color: rgb(249, 250, 252); color: rgb(102, 102, 102); font-family: 돋움; font-size: 25px; font-weight:bold; padding: 0px; padding-top: 10px;">
 						추정 거래대금(240분)
 					</v-col>
 				</v-row>

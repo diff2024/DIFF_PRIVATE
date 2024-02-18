@@ -225,14 +225,27 @@ public class YoutubeUpbit {
 	        		BigDecimal BD_O_C_RATE = ((BD_C_PRICE.subtract(BD_O_PRICE)).divide(BD_O_PRICE, 6, RoundingMode.HALF_UP)).multiply(BD_100);
 	        		BigDecimal BD_PRICE_VOLUME = BD_C_PRICE.multiply(BD_VOLUME);
 	        		
-	        		String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
+	        		//String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		
+	        		String format_c_price = c_price;
+	        		if(Double.parseDouble(c_price) > 999) {
+	        			format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
-	        		String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String format_volume_price = volume_price;
+	        		if(Double.parseDouble(volume_price) > 999) {
+	        			format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
-	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString());
+	        		if(Double.parseDouble(BD_O_C_SUBTRACT.toString()) > 999) {
+	        			o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		
 	        		if(API_HH.equals(datetime_kst_hh) && API_MM.equals(datetime_kst_mm)) {
-	        			
 		        		HashMap<String, String> map = new HashMap<String, String>();
 		        		map.put("API_DATETIME_KST", GIJUN_DATETIME);
 		        		map.put("CURRENT_DATETIME_KST", CURRENT_DATETIME_KST);
@@ -409,11 +422,25 @@ public class YoutubeUpbit {
 	        		BigDecimal BD_O_C_RATE = ((BD_C_PRICE.subtract(BD_O_PRICE)).divide(BD_O_PRICE, 6, RoundingMode.HALF_UP)).multiply(BD_100);
 	        		BigDecimal BD_PRICE_VOLUME = BD_C_PRICE.multiply(BD_VOLUME);
 	        		
-	        		String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
+	        		//String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		
+	        		String format_c_price = c_price;
+	        		if(Double.parseDouble(c_price) > 999) {
+	        			format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
-	        		String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String format_volume_price = volume_price;
+	        		if(Double.parseDouble(volume_price) > 999) {
+	        			format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
-	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString());
+	        		if(Double.parseDouble(BD_O_C_SUBTRACT.toString()) > 999) {
+	        			o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		
 	        		if(API_HH.equals(datetime_kst_hh) && API_MM.equals(datetime_kst_mm)) {
 		        		HashMap<String, String> map = new HashMap<String, String>();
@@ -581,11 +608,25 @@ public class YoutubeUpbit {
 	        		BigDecimal BD_O_C_RATE = ((BD_C_PRICE.subtract(BD_O_PRICE)).divide(BD_O_PRICE, 6, RoundingMode.HALF_UP)).multiply(BD_100);
 	        		BigDecimal BD_PRICE_VOLUME = BD_C_PRICE.multiply(BD_VOLUME);
 	        		
-	        		String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
+	        		//String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		
+	        		String format_c_price = c_price;
+	        		if(Double.parseDouble(c_price) > 999) {
+	        			format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
-	        		String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String format_volume_price = volume_price;
+	        		if(Double.parseDouble(volume_price) > 999) {
+	        			format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
-	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString());
+	        		if(Double.parseDouble(BD_O_C_SUBTRACT.toString()) > 999) {
+	        			o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		
 	        		if(API_HH.equals(datetime_kst_hh) && API_MM.equals(datetime_kst_mm)) {
 		        		HashMap<String, String> map = new HashMap<String, String>();
@@ -772,11 +813,25 @@ public class YoutubeUpbit {
 	        		BigDecimal BD_O_C_RATE = ((BD_C_PRICE.subtract(BD_O_PRICE)).divide(BD_O_PRICE, 6, RoundingMode.HALF_UP)).multiply(BD_100);
 	        		BigDecimal BD_PRICE_VOLUME = BD_C_PRICE.multiply(BD_VOLUME);
 	        		
-	        		String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		//String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
+	        		//String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		
+	        		String format_c_price = c_price;
+	        		if(Double.parseDouble(c_price) > 999) {
+	        			format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
-	        		String format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String format_volume_price = volume_price;
+	        		if(Double.parseDouble(volume_price) > 999) {
+	        			format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
-	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString());
+	        		if(Double.parseDouble(BD_O_C_SUBTRACT.toString()) > 999) {
+	        			o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+	        		}
 	        		
 	        		if(API_HH.equals(datetime_kst_hh) && API_MM.equals(datetime_kst_mm)) {
 		        		HashMap<String, String> map = new HashMap<String, String>();
