@@ -179,6 +179,10 @@ public class Main {
 			        	JSONArray jArray_h = jMainObject.getJSONArray("h");
 			        	JSONArray jArray_c = jMainObject.getJSONArray("c");
 			        	JSONArray jArray_v = jMainObject.getJSONArray("v");
+			        	String o_price = "";
+			        	String l_price = "9999999999999";
+			        	String h_price = "0";
+			        	String c_price = "";
 			        	
 			        	for (int i = 0; i < jArray_t.length(); i++) {
 			        		if(Long.parseLong((jArray_t.get(i)).toString()) >= GIJUN_TIMESTAMP) {
@@ -190,16 +194,30 @@ public class Main {
 			        			String tmp_c_price = (jArray_c.get(i)).toString();
 			        			String tmp_volume = (jArray_v.get(i)).toString();
 			        			
-			        			System.out.println("========================"+Integer.toString(i)+"========================");
-			        			System.out.println("[KST_DATETIME] "+ KST_DATETIME);
-			        			System.out.println("[timestamp] "+ timestamp);
-			        			System.out.println("[o_price] "+ tmp_o_price);
-			        			System.out.println("[l_price] "+ tmp_l_price);
-			        			System.out.println("[h_price] "+ tmp_h_price);
-			        			System.out.println("[c_price] "+ tmp_c_price);
+			        			if(o_price.equals("")) {
+			        				o_price = tmp_o_price;
+			        			}
+			        			
+			        			BigDecimal BD_TMP_L_PRICE = new BigDecimal(tmp_l_price);
+			        			BigDecimal BD_L_PRICE = new BigDecimal(l_price);
+			        			
+			        			BigDecimal BD_TMP_H_PRICE = new BigDecimal(tmp_h_price);
+			        			BigDecimal BD_H_PRICE = new BigDecimal(h_price);
+			        			
+			        			if(BD_L_PRICE.compareTo(BD_TMP_L_PRICE) == 1) {
+			        				l_price = tmp_l_price;
+			        			}
+			        			if(BD_H_PRICE.compareTo(BD_TMP_H_PRICE) == -1) {
+			        				h_price = tmp_h_price;
+			        			}
+			        			c_price = tmp_c_price;
 			        		}
-			        		
 			        	}
+			        	
+			        	System.out.println("[최종][o_price] "+ o_price);
+	        			System.out.println("[최종][l_price] "+ l_price);
+	        			System.out.println("[최종][h_price] "+ h_price);
+	        			System.out.println("[최종][c_price] "+ c_price);
 			        } else {
 			        	System.out.println("[실패]["+Coin_Ticker+"]["+Coin_Kor_Name+"]["+Coin_Number+"]");
 			        }
@@ -275,7 +293,7 @@ public class Main {
 		long TIMESTMAP = System.currentTimeMillis();
 		String CURRENT_DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
         
-        // 15분전
+        // 5분전
         long TIMESTMAP_5 = TIMESTMAP - (60000*5);
 		String DATETIME_KST_5 = simpleDateFormat.format(TIMESTMAP_5);
         

@@ -16,8 +16,17 @@ const Main = () => {
 const Test = () => {
 	return import("./views/Test.vue")
 }
-const UpbitFullLive = () => {
-  return import("./views/Coin/UpbitFullLive.vue")
+const YoutubeUpbit_5_15 = () => {
+  return import("./views/Coin/YoutubeUpbit_5_15.vue")
+}
+const YoutubeUpbit_60_240 = () => {
+  return import("./views/Coin/YoutubeUpbit_60_240.vue")
+}
+const YoutubeBithumb_5_15 = () => {
+  return import("./views/Coin/YoutubeBithumb_5_15.vue")
+}
+const YoutubeBithumb_60_240 = () => {
+  return import("./views/Coin/YoutubeBithumb_60_240.vue")
 }
 const Report = () => {
 	return import("./views/Coin/Report.vue")	
@@ -63,9 +72,24 @@ export const router = new Router({
       component: Main,
     },
     {
-      path: '/UpbitFullLive',
-      name: 'upbitfulllive',
-      component: UpbitFullLive
+      path: '/YoutubeUpbit_5_15',
+      name: 'youtubeupbit_5_15',
+      component: YoutubeUpbit_5_15
+    },
+    {
+      path: '/YoutubeUpbit_60_240',
+      name: 'youtubeupbit_60_240',
+      component: YoutubeUpbit_60_240
+    },
+    {
+      path: '/YoutubeBithumb_5_15',
+      name: 'youtubebithumb_5_15',
+      component: YoutubeBithumb_5_15
+    },
+    {
+      path: '/YoutubeBithumb_60_240',
+      name: 'youtubebithumb_60_240',
+      component: YoutubeBithumb_60_240
     },
     {
       path: '/test',

@@ -26,7 +26,7 @@
 	<!--<div id="app" v-if="$route.name !== 'main'">-->
 	<div id="app">
 		<v-app id="inspire">
-			<v-app-bar color="#283345" dark class="fontDefault v-HeadClass" :clipped-left="$vuetify.breakpoint.lgAndUp" v-if="$route.name !== 'upbitfulllive'">
+			<v-app-bar color="#283345" dark class="fontDefault v-HeadClass" :clipped-left="$vuetify.breakpoint.lgAndUp" v-if="$route.name !== 'youtubeupbit_5_15' && $route.name !== 'youtubeupbit_60_240' && $route.name !== 'youtubebithumb_5_15' && $route.name !== 'youtubebithumb_60_240'">
 				<v-toolbar-title v-on:click="goMainURL" class="fontDefault ml-2 pl-4" style="cursor:pointer;">
 					<img src="./assets/logo.jpg" width="90px" style="vertical-align:middle;" />
 				</v-toolbar-title>

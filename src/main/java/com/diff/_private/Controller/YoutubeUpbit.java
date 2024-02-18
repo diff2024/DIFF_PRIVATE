@@ -71,16 +71,16 @@ import java.util.Date;
 import java.util.Locale;
 
 @RestController
-@RequestMapping("/UpbitLive")
-public class UpbitLive {
+@RequestMapping("/YoutubeUpbit")
+public class YoutubeUpbit {
 	
 	@Autowired
 	MainService MainService;
 	
-	@GetMapping(path = "/Main_5MIN")
-	public List<HashMap<String, String>> Main_5MIN() throws Exception{
+	@GetMapping(path = "/MIN5")
+	public List<HashMap<String, String>> MIN5() throws Exception{
 		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + START_DATETIME + "] 5MIN 시작");
+		System.out.println("[업비트][" + START_DATETIME + "] MIN5 시작");
 		String GIJUN_DATETIME = "";
 		LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -126,7 +126,7 @@ public class UpbitLive {
 		long TIMESTMAP = System.currentTimeMillis();
 		String CURRENT_DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
         
-        // 15분전
+        // 5분전
         long TIMESTMAP_5 = TIMESTMAP - (60000*5);
 		String DATETIME_KST_5 = simpleDateFormat.format(TIMESTMAP_5);
         
@@ -137,6 +137,11 @@ public class UpbitLive {
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
 		
 		for(int x=0; x<CoinList.size(); x++) {
+			if(x == Math.ceil(CoinList.size()/2)) {
+				TIMESTMAP = System.currentTimeMillis();
+				CURRENT_DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
+			}
+			
 			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
 			String API_Coin_Ticker = CoinList.get(x).get("api_coin_ticker");
 			String Coin_Kor_Name = CoinList.get(x).get("coin_kor_name");
@@ -266,15 +271,15 @@ public class UpbitLive {
 		
 		
 		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + END_DATETIME + "] 5MIN 종료");
+		System.out.println("[업비트][" + END_DATETIME + "] MIN5 종료");
 		
 		return APICoinList;
 	}
 	
-	@GetMapping(path = "/Main_15MIN")
-	public List<HashMap<String, String>> Main_15MIN() throws Exception{
+	@GetMapping(path = "/MIN15")
+	public List<HashMap<String, String>> MIN15() throws Exception{
 		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + START_DATETIME + "] 15MIN 시작");
+		System.out.println("[업비트][" + START_DATETIME + "] MIN15 시작");
 		
 		String GIJUN_DATETIME = "";
 		LocalDateTime now = LocalDateTime.now();
@@ -316,6 +321,11 @@ public class UpbitLive {
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
 		
 		for(int x=0; x<CoinList.size(); x++) {
+			if(x == Math.ceil(CoinList.size()/2)) {
+				TIMESTMAP = System.currentTimeMillis();
+				CURRENT_DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
+			}
+			
 			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
 			String API_Coin_Ticker = CoinList.get(x).get("api_coin_ticker");
 			String Coin_Kor_Name = CoinList.get(x).get("coin_kor_name");
@@ -443,15 +453,15 @@ public class UpbitLive {
 		});
 		
 		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + END_DATETIME + "] 15MIN 종료");
+		System.out.println("[업비트][" + END_DATETIME + "] MIN15 종료");
 		
 		return APICoinList;
 	}
 	
-	@GetMapping(path = "/Main_60MIN")
-	public List<HashMap<String, String>> Main_60MIN() throws Exception{
+	@GetMapping(path = "/MIN60")
+	public List<HashMap<String, String>> MIN60() throws Exception{
 		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + START_DATETIME + "] 60MIN 시작");
+		System.out.println("[업비트][" + START_DATETIME + "] MIN60 시작");
 		
 		String GIJUN_DATETIME = "";
 		LocalDateTime now = LocalDateTime.now();
@@ -483,6 +493,11 @@ public class UpbitLive {
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
 		
 		for(int x=0; x<CoinList.size(); x++) {
+			if(x == Math.ceil(CoinList.size()/2)) {
+				TIMESTMAP = System.currentTimeMillis();
+				CURRENT_DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
+			}
+			
 			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
 			String API_Coin_Ticker = CoinList.get(x).get("api_coin_ticker");
 			String Coin_Kor_Name = CoinList.get(x).get("coin_kor_name");
@@ -610,15 +625,15 @@ public class UpbitLive {
 		});
 		
 		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + END_DATETIME + "] 60MIN 종료");
+		System.out.println("[업비트][" + END_DATETIME + "] MIN60 종료");
 		
 		return APICoinList;
 	}
 	
-	@GetMapping(path = "/Main_240MIN")
-	public List<HashMap<String, String>> Main_240MIN() throws Exception{
+	@GetMapping(path = "/MIN240")
+	public List<HashMap<String, String>> MIN240() throws Exception{
 		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + START_DATETIME + "] 240MIN 시작");
+		System.out.println("[업비트][" + START_DATETIME + "] MIN240 시작");
 		
 		String GIJUN_DATETIME = "";
 		LocalDateTime now = LocalDateTime.now();
@@ -669,6 +684,11 @@ public class UpbitLive {
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
 		
 		for(int x=0; x<CoinList.size(); x++) {
+			if(x == Math.ceil(CoinList.size()/2)) {
+				TIMESTMAP = System.currentTimeMillis();
+				CURRENT_DATETIME_KST = simpleDateFormat.format(System.currentTimeMillis());
+			}
+			
 			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
 			String API_Coin_Ticker = CoinList.get(x).get("api_coin_ticker");
 			String Coin_Kor_Name = CoinList.get(x).get("coin_kor_name");
@@ -796,7 +816,7 @@ public class UpbitLive {
 		});
 		
 		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + END_DATETIME + "] 240MIN 종료");
+		System.out.println("[업비트][" + END_DATETIME + "] MIN240 종료");
 		
 		return APICoinList;
 	}

@@ -103,7 +103,7 @@ export default {
 	data () {
 		return {
 			isLoading: false,
-			timeout: 1000000,
+			timeout: 1500000,
 			gridOptions: null,
 			columnDefs: null,
             rowData: [],
