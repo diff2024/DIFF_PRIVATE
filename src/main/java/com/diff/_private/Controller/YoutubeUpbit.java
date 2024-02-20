@@ -231,17 +231,17 @@ public class YoutubeUpbit {
 	        		//String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		
 	        		String format_c_price = c_price;
-	        		if(Math.abs(Integer.parseInt(c_price)) > 999) {
+	        		if(!c_price.contains(".") && (new BigDecimal(c_price).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
 	        		String format_volume_price = volume_price;
-	        		if(Math.abs(Integer.parseInt(volume_price)) > 999) {
+	        		if(!volume_price.contains(".") && (new BigDecimal(volume_price).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
 	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString());
-	        		if(Math.abs(Integer.parseInt(BD_O_C_SUBTRACT.toString())) > 999) {
+	        		if(!(BD_O_C_SUBTRACT.toString()).contains(".") && (new BigDecimal(BD_O_C_SUBTRACT.toString()).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		
@@ -428,17 +428,17 @@ public class YoutubeUpbit {
 	        		//String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		
 	        		String format_c_price = c_price;
-	        		if(Math.abs(Integer.parseInt(c_price)) > 999) {
+	        		if(!c_price.contains(".") && (new BigDecimal(c_price).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
 	        		String format_volume_price = volume_price;
-	        		if(Math.abs(Integer.parseInt(volume_price)) > 999) {
+	        		if(!volume_price.contains(".") && (new BigDecimal(volume_price).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
 	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString());
-	        		if(Math.abs(Integer.parseInt(BD_O_C_SUBTRACT.toString())) > 999) {
+	        		if(!(BD_O_C_SUBTRACT.toString()).contains(".") && (new BigDecimal(BD_O_C_SUBTRACT.toString()).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		
@@ -614,17 +614,17 @@ public class YoutubeUpbit {
 	        		//String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		
 	        		String format_c_price = c_price;
-	        		if(Math.abs(Integer.parseInt(c_price)) > 999) {
+	        		if(!c_price.contains(".") && (new BigDecimal(c_price).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
 	        		String format_volume_price = volume_price;
-	        		if(Math.abs(Integer.parseInt(volume_price)) > 999) {
+	        		if(!volume_price.contains(".") && (new BigDecimal(volume_price).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
 	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString());
-	        		if(Math.abs(Integer.parseInt(BD_O_C_SUBTRACT.toString())) > 999) {
+	        		if(!(BD_O_C_SUBTRACT.toString()).contains(".") && (new BigDecimal(BD_O_C_SUBTRACT.toString()).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		
@@ -819,17 +819,17 @@ public class YoutubeUpbit {
 	        		//String o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		
 	        		String format_c_price = c_price;
-	        		if(Math.abs(Integer.parseInt(c_price)) > 999) {
+	        		if(!c_price.contains(".") && (new BigDecimal(c_price).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			format_c_price = c_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		String volume_price = (BD_PRICE_VOLUME.setScale(0, RoundingMode.FLOOR)).toString();
 	        		String format_volume_price = volume_price;
-	        		if(Math.abs(Integer.parseInt(volume_price)) > 999) {
+	        		if(!volume_price.contains(".") && (new BigDecimal(volume_price).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			format_volume_price = volume_price.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		String o_c_rate = (BD_O_C_RATE.setScale(2, RoundingMode.FLOOR)).toString() + '%';
 	        		String o_c_subtract = (BD_O_C_SUBTRACT.toString());
-	        		if(Math.abs(Integer.parseInt(BD_O_C_SUBTRACT.toString())) > 999) {
+	        		if(!(BD_O_C_SUBTRACT.toString()).contains(".") && (new BigDecimal(BD_O_C_SUBTRACT.toString()).abs()).compareTo(new BigDecimal("999")) == 1) {
 	        			o_c_subtract = (BD_O_C_SUBTRACT.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 	        		}
 	        		

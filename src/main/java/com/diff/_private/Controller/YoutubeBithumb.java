@@ -333,19 +333,19 @@ public class YoutubeBithumb {
 			        		//String o_c_subtract_5 = (BD_O_C_SUBTRACT_5.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		
 			        		String format_c_price_5 = c_price_5;
-			        		if(Math.abs(Integer.parseInt(c_price_5)) > 999) {
+			        		if(!c_price_5.contains(".") && (new BigDecimal(c_price_5).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			format_c_price_5 = c_price_5.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
 			        		String volume_price_5 = (BD_PRICE_VOLUME_5.setScale(0, RoundingMode.FLOOR)).toString();
 			        		String format_volume_price_5 = volume_price_5;
-			        		if(Math.abs(Integer.parseInt(volume_price_5)) > 999) {
+			        		if(!volume_price_5.contains(".") && (new BigDecimal(volume_price_5).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			format_volume_price_5 = volume_price_5.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
 			        		String o_c_rate_5 = (BD_O_C_RATE_5.setScale(2, RoundingMode.FLOOR)).toString() + '%';
 			        		String o_c_subtract_5 = (BD_O_C_SUBTRACT_5.toString());
-			        		if(Math.abs(Integer.parseInt(BD_O_C_SUBTRACT_5.toString())) > 999) {
+			        		if(!(BD_O_C_SUBTRACT_5.toString()).contains(".") && (new BigDecimal(BD_O_C_SUBTRACT_5.toString()).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			o_c_subtract_5 = (BD_O_C_SUBTRACT_5.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
@@ -360,19 +360,19 @@ public class YoutubeBithumb {
 			        		//String o_c_subtract_15 = (BD_O_C_SUBTRACT_15.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 				        	
 			        		String format_c_price_15 = c_price_15;
-			        		if(Math.abs(Integer.parseInt(c_price_15)) > 999) {
+			        		if(!c_price_15.contains(".") && (new BigDecimal(c_price_15).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			format_c_price_15 = c_price_15.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
 			        		String volume_price_15 = (BD_PRICE_VOLUME_15.setScale(0, RoundingMode.FLOOR)).toString();
 			        		String format_volume_price_15 = volume_price_15;
-			        		if(Math.abs(Integer.parseInt(volume_price_15)) > 999) {
+			        		if(!volume_price_15.contains(".") && (new BigDecimal(volume_price_15).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			format_volume_price_15 = volume_price_15.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
 			        		String o_c_rate_15 = (BD_O_C_RATE_15.setScale(2, RoundingMode.FLOOR)).toString() + '%';
 			        		String o_c_subtract_15 = (BD_O_C_SUBTRACT_15.toString());
-			        		if(Math.abs(Integer.parseInt(BD_O_C_SUBTRACT_15.toString())) > 999) {
+			        		if(!(BD_O_C_SUBTRACT_15.toString()).contains(".") && (new BigDecimal(BD_O_C_SUBTRACT_15.toString()).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			o_c_subtract_15 = (BD_O_C_SUBTRACT_15.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
@@ -663,19 +663,19 @@ public class YoutubeBithumb {
 			        		//String o_c_subtract_60 = (BD_O_C_SUBTRACT_60.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		
 			        		String format_c_price_60 = c_price_60;
-			        		if(Math.abs(Integer.parseInt(c_price_60)) > 999) {
+			        		if(!c_price_60.contains(".") && (new BigDecimal(c_price_60).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			format_c_price_60 = c_price_60.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
 			        		String volume_price_60 = (BD_PRICE_VOLUME_60.setScale(0, RoundingMode.FLOOR)).toString();
 			        		String format_volume_price_60 = volume_price_60;
-			        		if(Math.abs(Integer.parseInt(volume_price_60)) > 999) {
+			        		if(!volume_price_60.contains(".") && (new BigDecimal(volume_price_60).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			format_volume_price_60 = volume_price_60.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
 			        		String o_c_rate_60 = (BD_O_C_RATE_60.setScale(2, RoundingMode.FLOOR)).toString() + '%';
 			        		String o_c_subtract_60 = (BD_O_C_SUBTRACT_60.toString());
-			        		if(Math.abs(Integer.parseInt(BD_O_C_SUBTRACT_60.toString())) > 999) {
+			        		if(!(BD_O_C_SUBTRACT_60.toString()).contains(".") && (new BigDecimal(BD_O_C_SUBTRACT_60.toString()).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			o_c_subtract_60 = (BD_O_C_SUBTRACT_60.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
@@ -690,19 +690,19 @@ public class YoutubeBithumb {
 			        		//String o_c_subtract_240 = (BD_O_C_SUBTRACT_240.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 				        	
 			        		String format_c_price_240 = c_price_240;
-			        		if(Math.abs(Integer.parseInt(c_price_240)) > 999) {
+			        		if(!c_price_240.contains(".") && (new BigDecimal(c_price_240).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			format_c_price_240 = c_price_240.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
 			        		String volume_price_240 = (BD_PRICE_VOLUME_240.setScale(0, RoundingMode.FLOOR)).toString();
 			        		String format_volume_price_240 = volume_price_240;
-			        		if(Math.abs(Integer.parseInt(volume_price_240)) > 999) {
+			        		if(!volume_price_240.contains(".") && (new BigDecimal(volume_price_240).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			format_volume_price_240 = volume_price_240.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		
 			        		String o_c_rate_240 = (BD_O_C_RATE_240.setScale(2, RoundingMode.FLOOR)).toString() + '%';
 			        		String o_c_subtract_240 = (BD_O_C_SUBTRACT_240.toString());
-			        		if(Math.abs(Integer.parseInt(BD_O_C_SUBTRACT_240.toString())) > 999) {
+		        			if(!(BD_O_C_SUBTRACT_240.toString()).contains(".") && (new BigDecimal(BD_O_C_SUBTRACT_240.toString()).abs()).compareTo(new BigDecimal("999")) == 1) {
 			        			o_c_subtract_240 = (BD_O_C_SUBTRACT_240.toString()).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
 			        		}
 			        		

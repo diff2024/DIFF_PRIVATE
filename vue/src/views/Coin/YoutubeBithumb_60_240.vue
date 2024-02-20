@@ -51,7 +51,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank1_border_color }">
 						{{ min60_rank1_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank1_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -64,7 +64,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank1_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -76,7 +76,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank1_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -90,7 +90,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank2_border_color }">
 						{{ min60_rank2_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank2_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -103,7 +103,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank2_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -115,7 +115,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank2_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -129,7 +129,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank3_border_color }">
 						{{ min60_rank3_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank3_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -142,7 +142,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank3_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -154,7 +154,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank3_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -168,7 +168,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank4_border_color }">
 						{{ min60_rank4_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank4_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -181,7 +181,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank4_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -193,7 +193,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank4_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -207,7 +207,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank5_border_color }">
 						{{ min60_rank5_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank5_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -220,7 +220,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank5_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -232,7 +232,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank5_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -246,7 +246,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank6_border_color }">
 						{{ min60_rank6_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank6_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -259,7 +259,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank6_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -271,7 +271,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank6_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -285,7 +285,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank7_border_color }">
 						{{ min60_rank7_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank7_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -298,7 +298,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank7_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -310,7 +310,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank7_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -324,7 +324,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank8_border_color }">
 						{{ min60_rank8_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank8_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -337,7 +337,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank8_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -349,7 +349,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank8_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -363,7 +363,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank9_border_color }">
 						{{ min60_rank9_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank9_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -376,7 +376,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank9_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -388,7 +388,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank9_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -402,7 +402,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_rank10_border_color }">
 						{{ min60_rank10_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min60_rank10_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -415,7 +415,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min60_rank10_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -427,7 +427,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min60_rank10_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -465,7 +465,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank1_border_color }">
 						{{ min240_rank1_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank1_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -478,7 +478,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank1_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -490,7 +490,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank1_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -504,7 +504,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank2_border_color }">
 						{{ min240_rank2_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank2_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -517,7 +517,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank2_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -529,7 +529,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank2_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -543,7 +543,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank3_border_color }">
 						{{ min240_rank3_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank3_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -556,7 +556,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank3_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -568,7 +568,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank3_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -582,7 +582,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank4_border_color }">
 						{{ min240_rank4_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank4_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -595,7 +595,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank4_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -607,7 +607,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank4_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -621,7 +621,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank5_border_color }">
 						{{ min240_rank5_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank5_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -634,7 +634,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank5_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -646,7 +646,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank5_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -660,7 +660,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank6_border_color }">
 						{{ min240_rank6_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank6_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -673,7 +673,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank6_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -685,7 +685,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank6_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -699,7 +699,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank7_border_color }">
 						{{ min240_rank7_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank7_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -712,7 +712,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank7_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -724,7 +724,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank7_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -738,7 +738,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank8_border_color }">
 						{{ min240_rank8_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank8_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -751,7 +751,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank8_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -763,7 +763,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank8_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -777,7 +777,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank9_border_color }">
 						{{ min240_rank9_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank9_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -790,7 +790,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank9_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -802,7 +802,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank9_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
@@ -816,7 +816,7 @@
 					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min240_rank10_border_color }">
 						{{ min240_rank10_coin_name }}
 					</v-col>
-					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:10px; padding-top:15px; color:black; font-size:36px;">
+					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
 						{{ min240_rank10_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
@@ -829,7 +829,7 @@
 									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min240_rank10_o_c_rate }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:28px; text-align:right;">-&nbsp;0.00%</td>
+									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
 								</template>
 								
 							</tr>
@@ -841,7 +841,7 @@
 									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min240_rank10_o_c_subtract }}</td>
 								</template>
 								<template v-else>
-									<td style="color:black; font-size:24px; text-align:right;">-&nbsp;0</td>
+									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
 								</template>
 							</tr>
 						</table>
