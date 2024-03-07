@@ -31,6 +31,9 @@ const YoutubeBithumb_60_240 = () => {
 const Report = () => {
 	return import("./views/Coin/Report.vue")	
 }
+const Short = () => {
+	return import("./views/Coin/Short.vue")	
+}
 const CoinMainList = () => {
 	return import("./views/Coin/CoinMainList.vue")	
 }
@@ -157,6 +160,16 @@ export const router = new Router({
       component: Report
     },
     {
+      path: '/Short',
+      name: 'Short',
+      component: Short
+    },
+    {
+      path: '/Short/:date/:market',
+      name: 'Short',
+      component: Short
+    },
+    {
       path: '/CoinLiveList',
       name: 'coinLiveList',
       component: CoinLiveList
@@ -182,19 +195,4 @@ export const router = new Router({
       component: BybitCoinLiveList
     }
   ]
-});
-
-router.beforeEach(function (to, from, next) {
-  console.log('변경하려는 경로 : ' + to.name);
-  console.log('이전 경로 : ' + from.name);
-  
-  var authority_yn = 'N';
-  var select_yn = 'N';
-  var update_yn = 'N';
-  var delete_yn = 'N';
-  var screen_name = '';
-  var from_location = from.name;
-  var to_location = to.name;
-  
-  next()
 });

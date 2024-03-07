@@ -94,6 +94,10 @@ public class MainService {
 		return MainMapper.BYBIT_DAY_RANKING(map);
 	}
 	
+	public List<HashMap<String, String>> ShortList() throws Exception{
+		return MainMapper.ShortList();
+	}
+	
 	public List<HashMap<String, String>> ReportList() throws Exception{
 		return MainMapper.ReportList();
 	}
@@ -108,5 +112,9 @@ public class MainService {
 	
 	public List<HashMap<String, String>> BithumbCoinList() throws Exception{
 		return MainMapper.BithumbCoinList();
+	}
+	
+	public List<HashMap<String, String>> BithumbCoinList_Script(HashMap<String, String> map) throws Exception{
+		return MainMapper.BithumbCoinList_Script(map);
 	}
 }

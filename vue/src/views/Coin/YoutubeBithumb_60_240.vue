@@ -867,6 +867,8 @@ export default {
 			password: '',
 			dialog: false,
 			notice_msg: '',
+
+			min_search_yn: 'Y',
 			/* MIN60 */
 			min60_api_datetime_kst : '',
 			min60_gijun_datetime_kst : '',
@@ -1126,6 +1128,8 @@ export default {
 	},
 	methods: {
 		Data_MIN_60_240_Make(){
+			this.min_search_yn = 'N'
+
 			axios({
 				url: '/YoutubeBithumb/MIN_60_240',
 				method: 'get',
@@ -1686,7 +1690,7 @@ export default {
 				this.min240_rank10_o_c_subtract = list240[9].o_c_subtract_240;
 				this.min240_rank10_price_volume = list240[9].format_volume_price_240;
 
-				this.Data_MIN_60_240_Make();
+				this.min_search_yn = 'Y'
 			})
 		},
 		CurrentDataTime() {
@@ -1697,11 +1701,16 @@ export default {
 				//this.Data_Notice();
 			}
 			
-			if(this.min60_gijun_datetime_kst != ''){
+			if(this.min60_gijun_datetime_kst != '' && this.min240_gijun_datetime_kst != ''){
 				var min60_mi = (this.min60_gijun_datetime_kst).substr(14, 2)
+
 				if(Number(min60_mi) == 0 && Number(mi) == 2){
 					this.Data_MIN_60_240_Make();
 				}else if((Number(min60_mi) < Number(mi)-1) || (Number(min60_mi) > Number(mi)+1)){
+					this.Data_MIN_60_240_Make();
+				}
+
+				if(this.min_search_yn == 'Y' && (Number(ss) == 0 || Number(ss) == 30)){
 					this.Data_MIN_60_240_Make();
 				}
 			}

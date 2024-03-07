@@ -84,11 +84,14 @@ public class Main {
 	MainService MainService;
 	
 	@GetMapping(path = "/MainTest")
-	public void MainTest() throws Exception{
+	public List<HashMap<String, String>> MainTest() throws Exception{
 	    String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
 		System.out.println("[" + START_DATETIME + "] MainTest 시작");
 		
-		String GIJUN_DATETIME = "";
+		String GIJUN_DATETIME_5 = "";
+		String GIJUN_DATETIME_15 = "";
+		String GIJUN_DATETIME_60 = "";
+		String GIJUN_DATETIME_240 = "";
 		LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String DateNow = now.format(formatter);
@@ -98,135 +101,103 @@ public class Main {
         String MMNow = now.format(formatter);
         String API_Date = DateNow;
         String API_HH = HHNow;
-        String API_MM = "";
+        String API_MM_5 = "";
+        String API_MM_15 = "";
+        String API_Date_60 = DateNow;
+        String API_Date_240 = DateNow;
+        String API_HH_60 = HHNow;
+        String API_HH_240 = "";
+        String API_MM = "00";
         
-        if(Integer.parseInt(MMNow) >= 55) {
-        	API_MM = "55";
-        } else if(Integer.parseInt(MMNow) >= 50) {
-        	API_MM = "50";
-        } else if(Integer.parseInt(MMNow) >= 45) {
-        	API_MM = "45";
-        } else if(Integer.parseInt(MMNow) >= 40) {
-        	API_MM = "40";
-        } else if(Integer.parseInt(MMNow) >= 35) {
-        	API_MM = "35";
-        } else if(Integer.parseInt(MMNow) >= 30) {
-        	API_MM = "30";
-        } else if(Integer.parseInt(MMNow) >= 25) {
-        	API_MM = "25";
-        } else if(Integer.parseInt(MMNow) >= 20) {
-        	API_MM = "20";
-        } else if(Integer.parseInt(MMNow) >= 15) {
-        	API_MM = "15";
-        } else if(Integer.parseInt(MMNow) >= 10) {
-        	API_MM = "10";
-        } else if(Integer.parseInt(MMNow) >= 5) {
-        	API_MM = "05";
-        } else {
-        	API_MM = "00";
+        if(Integer.parseInt(HHNow) >= 20) {
+        	API_HH_240 = "20";
+        } else if(Integer.parseInt(HHNow) >= 16) {
+        	API_HH_240 = "16";
+        } else if(Integer.parseInt(HHNow) >= 12) {
+        	API_HH_240 = "12";
+        } else if(Integer.parseInt(HHNow) >= 8) {
+        	API_HH_240 = "08";
+        } else if(Integer.parseInt(HHNow) >= 4) {
+        	API_HH_240 = "04";
+        } else if(Integer.parseInt(HHNow) >= 0) {
+        	API_HH_240 = "00";
         }
         
-        GIJUN_DATETIME = API_Date + " " + API_HH + ":" + API_MM+":00";
-		SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		SDF.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-		Date GIJUN_DATE = SDF.parse(GIJUN_DATETIME);
-		long GIJUN_TIMESTAMP = GIJUN_DATE.getTime();
-		
-        System.out.println("> GIJUN_DATETIME : " + GIJUN_DATETIME);
-        System.out.println("> GIJUN_DATE : " + GIJUN_DATE);
-        System.out.println("> GIJUN_TIMESTAMP : " + Long.toString(GIJUN_TIMESTAMP));
+        if(Integer.parseInt(MMNow) >= 55) {
+        	API_MM_5 = "55";
+        } else if(Integer.parseInt(MMNow) >= 50) {
+        	API_MM_5 = "50";
+        } else if(Integer.parseInt(MMNow) >= 45) {
+        	API_MM_5 = "45";
+        } else if(Integer.parseInt(MMNow) >= 40) {
+        	API_MM_5 = "40";
+        } else if(Integer.parseInt(MMNow) >= 35) {
+        	API_MM_5 = "35";
+        } else if(Integer.parseInt(MMNow) >= 30) {
+        	API_MM_5 = "30";
+        } else if(Integer.parseInt(MMNow) >= 25) {
+        	API_MM_5 = "25";
+        } else if(Integer.parseInt(MMNow) >= 20) {
+        	API_MM_5 = "20";
+        } else if(Integer.parseInt(MMNow) >= 15) {
+        	API_MM_5 = "15";
+        } else if(Integer.parseInt(MMNow) >= 10) {
+        	API_MM_5 = "10";
+        } else if(Integer.parseInt(MMNow) >= 5) {
+        	API_MM_5 = "05";
+        } else {
+        	API_MM_5 = "00";
+        }
         
-		List<HashMap<String, String>> CoinList = MainService.BithumbCoinList();
+        if(Integer.parseInt(MMNow) >= 45) {
+        	API_MM_15 = "45";
+        } else if(Integer.parseInt(MMNow) >= 30) {
+        	API_MM_15 = "30";
+        } else if(Integer.parseInt(MMNow) >= 15) {
+        	API_MM_15 = "15";
+        } else {
+        	API_MM_15 = "00";
+        }
+        
+        SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SDF.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        
+        GIJUN_DATETIME_5 = API_Date + " " + API_HH + ":" + API_MM_5+":00";
+		Date GIJUN_DATE_5 = SDF.parse(GIJUN_DATETIME_5);
+		long GIJUN_TIMESTAMP_5 = GIJUN_DATE_5.getTime();
 		
-		for(int x=0; x<CoinList.size(); x++) {
-			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
-			String Coin_Kor_Name = CoinList.get(x).get("coin_kor_name");
-			String Coin_Number = CoinList.get(x).get("coin_number");
-			if(Coin_Kor_Name.equals("비트코인")) {
-				if(!Coin_Number.equals("")) {
-					//System.out.println("["+Coin_Ticker+"]["+Coin_Kor_Name+"]["+Coin_Number+"]");
-					String str_url = "https://gw.bithumb.com/observer/chart/public/candlesticknew_trview/"+Coin_Number+"_C0100/1M";
-					System.out.println("> url : " + str_url);
-					URL url = new URL(str_url);
-					HttpsURLConnection conn = (HttpsURLConnection)url.openConnection(); 
-			        conn.setRequestMethod("GET");
-			        conn.setConnectTimeout(3000); // 연결 타임아웃 설정 (3초)
-			        conn.setReadTimeout(3000); // 읽기 타임아웃 설정 (3초)
-			        conn.connect();
-			        
-			        String RESPONSE_DATA = "";
-			        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
-			            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			            String line = null;
-			            while(true){
-			                line = reader.readLine();
-			                if(line == null)
-			                    break;
-			                
-			                RESPONSE_DATA += line;
-			            }
-			            reader.close();
-			        }
-			        JSONObject jObject = new JSONObject(RESPONSE_DATA);
-			        //JSONArray jsonArr = (JSONArray)jObject.get("data");
-			        JSONObject jMainObject = jObject.getJSONObject("data");
-			        if((jObject.getString("status")).equals("0000")) {
-			        	System.out.println("[성공]["+Coin_Ticker+"]["+Coin_Kor_Name+"]["+Coin_Number+"]");
-			        	
-			        	JSONArray jArray_t = jMainObject.getJSONArray("t");
-			        	JSONArray jArray_o = jMainObject.getJSONArray("o");
-			        	JSONArray jArray_l = jMainObject.getJSONArray("l");
-			        	JSONArray jArray_h = jMainObject.getJSONArray("h");
-			        	JSONArray jArray_c = jMainObject.getJSONArray("c");
-			        	JSONArray jArray_v = jMainObject.getJSONArray("v");
-			        	String o_price = "";
-			        	String l_price = "9999999999999";
-			        	String h_price = "0";
-			        	String c_price = "";
-			        	
-			        	for (int i = 0; i < jArray_t.length(); i++) {
-			        		if(Long.parseLong((jArray_t.get(i)).toString()) >= GIJUN_TIMESTAMP) {
-			        			String timestamp = (jArray_t.get(i)).toString();
-			        			String KST_DATETIME = SDF.format(Long.parseLong(timestamp));
-			        			String tmp_o_price = (jArray_o.get(i)).toString();
-			        			String tmp_l_price = (jArray_l.get(i)).toString();
-			        			String tmp_h_price = (jArray_h.get(i)).toString();
-			        			String tmp_c_price = (jArray_c.get(i)).toString();
-			        			String tmp_volume = (jArray_v.get(i)).toString();
-			        			
-			        			if(o_price.equals("")) {
-			        				o_price = tmp_o_price;
-			        			}
-			        			
-			        			BigDecimal BD_TMP_L_PRICE = new BigDecimal(tmp_l_price);
-			        			BigDecimal BD_L_PRICE = new BigDecimal(l_price);
-			        			
-			        			BigDecimal BD_TMP_H_PRICE = new BigDecimal(tmp_h_price);
-			        			BigDecimal BD_H_PRICE = new BigDecimal(h_price);
-			        			
-			        			if(BD_L_PRICE.compareTo(BD_TMP_L_PRICE) == 1) {
-			        				l_price = tmp_l_price;
-			        			}
-			        			if(BD_H_PRICE.compareTo(BD_TMP_H_PRICE) == -1) {
-			        				h_price = tmp_h_price;
-			        			}
-			        			c_price = tmp_c_price;
-			        		}
-			        	}
-			        	
-			        	System.out.println("[최종][o_price] "+ o_price);
-	        			System.out.println("[최종][l_price] "+ l_price);
-	        			System.out.println("[최종][h_price] "+ h_price);
-	        			System.out.println("[최종][c_price] "+ c_price);
-			        } else {
-			        	System.out.println("[실패]["+Coin_Ticker+"]["+Coin_Kor_Name+"]["+Coin_Number+"]");
-			        }
-				}
-			}
-		}
+		GIJUN_DATETIME_15 = API_Date + " " + API_HH + ":" + API_MM_15+":00";
+		Date GIJUN_DATE_15 = SDF.parse(GIJUN_DATETIME_15);
+		long GIJUN_TIMESTAMP_15 = GIJUN_DATE_15.getTime();
+		
+		GIJUN_DATETIME_60 = API_Date_60 + " " + API_HH_60 + ":" + API_MM+":00";
+		Date GIJUN_DATE_60 = SDF.parse(GIJUN_DATETIME_60);
+		long GIJUN_TIMESTAMP_60 = GIJUN_DATE_60.getTime();
+		
+		GIJUN_DATETIME_240 = API_Date_240 + " " + API_HH_240 + ":" + API_MM+":00";
+		Date GIJUN_DATE_240 = SDF.parse(GIJUN_DATETIME_240);
+		long GIJUN_TIMESTAMP_240 = GIJUN_DATE_240.getTime();
+		
+		// 현재
+		long TIMESTMAP = System.currentTimeMillis();
+		String CURRENT_DATETIME_KST = SDF.format(System.currentTimeMillis());
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("TIMESTAMP5", Long.toString(GIJUN_TIMESTAMP_5));
+		map.put("GIJUN_DATETIME_5", GIJUN_DATETIME_5);
+		map.put("TIMESTAMP15", Long.toString(GIJUN_TIMESTAMP_15));
+		map.put("GIJUN_DATETIME_15", GIJUN_DATETIME_15);
+		map.put("TIMESTAMP60", Long.toString(GIJUN_TIMESTAMP_60));
+		map.put("GIJUN_DATETIME_60", GIJUN_DATETIME_60);
+		map.put("TIMESTAMP240", Long.toString(GIJUN_TIMESTAMP_240));
+		map.put("GIJUN_DATETIME_240", GIJUN_DATETIME_240);
+		
+		List<HashMap<String, String>> BithumbCoinList = MainService.BithumbCoinList_Script(map);
 		
 		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
 		System.out.println("[" + END_DATETIME + "] MainTest 종료");
+		
+		return BithumbCoinList;
 	}
 	
 	@GetMapping(path = "/SelectCodeData")
@@ -1283,6 +1254,11 @@ public class Main {
 		map.put("date", date);
 		List<HashMap<String, String>> list = MainService.BYBIT_DAY_RANKING(map);
 		return list;
+	}
+	
+	@GetMapping(path = "/ShortList")
+	public List<HashMap<String, String>> ShortList() throws Exception {
+		return MainService.ShortList();
 	}
 	
 	@GetMapping(path = "/ReportList")

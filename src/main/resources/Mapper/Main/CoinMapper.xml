@@ -1,7 +1,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.diff._private.Mapper.Main.CoinMapper">
 	<select id="MainGridList" resultType="HashMap" parameterType="HashMap">
-		select x.coin_ticker id, x.gijun_date, x.coin_kor_name, x.coin_eng_name, x.max_price, x.min_price, x.max_date, x.min_date, x.o_price, x.c_price, x.l_price, x.h_price, x.trade_volume
+		select replace(x.coin_ticker, 'KRW-', '') id, x.gijun_date, x.coin_kor_name, x.coin_eng_name, x.max_price, x.min_price, x.max_date, x.min_date, x.o_price, x.c_price, x.l_price, x.h_price, x.trade_volume
 			 , coalesce(x.o_c_price_rate_5_date, '') o_c_price_rate_5_date, coalesce(x.o_c_price_rate_10_date, '') o_c_price_rate_10_date, coalesce(x.o_c_price_rate_15_date, '') o_c_price_rate_15_date
 	 		 , coalesce(x.o_c_price_rate_20_date, '') o_c_price_rate_20_date, coalesce(x.o_c_price_rate_25_date, '') o_c_price_rate_25_date, coalesce(x.o_c_price_rate_30_date, '') o_c_price_rate_30_date
 	 		 , coalesce(cast(x.o_c_price_rate_5_count as varchar), '0') o_c_price_rate_5_count, coalesce(cast(x.o_c_price_rate_10_count as varchar), '0') o_c_price_rate_10_count, coalesce(cast(x.o_c_price_rate_15_count as varchar), '0') o_c_price_rate_15_count
@@ -234,6 +234,7 @@
 						 order by z.datetime_kst desc limit 1)  trade_volume
 				  from upbit_coin_day x, upbit_coin_info y
 				 where x.coin_ticker = y.coin_ticker
+				   and y.coin_delete_yn = 'N'
 				 <if test='std_date != null and std_date != "" '>
 					and left(x.datetime_utc, 10) <![CDATA[ >= ]]> #{std_date}
 				 </if>

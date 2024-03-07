@@ -870,6 +870,7 @@ export default {
 			dialog: false,
 			notice_msg: '',
 			/* MIN5 */
+			min5_search_yn: 'Y',
 			min5_api_datetime_kst : '',
 			min5_gijun_datetime_kst : '',
 
@@ -994,6 +995,7 @@ export default {
 			min5_rank10_price_volume : '',
 
 			/* MIN15 */
+			min15_search_yn: 'Y',
 			min15_api_datetime_kst : '',
 			min15_gijun_datetime_kst : '',
 
@@ -1128,12 +1130,12 @@ export default {
 	},
 	methods: {
 		Data_MIN5_Make(){
+			var mi = new Date().getMinutes() < 10? "0" + new Date().getMinutes(): new Date().getMinutes();
+			
+			this.min5_search_yn = 'N'
 			axios.get('/YoutubeUpbit/MIN5')
 			.then(response => {
 				if(response.status == 200){
-					console.log('MIN5')
-					console.log(response)
-
 					this.min5_api_datetime_kst = response.data[0].API_DATETIME_KST;
 					this.min5_gijun_datetime_kst = response.data[0].CURRENT_DATETIME_KST;
 					
@@ -1408,18 +1410,197 @@ export default {
 					this.min5_rank10_o_c_rate = response.data[9].o_c_rate;
 					this.min5_rank10_o_c_subtract = response.data[9].o_c_subtract;
 					this.min5_rank10_price_volume = response.data[9].format_volume_price;
-				}
 
-				this.Data_MIN5_Make();
+					if(Number(mi) < 5){
+						this.min15_api_datetime_kst = this.min5_api_datetime_kst;
+						this.min15_gijun_datetime_kst = this.min5_gijun_datetime_kst;
+
+						this.min15_rank1_coin = this.min5_rank1_coin;
+						this.min15_rank1_coin_name = this.min5_rank1_coin_name;
+						this.min15_rank1_border_color = this.min5_rank1_border_color;
+						this.min15_rank1_gubun = this.min5_rank1_gubun;
+						this.min15_rank1_open = this.min5_rank1_open;
+						this.min15_rank1_low = this.min5_rank1_low;
+						this.min15_rank1_high = this.min5_rank1_high;
+						this.min15_rank1_close = this.min5_rank1_close;
+						this.min15_rank1_o_c_rate = this.min5_rank1_o_c_rate;
+						this.min15_rank1_o_c_subtract = this.min5_rank1_o_c_subtract;
+						this.min15_rank1_price_volume = this.min5_rank1_price_volume;
+						if(this.min15_rank1_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank1_border_color = 'white'
+							, 500);
+						}
+
+						this.min15_rank2_coin = this.min5_rank2_coin;
+						this.min15_rank2_coin_name = this.min5_rank2_coin_name;
+						this.min15_rank2_border_color = this.min5_rank2_border_color;
+						this.min15_rank2_gubun = this.min5_rank2_gubun;
+						this.min15_rank2_open = this.min5_rank2_open;
+						this.min15_rank2_low = this.min5_rank2_low;
+						this.min15_rank2_high = this.min5_rank2_high;
+						this.min15_rank2_close = this.min5_rank2_close;
+						this.min15_rank2_o_c_rate = this.min5_rank2_o_c_rate;
+						this.min15_rank2_o_c_subtract = this.min5_rank2_o_c_subtract;
+						this.min15_rank2_price_volume = this.min5_rank2_price_volume;
+						if(this.min15_rank2_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank2_border_color = 'white'
+							, 500);
+						}
+
+						this.min15_rank3_coin = this.min5_rank3_coin;
+						this.min15_rank3_coin_name = this.min5_rank3_coin_name;
+						this.min15_rank3_border_color = this.min5_rank3_border_color;
+						this.min15_rank3_gubun = this.min5_rank3_gubun;
+						this.min15_rank3_open = this.min5_rank3_open;
+						this.min15_rank3_low = this.min5_rank3_low;
+						this.min15_rank3_high = this.min5_rank3_high;
+						this.min15_rank3_close = this.min5_rank3_close;
+						this.min15_rank3_o_c_rate = this.min5_rank3_o_c_rate;
+						this.min15_rank3_o_c_subtract = this.min5_rank3_o_c_subtract;
+						this.min15_rank3_price_volume = this.min5_rank3_price_volume;
+						if(this.min15_rank3_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank3_border_color = 'white'
+							, 500);
+						}
+
+						this.min15_rank4_coin = this.min5_rank4_coin;
+						this.min15_rank4_coin_name = this.min5_rank4_coin_name;
+						this.min15_rank4_border_color = this.min5_rank4_border_color;
+						this.min15_rank4_gubun = this.min5_rank4_gubun;
+						this.min15_rank4_open = this.min5_rank4_open;
+						this.min15_rank4_low = this.min5_rank4_low;
+						this.min15_rank4_high = this.min5_rank4_high;
+						this.min15_rank4_close = this.min5_rank4_close;
+						this.min15_rank4_o_c_rate = this.min5_rank4_o_c_rate;
+						this.min15_rank4_o_c_subtract = this.min5_rank4_o_c_subtract;
+						this.min15_rank4_price_volume = this.min5_rank4_price_volume;
+						if(this.min15_rank4_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank4_border_color = 'white'
+							, 500);
+						}
+
+						this.min15_rank5_coin = this.min5_rank5_coin;
+						this.min15_rank5_coin_name = this.min5_rank5_coin_name;
+						this.min15_rank5_border_color = this.min5_rank5_border_color;
+						this.min15_rank5_gubun = this.min5_rank5_gubun;
+						this.min15_rank5_open = this.min5_rank5_open;
+						this.min15_rank5_low = this.min5_rank5_low;
+						this.min15_rank5_high = this.min5_rank5_high;
+						this.min15_rank5_close = this.min5_rank5_close;
+						this.min15_rank5_o_c_rate = this.min5_rank5_o_c_rate;
+						this.min15_rank5_o_c_subtract = this.min5_rank5_o_c_subtract;
+						this.min15_rank5_price_volume = this.min5_rank5_price_volume;
+						if(this.min15_rank5_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank5_border_color = 'white'
+							, 500);
+						}
+
+						this.min15_rank6_coin = this.min5_rank6_coin;
+						this.min15_rank6_coin_name = this.min5_rank6_coin_name;
+						this.min15_rank6_border_color = this.min5_rank6_border_color;
+						this.min15_rank6_gubun = this.min5_rank6_gubun;
+						this.min15_rank6_open = this.min5_rank6_open;
+						this.min15_rank6_low = this.min5_rank6_low;
+						this.min15_rank6_high = this.min5_rank6_high;
+						this.min15_rank6_close = this.min5_rank6_close;
+						this.min15_rank6_o_c_rate = this.min5_rank6_o_c_rate;
+						this.min15_rank6_o_c_subtract = this.min5_rank6_o_c_subtract;
+						this.min15_rank6_price_volume = this.min5_rank6_price_volume;
+						if(this.min15_rank6_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank6_border_color = 'white'
+							, 500);
+						}
+						
+						this.min15_rank7_coin = this.min5_rank7_coin;
+						this.min15_rank7_coin_name = this.min5_rank7_coin_name;
+						this.min15_rank7_border_color = this.min5_rank7_border_color;
+						this.min15_rank7_gubun = this.min5_rank7_gubun;
+						this.min15_rank7_open = this.min5_rank7_open;
+						this.min15_rank7_low = this.min5_rank7_low;
+						this.min15_rank7_high = this.min5_rank7_high;
+						this.min15_rank7_close = this.min5_rank7_close;
+						this.min15_rank7_o_c_rate = this.min5_rank7_o_c_rate;
+						this.min15_rank7_o_c_subtract = this.min5_rank7_o_c_subtract;
+						this.min15_rank7_price_volume = this.min5_rank7_price_volume;
+						if(this.min15_rank7_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank7_border_color = 'white'
+							, 500);
+						}
+
+						this.min15_rank8_coin = this.min5_rank8_coin;
+						this.min15_rank8_coin_name = this.min5_rank8_coin_name;
+						this.min15_rank8_border_color = this.min5_rank8_border_color;
+						this.min15_rank8_gubun = this.min5_rank8_gubun;
+						this.min15_rank8_open = this.min5_rank8_open;
+						this.min15_rank8_low = this.min5_rank8_low;
+						this.min15_rank8_high = this.min5_rank8_high;
+						this.min15_rank8_close = this.min5_rank8_close;
+						this.min15_rank8_o_c_rate = this.min5_rank8_o_c_rate;
+						this.min15_rank8_o_c_subtract = this.min5_rank8_o_c_subtract;
+						this.min15_rank8_price_volume = this.min5_rank8_price_volume;
+						if(this.min15_rank8_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank8_border_color = 'white'
+							, 500);
+						}
+
+						this.min15_rank9_coin = this.min5_rank9_coin;
+						this.min15_rank9_coin_name = this.min5_rank9_coin_name;
+						this.min15_rank9_border_color = this.min5_rank9_border_color;
+						this.min15_rank9_gubun = this.min5_rank9_gubun;
+						this.min15_rank9_open = this.min5_rank9_open;
+						this.min15_rank9_low = this.min5_rank9_low;
+						this.min15_rank9_high = this.min5_rank9_high;
+						this.min15_rank9_close = this.min5_rank9_close;
+						this.min15_rank9_o_c_rate = this.min5_rank9_o_c_rate;
+						this.min15_rank9_o_c_subtract = this.min5_rank9_o_c_subtract;
+						this.min15_rank9_price_volume = this.min5_rank9_price_volume;
+						if(this.min15_rank9_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank9_border_color = 'white'
+							, 500);
+						}
+
+						this.min15_rank10_coin = this.min5_rank10_coin;
+						this.min15_rank10_coin_name = this.min5_rank10_coin_name;
+						this.min15_rank10_border_color = this.min5_rank10_border_color;
+						this.min15_rank10_gubun = this.min5_rank10_gubun;
+						this.min15_rank10_open = this.min5_rank10_open;
+						this.min15_rank10_low = this.min5_rank10_low;
+						this.min15_rank10_high = this.min5_rank10_high;
+						this.min15_rank10_close = this.min5_rank10_close;
+						this.min15_rank10_o_c_rate = this.min5_rank10_o_c_rate;
+						this.min15_rank10_o_c_subtract = this.min5_rank10_o_c_subtract;
+						this.min15_rank10_price_volume = this.min5_rank10_price_volume;
+						if(this.min15_rank10_border_color != 'white'){
+							setTimeout(() => 
+								this.min15_rank10_border_color = 'white'
+							, 500);
+						}
+					}
+
+					this.min5_search_yn = 'Y'
+				}
 			})
 		},
 		Data_MIN15_Make(){
+			var mi = new Date().getMinutes() < 10? "0" + new Date().getMinutes(): new Date().getMinutes();
+			if(Number(mi) < 5){
+				this.min15_search_yn = 'Y'
+				return;
+			}
+
+			this.min15_search_yn = 'N'
 			axios.get('/YoutubeUpbit/MIN15')
 			.then(response => {
 				if(response.status == 200){
-					console.log('MIN15')
-					console.log(response)
-
 					this.min15_api_datetime_kst = response.data[0].API_DATETIME_KST;
 					this.min15_gijun_datetime_kst = response.data[0].CURRENT_DATETIME_KST;
 
@@ -1694,9 +1875,8 @@ export default {
 					this.min15_rank10_o_c_rate = response.data[9].o_c_rate;
 					this.min15_rank10_o_c_subtract = response.data[9].o_c_subtract;
 					this.min15_rank10_price_volume = response.data[9].format_volume_price;
+					this.min15_search_yn = 'Y'
 				}
-
-				this.Data_MIN15_Make();
 			})
 		},
 		CurrentDataTime() {
@@ -1704,17 +1884,33 @@ export default {
 			var ss = new Date().getSeconds() < 10? "0" + new Date().getSeconds(): new Date().getSeconds();
 			
 			var min5_mi = (this.min5_gijun_datetime_kst).substr(14, 2)
-			if(Number(min5_mi) == 0 && Number(mi) == 2){
-				this.Data_MIN5_Make();
-			}else if((Number(min5_mi) < Number(mi)-1) || (Number(min5_mi) > Number(mi)+1)){
-				this.Data_MIN5_Make();
+			var min15_mi = (this.min15_gijun_datetime_kst).substr(14, 2)
+
+			if(this.min5_gijun_datetime_kst != '' && this.min15_gijun_datetime_kst != ''){
+				if(this.min15_search_yn == 'Y' && (Number(ss) == 0 || Number(ss) == 10 || Number(ss) == 20 || Number(ss) == 30 || Number(ss) == 40 || Number(ss) == 50)){
+					this.Data_MIN15_Make();
+					if(this.min5_search_yn == 'Y'){
+						this.Data_MIN5_Make();
+					}
+				}else if(this.min5_search_yn == 'Y' && (Number(ss) == 0 || Number(ss) == 5 || Number(ss) == 10 || Number(ss) == 15 || Number(ss) == 20 || Number(ss) == 25 || Number(ss) == 30 || Number(ss) == 35 || Number(ss) == 40 || Number(ss) == 45 || Number(ss) == 50 || Number(ss) == 55)){
+					this.Data_MIN5_Make();
+				}
 			}
 
-			var min15_mi = (this.min15_gijun_datetime_kst).substr(14, 2)
-			if(Number(min15_mi) == 0 && Number(mi) == 2){
-				this.Data_MIN15_Make();
-			}else if((Number(min15_mi) < Number(mi)-1) || (Number(min15_mi) > Number(mi)+1)){
-				this.Data_MIN15_Make();
+			if(this.min5_gijun_datetime_kst != ''){
+				if(Number(min5_mi) == 0 && Number(mi) == 2){
+					this.Data_MIN5_Make();
+				}else if((Number(min5_mi) < Number(mi)-1) || (Number(min5_mi) > Number(mi)+1)){
+					this.Data_MIN5_Make();
+				}
+			}
+			
+			if(this.min15_gijun_datetime_kst != ''){
+				if(Number(min15_mi) == 0 && Number(mi) == 2){
+					this.Data_MIN15_Make();
+				}else if((Number(min15_mi) < Number(mi)-1) || (Number(min15_mi) > Number(mi)+1)){
+					this.Data_MIN15_Make();
+				}
 			}
 		},
 		Data_Notice(){

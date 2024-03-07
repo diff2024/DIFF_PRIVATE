@@ -25,8 +25,10 @@ public interface MainMapper {
 	public List<HashMap<String, String>> BYBIT_BTC_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> BYBIT_BTC_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> BYBIT_DAY_RANKING(HashMap<String, String> map) throws Exception;
+	public List<HashMap<String, String>> ShortList() throws Exception;
 	public List<HashMap<String, String>> ReportList() throws Exception;
 	public List<HashMap<String, String>> ReportHTMLList(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> UpbitCoinList() throws Exception;
 	public List<HashMap<String, String>> BithumbCoinList() throws Exception;
+	public List<HashMap<String, String>> BithumbCoinList_Script(HashMap<String, String> map) throws Exception;
 }

@@ -226,6 +226,7 @@
 						 order by z.datetime_kst desc limit 1)  trade_volume
 				  from bithumb_coin_day x, bithumb_coin_info y
 				 where x.coin_ticker = y.coin_ticker
+				   and y.coin_delete_yn = 'N'
 				 <if test='std_date != null and std_date != "" '>
 					and left(x.datetime_kst, 10) <![CDATA[ >= ]]> #{std_date}
 				 </if>

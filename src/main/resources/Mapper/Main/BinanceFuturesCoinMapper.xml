@@ -234,6 +234,7 @@
 						 order by z.datetime_kst desc limit 1)  trade_volume
 				  from binance_futures_coin_day x, binance_futures_coin_info y
 				 where x.coin_ticker = y.coin_ticker
+				   and y.coin_delete_yn = 'N'
 				 <if test='std_date != null and std_date != "" '>
 					and left(x.datetime_utc, 10) <![CDATA[ >= ]]> #{std_date}
 				 </if>

@@ -867,6 +867,8 @@ export default {
 			password: '',
 			dialog: false,
 			notice_msg: '',
+			
+			min_search_yn: 'Y',
 			/* MIN5 */
 			min5_api_datetime_kst : '',
 			min5_gijun_datetime_kst : '',
@@ -1126,6 +1128,8 @@ export default {
 	},
 	methods: {
 		Data_MIN_5_15_Make(){
+			this.min_search_yn = 'N'
+
 			axios({
 				url: '/YoutubeBithumb/MIN_5_15',
 				method: 'get',
@@ -1133,7 +1137,7 @@ export default {
 			})
 			.then(response => {
 				if(response.status == 200){
-
+					console.log(response.data);
 					var list15 = response.data;
 					this.min5_api_datetime_kst = (response.data[0].API_DATETIME_KST_5).substring(0, 16);
 					this.min5_gijun_datetime_kst = response.data[0].CURRENT_DATETIME_KST;
@@ -1688,7 +1692,7 @@ export default {
 				this.min15_rank10_o_c_subtract = list15[9].o_c_subtract_15;
 				this.min15_rank10_price_volume = list15[9].format_volume_price_15;
 
-				this.Data_MIN_5_15_Make();
+				this.min_search_yn = 'Y'
 			})
 		},
 		CurrentDataTime() {
@@ -1699,11 +1703,16 @@ export default {
 				//this.Data_Notice();
 			}
 			
-			if(this.min5_gijun_datetime_kst != ''){
+			if(this.min5_gijun_datetime_kst != '' && this.min15_gijun_datetime_kst != ''){
 				var min5_mi = (this.min5_gijun_datetime_kst).substr(14, 2)
+
 				if(Number(min5_mi) == 0 && Number(mi) == 2){
 					this.Data_MIN_5_15_Make();
 				}else if((Number(min5_mi) < Number(mi)-1) || (Number(min5_mi) > Number(mi)+1)){
+					this.Data_MIN_5_15_Make();
+				}
+
+				if(this.min_search_yn == 'Y' && (Number(ss) == 0 || Number(ss) == 5 || Number(ss) == 10 || Number(ss) == 15 || Number(ss) == 20 || Number(ss) == 25 || Number(ss) == 30 || Number(ss) == 35 || Number(ss) == 40 || Number(ss) == 45 || Number(ss) == 50 || Number(ss) == 55)){
 					this.Data_MIN_5_15_Make();
 				}
 			}
