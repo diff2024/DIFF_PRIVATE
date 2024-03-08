@@ -1136,8 +1136,9 @@ export default {
 				timeout: 60000
 			})
 			.then(response => {
+				console.log(response)
 				if(response.status == 200){
-					console.log(response.data);
+					
 					var list15 = response.data;
 					this.min5_api_datetime_kst = (response.data[0].API_DATETIME_KST_5).substring(0, 16);
 					this.min5_gijun_datetime_kst = response.data[0].CURRENT_DATETIME_KST;

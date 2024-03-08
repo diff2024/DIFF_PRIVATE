@@ -243,7 +243,7 @@ export default {
 		makeDay () {
 			this.rowData = [];
 			this.isLoading = true;
-			axios.get('/Main/ShortList')
+			axios.get('/Main/YoutubeList')
 			.then(response => {
 				for(var x=0; x<response.data.length; x++){
 					this.rowData.push({
@@ -530,15 +530,15 @@ export default {
 				this.short_html = '<div id="short_title" style="color:black; width:500px; padding-top:50px; padding-bottom:50px;">'
 				this.short_html += '<h1 style="text-align:center; vertical-align:middle; line-height:1.5; font-size:36px;">'+short_title+'</h1>';
 				this.short_html += '</div>'
-				this.short_html += '<br/><br/>';
+				//this.short_html += '<br/><br/>';
 				this.short_html += '<div style="color:black;">';
 				this.short_html += short_title.replaceAll('<br/><br/>', ' ').replaceAll('<br/>', ' ')+'를 알아보겠습니다.';
-				this.short_html += '<br/><br/>';
-				this.short_html += '기준이 되는 '+this.btc_coin_name+'는 '+this.btc_o_price+'원으로 시작해 젓가 '+this.btc_l_price+'원, 곳가 '+this.btc_h_price+'원을 기록하고 '+this.btc_c_price+'원으로 마감하였고, 시까대비종까는 '+this.btc_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.btc_l_h_price_rate+'% 상승 하였습니다.';
-				this.short_html += '<br/><br/>';
-				this.short_html += '상승율 5위는 '+this.rank5_coin_name+this.rank5_coin_particle+' '+this.rank5_o_price+'원으로 시작해 젓가 '+this.rank5_l_price+'원, 곳가 '+this.rank5_h_price+'원을 기록하고 '+this.rank5_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank5_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank5_l_h_price_rate+'% 상승 하였습니다.';
-				this.short_html += '<br/><br/>';
-				this.short_html += '상승율 4위는 '+this.rank4_coin_name+this.rank4_coin_particle+' '+this.rank4_o_price+'원으로 시작해 젓가 '+this.rank4_l_price+'원, 곳가 '+this.rank4_h_price+'원을 기록하고 '+this.rank4_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank4_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank4_l_h_price_rate+'% 상승 하였습니다.';
+				//this.short_html += '<br/><br/>';
+				//this.short_html += '기준이 되는 '+this.btc_coin_name+'는 '+this.btc_o_price+'원으로 시작해 젓가 '+this.btc_l_price+'원, 곳가 '+this.btc_h_price+'원을 기록하고 '+this.btc_c_price+'원으로 마감하였고, 시까대비종까는 '+this.btc_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.btc_l_h_price_rate+'% 상승 하였습니다.';
+				//this.short_html += '<br/><br/>';
+				//this.short_html += '상승율 5위는 '+this.rank5_coin_name+this.rank5_coin_particle+' '+this.rank5_o_price+'원으로 시작해 젓가 '+this.rank5_l_price+'원, 곳가 '+this.rank5_h_price+'원을 기록하고 '+this.rank5_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank5_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank5_l_h_price_rate+'% 상승 하였습니다.';
+				//this.short_html += '<br/><br/>';
+				//this.short_html += '상승율 4위는 '+this.rank4_coin_name+this.rank4_coin_particle+' '+this.rank4_o_price+'원으로 시작해 젓가 '+this.rank4_l_price+'원, 곳가 '+this.rank4_h_price+'원을 기록하고 '+this.rank4_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank4_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank4_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
 				this.short_html += '상승율 3위는 '+this.rank3_coin_name+this.rank3_coin_particle+' '+this.rank3_o_price+'원으로 시작해 젓가 '+this.rank3_l_price+'원, 곳가 '+this.rank3_h_price+'원을 기록하고 '+this.rank3_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank3_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';

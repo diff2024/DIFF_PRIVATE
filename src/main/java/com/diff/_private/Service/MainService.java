@@ -94,8 +94,8 @@ public class MainService {
 		return MainMapper.BYBIT_DAY_RANKING(map);
 	}
 	
-	public List<HashMap<String, String>> ShortList() throws Exception{
-		return MainMapper.ShortList();
+	public List<HashMap<String, String>> YoutubeList() throws Exception{
+		return MainMapper.YoutubeList();
 	}
 	
 	public List<HashMap<String, String>> ReportList() throws Exception{

@@ -9,6 +9,10 @@ import Print from 'vue-print-nb'
 import message from './message.js';
 import numkeyboard from 'vue-numkeyboard';
 import 'vue-numkeyboard/style.css';
+import VueResource from 'vue-resource';
+
+
+
 
 Vue.config.productionTip = false
 
@@ -23,7 +27,7 @@ window.sendMessage = message;
 var sessionOptions = {
   persist: true
 }
-
+Vue.use(VueResource);
 Vue.use(VueSession, sessionOptions)
 Vue.use(VueMobileDetection)
 Vue.use(VuetifyDialog, {

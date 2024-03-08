@@ -83,123 +83,6 @@ public class Main {
 	@Autowired
 	MainService MainService;
 	
-	@GetMapping(path = "/MainTest")
-	public List<HashMap<String, String>> MainTest() throws Exception{
-	    String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + START_DATETIME + "] MainTest 시작");
-		
-		String GIJUN_DATETIME_5 = "";
-		String GIJUN_DATETIME_15 = "";
-		String GIJUN_DATETIME_60 = "";
-		String GIJUN_DATETIME_240 = "";
-		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String DateNow = now.format(formatter);
-        formatter = DateTimeFormatter.ofPattern("HH");
-        String HHNow = now.format(formatter);
-        formatter = DateTimeFormatter.ofPattern("mm");
-        String MMNow = now.format(formatter);
-        String API_Date = DateNow;
-        String API_HH = HHNow;
-        String API_MM_5 = "";
-        String API_MM_15 = "";
-        String API_Date_60 = DateNow;
-        String API_Date_240 = DateNow;
-        String API_HH_60 = HHNow;
-        String API_HH_240 = "";
-        String API_MM = "00";
-        
-        if(Integer.parseInt(HHNow) >= 20) {
-        	API_HH_240 = "20";
-        } else if(Integer.parseInt(HHNow) >= 16) {
-        	API_HH_240 = "16";
-        } else if(Integer.parseInt(HHNow) >= 12) {
-        	API_HH_240 = "12";
-        } else if(Integer.parseInt(HHNow) >= 8) {
-        	API_HH_240 = "08";
-        } else if(Integer.parseInt(HHNow) >= 4) {
-        	API_HH_240 = "04";
-        } else if(Integer.parseInt(HHNow) >= 0) {
-        	API_HH_240 = "00";
-        }
-        
-        if(Integer.parseInt(MMNow) >= 55) {
-        	API_MM_5 = "55";
-        } else if(Integer.parseInt(MMNow) >= 50) {
-        	API_MM_5 = "50";
-        } else if(Integer.parseInt(MMNow) >= 45) {
-        	API_MM_5 = "45";
-        } else if(Integer.parseInt(MMNow) >= 40) {
-        	API_MM_5 = "40";
-        } else if(Integer.parseInt(MMNow) >= 35) {
-        	API_MM_5 = "35";
-        } else if(Integer.parseInt(MMNow) >= 30) {
-        	API_MM_5 = "30";
-        } else if(Integer.parseInt(MMNow) >= 25) {
-        	API_MM_5 = "25";
-        } else if(Integer.parseInt(MMNow) >= 20) {
-        	API_MM_5 = "20";
-        } else if(Integer.parseInt(MMNow) >= 15) {
-        	API_MM_5 = "15";
-        } else if(Integer.parseInt(MMNow) >= 10) {
-        	API_MM_5 = "10";
-        } else if(Integer.parseInt(MMNow) >= 5) {
-        	API_MM_5 = "05";
-        } else {
-        	API_MM_5 = "00";
-        }
-        
-        if(Integer.parseInt(MMNow) >= 45) {
-        	API_MM_15 = "45";
-        } else if(Integer.parseInt(MMNow) >= 30) {
-        	API_MM_15 = "30";
-        } else if(Integer.parseInt(MMNow) >= 15) {
-        	API_MM_15 = "15";
-        } else {
-        	API_MM_15 = "00";
-        }
-        
-        SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SDF.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-        
-        GIJUN_DATETIME_5 = API_Date + " " + API_HH + ":" + API_MM_5+":00";
-		Date GIJUN_DATE_5 = SDF.parse(GIJUN_DATETIME_5);
-		long GIJUN_TIMESTAMP_5 = GIJUN_DATE_5.getTime();
-		
-		GIJUN_DATETIME_15 = API_Date + " " + API_HH + ":" + API_MM_15+":00";
-		Date GIJUN_DATE_15 = SDF.parse(GIJUN_DATETIME_15);
-		long GIJUN_TIMESTAMP_15 = GIJUN_DATE_15.getTime();
-		
-		GIJUN_DATETIME_60 = API_Date_60 + " " + API_HH_60 + ":" + API_MM+":00";
-		Date GIJUN_DATE_60 = SDF.parse(GIJUN_DATETIME_60);
-		long GIJUN_TIMESTAMP_60 = GIJUN_DATE_60.getTime();
-		
-		GIJUN_DATETIME_240 = API_Date_240 + " " + API_HH_240 + ":" + API_MM+":00";
-		Date GIJUN_DATE_240 = SDF.parse(GIJUN_DATETIME_240);
-		long GIJUN_TIMESTAMP_240 = GIJUN_DATE_240.getTime();
-		
-		// 현재
-		long TIMESTMAP = System.currentTimeMillis();
-		String CURRENT_DATETIME_KST = SDF.format(System.currentTimeMillis());
-		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("TIMESTAMP5", Long.toString(GIJUN_TIMESTAMP_5));
-		map.put("GIJUN_DATETIME_5", GIJUN_DATETIME_5);
-		map.put("TIMESTAMP15", Long.toString(GIJUN_TIMESTAMP_15));
-		map.put("GIJUN_DATETIME_15", GIJUN_DATETIME_15);
-		map.put("TIMESTAMP60", Long.toString(GIJUN_TIMESTAMP_60));
-		map.put("GIJUN_DATETIME_60", GIJUN_DATETIME_60);
-		map.put("TIMESTAMP240", Long.toString(GIJUN_TIMESTAMP_240));
-		map.put("GIJUN_DATETIME_240", GIJUN_DATETIME_240);
-		
-		List<HashMap<String, String>> BithumbCoinList = MainService.BithumbCoinList_Script(map);
-		
-		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
-		System.out.println("[" + END_DATETIME + "] MainTest 종료");
-		
-		return BithumbCoinList;
-	}
-	
 	@GetMapping(path = "/SelectCodeData")
 	public String SelectCodeData(HttpServletRequest req) throws Exception{
 		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
@@ -1256,9 +1139,9 @@ public class Main {
 		return list;
 	}
 	
-	@GetMapping(path = "/ShortList")
-	public List<HashMap<String, String>> ShortList() throws Exception {
-		return MainService.ShortList();
+	@GetMapping(path = "/YoutubeList")
+	public List<HashMap<String, String>> YoutubeList() throws Exception {
+		return MainService.YoutubeList();
 	}
 	
 	@GetMapping(path = "/ReportList")
