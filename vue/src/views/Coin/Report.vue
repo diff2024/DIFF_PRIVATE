@@ -143,6 +143,7 @@ export default {
 			.then(response => {
 				this.report_html = ''
 				for(var x=0; x<response.data.length; x++){
+					console.log((response.data[x].html))
 					this.report_html += (response.data[x].html)
 				}
 				

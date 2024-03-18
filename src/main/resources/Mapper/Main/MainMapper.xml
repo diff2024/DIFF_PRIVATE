@@ -1114,7 +1114,7 @@
 		 order by cast(replace(x.ranking, '기준', '0') as integer)
 	</select>
 	
-	<select id="YoutubeList" resultType="HashMap">
+	<select id="ShortList" resultType="HashMap">
 		select x.yyyymmdd, x.market, x.kor_market
 			 , x.btc_coin_ticker, x.btc_coin_name, x.btc_coin_particle, x.btc_o_price, x.btc_l_price, x.btc_h_price, x.btc_c_price
 			 , x.btc_o_c_price, x.btc_o_c_price_rate, x.btc_l_h_price, x.btc_l_h_price_rate
@@ -1326,6 +1326,740 @@
 		 order by x.yyyymmdd desc, x.market
 	</select>
 	
+	<select id="VideoList" resultType="HashMap">
+		select x.yyyymmdd, x.market, x.kor_market
+			 , x.btc_coin_ticker, x.btc_coin_name, x.btc_coin_particle, x.btc_o_price, x.btc_l_price, x.btc_h_price, x.btc_c_price
+			 , x.btc_o_c_price, x.btc_o_c_price_rate, x.btc_l_h_price, x.btc_l_h_price_rate, x.btc_lower_price_time, x.btc_higher_price_time, x.btc_lower_volume_time, x.btc_higher_volume_time
+			 , case when x.btc_o_c_price like '-%' then 'blue' when x.btc_o_c_price = '0' then 'black'  else 'red' end btc_o_c_price_color
+			 , case when x.btc_l_h_price like '-%' then 'blue' when x.btc_l_h_price = '0' then 'black'  else 'red' end btc_l_h_price_color
+			 , x.btc_o_0_4, x.btc_l_0_4, x.btc_h_0_4, x.btc_c_0_4, x.btc_v_0_4, x.btc_o_4_8, x.btc_l_4_8, x.btc_h_4_8, x.btc_c_4_8, x.btc_v_4_8
+			 , x.btc_o_8_12, x.btc_l_8_12, x.btc_h_8_12, x.btc_c_8_12, x.btc_v_8_12, x.btc_o_12_16, x.btc_l_12_16, x.btc_h_12_16, x.btc_c_12_16, x.btc_v_12_16
+			 , x.btc_o_16_20, x.btc_l_16_20, x.btc_h_16_20, x.btc_c_16_20, x.btc_v_16_20, x.btc_o_20_24, x.btc_l_20_24, x.btc_h_20_24, x.btc_c_20_24, x.btc_v_20_24
+			 , x.rank1_coin_ticker, x.rank1_coin_name, x.rank1_coin_particle, x.rank1_o_price, x.rank1_l_price, x.rank1_h_price, x.rank1_c_price
+			 , x.rank1_o_c_price, x.rank1_o_c_price_rate, x.rank1_l_h_price, x.rank1_l_h_price_rate, x.rank1_lower_price_time, x.rank1_higher_price_time, x.rank1_lower_volume_time, x.rank1_higher_volume_time
+			 , case when x.rank1_o_c_price like '-%' then 'blue' when x.rank1_o_c_price = '0' then 'black'  else 'red' end rank1_o_c_price_color
+			 , case when x.rank1_l_h_price like '-%' then 'blue' when x.rank1_l_h_price = '0' then 'black'  else 'red' end rank1_l_h_price_color
+			 , x.rank1_o_0_4, x.rank1_l_0_4, x.rank1_h_0_4, x.rank1_c_0_4, x.rank1_v_0_4, x.rank1_o_4_8, x.rank1_l_4_8, x.rank1_h_4_8, x.rank1_c_4_8, x.rank1_v_4_8
+			 , x.rank1_o_8_12, x.rank1_l_8_12, x.rank1_h_8_12, x.rank1_c_8_12, x.rank1_v_8_12, x.rank1_o_12_16, x.rank1_l_12_16, x.rank1_h_12_16, x.rank1_c_12_16, x.rank1_v_12_16
+			 , x.rank1_o_16_20, x.rank1_l_16_20, x.rank1_h_16_20, x.rank1_c_16_20, x.rank1_v_16_20, x.rank1_o_20_24, x.rank1_l_20_24, x.rank1_h_20_24, x.rank1_c_20_24, x.rank1_v_20_24
+			 , x.rank2_coin_ticker, x.rank2_coin_name, x.rank2_coin_particle, x.rank2_o_price, x.rank2_l_price, x.rank2_h_price, x.rank2_c_price
+			 , x.rank2_o_c_price, x.rank2_o_c_price_rate, x.rank2_l_h_price, x.rank2_l_h_price_rate, x.rank2_lower_price_time, x.rank2_higher_price_time, x.rank2_lower_volume_time, x.rank2_higher_volume_time
+			 , case when x.rank2_o_c_price like '-%' then 'blue' when x.rank2_o_c_price = '0' then 'black'  else 'red' end rank2_o_c_price_color
+			 , case when x.rank2_l_h_price like '-%' then 'blue' when x.rank2_l_h_price = '0' then 'black'  else 'red' end rank2_l_h_price_color
+			 , x.rank2_o_0_4, x.rank2_l_0_4, x.rank2_h_0_4, x.rank2_c_0_4, x.rank2_v_0_4, x.rank2_o_4_8, x.rank2_l_4_8, x.rank2_h_4_8, x.rank2_c_4_8, x.rank2_v_4_8
+			 , x.rank2_o_8_12, x.rank2_l_8_12, x.rank2_h_8_12, x.rank2_c_8_12, x.rank2_v_8_12, x.rank2_o_12_16, x.rank2_l_12_16, x.rank2_h_12_16, x.rank2_c_12_16, x.rank2_v_12_16
+			 , x.rank2_o_16_20, x.rank2_l_16_20, x.rank2_h_16_20, x.rank2_c_16_20, x.rank2_v_16_20, x.rank2_o_20_24, x.rank2_l_20_24, x.rank2_h_20_24, x.rank2_c_20_24, x.rank2_v_20_24
+			 , x.rank3_coin_ticker, x.rank3_coin_name, x.rank3_coin_particle, x.rank3_o_price, x.rank3_l_price, x.rank3_h_price, x.rank3_c_price
+			 , x.rank3_o_c_price, x.rank3_o_c_price_rate, x.rank3_l_h_price, x.rank3_l_h_price_rate, x.rank3_lower_price_time, x.rank3_higher_price_time, x.rank3_lower_volume_time, x.rank3_higher_volume_time
+			 , case when x.rank3_o_c_price like '-%' then 'blue' when x.rank3_o_c_price = '0' then 'black'  else 'red' end rank3_o_c_price_color
+			 , case when x.rank3_l_h_price like '-%' then 'blue' when x.rank3_l_h_price = '0' then 'black'  else 'red' end rank3_l_h_price_color
+			 , x.rank3_o_0_4, x.rank3_l_0_4, x.rank3_h_0_4, x.rank3_c_0_4, x.rank3_v_0_4, x.rank3_o_4_8, x.rank3_l_4_8, x.rank3_h_4_8, x.rank3_c_4_8, x.rank3_v_4_8
+			 , x.rank3_o_8_12, x.rank3_l_8_12, x.rank3_h_8_12, x.rank3_c_8_12, x.rank3_v_8_12, x.rank3_o_12_16, x.rank3_l_12_16, x.rank3_h_12_16, x.rank3_c_12_16, x.rank3_v_12_16
+			 , x.rank3_o_16_20, x.rank3_l_16_20, x.rank3_h_16_20, x.rank3_c_16_20, x.rank3_v_16_20, x.rank3_o_20_24, x.rank3_l_20_24, x.rank3_h_20_24, x.rank3_c_20_24, x.rank3_v_20_24
+			 , x.rank4_coin_ticker, x.rank4_coin_name, x.rank4_coin_particle, x.rank4_o_price, x.rank4_l_price, x.rank4_h_price, x.rank4_c_price
+			 , x.rank4_o_c_price, x.rank4_o_c_price_rate, x.rank4_l_h_price, x.rank4_l_h_price_rate, x.rank4_lower_price_time, x.rank4_higher_price_time, x.rank4_lower_volume_time, x.rank4_higher_volume_time
+			 , case when x.rank4_o_c_price like '-%' then 'blue' when x.rank4_o_c_price = '0' then 'black'  else 'red' end rank4_o_c_price_color
+			 , case when x.rank4_l_h_price like '-%' then 'blue' when x.rank4_l_h_price = '0' then 'black'  else 'red' end rank4_l_h_price_color
+			 , x.rank4_o_0_4, x.rank4_l_0_4, x.rank4_h_0_4, x.rank4_c_0_4, x.rank4_v_0_4, x.rank4_o_4_8, x.rank4_l_4_8, x.rank4_h_4_8, x.rank4_c_4_8, x.rank4_v_4_8
+			 , x.rank4_o_8_12, x.rank4_l_8_12, x.rank4_h_8_12, x.rank4_c_8_12, x.rank4_v_8_12, x.rank4_o_12_16, x.rank4_l_12_16, x.rank4_h_12_16, x.rank4_c_12_16, x.rank4_v_12_16
+			 , x.rank4_o_16_20, x.rank4_l_16_20, x.rank4_h_16_20, x.rank4_c_16_20, x.rank4_v_16_20, x.rank4_o_20_24, x.rank4_l_20_24, x.rank4_h_20_24, x.rank4_c_20_24, x.rank4_v_20_24
+			 , x.rank5_coin_ticker, x.rank5_coin_name, x.rank5_coin_particle, x.rank5_o_price, x.rank5_l_price, x.rank5_h_price, x.rank5_c_price
+			 , x.rank5_o_c_price, x.rank5_o_c_price_rate, x.rank5_l_h_price, x.rank5_l_h_price_rate, x.rank5_lower_price_time, x.rank5_higher_price_time, x.rank5_lower_volume_time, x.rank5_higher_volume_time
+			 , case when x.rank5_o_c_price like '-%' then 'blue' when x.rank5_o_c_price = '0' then 'black'  else 'red' end rank5_o_c_price_color
+			 , case when x.rank5_l_h_price like '-%' then 'blue' when x.rank5_l_h_price = '0' then 'black'  else 'red' end rank5_l_h_price_color
+			 , x.rank5_o_0_4, x.rank5_l_0_4, x.rank5_h_0_4, x.rank5_c_0_4, x.rank5_v_0_4, x.rank5_o_4_8, x.rank5_l_4_8, x.rank5_h_4_8, x.rank5_c_4_8, x.rank5_v_4_8
+			 , x.rank5_o_8_12, x.rank5_l_8_12, x.rank5_h_8_12, x.rank5_c_8_12, x.rank5_v_8_12, x.rank5_o_12_16, x.rank5_l_12_16, x.rank5_h_12_16, x.rank5_c_12_16, x.rank5_v_12_16
+			 , x.rank5_o_16_20, x.rank5_l_16_20, x.rank5_h_16_20, x.rank5_c_16_20, x.rank5_v_16_20, x.rank5_o_20_24, x.rank5_l_20_24, x.rank5_h_20_24, x.rank5_c_20_24, x.rank5_v_20_24
+		  from (
+				select x.yyyymmdd, 'upbit' market, '업비트' kor_market
+					 , max(x.btc_coin_ticker) btc_coin_ticker, max(x.btc_coin_name) btc_coin_name, max(btc_coin_particle) btc_coin_particle
+					 , max(x.btc_o_price) btc_o_price, max(x.btc_l_price) btc_l_price, max(x.btc_h_price) btc_h_price, max(x.btc_c_price) btc_c_price
+					 , max(x.btc_o_c_price) btc_o_c_price, max(x.btc_o_c_price_rate) btc_o_c_price_rate, max(x.btc_l_h_price) btc_l_h_price, max(x.btc_l_h_price_rate) btc_l_h_price_rate
+					 , max(x.btc_lower_price_time) btc_lower_price_time, max(x.btc_higher_price_time) btc_higher_price_time, max(x.btc_lower_volume_time) btc_lower_volume_time, max(x.btc_higher_volume_time) btc_higher_volume_time
+					 , max(x.btc_o_0_4) btc_o_0_4, max(x.btc_l_0_4) btc_l_0_4, max(x.btc_h_0_4) btc_h_0_4, max(x.btc_c_0_4) btc_c_0_4, max(x.btc_v_0_4) btc_v_0_4
+					 , max(x.btc_o_4_8) btc_o_4_8, max(x.btc_l_4_8) btc_l_4_8, max(x.btc_h_4_8) btc_h_4_8, max(x.btc_c_4_8) btc_c_4_8, max(x.btc_v_4_8) btc_v_4_8
+					 , max(x.btc_o_8_12) btc_o_8_12, max(x.btc_l_8_12) btc_l_8_12, max(x.btc_h_8_12) btc_h_8_12, max(x.btc_c_8_12) btc_c_8_12, max(x.btc_v_8_12) btc_v_8_12
+					 , max(x.btc_o_12_16) btc_o_12_16, max(x.btc_l_12_16) btc_l_12_16, max(x.btc_h_12_16) btc_h_12_16, max(x.btc_c_12_16) btc_c_12_16, max(x.btc_v_12_16) btc_v_12_16
+					 , max(x.btc_o_16_20) btc_o_16_20, max(x.btc_l_16_20) btc_l_16_20, max(x.btc_h_16_20) btc_h_16_20, max(x.btc_c_16_20) btc_c_16_20, max(x.btc_v_16_20) btc_v_16_20
+					 , max(x.btc_o_20_24) btc_o_20_24, max(x.btc_l_20_24) btc_l_20_24, max(x.btc_h_20_24) btc_h_20_24, max(x.btc_c_20_24) btc_c_20_24, max(x.btc_v_20_24) btc_v_20_24
+					 , max(x.rank1_coin_ticker) rank1_coin_ticker, max(x.rank1_coin_name) rank1_coin_name, max(x.rank1_coin_particle) rank1_coin_particle
+					 , max(x.rank1_o_price) rank1_o_price, max(x.rank1_l_price) rank1_l_price, max(x.rank1_h_price) rank1_h_price, max(x.rank1_c_price) rank1_c_price
+					 , max(x.rank1_o_c_price) rank1_o_c_price, max(x.rank1_o_c_price_rate) rank1_o_c_price_rate, max(x.rank1_l_h_price) rank1_l_h_price, max(x.rank1_l_h_price_rate) rank1_l_h_price_rate
+					 , max(x.rank1_lower_price_time) rank1_lower_price_time, max(x.rank1_higher_price_time) rank1_higher_price_time, max(x.rank1_lower_volume_time) rank1_lower_volume_time, max(x.rank1_higher_volume_time) rank1_higher_volume_time
+					 , max(x.rank1_o_0_4) rank1_o_0_4, max(x.rank1_l_0_4) rank1_l_0_4, max(x.rank1_h_0_4) rank1_h_0_4, max(x.rank1_c_0_4) rank1_c_0_4, max(x.rank1_v_0_4) rank1_v_0_4
+					 , max(x.rank1_o_4_8) rank1_o_4_8, max(x.rank1_l_4_8) rank1_l_4_8, max(x.rank1_h_4_8) rank1_h_4_8, max(x.rank1_c_4_8) rank1_c_4_8, max(x.rank1_v_4_8) rank1_v_4_8
+					 , max(x.rank1_o_8_12) rank1_o_8_12, max(x.rank1_l_8_12) rank1_l_8_12, max(x.rank1_h_8_12) rank1_h_8_12, max(x.rank1_c_8_12) rank1_c_8_12, max(x.rank1_v_8_12) rank1_v_8_12
+					 , max(x.rank1_o_12_16) rank1_o_12_16, max(x.rank1_l_12_16) rank1_l_12_16, max(x.rank1_h_12_16) rank1_h_12_16, max(x.rank1_c_12_16) rank1_c_12_16, max(x.rank1_v_12_16) rank1_v_12_16
+					 , max(x.rank1_o_16_20) rank1_o_16_20, max(x.rank1_l_16_20) rank1_l_16_20, max(x.rank1_h_16_20) rank1_h_16_20, max(x.rank1_c_16_20) rank1_c_16_20, max(x.rank1_v_16_20) rank1_v_16_20
+					 , max(x.rank1_o_20_24) rank1_o_20_24, max(x.rank1_l_20_24) rank1_l_20_24, max(x.rank1_h_20_24) rank1_h_20_24, max(x.rank1_c_20_24) rank1_c_20_24, max(x.rank1_v_20_24) rank1_v_20_24
+					 , max(x.rank2_coin_ticker) rank2_coin_ticker, max(x.rank2_coin_name) rank2_coin_name, max(x.rank2_coin_particle) rank2_coin_particle
+					 , max(x.rank2_o_price) rank2_o_price, max(x.rank2_l_price) rank2_l_price, max(x.rank2_h_price) rank2_h_price, max(x.rank2_c_price) rank2_c_price
+					 , max(x.rank2_o_c_price) rank2_o_c_price, max(x.rank2_o_c_price_rate) rank2_o_c_price_rate, max(x.rank2_l_h_price) rank2_l_h_price, max(x.rank2_l_h_price_rate) rank2_l_h_price_rate
+					 , max(x.rank2_lower_price_time) rank2_lower_price_time, max(x.rank2_higher_price_time) rank2_higher_price_time, max(x.rank2_lower_volume_time) rank2_lower_volume_time, max(x.rank2_higher_volume_time) rank2_higher_volume_time
+					 , max(x.rank2_o_0_4) rank2_o_0_4, max(x.rank2_l_0_4) rank2_l_0_4, max(x.rank2_h_0_4) rank2_h_0_4, max(x.rank2_c_0_4) rank2_c_0_4, max(x.rank2_v_0_4) rank2_v_0_4
+					 , max(x.rank2_o_4_8) rank2_o_4_8, max(x.rank2_l_4_8) rank2_l_4_8, max(x.rank2_h_4_8) rank2_h_4_8, max(x.rank2_c_4_8) rank2_c_4_8, max(x.rank2_v_4_8) rank2_v_4_8
+					 , max(x.rank2_o_8_12) rank2_o_8_12, max(x.rank2_l_8_12) rank2_l_8_12, max(x.rank2_h_8_12) rank2_h_8_12, max(x.rank2_c_8_12) rank2_c_8_12, max(x.rank2_v_8_12) rank2_v_8_12
+					 , max(x.rank2_o_12_16) rank2_o_12_16, max(x.rank2_l_12_16) rank2_l_12_16, max(x.rank2_h_12_16) rank2_h_12_16, max(x.rank2_c_12_16) rank2_c_12_16, max(x.rank2_v_12_16) rank2_v_12_16
+					 , max(x.rank2_o_16_20) rank2_o_16_20, max(x.rank2_l_16_20) rank2_l_16_20, max(x.rank2_h_16_20) rank2_h_16_20, max(x.rank2_c_16_20) rank2_c_16_20, max(x.rank2_v_16_20) rank2_v_16_20
+					 , max(x.rank2_o_20_24) rank2_o_20_24, max(x.rank2_l_20_24) rank2_l_20_24, max(x.rank2_h_20_24) rank2_h_20_24, max(x.rank2_c_20_24) rank2_c_20_24, max(x.rank2_v_20_24) rank2_v_20_24
+					 , max(x.rank3_coin_ticker) rank3_coin_ticker, max(x.rank3_coin_name) rank3_coin_name, max(x.rank3_coin_particle) rank3_coin_particle
+					 , max(x.rank3_o_price) rank3_o_price, max(x.rank3_l_price) rank3_l_price, max(x.rank3_h_price) rank3_h_price, max(x.rank3_c_price) rank3_c_price
+					 , max(x.rank3_o_c_price) rank3_o_c_price, max(x.rank3_o_c_price_rate) rank3_o_c_price_rate, max(x.rank3_l_h_price) rank3_l_h_price, max(x.rank3_l_h_price_rate) rank3_l_h_price_rate
+					 , max(x.rank3_lower_price_time) rank3_lower_price_time, max(x.rank3_higher_price_time) rank3_higher_price_time, max(x.rank3_lower_volume_time) rank3_lower_volume_time, max(x.rank3_higher_volume_time) rank3_higher_volume_time
+					 , max(x.rank3_o_0_4) rank3_o_0_4, max(x.rank3_l_0_4) rank3_l_0_4, max(x.rank3_h_0_4) rank3_h_0_4, max(x.rank3_c_0_4) rank3_c_0_4, max(x.rank3_v_0_4) rank3_v_0_4
+					 , max(x.rank3_o_4_8) rank3_o_4_8, max(x.rank3_l_4_8) rank3_l_4_8, max(x.rank3_h_4_8) rank3_h_4_8, max(x.rank3_c_4_8) rank3_c_4_8, max(x.rank3_v_4_8) rank3_v_4_8
+					 , max(x.rank3_o_8_12) rank3_o_8_12, max(x.rank3_l_8_12) rank3_l_8_12, max(x.rank3_h_8_12) rank3_h_8_12, max(x.rank3_c_8_12) rank3_c_8_12, max(x.rank3_v_8_12) rank3_v_8_12
+					 , max(x.rank3_o_12_16) rank3_o_12_16, max(x.rank3_l_12_16) rank3_l_12_16, max(x.rank3_h_12_16) rank3_h_12_16, max(x.rank3_c_12_16) rank3_c_12_16, max(x.rank3_v_12_16) rank3_v_12_16
+					 , max(x.rank3_o_16_20) rank3_o_16_20, max(x.rank3_l_16_20) rank3_l_16_20, max(x.rank3_h_16_20) rank3_h_16_20, max(x.rank3_c_16_20) rank3_c_16_20, max(x.rank3_v_16_20) rank3_v_16_20
+					 , max(x.rank3_o_20_24) rank3_o_20_24, max(x.rank3_l_20_24) rank3_l_20_24, max(x.rank3_h_20_24) rank3_h_20_24, max(x.rank3_c_20_24) rank3_c_20_24, max(x.rank3_v_20_24) rank3_v_20_24
+					 , max(x.rank4_coin_ticker) rank4_coin_ticker, max(x.rank4_coin_name) rank4_coin_name, max(x.rank4_coin_particle) rank4_coin_particle
+					 , max(x.rank4_o_price) rank4_o_price, max(x.rank4_l_price) rank4_l_price, max(x.rank4_h_price) rank4_h_price, max(x.rank4_c_price) rank4_c_price
+					 , max(x.rank4_o_c_price) rank4_o_c_price, max(x.rank4_o_c_price_rate) rank4_o_c_price_rate, max(x.rank4_l_h_price) rank4_l_h_price, max(x.rank4_l_h_price_rate) rank4_l_h_price_rate
+					 , max(x.rank4_lower_price_time) rank4_lower_price_time, max(x.rank4_higher_price_time) rank4_higher_price_time, max(x.rank4_lower_volume_time) rank4_lower_volume_time, max(x.rank4_higher_volume_time) rank4_higher_volume_time
+					 , max(x.rank4_o_0_4) rank4_o_0_4, max(x.rank4_l_0_4) rank4_l_0_4, max(x.rank4_h_0_4) rank4_h_0_4, max(x.rank4_c_0_4) rank4_c_0_4, max(x.rank4_v_0_4) rank4_v_0_4
+					 , max(x.rank4_o_4_8) rank4_o_4_8, max(x.rank4_l_4_8) rank4_l_4_8, max(x.rank4_h_4_8) rank4_h_4_8, max(x.rank4_c_4_8) rank4_c_4_8, max(x.rank4_v_4_8) rank4_v_4_8
+					 , max(x.rank4_o_8_12) rank4_o_8_12, max(x.rank4_l_8_12) rank4_l_8_12, max(x.rank4_h_8_12) rank4_h_8_12, max(x.rank4_c_8_12) rank4_c_8_12, max(x.rank4_v_8_12) rank4_v_8_12
+					 , max(x.rank4_o_12_16) rank4_o_12_16, max(x.rank4_l_12_16) rank4_l_12_16, max(x.rank4_h_12_16) rank4_h_12_16, max(x.rank4_c_12_16) rank4_c_12_16, max(x.rank4_v_12_16) rank4_v_12_16
+					 , max(x.rank4_o_16_20) rank4_o_16_20, max(x.rank4_l_16_20) rank4_l_16_20, max(x.rank4_h_16_20) rank4_h_16_20, max(x.rank4_c_16_20) rank4_c_16_20, max(x.rank4_v_16_20) rank4_v_16_20
+					 , max(x.rank4_o_20_24) rank4_o_20_24, max(x.rank4_l_20_24) rank4_l_20_24, max(x.rank4_h_20_24) rank4_h_20_24, max(x.rank4_c_20_24) rank4_c_20_24, max(x.rank4_v_20_24) rank4_v_20_24
+					 , max(x.rank5_coin_ticker) rank5_coin_ticker, max(x.rank5_coin_name) rank5_coin_name, max(x.rank5_coin_particle) rank5_coin_particle
+					 , max(x.rank5_o_price) rank5_o_price, max(x.rank5_l_price) rank5_l_price, max(x.rank5_h_price) rank5_h_price, max(x.rank5_c_price) rank5_c_price
+					 , max(x.rank5_o_c_price) rank5_o_c_price, max(x.rank5_o_c_price_rate) rank5_o_c_price_rate, max(x.rank5_l_h_price) rank5_l_h_price, max(x.rank5_l_h_price_rate) rank5_l_h_price_rate
+					 , max(x.rank5_lower_price_time) rank5_lower_price_time, max(x.rank5_higher_price_time) rank5_higher_price_time, max(x.rank5_lower_volume_time) rank5_lower_volume_time, max(x.rank5_higher_volume_time) rank5_higher_volume_time
+					 , max(x.rank5_o_0_4) rank5_o_0_4, max(x.rank5_l_0_4) rank5_l_0_4, max(x.rank5_h_0_4) rank5_h_0_4, max(x.rank5_c_0_4) rank5_c_0_4, max(x.rank5_v_0_4) rank5_v_0_4
+					 , max(x.rank5_o_4_8) rank5_o_4_8, max(x.rank5_l_4_8) rank5_l_4_8, max(x.rank5_h_4_8) rank5_h_4_8, max(x.rank5_c_4_8) rank5_c_4_8, max(x.rank5_v_4_8) rank5_v_4_8
+					 , max(x.rank5_o_8_12) rank5_o_8_12, max(x.rank5_l_8_12) rank5_l_8_12, max(x.rank5_h_8_12) rank5_h_8_12, max(x.rank5_c_8_12) rank5_c_8_12, max(x.rank5_v_8_12) rank5_v_8_12
+					 , max(x.rank5_o_12_16) rank5_o_12_16, max(x.rank5_l_12_16) rank5_l_12_16, max(x.rank5_h_12_16) rank5_h_12_16, max(x.rank5_c_12_16) rank5_c_12_16, max(x.rank5_v_12_16) rank5_v_12_16
+					 , max(x.rank5_o_16_20) rank5_o_16_20, max(x.rank5_l_16_20) rank5_l_16_20, max(x.rank5_h_16_20) rank5_h_16_20, max(x.rank5_c_16_20) rank5_c_16_20, max(x.rank5_v_16_20) rank5_v_16_20
+					 , max(x.rank5_o_20_24) rank5_o_20_24, max(x.rank5_l_20_24) rank5_l_20_24, max(x.rank5_h_20_24) rank5_h_20_24, max(x.rank5_c_20_24) rank5_c_20_24, max(x.rank5_v_20_24) rank5_v_20_24
+				  from (
+						select x.yyyymmdd
+							 , case when ranking = '기준' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end btc_coin_ticker
+							 , case when ranking = '기준' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end btc_coin_name
+							 , case when ranking = '기준' then z.coin_particle else '' end btc_coin_particle
+							 , case when ranking = '기준' then x.o_price else '' end btc_o_price
+							 , case when ranking = '기준' then x.l_price else '' end btc_l_price
+							 , case when ranking = '기준' then x.h_price else '' end btc_h_price
+							 , case when ranking = '기준' then x.c_price else '' end btc_c_price
+							 , case when ranking = '기준' then x.o_c_price else '' end btc_o_c_price
+							 , case when ranking = '기준' then x.o_c_price_rate else '' end btc_o_c_price_rate
+							 , case when ranking = '기준' then x.l_h_price else '' end btc_l_h_price
+							 , case when ranking = '기준' then x.l_h_price_rate else '' end btc_l_h_price_rate
+							 , case when ranking = '기준' then x.lower_price_time else '' end btc_lower_price_time
+							 , case when ranking = '기준' then x.higher_price_time else '' end btc_higher_price_time
+							 , case when ranking = '기준' then x.lower_volume_time else '' end btc_lower_volume_time
+							 , case when ranking = '기준' then x.higher_volume_time else '' end btc_higher_volume_time
+							 , case when ranking = '기준' then x.o_0_4 else '' end btc_o_0_4
+							 , case when ranking = '기준' then x.l_0_4 else '' end btc_l_0_4
+							 , case when ranking = '기준' then x.h_0_4 else '' end btc_h_0_4
+							 , case when ranking = '기준' then x.c_0_4 else '' end btc_c_0_4
+							 , case when ranking = '기준' then x.v_0_4 else '' end btc_v_0_4
+							 , case when ranking = '기준' then x.o_4_8 else '' end btc_o_4_8
+							 , case when ranking = '기준' then x.l_4_8 else '' end btc_l_4_8
+							 , case when ranking = '기준' then x.h_4_8 else '' end btc_h_4_8
+							 , case when ranking = '기준' then x.c_4_8 else '' end btc_c_4_8
+							 , case when ranking = '기준' then x.v_4_8 else '' end btc_v_4_8
+							 , case when ranking = '기준' then x.o_8_12 else '' end btc_o_8_12
+							 , case when ranking = '기준' then x.l_8_12 else '' end btc_l_8_12
+							 , case when ranking = '기준' then x.h_8_12 else '' end btc_h_8_12
+							 , case when ranking = '기준' then x.c_8_12 else '' end btc_c_8_12
+							 , case when ranking = '기준' then x.v_8_12 else '' end btc_v_8_12
+							 , case when ranking = '기준' then x.o_12_16 else '' end btc_o_12_16
+							 , case when ranking = '기준' then x.l_12_16 else '' end btc_l_12_16
+							 , case when ranking = '기준' then x.h_12_16 else '' end btc_h_12_16
+							 , case when ranking = '기준' then x.c_12_16 else '' end btc_c_12_16
+							 , case when ranking = '기준' then x.v_12_16 else '' end btc_v_12_16
+							 , case when ranking = '기준' then x.o_16_20 else '' end btc_o_16_20
+							 , case when ranking = '기준' then x.l_16_20 else '' end btc_l_16_20
+							 , case when ranking = '기준' then x.h_16_20 else '' end btc_h_16_20
+							 , case when ranking = '기준' then x.c_16_20 else '' end btc_c_16_20
+							 , case when ranking = '기준' then x.v_16_20 else '' end btc_v_16_20
+							 , case when ranking = '기준' then x.o_20_24 else '' end btc_o_20_24
+							 , case when ranking = '기준' then x.l_20_24 else '' end btc_l_20_24
+							 , case when ranking = '기준' then x.h_20_24 else '' end btc_h_20_24
+							 , case when ranking = '기준' then x.c_20_24 else '' end btc_c_20_24
+							 , case when ranking = '기준' then x.v_20_24 else '' end btc_v_20_24
+							 , case when ranking = '1' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank1_coin_ticker
+							 , case when ranking = '1' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank1_coin_name
+							 , case when ranking = '1' then z.coin_particle else '' end rank1_coin_particle
+							 , case when ranking = '1' then x.o_price else '' end rank1_o_price
+							 , case when ranking = '1' then x.l_price else '' end rank1_l_price
+							 , case when ranking = '1' then x.h_price else '' end rank1_h_price
+							 , case when ranking = '1' then x.c_price else '' end rank1_c_price
+							 , case when ranking = '1' then x.o_c_price else '' end rank1_o_c_price
+							 , case when ranking = '1' then x.o_c_price_rate else '' end rank1_o_c_price_rate
+							 , case when ranking = '1' then x.l_h_price else '' end rank1_l_h_price
+							 , case when ranking = '1' then x.l_h_price_rate else '' end rank1_l_h_price_rate
+							 , case when ranking = '1' then x.lower_price_time else '' end rank1_lower_price_time
+							 , case when ranking = '1' then x.higher_price_time else '' end rank1_higher_price_time
+							 , case when ranking = '1' then x.lower_volume_time else '' end rank1_lower_volume_time
+							 , case when ranking = '1' then x.higher_volume_time else '' end rank1_higher_volume_time
+							 , case when ranking = '1' then x.o_0_4 else '' end rank1_o_0_4
+							 , case when ranking = '1' then x.l_0_4 else '' end rank1_l_0_4
+							 , case when ranking = '1' then x.h_0_4 else '' end rank1_h_0_4
+							 , case when ranking = '1' then x.c_0_4 else '' end rank1_c_0_4
+							 , case when ranking = '1' then x.v_0_4 else '' end rank1_v_0_4
+							 , case when ranking = '1' then x.o_4_8 else '' end rank1_o_4_8
+							 , case when ranking = '1' then x.l_4_8 else '' end rank1_l_4_8
+							 , case when ranking = '1' then x.h_4_8 else '' end rank1_h_4_8
+							 , case when ranking = '1' then x.c_4_8 else '' end rank1_c_4_8
+							 , case when ranking = '1' then x.v_4_8 else '' end rank1_v_4_8
+							 , case when ranking = '1' then x.o_8_12 else '' end rank1_o_8_12
+							 , case when ranking = '1' then x.l_8_12 else '' end rank1_l_8_12
+							 , case when ranking = '1' then x.h_8_12 else '' end rank1_h_8_12
+							 , case when ranking = '1' then x.c_8_12 else '' end rank1_c_8_12
+							 , case when ranking = '1' then x.v_8_12 else '' end rank1_v_8_12
+							 , case when ranking = '1' then x.o_12_16 else '' end rank1_o_12_16
+							 , case when ranking = '1' then x.l_12_16 else '' end rank1_l_12_16
+							 , case when ranking = '1' then x.h_12_16 else '' end rank1_h_12_16
+							 , case when ranking = '1' then x.c_12_16 else '' end rank1_c_12_16
+							 , case when ranking = '1' then x.v_12_16 else '' end rank1_v_12_16
+							 , case when ranking = '1' then x.o_16_20 else '' end rank1_o_16_20
+							 , case when ranking = '1' then x.l_16_20 else '' end rank1_l_16_20
+							 , case when ranking = '1' then x.h_16_20 else '' end rank1_h_16_20
+							 , case when ranking = '1' then x.c_16_20 else '' end rank1_c_16_20
+							 , case when ranking = '1' then x.v_16_20 else '' end rank1_v_16_20
+							 , case when ranking = '1' then x.o_20_24 else '' end rank1_o_20_24
+							 , case when ranking = '1' then x.l_20_24 else '' end rank1_l_20_24
+							 , case when ranking = '1' then x.h_20_24 else '' end rank1_h_20_24
+							 , case when ranking = '1' then x.c_20_24 else '' end rank1_c_20_24
+							 , case when ranking = '1' then x.v_20_24 else '' end rank1_v_20_24
+							 , case when ranking = '2' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank2_coin_ticker
+							 , case when ranking = '2' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank2_coin_name
+							 , case when ranking = '2' then z.coin_particle else '' end rank2_coin_particle
+							 , case when ranking = '2' then x.o_price else '' end rank2_o_price
+							 , case when ranking = '2' then x.l_price else '' end rank2_l_price
+							 , case when ranking = '2' then x.h_price else '' end rank2_h_price
+							 , case when ranking = '2' then x.c_price else '' end rank2_c_price
+							 , case when ranking = '2' then x.o_c_price else '' end rank2_o_c_price
+							 , case when ranking = '2' then x.o_c_price_rate else '' end rank2_o_c_price_rate
+							 , case when ranking = '2' then x.l_h_price else '' end rank2_l_h_price
+							 , case when ranking = '2' then x.l_h_price_rate else '' end rank2_l_h_price_rate
+							 , case when ranking = '2' then x.lower_price_time else '' end rank2_lower_price_time
+							 , case when ranking = '2' then x.higher_price_time else '' end rank2_higher_price_time
+							 , case when ranking = '2' then x.lower_volume_time else '' end rank2_lower_volume_time
+							 , case when ranking = '2' then x.higher_volume_time else '' end rank2_higher_volume_time
+							 , case when ranking = '2' then x.o_0_4 else '' end rank2_o_0_4
+							 , case when ranking = '2' then x.l_0_4 else '' end rank2_l_0_4
+							 , case when ranking = '2' then x.h_0_4 else '' end rank2_h_0_4
+							 , case when ranking = '2' then x.c_0_4 else '' end rank2_c_0_4
+							 , case when ranking = '2' then x.v_0_4 else '' end rank2_v_0_4
+							 , case when ranking = '2' then x.o_4_8 else '' end rank2_o_4_8
+							 , case when ranking = '2' then x.l_4_8 else '' end rank2_l_4_8
+							 , case when ranking = '2' then x.h_4_8 else '' end rank2_h_4_8
+							 , case when ranking = '2' then x.c_4_8 else '' end rank2_c_4_8
+							 , case when ranking = '2' then x.v_4_8 else '' end rank2_v_4_8
+							 , case when ranking = '2' then x.o_8_12 else '' end rank2_o_8_12
+							 , case when ranking = '2' then x.l_8_12 else '' end rank2_l_8_12
+							 , case when ranking = '2' then x.h_8_12 else '' end rank2_h_8_12
+							 , case when ranking = '2' then x.c_8_12 else '' end rank2_c_8_12
+							 , case when ranking = '2' then x.v_8_12 else '' end rank2_v_8_12
+							 , case when ranking = '2' then x.o_12_16 else '' end rank2_o_12_16
+							 , case when ranking = '2' then x.l_12_16 else '' end rank2_l_12_16
+							 , case when ranking = '2' then x.h_12_16 else '' end rank2_h_12_16
+							 , case when ranking = '2' then x.c_12_16 else '' end rank2_c_12_16
+							 , case when ranking = '2' then x.v_12_16 else '' end rank2_v_12_16
+							 , case when ranking = '2' then x.o_16_20 else '' end rank2_o_16_20
+							 , case when ranking = '2' then x.l_16_20 else '' end rank2_l_16_20
+							 , case when ranking = '2' then x.h_16_20 else '' end rank2_h_16_20
+							 , case when ranking = '2' then x.c_16_20 else '' end rank2_c_16_20
+							 , case when ranking = '2' then x.v_16_20 else '' end rank2_v_16_20
+							 , case when ranking = '2' then x.o_20_24 else '' end rank2_o_20_24
+							 , case when ranking = '2' then x.l_20_24 else '' end rank2_l_20_24
+							 , case when ranking = '2' then x.h_20_24 else '' end rank2_h_20_24
+							 , case when ranking = '2' then x.c_20_24 else '' end rank2_c_20_24
+							 , case when ranking = '2' then x.v_20_24 else '' end rank2_v_20_24
+							 , case when ranking = '3' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank3_coin_ticker
+							 , case when ranking = '3' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank3_coin_name
+							 , case when ranking = '3' then z.coin_particle else '' end rank3_coin_particle
+							 , case when ranking = '3' then x.o_price else '' end rank3_o_price
+							 , case when ranking = '3' then x.l_price else '' end rank3_l_price
+							 , case when ranking = '3' then x.h_price else '' end rank3_h_price
+							 , case when ranking = '3' then x.c_price else '' end rank3_c_price
+							 , case when ranking = '3' then x.o_c_price else '' end rank3_o_c_price
+							 , case when ranking = '3' then x.o_c_price_rate else '' end rank3_o_c_price_rate
+							 , case when ranking = '3' then x.l_h_price else '' end rank3_l_h_price
+							 , case when ranking = '3' then x.l_h_price_rate else '' end rank3_l_h_price_rate
+							 , case when ranking = '3' then x.lower_price_time else '' end rank3_lower_price_time
+							 , case when ranking = '3' then x.higher_price_time else '' end rank3_higher_price_time
+							 , case when ranking = '3' then x.lower_volume_time else '' end rank3_lower_volume_time
+							 , case when ranking = '3' then x.higher_volume_time else '' end rank3_higher_volume_time
+							 , case when ranking = '3' then x.o_0_4 else '' end rank3_o_0_4
+							 , case when ranking = '3' then x.l_0_4 else '' end rank3_l_0_4
+							 , case when ranking = '3' then x.h_0_4 else '' end rank3_h_0_4
+							 , case when ranking = '3' then x.c_0_4 else '' end rank3_c_0_4
+							 , case when ranking = '3' then x.v_0_4 else '' end rank3_v_0_4
+							 , case when ranking = '3' then x.o_4_8 else '' end rank3_o_4_8
+							 , case when ranking = '3' then x.l_4_8 else '' end rank3_l_4_8
+							 , case when ranking = '3' then x.h_4_8 else '' end rank3_h_4_8
+							 , case when ranking = '3' then x.c_4_8 else '' end rank3_c_4_8
+							 , case when ranking = '3' then x.v_4_8 else '' end rank3_v_4_8
+							 , case when ranking = '3' then x.o_8_12 else '' end rank3_o_8_12
+							 , case when ranking = '3' then x.l_8_12 else '' end rank3_l_8_12
+							 , case when ranking = '3' then x.h_8_12 else '' end rank3_h_8_12
+							 , case when ranking = '3' then x.c_8_12 else '' end rank3_c_8_12
+							 , case when ranking = '3' then x.v_8_12 else '' end rank3_v_8_12
+							 , case when ranking = '3' then x.o_12_16 else '' end rank3_o_12_16
+							 , case when ranking = '3' then x.l_12_16 else '' end rank3_l_12_16
+							 , case when ranking = '3' then x.h_12_16 else '' end rank3_h_12_16
+							 , case when ranking = '3' then x.c_12_16 else '' end rank3_c_12_16
+							 , case when ranking = '3' then x.v_12_16 else '' end rank3_v_12_16
+							 , case when ranking = '3' then x.o_16_20 else '' end rank3_o_16_20
+							 , case when ranking = '3' then x.l_16_20 else '' end rank3_l_16_20
+							 , case when ranking = '3' then x.h_16_20 else '' end rank3_h_16_20
+							 , case when ranking = '3' then x.c_16_20 else '' end rank3_c_16_20
+							 , case when ranking = '3' then x.v_16_20 else '' end rank3_v_16_20
+							 , case when ranking = '3' then x.o_20_24 else '' end rank3_o_20_24
+							 , case when ranking = '3' then x.l_20_24 else '' end rank3_l_20_24
+							 , case when ranking = '3' then x.h_20_24 else '' end rank3_h_20_24
+							 , case when ranking = '3' then x.c_20_24 else '' end rank3_c_20_24
+							 , case when ranking = '3' then x.v_20_24 else '' end rank3_v_20_24
+							 , case when ranking = '4' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank4_coin_ticker
+							 , case when ranking = '4' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank4_coin_name
+							 , case when ranking = '4' then z.coin_particle else '' end rank4_coin_particle
+							 , case when ranking = '4' then x.o_price else '' end rank4_o_price
+							 , case when ranking = '4' then x.l_price else '' end rank4_l_price
+							 , case when ranking = '4' then x.h_price else '' end rank4_h_price
+							 , case when ranking = '4' then x.c_price else '' end rank4_c_price
+							 , case when ranking = '4' then x.o_c_price else '' end rank4_o_c_price
+							 , case when ranking = '4' then x.o_c_price_rate else '' end rank4_o_c_price_rate
+							 , case when ranking = '4' then x.l_h_price else '' end rank4_l_h_price
+							 , case when ranking = '4' then x.l_h_price_rate else '' end rank4_l_h_price_rate
+							 , case when ranking = '4' then x.lower_price_time else '' end rank4_lower_price_time
+							 , case when ranking = '4' then x.higher_price_time else '' end rank4_higher_price_time
+							 , case when ranking = '4' then x.lower_volume_time else '' end rank4_lower_volume_time
+							 , case when ranking = '4' then x.higher_volume_time else '' end rank4_higher_volume_time
+							 , case when ranking = '4' then x.o_0_4 else '' end rank4_o_0_4
+							 , case when ranking = '4' then x.l_0_4 else '' end rank4_l_0_4
+							 , case when ranking = '4' then x.h_0_4 else '' end rank4_h_0_4
+							 , case when ranking = '4' then x.c_0_4 else '' end rank4_c_0_4
+							 , case when ranking = '4' then x.v_0_4 else '' end rank4_v_0_4
+							 , case when ranking = '4' then x.o_4_8 else '' end rank4_o_4_8
+							 , case when ranking = '4' then x.l_4_8 else '' end rank4_l_4_8
+							 , case when ranking = '4' then x.h_4_8 else '' end rank4_h_4_8
+							 , case when ranking = '4' then x.c_4_8 else '' end rank4_c_4_8
+							 , case when ranking = '4' then x.v_4_8 else '' end rank4_v_4_8
+							 , case when ranking = '4' then x.o_8_12 else '' end rank4_o_8_12
+							 , case when ranking = '4' then x.l_8_12 else '' end rank4_l_8_12
+							 , case when ranking = '4' then x.h_8_12 else '' end rank4_h_8_12
+							 , case when ranking = '4' then x.c_8_12 else '' end rank4_c_8_12
+							 , case when ranking = '4' then x.v_8_12 else '' end rank4_v_8_12
+							 , case when ranking = '4' then x.o_12_16 else '' end rank4_o_12_16
+							 , case when ranking = '4' then x.l_12_16 else '' end rank4_l_12_16
+							 , case when ranking = '4' then x.h_12_16 else '' end rank4_h_12_16
+							 , case when ranking = '4' then x.c_12_16 else '' end rank4_c_12_16
+							 , case when ranking = '4' then x.v_12_16 else '' end rank4_v_12_16
+							 , case when ranking = '4' then x.o_16_20 else '' end rank4_o_16_20
+							 , case when ranking = '4' then x.l_16_20 else '' end rank4_l_16_20
+							 , case when ranking = '4' then x.h_16_20 else '' end rank4_h_16_20
+							 , case when ranking = '4' then x.c_16_20 else '' end rank4_c_16_20
+							 , case when ranking = '4' then x.v_16_20 else '' end rank4_v_16_20
+							 , case when ranking = '4' then x.o_20_24 else '' end rank4_o_20_24
+							 , case when ranking = '4' then x.l_20_24 else '' end rank4_l_20_24
+							 , case when ranking = '4' then x.h_20_24 else '' end rank4_h_20_24
+							 , case when ranking = '4' then x.c_20_24 else '' end rank4_c_20_24
+							 , case when ranking = '4' then x.v_20_24 else '' end rank4_v_20_24
+							 , case when ranking = '5' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank5_coin_ticker
+							 , case when ranking = '5' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank5_coin_name
+							 , case when ranking = '5' then z.coin_particle else '' end rank5_coin_particle
+							 , case when ranking = '5' then x.o_price else '' end rank5_o_price
+							 , case when ranking = '5' then x.l_price else '' end rank5_l_price
+							 , case when ranking = '5' then x.h_price else '' end rank5_h_price
+							 , case when ranking = '5' then x.c_price else '' end rank5_c_price
+							 , case when ranking = '5' then x.o_c_price else '' end rank5_o_c_price
+							 , case when ranking = '5' then x.o_c_price_rate else '' end rank5_o_c_price_rate
+							 , case when ranking = '5' then x.l_h_price else '' end rank5_l_h_price
+							 , case when ranking = '5' then x.l_h_price_rate else '' end rank5_l_h_price_rate
+							 , case when ranking = '5' then x.lower_price_time else '' end rank5_lower_price_time
+							 , case when ranking = '5' then x.higher_price_time else '' end rank5_higher_price_time
+							 , case when ranking = '5' then x.lower_volume_time else '' end rank5_lower_volume_time
+							 , case when ranking = '5' then x.higher_volume_time else '' end rank5_higher_volume_time
+							 , case when ranking = '5' then x.o_0_4 else '' end rank5_o_0_4
+							 , case when ranking = '5' then x.l_0_4 else '' end rank5_l_0_4
+							 , case when ranking = '5' then x.h_0_4 else '' end rank5_h_0_4
+							 , case when ranking = '5' then x.c_0_4 else '' end rank5_c_0_4
+							 , case when ranking = '5' then x.v_0_4 else '' end rank5_v_0_4
+							 , case when ranking = '5' then x.o_4_8 else '' end rank5_o_4_8
+							 , case when ranking = '5' then x.l_4_8 else '' end rank5_l_4_8
+							 , case when ranking = '5' then x.h_4_8 else '' end rank5_h_4_8
+							 , case when ranking = '5' then x.c_4_8 else '' end rank5_c_4_8
+							 , case when ranking = '5' then x.v_4_8 else '' end rank5_v_4_8
+							 , case when ranking = '5' then x.o_8_12 else '' end rank5_o_8_12
+							 , case when ranking = '5' then x.l_8_12 else '' end rank5_l_8_12
+							 , case when ranking = '5' then x.h_8_12 else '' end rank5_h_8_12
+							 , case when ranking = '5' then x.c_8_12 else '' end rank5_c_8_12
+							 , case when ranking = '5' then x.v_8_12 else '' end rank5_v_8_12
+							 , case when ranking = '5' then x.o_12_16 else '' end rank5_o_12_16
+							 , case when ranking = '5' then x.l_12_16 else '' end rank5_l_12_16
+							 , case when ranking = '5' then x.h_12_16 else '' end rank5_h_12_16
+							 , case when ranking = '5' then x.c_12_16 else '' end rank5_c_12_16
+							 , case when ranking = '5' then x.v_12_16 else '' end rank5_v_12_16
+							 , case when ranking = '5' then x.o_16_20 else '' end rank5_o_16_20
+							 , case when ranking = '5' then x.l_16_20 else '' end rank5_l_16_20
+							 , case when ranking = '5' then x.h_16_20 else '' end rank5_h_16_20
+							 , case when ranking = '5' then x.c_16_20 else '' end rank5_c_16_20
+							 , case when ranking = '5' then x.v_16_20 else '' end rank5_v_16_20
+							 , case when ranking = '5' then x.o_20_24 else '' end rank5_o_20_24
+							 , case when ranking = '5' then x.l_20_24 else '' end rank5_l_20_24
+							 , case when ranking = '5' then x.h_20_24 else '' end rank5_h_20_24
+							 , case when ranking = '5' then x.c_20_24 else '' end rank5_c_20_24
+							 , case when ranking = '5' then x.v_20_24 else '' end rank5_v_20_24
+						  from upbit_coin_report_daily x, blog_data_setting y, upbit_coin_info z
+						 where x.yyyymmdd = y.yyyymmdd
+						   and x.coin_ticker = z.coin_ticker
+						   and y.upbit_data_setting_yn = 'Y'
+						   and x.ranking in ('기준', '1', '2', '3', '4', '5')
+						 order by x.yyyymmdd desc, case when x.ranking = '기준' then 999 else cast(x.ranking as integer) end desc 
+				 	) x
+				  where 1=1
+				  group by x.yyyymmdd 
+				  union all
+				 select x.yyyymmdd, 'bithumb' market, '빗썸' kor_market
+					  , max(x.btc_coin_ticker) btc_coin_ticker, max(x.btc_coin_name) btc_coin_name, max(btc_coin_particle) btc_coin_particle
+					  , max(x.btc_o_price) btc_o_price, max(x.btc_l_price) btc_l_price, max(x.btc_h_price) btc_h_price, max(x.btc_c_price) btc_c_price
+					  , max(x.btc_o_c_price) btc_o_c_price, max(x.btc_o_c_price_rate) btc_o_c_price_rate, max(x.btc_l_h_price) btc_l_h_price, max(x.btc_l_h_price_rate) btc_l_h_price_rate
+					  , max(x.btc_lower_price_time) btc_lower_price_time, max(x.btc_higher_price_time) btc_higher_price_time, max(x.btc_lower_volume_time) btc_lower_volume_time, max(x.btc_higher_volume_time) btc_higher_volume_time
+					  , max(x.btc_o_0_4) btc_o_0_4, max(x.btc_l_0_4) btc_l_0_4, max(x.btc_h_0_4) btc_h_0_4, max(x.btc_c_0_4) btc_c_0_4, max(x.btc_v_0_4) btc_v_0_4
+					  , max(x.btc_o_4_8) btc_o_4_8, max(x.btc_l_4_8) btc_l_4_8, max(x.btc_h_4_8) btc_h_4_8, max(x.btc_c_4_8) btc_c_4_8, max(x.btc_v_4_8) btc_v_4_8
+					  , max(x.btc_o_8_12) btc_o_8_12, max(x.btc_l_8_12) btc_l_8_12, max(x.btc_h_8_12) btc_h_8_12, max(x.btc_c_8_12) btc_c_8_12, max(x.btc_v_8_12) btc_v_8_12
+					  , max(x.btc_o_12_16) btc_o_12_16, max(x.btc_l_12_16) btc_l_12_16, max(x.btc_h_12_16) btc_h_12_16, max(x.btc_c_12_16) btc_c_12_16, max(x.btc_v_12_16) btc_v_12_16
+					  , max(x.btc_o_16_20) btc_o_16_20, max(x.btc_l_16_20) btc_l_16_20, max(x.btc_h_16_20) btc_h_16_20, max(x.btc_c_16_20) btc_c_16_20, max(x.btc_v_16_20) btc_v_16_20
+					  , max(x.btc_o_20_24) btc_o_20_24, max(x.btc_l_20_24) btc_l_20_24, max(x.btc_h_20_24) btc_h_20_24, max(x.btc_c_20_24) btc_c_20_24, max(x.btc_v_20_24) btc_v_20_24
+					  , max(x.rank1_coin_ticker) rank1_coin_ticker, max(x.rank1_coin_name) rank1_coin_name, max(x.rank1_coin_particle) rank1_coin_particle
+					  , max(x.rank1_o_price) rank1_o_price, max(x.rank1_l_price) rank1_l_price, max(x.rank1_h_price) rank1_h_price, max(x.rank1_c_price) rank1_c_price
+					  , max(x.rank1_o_c_price) rank1_o_c_price, max(x.rank1_o_c_price_rate) rank1_o_c_price_rate, max(x.rank1_l_h_price) rank1_l_h_price, max(x.rank1_l_h_price_rate) rank1_l_h_price_rate
+					  , max(x.rank1_lower_price_time) rank1_lower_price_time, max(x.rank1_higher_price_time) rank1_higher_price_time, max(x.rank1_lower_volume_time) rank1_lower_volume_time, max(x.rank1_higher_volume_time) rank1_higher_volume_time
+					  , max(x.rank1_o_0_4) rank1_o_0_4, max(x.rank1_l_0_4) rank1_l_0_4, max(x.rank1_h_0_4) rank1_h_0_4, max(x.rank1_c_0_4) rank1_c_0_4, max(x.rank1_v_0_4) rank1_v_0_4
+					  , max(x.rank1_o_4_8) rank1_o_4_8, max(x.rank1_l_4_8) rank1_l_4_8, max(x.rank1_h_4_8) rank1_h_4_8, max(x.rank1_c_4_8) rank1_c_4_8, max(x.rank1_v_4_8) rank1_v_4_8
+					  , max(x.rank1_o_8_12) rank1_o_8_12, max(x.rank1_l_8_12) rank1_l_8_12, max(x.rank1_h_8_12) rank1_h_8_12, max(x.rank1_c_8_12) rank1_c_8_12, max(x.rank1_v_8_12) rank1_v_8_12
+					  , max(x.rank1_o_12_16) rank1_o_12_16, max(x.rank1_l_12_16) rank1_l_12_16, max(x.rank1_h_12_16) rank1_h_12_16, max(x.rank1_c_12_16) rank1_c_12_16, max(x.rank1_v_12_16) rank1_v_12_16
+					  , max(x.rank1_o_16_20) rank1_o_16_20, max(x.rank1_l_16_20) rank1_l_16_20, max(x.rank1_h_16_20) rank1_h_16_20, max(x.rank1_c_16_20) rank1_c_16_20, max(x.rank1_v_16_20) rank1_v_16_20
+					  , max(x.rank1_o_20_24) rank1_o_20_24, max(x.rank1_l_20_24) rank1_l_20_24, max(x.rank1_h_20_24) rank1_h_20_24, max(x.rank1_c_20_24) rank1_c_20_24, max(x.rank1_v_20_24) rank1_v_20_24
+					  , max(x.rank2_coin_ticker) rank2_coin_ticker, max(x.rank2_coin_name) rank2_coin_name, max(x.rank2_coin_particle) rank2_coin_particle
+					  , max(x.rank2_o_price) rank2_o_price, max(x.rank2_l_price) rank2_l_price, max(x.rank2_h_price) rank2_h_price, max(x.rank2_c_price) rank2_c_price
+					  , max(x.rank2_o_c_price) rank2_o_c_price, max(x.rank2_o_c_price_rate) rank2_o_c_price_rate, max(x.rank2_l_h_price) rank2_l_h_price, max(x.rank2_l_h_price_rate) rank2_l_h_price_rate
+					  , max(x.rank2_lower_price_time) rank2_lower_price_time, max(x.rank2_higher_price_time) rank2_higher_price_time, max(x.rank2_lower_volume_time) rank2_lower_volume_time, max(x.rank2_higher_volume_time) rank2_higher_volume_time
+					  , max(x.rank2_o_0_4) rank2_o_0_4, max(x.rank2_l_0_4) rank2_l_0_4, max(x.rank2_h_0_4) rank2_h_0_4, max(x.rank2_c_0_4) rank2_c_0_4, max(x.rank2_v_0_4) rank2_v_0_4
+					  , max(x.rank2_o_4_8) rank2_o_4_8, max(x.rank2_l_4_8) rank2_l_4_8, max(x.rank2_h_4_8) rank2_h_4_8, max(x.rank2_c_4_8) rank2_c_4_8, max(x.rank2_v_4_8) rank2_v_4_8
+					  , max(x.rank2_o_8_12) rank2_o_8_12, max(x.rank2_l_8_12) rank2_l_8_12, max(x.rank2_h_8_12) rank2_h_8_12, max(x.rank2_c_8_12) rank2_c_8_12, max(x.rank2_v_8_12) rank2_v_8_12
+					  , max(x.rank2_o_12_16) rank2_o_12_16, max(x.rank2_l_12_16) rank2_l_12_16, max(x.rank2_h_12_16) rank2_h_12_16, max(x.rank2_c_12_16) rank2_c_12_16, max(x.rank2_v_12_16) rank2_v_12_16
+					  , max(x.rank2_o_16_20) rank2_o_16_20, max(x.rank2_l_16_20) rank2_l_16_20, max(x.rank2_h_16_20) rank2_h_16_20, max(x.rank2_c_16_20) rank2_c_16_20, max(x.rank2_v_16_20) rank2_v_16_20
+					  , max(x.rank2_o_20_24) rank2_o_20_24, max(x.rank2_l_20_24) rank2_l_20_24, max(x.rank2_h_20_24) rank2_h_20_24, max(x.rank2_c_20_24) rank2_c_20_24, max(x.rank2_v_20_24) rank2_v_20_24
+					  , max(x.rank3_coin_ticker) rank3_coin_ticker, max(x.rank3_coin_name) rank3_coin_name, max(x.rank3_coin_particle) rank3_coin_particle
+					  , max(x.rank3_o_price) rank3_o_price, max(x.rank3_l_price) rank3_l_price, max(x.rank3_h_price) rank3_h_price, max(x.rank3_c_price) rank3_c_price
+					  , max(x.rank3_o_c_price) rank3_o_c_price, max(x.rank3_o_c_price_rate) rank3_o_c_price_rate, max(x.rank3_l_h_price) rank3_l_h_price, max(x.rank3_l_h_price_rate) rank3_l_h_price_rate
+					  , max(x.rank3_lower_price_time) rank3_lower_price_time, max(x.rank3_higher_price_time) rank3_higher_price_time, max(x.rank3_lower_volume_time) rank3_lower_volume_time, max(x.rank3_higher_volume_time) rank3_higher_volume_time
+					  , max(x.rank3_o_0_4) rank3_o_0_4, max(x.rank3_l_0_4) rank3_l_0_4, max(x.rank3_h_0_4) rank3_h_0_4, max(x.rank3_c_0_4) rank3_c_0_4, max(x.rank3_v_0_4) rank3_v_0_4
+					  , max(x.rank3_o_4_8) rank3_o_4_8, max(x.rank3_l_4_8) rank3_l_4_8, max(x.rank3_h_4_8) rank3_h_4_8, max(x.rank3_c_4_8) rank3_c_4_8, max(x.rank3_v_4_8) rank3_v_4_8
+					  , max(x.rank3_o_8_12) rank3_o_8_12, max(x.rank3_l_8_12) rank3_l_8_12, max(x.rank3_h_8_12) rank3_h_8_12, max(x.rank3_c_8_12) rank3_c_8_12, max(x.rank3_v_8_12) rank3_v_8_12
+					  , max(x.rank3_o_12_16) rank3_o_12_16, max(x.rank3_l_12_16) rank3_l_12_16, max(x.rank3_h_12_16) rank3_h_12_16, max(x.rank3_c_12_16) rank3_c_12_16, max(x.rank3_v_12_16) rank3_v_12_16
+					  , max(x.rank3_o_16_20) rank3_o_16_20, max(x.rank3_l_16_20) rank3_l_16_20, max(x.rank3_h_16_20) rank3_h_16_20, max(x.rank3_c_16_20) rank3_c_16_20, max(x.rank3_v_16_20) rank3_v_16_20
+					  , max(x.rank3_o_20_24) rank3_o_20_24, max(x.rank3_l_20_24) rank3_l_20_24, max(x.rank3_h_20_24) rank3_h_20_24, max(x.rank3_c_20_24) rank3_c_20_24, max(x.rank3_v_20_24) rank3_v_20_24
+					  , max(x.rank4_coin_ticker) rank4_coin_ticker, max(x.rank4_coin_name) rank4_coin_name, max(x.rank4_coin_particle) rank4_coin_particle
+					  , max(x.rank4_o_price) rank4_o_price, max(x.rank4_l_price) rank4_l_price, max(x.rank4_h_price) rank4_h_price, max(x.rank4_c_price) rank4_c_price
+					  , max(x.rank4_o_c_price) rank4_o_c_price, max(x.rank4_o_c_price_rate) rank4_o_c_price_rate, max(x.rank4_l_h_price) rank4_l_h_price, max(x.rank4_l_h_price_rate) rank4_l_h_price_rate
+					  , max(x.rank4_lower_price_time) rank4_lower_price_time, max(x.rank4_higher_price_time) rank4_higher_price_time, max(x.rank4_lower_volume_time) rank4_lower_volume_time, max(x.rank4_higher_volume_time) rank4_higher_volume_time
+					  , max(x.rank4_o_0_4) rank4_o_0_4, max(x.rank4_l_0_4) rank4_l_0_4, max(x.rank4_h_0_4) rank4_h_0_4, max(x.rank4_c_0_4) rank4_c_0_4, max(x.rank4_v_0_4) rank4_v_0_4
+					  , max(x.rank4_o_4_8) rank4_o_4_8, max(x.rank4_l_4_8) rank4_l_4_8, max(x.rank4_h_4_8) rank4_h_4_8, max(x.rank4_c_4_8) rank4_c_4_8, max(x.rank4_v_4_8) rank4_v_4_8
+					  , max(x.rank4_o_8_12) rank4_o_8_12, max(x.rank4_l_8_12) rank4_l_8_12, max(x.rank4_h_8_12) rank4_h_8_12, max(x.rank4_c_8_12) rank4_c_8_12, max(x.rank4_v_8_12) rank4_v_8_12
+					  , max(x.rank4_o_12_16) rank4_o_12_16, max(x.rank4_l_12_16) rank4_l_12_16, max(x.rank4_h_12_16) rank4_h_12_16, max(x.rank4_c_12_16) rank4_c_12_16, max(x.rank4_v_12_16) rank4_v_12_16
+					  , max(x.rank4_o_16_20) rank4_o_16_20, max(x.rank4_l_16_20) rank4_l_16_20, max(x.rank4_h_16_20) rank4_h_16_20, max(x.rank4_c_16_20) rank4_c_16_20, max(x.rank4_v_16_20) rank4_v_16_20
+					  , max(x.rank4_o_20_24) rank4_o_20_24, max(x.rank4_l_20_24) rank4_l_20_24, max(x.rank4_h_20_24) rank4_h_20_24, max(x.rank4_c_20_24) rank4_c_20_24, max(x.rank4_v_20_24) rank4_v_20_24
+					  , max(x.rank5_coin_ticker) rank5_coin_ticker, max(x.rank5_coin_name) rank5_coin_name, max(x.rank5_coin_particle) rank5_coin_particle
+					  , max(x.rank5_o_price) rank5_o_price, max(x.rank5_l_price) rank5_l_price, max(x.rank5_h_price) rank5_h_price, max(x.rank5_c_price) rank5_c_price
+					  , max(x.rank5_o_c_price) rank5_o_c_price, max(x.rank5_o_c_price_rate) rank5_o_c_price_rate, max(x.rank5_l_h_price) rank5_l_h_price, max(x.rank5_l_h_price_rate) rank5_l_h_price_rate
+					  , max(x.rank5_lower_price_time) rank5_lower_price_time, max(x.rank5_higher_price_time) rank5_higher_price_time, max(x.rank5_lower_volume_time) rank5_lower_volume_time, max(x.rank5_higher_volume_time) rank5_higher_volume_time
+					  , max(x.rank5_o_0_4) rank5_o_0_4, max(x.rank5_l_0_4) rank5_l_0_4, max(x.rank5_h_0_4) rank5_h_0_4, max(x.rank5_c_0_4) rank5_c_0_4, max(x.rank5_v_0_4) rank5_v_0_4
+					  , max(x.rank5_o_4_8) rank5_o_4_8, max(x.rank5_l_4_8) rank5_l_4_8, max(x.rank5_h_4_8) rank5_h_4_8, max(x.rank5_c_4_8) rank5_c_4_8, max(x.rank5_v_4_8) rank5_v_4_8
+					  , max(x.rank5_o_8_12) rank5_o_8_12, max(x.rank5_l_8_12) rank5_l_8_12, max(x.rank5_h_8_12) rank5_h_8_12, max(x.rank5_c_8_12) rank5_c_8_12, max(x.rank5_v_8_12) rank5_v_8_12
+					  , max(x.rank5_o_12_16) rank5_o_12_16, max(x.rank5_l_12_16) rank5_l_12_16, max(x.rank5_h_12_16) rank5_h_12_16, max(x.rank5_c_12_16) rank5_c_12_16, max(x.rank5_v_12_16) rank5_v_12_16
+					  , max(x.rank5_o_16_20) rank5_o_16_20, max(x.rank5_l_16_20) rank5_l_16_20, max(x.rank5_h_16_20) rank5_h_16_20, max(x.rank5_c_16_20) rank5_c_16_20, max(x.rank5_v_16_20) rank5_v_16_20
+					  , max(x.rank5_o_20_24) rank5_o_20_24, max(x.rank5_l_20_24) rank5_l_20_24, max(x.rank5_h_20_24) rank5_h_20_24, max(x.rank5_c_20_24) rank5_c_20_24, max(x.rank5_v_20_24) rank5_v_20_24
+				   from (
+						select x.yyyymmdd
+							 , case when ranking = '기준' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end btc_coin_ticker
+							 , case when ranking = '기준' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end btc_coin_name
+							 , case when ranking = '기준' then z.coin_particle else '' end btc_coin_particle
+							 , case when ranking = '기준' then x.o_price else '' end btc_o_price
+							 , case when ranking = '기준' then x.l_price else '' end btc_l_price
+							 , case when ranking = '기준' then x.h_price else '' end btc_h_price
+							 , case when ranking = '기준' then x.c_price else '' end btc_c_price
+							 , case when ranking = '기준' then x.o_c_price else '' end btc_o_c_price
+							 , case when ranking = '기준' then x.o_c_price_rate else '' end btc_o_c_price_rate
+							 , case when ranking = '기준' then x.l_h_price else '' end btc_l_h_price
+							 , case when ranking = '기준' then x.l_h_price_rate else '' end btc_l_h_price_rate
+							 , case when ranking = '기준' then x.lower_price_time else '' end btc_lower_price_time
+							 , case when ranking = '기준' then x.higher_price_time else '' end btc_higher_price_time
+							 , case when ranking = '기준' then x.lower_volume_time else '' end btc_lower_volume_time
+							 , case when ranking = '기준' then x.higher_volume_time else '' end btc_higher_volume_time
+							 , case when ranking = '기준' then x.o_0_4 else '' end btc_o_0_4
+							 , case when ranking = '기준' then x.l_0_4 else '' end btc_l_0_4
+							 , case when ranking = '기준' then x.h_0_4 else '' end btc_h_0_4
+							 , case when ranking = '기준' then x.c_0_4 else '' end btc_c_0_4
+							 , case when ranking = '기준' then x.v_0_4 else '' end btc_v_0_4
+							 , case when ranking = '기준' then x.o_4_8 else '' end btc_o_4_8
+							 , case when ranking = '기준' then x.l_4_8 else '' end btc_l_4_8
+							 , case when ranking = '기준' then x.h_4_8 else '' end btc_h_4_8
+							 , case when ranking = '기준' then x.c_4_8 else '' end btc_c_4_8
+							 , case when ranking = '기준' then x.v_4_8 else '' end btc_v_4_8
+							 , case when ranking = '기준' then x.o_8_12 else '' end btc_o_8_12
+							 , case when ranking = '기준' then x.l_8_12 else '' end btc_l_8_12
+							 , case when ranking = '기준' then x.h_8_12 else '' end btc_h_8_12
+							 , case when ranking = '기준' then x.c_8_12 else '' end btc_c_8_12
+							 , case when ranking = '기준' then x.v_8_12 else '' end btc_v_8_12
+							 , case when ranking = '기준' then x.o_12_16 else '' end btc_o_12_16
+							 , case when ranking = '기준' then x.l_12_16 else '' end btc_l_12_16
+							 , case when ranking = '기준' then x.h_12_16 else '' end btc_h_12_16
+							 , case when ranking = '기준' then x.c_12_16 else '' end btc_c_12_16
+							 , case when ranking = '기준' then x.v_12_16 else '' end btc_v_12_16
+							 , case when ranking = '기준' then x.o_16_20 else '' end btc_o_16_20
+							 , case when ranking = '기준' then x.l_16_20 else '' end btc_l_16_20
+							 , case when ranking = '기준' then x.h_16_20 else '' end btc_h_16_20
+							 , case when ranking = '기준' then x.c_16_20 else '' end btc_c_16_20
+							 , case when ranking = '기준' then x.v_16_20 else '' end btc_v_16_20
+							 , case when ranking = '기준' then x.o_20_24 else '' end btc_o_20_24
+							 , case when ranking = '기준' then x.l_20_24 else '' end btc_l_20_24
+							 , case when ranking = '기준' then x.h_20_24 else '' end btc_h_20_24
+							 , case when ranking = '기준' then x.c_20_24 else '' end btc_c_20_24
+							 , case when ranking = '기준' then x.v_20_24 else '' end btc_v_20_24
+							 , case when ranking = '1' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank1_coin_ticker
+							 , case when ranking = '1' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank1_coin_name
+							 , case when ranking = '1' then z.coin_particle else '' end rank1_coin_particle
+							 , case when ranking = '1' then x.o_price else '' end rank1_o_price
+							 , case when ranking = '1' then x.l_price else '' end rank1_l_price
+							 , case when ranking = '1' then x.h_price else '' end rank1_h_price
+							 , case when ranking = '1' then x.c_price else '' end rank1_c_price
+							 , case when ranking = '1' then x.o_c_price else '' end rank1_o_c_price
+							 , case when ranking = '1' then x.o_c_price_rate else '' end rank1_o_c_price_rate
+							 , case when ranking = '1' then x.l_h_price else '' end rank1_l_h_price
+							 , case when ranking = '1' then x.l_h_price_rate else '' end rank1_l_h_price_rate
+							 , case when ranking = '1' then x.lower_price_time else '' end rank1_lower_price_time
+							 , case when ranking = '1' then x.higher_price_time else '' end rank1_higher_price_time
+							 , case when ranking = '1' then x.lower_volume_time else '' end rank1_lower_volume_time
+							 , case when ranking = '1' then x.higher_volume_time else '' end rank1_higher_volume_time
+							 , case when ranking = '1' then x.o_0_4 else '' end rank1_o_0_4
+							 , case when ranking = '1' then x.l_0_4 else '' end rank1_l_0_4
+							 , case when ranking = '1' then x.h_0_4 else '' end rank1_h_0_4
+							 , case when ranking = '1' then x.c_0_4 else '' end rank1_c_0_4
+							 , case when ranking = '1' then x.v_0_4 else '' end rank1_v_0_4
+							 , case when ranking = '1' then x.o_4_8 else '' end rank1_o_4_8
+							 , case when ranking = '1' then x.l_4_8 else '' end rank1_l_4_8
+							 , case when ranking = '1' then x.h_4_8 else '' end rank1_h_4_8
+							 , case when ranking = '1' then x.c_4_8 else '' end rank1_c_4_8
+							 , case when ranking = '1' then x.v_4_8 else '' end rank1_v_4_8
+							 , case when ranking = '1' then x.o_8_12 else '' end rank1_o_8_12
+							 , case when ranking = '1' then x.l_8_12 else '' end rank1_l_8_12
+							 , case when ranking = '1' then x.h_8_12 else '' end rank1_h_8_12
+							 , case when ranking = '1' then x.c_8_12 else '' end rank1_c_8_12
+							 , case when ranking = '1' then x.v_8_12 else '' end rank1_v_8_12
+							 , case when ranking = '1' then x.o_12_16 else '' end rank1_o_12_16
+							 , case when ranking = '1' then x.l_12_16 else '' end rank1_l_12_16
+							 , case when ranking = '1' then x.h_12_16 else '' end rank1_h_12_16
+							 , case when ranking = '1' then x.c_12_16 else '' end rank1_c_12_16
+							 , case when ranking = '1' then x.v_12_16 else '' end rank1_v_12_16
+							 , case when ranking = '1' then x.o_16_20 else '' end rank1_o_16_20
+							 , case when ranking = '1' then x.l_16_20 else '' end rank1_l_16_20
+							 , case when ranking = '1' then x.h_16_20 else '' end rank1_h_16_20
+							 , case when ranking = '1' then x.c_16_20 else '' end rank1_c_16_20
+							 , case when ranking = '1' then x.v_16_20 else '' end rank1_v_16_20
+							 , case when ranking = '1' then x.o_20_24 else '' end rank1_o_20_24
+							 , case when ranking = '1' then x.l_20_24 else '' end rank1_l_20_24
+							 , case when ranking = '1' then x.h_20_24 else '' end rank1_h_20_24
+							 , case when ranking = '1' then x.c_20_24 else '' end rank1_c_20_24
+							 , case when ranking = '1' then x.v_20_24 else '' end rank1_v_20_24
+							 , case when ranking = '2' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank2_coin_ticker
+							 , case when ranking = '2' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank2_coin_name
+							 , case when ranking = '2' then z.coin_particle else '' end rank2_coin_particle
+							 , case when ranking = '2' then x.o_price else '' end rank2_o_price
+							 , case when ranking = '2' then x.l_price else '' end rank2_l_price
+							 , case when ranking = '2' then x.h_price else '' end rank2_h_price
+							 , case when ranking = '2' then x.c_price else '' end rank2_c_price
+							 , case when ranking = '2' then x.o_c_price else '' end rank2_o_c_price
+							 , case when ranking = '2' then x.o_c_price_rate else '' end rank2_o_c_price_rate
+							 , case when ranking = '2' then x.l_h_price else '' end rank2_l_h_price
+							 , case when ranking = '2' then x.l_h_price_rate else '' end rank2_l_h_price_rate
+							 , case when ranking = '2' then x.lower_price_time else '' end rank2_lower_price_time
+							 , case when ranking = '2' then x.higher_price_time else '' end rank2_higher_price_time
+							 , case when ranking = '2' then x.lower_volume_time else '' end rank2_lower_volume_time
+							 , case when ranking = '2' then x.higher_volume_time else '' end rank2_higher_volume_time
+							 , case when ranking = '2' then x.o_0_4 else '' end rank2_o_0_4
+							 , case when ranking = '2' then x.l_0_4 else '' end rank2_l_0_4
+							 , case when ranking = '2' then x.h_0_4 else '' end rank2_h_0_4
+							 , case when ranking = '2' then x.c_0_4 else '' end rank2_c_0_4
+							 , case when ranking = '2' then x.v_0_4 else '' end rank2_v_0_4
+							 , case when ranking = '2' then x.o_4_8 else '' end rank2_o_4_8
+							 , case when ranking = '2' then x.l_4_8 else '' end rank2_l_4_8
+							 , case when ranking = '2' then x.h_4_8 else '' end rank2_h_4_8
+							 , case when ranking = '2' then x.c_4_8 else '' end rank2_c_4_8
+							 , case when ranking = '2' then x.v_4_8 else '' end rank2_v_4_8
+							 , case when ranking = '2' then x.o_8_12 else '' end rank2_o_8_12
+							 , case when ranking = '2' then x.l_8_12 else '' end rank2_l_8_12
+							 , case when ranking = '2' then x.h_8_12 else '' end rank2_h_8_12
+							 , case when ranking = '2' then x.c_8_12 else '' end rank2_c_8_12
+							 , case when ranking = '2' then x.v_8_12 else '' end rank2_v_8_12
+							 , case when ranking = '2' then x.o_12_16 else '' end rank2_o_12_16
+							 , case when ranking = '2' then x.l_12_16 else '' end rank2_l_12_16
+							 , case when ranking = '2' then x.h_12_16 else '' end rank2_h_12_16
+							 , case when ranking = '2' then x.c_12_16 else '' end rank2_c_12_16
+							 , case when ranking = '2' then x.v_12_16 else '' end rank2_v_12_16
+							 , case when ranking = '2' then x.o_16_20 else '' end rank2_o_16_20
+							 , case when ranking = '2' then x.l_16_20 else '' end rank2_l_16_20
+							 , case when ranking = '2' then x.h_16_20 else '' end rank2_h_16_20
+							 , case when ranking = '2' then x.c_16_20 else '' end rank2_c_16_20
+							 , case when ranking = '2' then x.v_16_20 else '' end rank2_v_16_20
+							 , case when ranking = '2' then x.o_20_24 else '' end rank2_o_20_24
+							 , case when ranking = '2' then x.l_20_24 else '' end rank2_l_20_24
+							 , case when ranking = '2' then x.h_20_24 else '' end rank2_h_20_24
+							 , case when ranking = '2' then x.c_20_24 else '' end rank2_c_20_24
+							 , case when ranking = '2' then x.v_20_24 else '' end rank2_v_20_24
+							 , case when ranking = '3' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank3_coin_ticker
+							 , case when ranking = '3' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank3_coin_name
+							 , case when ranking = '3' then z.coin_particle else '' end rank3_coin_particle
+							 , case when ranking = '3' then x.o_price else '' end rank3_o_price
+							 , case when ranking = '3' then x.l_price else '' end rank3_l_price
+							 , case when ranking = '3' then x.h_price else '' end rank3_h_price
+							 , case when ranking = '3' then x.c_price else '' end rank3_c_price
+							 , case when ranking = '3' then x.o_c_price else '' end rank3_o_c_price
+							 , case when ranking = '3' then x.o_c_price_rate else '' end rank3_o_c_price_rate
+							 , case when ranking = '3' then x.l_h_price else '' end rank3_l_h_price
+							 , case when ranking = '3' then x.l_h_price_rate else '' end rank3_l_h_price_rate
+							 , case when ranking = '3' then x.lower_price_time else '' end rank3_lower_price_time
+							 , case when ranking = '3' then x.higher_price_time else '' end rank3_higher_price_time
+							 , case when ranking = '3' then x.lower_volume_time else '' end rank3_lower_volume_time
+							 , case when ranking = '3' then x.higher_volume_time else '' end rank3_higher_volume_time
+							 , case when ranking = '3' then x.o_0_4 else '' end rank3_o_0_4
+							 , case when ranking = '3' then x.l_0_4 else '' end rank3_l_0_4
+							 , case when ranking = '3' then x.h_0_4 else '' end rank3_h_0_4
+							 , case when ranking = '3' then x.c_0_4 else '' end rank3_c_0_4
+							 , case when ranking = '3' then x.v_0_4 else '' end rank3_v_0_4
+							 , case when ranking = '3' then x.o_4_8 else '' end rank3_o_4_8
+							 , case when ranking = '3' then x.l_4_8 else '' end rank3_l_4_8
+							 , case when ranking = '3' then x.h_4_8 else '' end rank3_h_4_8
+							 , case when ranking = '3' then x.c_4_8 else '' end rank3_c_4_8
+							 , case when ranking = '3' then x.v_4_8 else '' end rank3_v_4_8
+							 , case when ranking = '3' then x.o_8_12 else '' end rank3_o_8_12
+							 , case when ranking = '3' then x.l_8_12 else '' end rank3_l_8_12
+							 , case when ranking = '3' then x.h_8_12 else '' end rank3_h_8_12
+							 , case when ranking = '3' then x.c_8_12 else '' end rank3_c_8_12
+							 , case when ranking = '3' then x.v_8_12 else '' end rank3_v_8_12
+							 , case when ranking = '3' then x.o_12_16 else '' end rank3_o_12_16
+							 , case when ranking = '3' then x.l_12_16 else '' end rank3_l_12_16
+							 , case when ranking = '3' then x.h_12_16 else '' end rank3_h_12_16
+							 , case when ranking = '3' then x.c_12_16 else '' end rank3_c_12_16
+							 , case when ranking = '3' then x.v_12_16 else '' end rank3_v_12_16
+							 , case when ranking = '3' then x.o_16_20 else '' end rank3_o_16_20
+							 , case when ranking = '3' then x.l_16_20 else '' end rank3_l_16_20
+							 , case when ranking = '3' then x.h_16_20 else '' end rank3_h_16_20
+							 , case when ranking = '3' then x.c_16_20 else '' end rank3_c_16_20
+							 , case when ranking = '3' then x.v_16_20 else '' end rank3_v_16_20
+							 , case when ranking = '3' then x.o_20_24 else '' end rank3_o_20_24
+							 , case when ranking = '3' then x.l_20_24 else '' end rank3_l_20_24
+							 , case when ranking = '3' then x.h_20_24 else '' end rank3_h_20_24
+							 , case when ranking = '3' then x.c_20_24 else '' end rank3_c_20_24
+							 , case when ranking = '3' then x.v_20_24 else '' end rank3_v_20_24
+							 , case when ranking = '4' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank4_coin_ticker
+							 , case when ranking = '4' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank4_coin_name
+							 , case when ranking = '4' then z.coin_particle else '' end rank4_coin_particle
+							 , case when ranking = '4' then x.o_price else '' end rank4_o_price
+							 , case when ranking = '4' then x.l_price else '' end rank4_l_price
+							 , case when ranking = '4' then x.h_price else '' end rank4_h_price
+							 , case when ranking = '4' then x.c_price else '' end rank4_c_price
+							 , case when ranking = '4' then x.o_c_price else '' end rank4_o_c_price
+							 , case when ranking = '4' then x.o_c_price_rate else '' end rank4_o_c_price_rate
+							 , case when ranking = '4' then x.l_h_price else '' end rank4_l_h_price
+							 , case when ranking = '4' then x.l_h_price_rate else '' end rank4_l_h_price_rate
+							 , case when ranking = '4' then x.lower_price_time else '' end rank4_lower_price_time
+							 , case when ranking = '4' then x.higher_price_time else '' end rank4_higher_price_time
+							 , case when ranking = '4' then x.lower_volume_time else '' end rank4_lower_volume_time
+							 , case when ranking = '4' then x.higher_volume_time else '' end rank4_higher_volume_time
+							 , case when ranking = '4' then x.o_0_4 else '' end rank4_o_0_4
+							 , case when ranking = '4' then x.l_0_4 else '' end rank4_l_0_4
+							 , case when ranking = '4' then x.h_0_4 else '' end rank4_h_0_4
+							 , case when ranking = '4' then x.c_0_4 else '' end rank4_c_0_4
+							 , case when ranking = '4' then x.v_0_4 else '' end rank4_v_0_4
+							 , case when ranking = '4' then x.o_4_8 else '' end rank4_o_4_8
+							 , case when ranking = '4' then x.l_4_8 else '' end rank4_l_4_8
+							 , case when ranking = '4' then x.h_4_8 else '' end rank4_h_4_8
+							 , case when ranking = '4' then x.c_4_8 else '' end rank4_c_4_8
+							 , case when ranking = '4' then x.v_4_8 else '' end rank4_v_4_8
+							 , case when ranking = '4' then x.o_8_12 else '' end rank4_o_8_12
+							 , case when ranking = '4' then x.l_8_12 else '' end rank4_l_8_12
+							 , case when ranking = '4' then x.h_8_12 else '' end rank4_h_8_12
+							 , case when ranking = '4' then x.c_8_12 else '' end rank4_c_8_12
+							 , case when ranking = '4' then x.v_8_12 else '' end rank4_v_8_12
+							 , case when ranking = '4' then x.o_12_16 else '' end rank4_o_12_16
+							 , case when ranking = '4' then x.l_12_16 else '' end rank4_l_12_16
+							 , case when ranking = '4' then x.h_12_16 else '' end rank4_h_12_16
+							 , case when ranking = '4' then x.c_12_16 else '' end rank4_c_12_16
+							 , case when ranking = '4' then x.v_12_16 else '' end rank4_v_12_16
+							 , case when ranking = '4' then x.o_16_20 else '' end rank4_o_16_20
+							 , case when ranking = '4' then x.l_16_20 else '' end rank4_l_16_20
+							 , case when ranking = '4' then x.h_16_20 else '' end rank4_h_16_20
+							 , case when ranking = '4' then x.c_16_20 else '' end rank4_c_16_20
+							 , case when ranking = '4' then x.v_16_20 else '' end rank4_v_16_20
+							 , case when ranking = '4' then x.o_20_24 else '' end rank4_o_20_24
+							 , case when ranking = '4' then x.l_20_24 else '' end rank4_l_20_24
+							 , case when ranking = '4' then x.h_20_24 else '' end rank4_h_20_24
+							 , case when ranking = '4' then x.c_20_24 else '' end rank4_c_20_24
+							 , case when ranking = '4' then x.v_20_24 else '' end rank4_v_20_24
+							 , case when ranking = '5' then replace(replace(x.coin_ticker, 'KRW-',''), 'USDT','') else '' end rank5_coin_ticker
+							 , case when ranking = '5' then case when z.coin_kor_name = '' then z.coin_eng_name else z.coin_kor_name end else '' end rank5_coin_name
+							 , case when ranking = '5' then z.coin_particle else '' end rank5_coin_particle
+							 , case when ranking = '5' then x.o_price else '' end rank5_o_price
+							 , case when ranking = '5' then x.l_price else '' end rank5_l_price
+							 , case when ranking = '5' then x.h_price else '' end rank5_h_price
+							 , case when ranking = '5' then x.c_price else '' end rank5_c_price
+							 , case when ranking = '5' then x.o_c_price else '' end rank5_o_c_price
+							 , case when ranking = '5' then x.o_c_price_rate else '' end rank5_o_c_price_rate
+							 , case when ranking = '5' then x.l_h_price else '' end rank5_l_h_price
+							 , case when ranking = '5' then x.l_h_price_rate else '' end rank5_l_h_price_rate
+							 , case when ranking = '5' then x.lower_price_time else '' end rank5_lower_price_time
+							 , case when ranking = '5' then x.higher_price_time else '' end rank5_higher_price_time
+							 , case when ranking = '5' then x.lower_volume_time else '' end rank5_lower_volume_time
+							 , case when ranking = '5' then x.higher_volume_time else '' end rank5_higher_volume_time
+							 , case when ranking = '5' then x.o_0_4 else '' end rank5_o_0_4
+							 , case when ranking = '5' then x.l_0_4 else '' end rank5_l_0_4
+							 , case when ranking = '5' then x.h_0_4 else '' end rank5_h_0_4
+							 , case when ranking = '5' then x.c_0_4 else '' end rank5_c_0_4
+							 , case when ranking = '5' then x.v_0_4 else '' end rank5_v_0_4
+							 , case when ranking = '5' then x.o_4_8 else '' end rank5_o_4_8
+							 , case when ranking = '5' then x.l_4_8 else '' end rank5_l_4_8
+							 , case when ranking = '5' then x.h_4_8 else '' end rank5_h_4_8
+							 , case when ranking = '5' then x.c_4_8 else '' end rank5_c_4_8
+							 , case when ranking = '5' then x.v_4_8 else '' end rank5_v_4_8
+							 , case when ranking = '5' then x.o_8_12 else '' end rank5_o_8_12
+							 , case when ranking = '5' then x.l_8_12 else '' end rank5_l_8_12
+							 , case when ranking = '5' then x.h_8_12 else '' end rank5_h_8_12
+							 , case when ranking = '5' then x.c_8_12 else '' end rank5_c_8_12
+							 , case when ranking = '5' then x.v_8_12 else '' end rank5_v_8_12
+							 , case when ranking = '5' then x.o_12_16 else '' end rank5_o_12_16
+							 , case when ranking = '5' then x.l_12_16 else '' end rank5_l_12_16
+							 , case when ranking = '5' then x.h_12_16 else '' end rank5_h_12_16
+							 , case when ranking = '5' then x.c_12_16 else '' end rank5_c_12_16
+							 , case when ranking = '5' then x.v_12_16 else '' end rank5_v_12_16
+							 , case when ranking = '5' then x.o_16_20 else '' end rank5_o_16_20
+							 , case when ranking = '5' then x.l_16_20 else '' end rank5_l_16_20
+							 , case when ranking = '5' then x.h_16_20 else '' end rank5_h_16_20
+							 , case when ranking = '5' then x.c_16_20 else '' end rank5_c_16_20
+							 , case when ranking = '5' then x.v_16_20 else '' end rank5_v_16_20
+							 , case when ranking = '5' then x.o_20_24 else '' end rank5_o_20_24
+							 , case when ranking = '5' then x.l_20_24 else '' end rank5_l_20_24
+							 , case when ranking = '5' then x.h_20_24 else '' end rank5_h_20_24
+							 , case when ranking = '5' then x.c_20_24 else '' end rank5_c_20_24
+							 , case when ranking = '5' then x.v_20_24 else '' end rank5_v_20_24
+						  from bithumb_coin_report_daily x, blog_data_setting y, bithumb_coin_info z
+						 where x.yyyymmdd = y.yyyymmdd
+						   and x.coin_ticker = z.coin_ticker
+						   and y.bithumb_data_setting_yn = 'Y'
+						   and x.ranking in ('기준', '1', '2', '3', '4', '5')
+						 order by x.yyyymmdd desc, case when x.ranking = '기준' then 999 else cast(x.ranking as integer) end desc 
+				 	) x
+				  where 1=1
+				  group by x.yyyymmdd 
+		  ) x
+		 order by x.yyyymmdd desc, x.market
+	</select>
+	
 	<select id="ReportList" resultType="HashMap">
 		select x.yyyymmdd, x.blog_id, x.market, x.market_name, x.blog_gubun, x.blog_gubun_name
 			 , '['|| x.yyyymmdd || '] [' || x.market_name || '] [' || x.blog_gubun_name || ']' report_name
@@ -1407,5 +2141,469 @@
 		  from bithumb_coin_info x
 		 where x.coin_delete_yn = 'N'
 		 order by x.coin_ticker
+	</select>
+	
+	<select id="BITHUMB_BTC_OPEN_HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select bithumb_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker,'') rank1_coin_ticker, coalesce(rank1_o_price,'') rank1_o_price, coalesce(rank1_c_price,'') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker,'') rank2_coin_ticker, coalesce(rank2_o_price,'') rank2_o_price, coalesce(rank2_c_price,'') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker,'') rank3_coin_ticker, coalesce(rank3_o_price,'') rank3_o_price, coalesce(rank3_c_price,'') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker,'') rank4_coin_ticker, coalesce(rank4_o_price,'') rank4_o_price, coalesce(rank4_c_price,'') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker,'') rank5_coin_ticker, coalesce(rank5_o_price,'') rank5_o_price, coalesce(rank5_c_price,'') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker,'') rank6_coin_ticker, coalesce(rank6_o_price,'') rank6_o_price, coalesce(rank6_c_price,'') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker,'') rank7_coin_ticker, coalesce(rank7_o_price,'') rank7_o_price, coalesce(rank7_c_price,'') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker,'') rank8_coin_ticker, coalesce(rank8_o_price,'') rank8_o_price, coalesce(rank8_c_price,'') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker,'') rank9_coin_ticker, coalesce(rank9_o_price,'') rank9_o_price, coalesce(rank9_c_price,'') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker,'') rank10_coin_ticker, coalesce(rank10_o_price,'') rank10_o_price, coalesce(rank10_c_price,'') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select x.datetime_kst, x.coin_ticker as btc_coin_ticker, y.o_price as btc_o_price, x.c_price as btc_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) btc_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd
+				   and x.coin_ticker = y.coin_ticker
+				   and x.coin_ticker = 'BTC'
+				   and x.yyyymmdd = #{date}
+		   	   ) x
+		  left outer join (	
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, y.o_price as rank1_o_price, x.c_price as rank1_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank1_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, y.o_price as rank2_o_price, x.c_price as rank2_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank2_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, y.o_price as rank3_o_price, x.c_price as rank3_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank3_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, y.o_price as rank4_o_price, x.c_price as rank4_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank4_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, y.o_price as rank5_o_price, x.c_price as rank5_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank5_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, y.o_price as rank6_o_price, x.c_price as rank6_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank6_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, y.o_price as rank7_o_price, x.c_price as rank7_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank7_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, y.o_price as rank8_o_price, x.c_price as rank8_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank8_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, y.o_price as rank9_o_price, x.c_price as rank9_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank9_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, y.o_price as rank10_o_price, x.c_price as rank10_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank10_o_c_percent
+				  from bithumb_coin_report_hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="UPBIT_BTC_OPEN_HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select upbit_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker,'') rank1_coin_ticker, coalesce(rank1_o_price,'') rank1_o_price, coalesce(rank1_c_price,'') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker,'') rank2_coin_ticker, coalesce(rank2_o_price,'') rank2_o_price, coalesce(rank2_c_price,'') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker,'') rank3_coin_ticker, coalesce(rank3_o_price,'') rank3_o_price, coalesce(rank3_c_price,'') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker,'') rank4_coin_ticker, coalesce(rank4_o_price,'') rank4_o_price, coalesce(rank4_c_price,'') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker,'') rank5_coin_ticker, coalesce(rank5_o_price,'') rank5_o_price, coalesce(rank5_c_price,'') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker,'') rank6_coin_ticker, coalesce(rank6_o_price,'') rank6_o_price, coalesce(rank6_c_price,'') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker,'') rank7_coin_ticker, coalesce(rank7_o_price,'') rank7_o_price, coalesce(rank7_c_price,'') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker,'') rank8_coin_ticker, coalesce(rank8_o_price,'') rank8_o_price, coalesce(rank8_c_price,'') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker,'') rank9_coin_ticker, coalesce(rank9_o_price,'') rank9_o_price, coalesce(rank9_c_price,'') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker,'') rank10_coin_ticker, coalesce(rank10_o_price,'') rank10_o_price, coalesce(rank10_c_price,'') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select x.datetime_kst, x.coin_ticker as btc_coin_ticker, y.o_price as btc_o_price, x.c_price as btc_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) btc_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd
+				   and x.coin_ticker = y.coin_ticker
+				   and x.coin_ticker = 'KRW-BTC'
+				   and x.yyyymmdd = #{date}
+		   	   ) x
+		  left outer join (	
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, y.o_price as rank1_o_price, x.c_price as rank1_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank1_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, y.o_price as rank2_o_price, x.c_price as rank2_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank2_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, y.o_price as rank3_o_price, x.c_price as rank3_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank3_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, y.o_price as rank4_o_price, x.c_price as rank4_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank4_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, y.o_price as rank5_o_price, x.c_price as rank5_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank5_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, y.o_price as rank6_o_price, x.c_price as rank6_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank6_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, y.o_price as rank7_o_price, x.c_price as rank7_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank7_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, y.o_price as rank8_o_price, x.c_price as rank8_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank8_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, y.o_price as rank9_o_price, x.c_price as rank9_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank9_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, y.o_price as rank10_o_price, x.c_price as rank10_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank10_o_c_percent
+				  from upbit_coin_report_hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="BITHUMB_BTC_OPEN_4HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select bithumb_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker,'') rank1_coin_ticker, coalesce(rank1_o_price,'') rank1_o_price, coalesce(rank1_c_price,'') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker,'') rank2_coin_ticker, coalesce(rank2_o_price,'') rank2_o_price, coalesce(rank2_c_price,'') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker,'') rank3_coin_ticker, coalesce(rank3_o_price,'') rank3_o_price, coalesce(rank3_c_price,'') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker,'') rank4_coin_ticker, coalesce(rank4_o_price,'') rank4_o_price, coalesce(rank4_c_price,'') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker,'') rank5_coin_ticker, coalesce(rank5_o_price,'') rank5_o_price, coalesce(rank5_c_price,'') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker,'') rank6_coin_ticker, coalesce(rank6_o_price,'') rank6_o_price, coalesce(rank6_c_price,'') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker,'') rank7_coin_ticker, coalesce(rank7_o_price,'') rank7_o_price, coalesce(rank7_c_price,'') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker,'') rank8_coin_ticker, coalesce(rank8_o_price,'') rank8_o_price, coalesce(rank8_c_price,'') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker,'') rank9_coin_ticker, coalesce(rank9_o_price,'') rank9_o_price, coalesce(rank9_c_price,'') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker,'') rank10_coin_ticker, coalesce(rank10_o_price,'') rank10_o_price, coalesce(rank10_c_price,'') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select x.datetime_kst, x.coin_ticker as btc_coin_ticker, y.o_price as btc_o_price, x.c_price as btc_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) btc_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd
+				   and x.coin_ticker = y.coin_ticker
+				   and x.coin_ticker = 'BTC'
+				   and x.yyyymmdd = #{date}
+		   	   ) x
+		  left outer join (	
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, y.o_price as rank1_o_price, x.c_price as rank1_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank1_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, y.o_price as rank2_o_price, x.c_price as rank2_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank2_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, y.o_price as rank3_o_price, x.c_price as rank3_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank3_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, y.o_price as rank4_o_price, x.c_price as rank4_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank4_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, y.o_price as rank5_o_price, x.c_price as rank5_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank5_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, y.o_price as rank6_o_price, x.c_price as rank6_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank6_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, y.o_price as rank7_o_price, x.c_price as rank7_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank7_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, y.o_price as rank8_o_price, x.c_price as rank8_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank8_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, y.o_price as rank9_o_price, x.c_price as rank9_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank9_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, y.o_price as rank10_o_price, x.c_price as rank10_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank10_o_c_percent
+				  from bithumb_coin_report_4hour_graph x, bithumb_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
+	</select>
+	
+	<select id="UPBIT_BTC_OPEN_4HOUR_Ticker_Comparison" parameterType="HashMap" resultType="HashMap">
+		select x.datetime_kst, (select upbit_report_main_ranking from coin_report_daily_setting) main_ranking
+			 , btc_coin_ticker, btc_o_price, btc_c_price, btc_o_c_percent
+			 , coalesce(rank1_coin_ticker,'') rank1_coin_ticker, coalesce(rank1_o_price,'') rank1_o_price, coalesce(rank1_c_price,'') rank1_c_price, coalesce(rank1_o_c_percent, '') rank1_o_c_percent
+			 , coalesce(rank2_coin_ticker,'') rank2_coin_ticker, coalesce(rank2_o_price,'') rank2_o_price, coalesce(rank2_c_price,'') rank2_c_price, coalesce(rank2_o_c_percent, '') rank2_o_c_percent
+			 , coalesce(rank3_coin_ticker,'') rank3_coin_ticker, coalesce(rank3_o_price,'') rank3_o_price, coalesce(rank3_c_price,'') rank3_c_price, coalesce(rank3_o_c_percent, '') rank3_o_c_percent
+			 , coalesce(rank4_coin_ticker,'') rank4_coin_ticker, coalesce(rank4_o_price,'') rank4_o_price, coalesce(rank4_c_price,'') rank4_c_price, coalesce(rank4_o_c_percent, '') rank4_o_c_percent
+			 , coalesce(rank5_coin_ticker,'') rank5_coin_ticker, coalesce(rank5_o_price,'') rank5_o_price, coalesce(rank5_c_price,'') rank5_c_price, coalesce(rank5_o_c_percent, '') rank5_o_c_percent
+			 , coalesce(rank6_coin_ticker,'') rank6_coin_ticker, coalesce(rank6_o_price,'') rank6_o_price, coalesce(rank6_c_price,'') rank6_c_price, coalesce(rank6_o_c_percent, '') rank6_o_c_percent
+			 , coalesce(rank7_coin_ticker,'') rank7_coin_ticker, coalesce(rank7_o_price,'') rank7_o_price, coalesce(rank7_c_price,'') rank7_c_price, coalesce(rank7_o_c_percent, '') rank7_o_c_percent
+			 , coalesce(rank8_coin_ticker,'') rank8_coin_ticker, coalesce(rank8_o_price,'') rank8_o_price, coalesce(rank8_c_price,'') rank8_c_price, coalesce(rank8_o_c_percent, '') rank8_o_c_percent
+			 , coalesce(rank9_coin_ticker,'') rank9_coin_ticker, coalesce(rank9_o_price,'') rank9_o_price, coalesce(rank9_c_price,'') rank9_c_price, coalesce(rank9_o_c_percent, '') rank9_o_c_percent
+			 , coalesce(rank10_coin_ticker,'') rank10_coin_ticker, coalesce(rank10_o_price,'') rank10_o_price, coalesce(rank10_c_price,'') rank10_c_price, coalesce(rank10_o_c_percent, '') rank10_o_c_percent
+		  from (
+				select x.datetime_kst, x.coin_ticker as btc_coin_ticker, y.o_price as btc_o_price, x.c_price as btc_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) btc_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd
+				   and x.coin_ticker = y.coin_ticker
+				   and x.coin_ticker = 'KRW-BTC'
+				   and x.yyyymmdd = #{date}
+		   	   ) x
+		  left outer join (	
+				select x.datetime_kst, x.coin_ticker as rank1_coin_ticker, y.o_price as rank1_o_price, x.c_price as rank1_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank1_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '1'
+		       ) rank1 on x.datetime_kst = rank1.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank2_coin_ticker, y.o_price as rank2_o_price, x.c_price as rank2_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank2_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '2'
+		       ) rank2 on x.datetime_kst = rank2.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank3_coin_ticker, y.o_price as rank3_o_price, x.c_price as rank3_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank3_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '3'
+		       ) rank3 on x.datetime_kst = rank3.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank4_coin_ticker, y.o_price as rank4_o_price, x.c_price as rank4_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank4_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '4'
+		       ) rank4 on x.datetime_kst = rank4.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank5_coin_ticker, y.o_price as rank5_o_price, x.c_price as rank5_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank5_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '5'
+		       ) rank5 on x.datetime_kst = rank5.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank6_coin_ticker, y.o_price as rank6_o_price, x.c_price as rank6_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank6_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '6'
+		       ) rank6 on x.datetime_kst = rank6.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank7_coin_ticker, y.o_price as rank7_o_price, x.c_price as rank7_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank7_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '7'
+		       ) rank7 on x.datetime_kst = rank7.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank8_coin_ticker, y.o_price as rank8_o_price, x.c_price as rank8_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank8_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '8'
+		       ) rank8 on x.datetime_kst = rank8.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank9_coin_ticker, y.o_price as rank9_o_price, x.c_price as rank9_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank9_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '9'
+		       ) rank9 on x.datetime_kst = rank9.datetime_kst
+		  left outer join (
+				select x.datetime_kst, x.coin_ticker as rank10_coin_ticker, y.o_price as rank10_o_price, x.c_price as rank10_c_price
+					 , cast((ROUND(((cast(x.c_price as numeric)-cast(y.o_price as numeric))/cast(y.o_price as numeric))*100,2)) as varchar) as rank10_o_c_percent
+				  from upbit_coin_report_4hour_graph x, upbit_coin_report_daily y
+				 where x.yyyymmdd = y.yyyymmdd 
+				   and x.yyyymmdd = #{date}
+				   and x.coin_ticker = y.coin_ticker
+				   and y.ranking = '10'
+		       ) rank10 on x.datetime_kst = rank10.datetime_kst
+		 where 1=1
+		 order by datetime_kst
 	</select>
 </mapper>

@@ -7,10 +7,11 @@ function drawChart() {
 
     var url_location = window.location.pathname;
     var date = (url_location.split('/'))[2]
+    
     if(date.length != 10 || isNaN(date.replaceAll('-',''))){
         date = ''
     }
-
+    
     fetch('/Main/BITHUMB_BTC_HOUR_Ticker_Comparison?date='+date)
     .then((response) => response.json())
     .then((list) => {

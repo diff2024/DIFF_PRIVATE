@@ -46,6 +46,7 @@
 				<v-spacer></v-spacer>
 					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/Short')">Short</span>
 				<v-spacer></v-spacer>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/Video')">Video</span>
 				<v-spacer></v-spacer>
 				<v-spacer></v-spacer>
 				<v-spacer></v-spacer>

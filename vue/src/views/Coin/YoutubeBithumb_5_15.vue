@@ -1,4 +1,4 @@
-<style scoped>
+ <style scoped>
 /* 움직이는 텍스트 */
 .animated-title {
 	font-size:30px; font-family:'Raleway',Sans-serif; font-weight:500; position: relative; width: 100%; max-width:100%; height: auto; padding:73px 0; overflow-x: hidden; overflow-y: hidden; 
@@ -58,10 +58,10 @@
 						<table>
 							<tr>
 								<template v-if="this.min5_rank1_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min5_rank1_o_c_rate }}</td>
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min5_rank1_o_c_rate }}%</td>
 								</template>
 								<template v-else-if="this.min5_rank1_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min5_rank1_o_c_rate }}</td>
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min5_rank1_o_c_rate }}%</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -858,7 +858,7 @@
 <script src="https://unpkg.com/vue"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
-import axios from 'axios';
+import * as axios from 'axios' 
 
 export default {
 	data () {
@@ -867,8 +867,7 @@ export default {
 			password: '',
 			dialog: false,
 			notice_msg: '',
-			
-			min_search_yn: 'Y',
+			RequestCompleteYN: 'N',
 			/* MIN5 */
 			min5_api_datetime_kst : '',
 			min5_gijun_datetime_kst : '',
@@ -1128,592 +1127,825 @@ export default {
 	},
 	methods: {
 		Data_MIN_5_15_Make(){
-			this.min_search_yn = 'N'
+			const headerDict = {
+				'Cache-Control': 'no-cache',
+				'Pragma': 'no-cache',
+				'Expires': '0',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'X-Requested-With'
+			}
 
-			axios({
-				url: '/YoutubeBithumb/MIN_5_15',
-				method: 'get',
-				timeout: 60000
-			})
+			const requestOptions = {                                                                                                                                                                                 
+				headers: new Headers(headerDict), 
+			};
+			
+			this.RequestCompleteYN = 'N'
+			var BithumbList = [];
+			var tmpBithumbList = [];
+			var list5 = [];
+			var list15 = [];
+
+			console.log('시작 ' + (new Date()))
+			
+			axios.get('/YoutubeBithumb/BithumbCoinInfo')
 			.then(response => {
-				console.log(response)
-				if(response.status == 200){
+				let start = new Date();
+				let end = new Date();
+				BithumbList = response.data;
+				for(var i=0; i<BithumbList.length; i++){
+					var ticker = BithumbList[i].coin_ticker;
+					var kor_name = BithumbList[i].coin_kor_name;
+					var number = BithumbList[i].coin_number;
+					var timestamp5 = BithumbList[i].timestamp5;
+					var timestamp15 = BithumbList[i].timestamp15;
+					var timestamp60 = BithumbList[i].timestamp60;
+					var timestamp240 = BithumbList[i].timestamp240;
+					var gijun_datetime_5 = BithumbList[i].gijun_datetime_5;
+					var gijun_datetime_15 = BithumbList[i].gijun_datetime_15;
+					var gijun_datetime_60 = BithumbList[i].gijun_datetime_60;
+					var gijun_datetime_240 = BithumbList[i].gijun_datetime_240;
 					
-					var list15 = response.data;
-					this.min5_api_datetime_kst = (response.data[0].API_DATETIME_KST_5).substring(0, 16);
-					this.min5_gijun_datetime_kst = response.data[0].CURRENT_DATETIME_KST;
-					
-					if(this.min5_rank1_coin_name != response.data[0].Coin_Kor_Name){
-						if(!(Number(new Date().getMinutes())%5==0 && Number(new Date().getSeconds()) < 5)){
-							this.min5_rank1_coin = response.data[0].API_Coin_Ticker;
-							this.min5_rank1_coin_name = response.data[0].Coin_Kor_Name;
+					tmpBithumbList.push('https://gw.bithumb.com/observer/chart/public/candlesticknew_trview/'+String(number)+'_C0100/1M');
+					axios.get('https://gw.bithumb.com/observer/chart/public/candlesticknew_trview/'+String(number)+'_C0100/1M', {
+						headers: {
+							'Cache-Control': 'no-cache',
+							'Pragma': 'no-cache',
+							'Expires': '0',
+						},
+					})
+					//tmpBithumbList.push('https://gw.bithumb.com/observer/chart/public/candlesticknew_trview/'+String(number)+'_C0100/1M');
+					//this.$http.get("https://gw.bithumb.com/observer/chart/public/candlesticknew_trview/"+String(number)+"_C0100/1M", requestOptions)
+					.then(response => {
+						var FindIndex = tmpBithumbList.findIndex(function(data, index){ 
+							//return data === response.url
+							return data === response.config.url
+						});
 
-							if(this.min5_rank1_coin_name != ''){
-								if(response.data[0].gubun_5 == '상승'){
-									this.min5_rank1_border_color = 'red';
-								}else if(response.data[0].gubun_5 == '하락'){
-									this.min5_rank1_border_color = 'blue';
-								}else if(response.data[0].gubun_5 == '보합'){
-									this.min5_rank1_border_color = 'black';
+						var bithumb_list = response.data.data;
+						var bithumb_list_timestamp = bithumb_list['t'];
+						var bithumb_list_open = bithumb_list['o'];
+						var bithumb_list_low = bithumb_list['l'];
+						var bithumb_list_high = bithumb_list['h'];
+						var bithumb_list_close = bithumb_list['c'];
+						var bithumb_list_volume = bithumb_list['v'];
+
+						var YN5 = 'N'
+						var YN15 = 'N'
+
+						var o_price_5 = ''
+						var l_price_5 = ''
+						var h_price_5 = ''
+						var c_price_5 = ''
+						var o_c_subtract_5 = ''
+						var o_c_rate_5 = ''
+						var volume_5 = '0'
+						var gubun_5 = ''
+						var price_volume_5 = ''
+
+						var o_price_15 = ''
+						var l_price_15 = ''
+						var h_price_15 = ''
+						var c_price_15 = ''
+						var o_c_subtract_15 = ''
+						var o_c_rate_15 = ''
+						var volume_15 = '0'
+						var gubun_15 = ''
+						var price_volume_15 = ''
+
+						for(var a=0; a<bithumb_list_timestamp.length; a++){
+							var tmp_timestamp = bithumb_list_timestamp[a]
+							var tmp_o_price = bithumb_list_open[a]
+							var tmp_l_price = bithumb_list_low[a]
+							var tmp_h_price = bithumb_list_high[a]
+							var tmp_c_price = bithumb_list_close[a]
+							var tmp_volume = bithumb_list_volume[a]
+							
+							if(BigInt(timestamp5) <= BigInt(tmp_timestamp)){
+								YN5 = 'Y'
+
+								if(o_price_5 == '') {
+									o_price_5 = tmp_o_price;
+								}
+								
+								if(l_price_5 == '' && h_price_5 == '') {
+									l_price_5 = tmp_l_price;
+									h_price_5 = tmp_h_price;
+								}else{
+									if(parseFloat(l_price_5) > parseFloat(tmp_l_price)){
+										l_price_5 = tmp_l_price
+									}
+
+									if(parseFloat(h_price_5) < parseFloat(tmp_h_price)){
+										h_price_5 = tmp_h_price
+									}
 								}
 
-								setTimeout(() => 
-									this.min5_rank1_border_color = 'white'
-								, 500);
-							}
-						}
-					}
-					this.min5_rank1_gubun = response.data[0].gubun_5;
-					this.min5_rank1_open = response.data[0].o_price_5;
-					this.min5_rank1_low = response.data[0].l_price_5;
-					this.min5_rank1_high = response.data[0].h_price_5;
-					this.min5_rank1_close = response.data[0].format_c_price_5;
-					this.min5_rank1_o_c_rate = response.data[0].o_c_rate_5;
-					this.min5_rank1_o_c_subtract = response.data[0].o_c_subtract_5;
-					this.min5_rank1_price_volume = response.data[0].format_volume_price_5;
+								c_price_5 = tmp_c_price;
 
-					if(this.min5_rank2_coin_name != response.data[1].Coin_Kor_Name){
-						this.min5_rank2_coin = response.data[1].API_Coin_Ticker;
-						this.min5_rank2_coin_name = response.data[1].Coin_Kor_Name;
+								if(parseFloat(c_price_5) > parseFloat(o_price_5)){
+									gubun_5 = '상승'
+								}else if(parseFloat(c_price_5) < parseFloat(o_price_5)){
+									gubun_5 = '하락'
+								}else{
+									gubun_5 = '보합'
+								}
+								volume_5 = (parseFloat(volume_5) + parseFloat(tmp_volume)).toFixed(8)
+								price_volume_5 = (parseFloat(volume_5) * parseFloat(c_price_5)).toFixed(0)
+								o_c_subtract_5 = (parseFloat(c_price_5) - parseFloat(o_price_5))
+								o_c_rate_5 = ((parseFloat(o_c_subtract_5)/parseFloat(o_price_5))*100).toFixed(2)
 
-						if(this.min5_rank2_coin_name != ''){
-							if(response.data[1].gubun_5 == '상승'){
-								this.min5_rank2_border_color = 'red';
-							}else if(response.data[1].gubun_5 == '하락'){
-								this.min5_rank2_border_color = 'blue';
-							}else if(response.data[1].gubun_5 == '보합'){
-								this.min5_rank2_border_color = 'black';
+								//console.log('['+String(tmp_timestamp)+']['+String(o_price_5)+']['+String(l_price_5)+']['+String(h_price_5)+']['+String(c_price_5)+']['+String(tmp_volume)+']+['+String(volume_5)+']')
 							}
 
-							setTimeout(() => 
-								this.min5_rank2_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min5_rank2_gubun = response.data[1].gubun_5;
-					this.min5_rank2_open = response.data[1].o_price_5;
-					this.min5_rank2_low = response.data[1].l_price_5;
-					this.min5_rank2_high = response.data[1].h_price_5;
-					this.min5_rank2_close = response.data[1].format_c_price_5;
-					this.min5_rank2_o_c_rate = response.data[1].o_c_rate_5;
-					this.min5_rank2_o_c_subtract = response.data[1].o_c_subtract_5;
-					this.min5_rank2_price_volume = response.data[1].format_volume_price_5;
+							if(BigInt(timestamp15) <= BigInt(bithumb_list_timestamp[a])){
+								YN15 = 'Y'
 
-					if(this.min5_rank3_coin_name != response.data[2].Coin_Kor_Name){
-						this.min5_rank3_coin = response.data[2].API_Coin_Ticker;
-						this.min5_rank3_coin_name = response.data[2].Coin_Kor_Name;
+								if(o_price_15 == '') {
+									o_price_15 = tmp_o_price;
+								}
+								
+								if(l_price_15 == '' && h_price_15 == '') {
+									l_price_15 = tmp_l_price;
+									h_price_15 = tmp_h_price;
+								}else{
+									if(parseFloat(l_price_15) > parseFloat(tmp_l_price)){
+										l_price_15 = tmp_l_price
+									}
 
-						if(this.min5_rank3_coin_name != ''){
-							if(response.data[2].gubun_5 == '상승'){
-								this.min5_rank3_border_color = 'red';
-							}else if(response.data[2].gubun_5 == '하락'){
-								this.min5_rank3_border_color = 'blue';
-							}else if(response.data[2].gubun_5 == '보합'){
-								this.min5_rank3_border_color = 'black';
+									if(parseFloat(h_price_15) < parseFloat(tmp_h_price)){
+										h_price_15 = tmp_h_price
+									}
+								}
+
+								c_price_15 = tmp_c_price;
+
+								if(parseFloat(c_price_15) > parseFloat(o_price_15)){
+									gubun_15 = '상승'
+								}else if(parseFloat(c_price_15) < parseFloat(o_price_15)){
+									gubun_15 = '하락'
+								}else{
+									gubun_15 = '보합'
+								}
+								volume_15 = (parseFloat(volume_15) + parseFloat(tmp_volume)).toFixed(8)
+								price_volume_15 = (parseFloat(volume_15) * parseFloat(c_price_15)).toFixed(0)
+								o_c_subtract_15 = (parseFloat(c_price_15) - parseFloat(o_price_15))
+								o_c_rate_15 = ((parseFloat(o_c_subtract_15)/parseFloat(o_price_15))*100).toFixed(2)
 							}
-
-							setTimeout(() => 
-								this.min5_rank3_border_color = 'white'
-							, 500);
 						}
-					}
-					this.min5_rank3_gubun = response.data[2].gubun_5;
-					this.min5_rank3_open = response.data[2].o_price_5;
-					this.min5_rank3_low = response.data[2].l_price_5;
-					this.min5_rank3_high = response.data[2].h_price_5;
-					this.min5_rank3_close = response.data[2].format_c_price_5;
-					this.min5_rank3_o_c_rate = response.data[2].o_c_rate_5;
-					this.min5_rank3_o_c_subtract = response.data[2].o_c_subtract_5;
-					this.min5_rank3_price_volume = response.data[2].format_volume_price_5;
-					
-					if(this.min5_rank4_coin_name != response.data[3].Coin_Kor_Name){
-						this.min5_rank4_coin = response.data[3].API_Coin_Ticker;
-						this.min5_rank4_coin_name = response.data[3].Coin_Kor_Name;
+						o_c_rate_5 = o_c_rate_5.replace('-0.00','0.00')
+						this.min5_api_datetime_kst = gijun_datetime_5.substr(0, 16)
 
-						if(this.min5_rank4_coin_name != ''){
-							if(response.data[3].gubun_5 == '상승'){
-								this.min5_rank4_border_color = 'red';
-							}else if(response.data[3].gubun_5 == '하락'){
-								this.min5_rank4_border_color = 'blue';
-							}else if(response.data[3].gubun_5 == '보합'){
-								this.min5_rank4_border_color = 'black';
+						o_c_rate_15 = o_c_rate_15.replace('-0.00','0.00')
+						this.min15_api_datetime_kst = gijun_datetime_15.substr(0, 16)
+
+						if(YN5 == 'Y'){
+							list5.push({
+								coin_ticker: String(BithumbList[FindIndex].coin_ticker),
+								coin_kor_name: String(BithumbList[FindIndex].coin_kor_name),
+								gubun: gubun_5,
+								o_price: o_price_5,
+								l_price: l_price_5,
+								h_price: h_price_5,
+								c_price: c_price_5,
+								volume: volume_5,
+								price_volume: price_volume_5,
+								o_c_subtract: o_c_subtract_5,
+								o_c_rate: o_c_rate_5,
+							})
+						}else{
+							list5.push({
+								coin_ticker: String(BithumbList[FindIndex].coin_ticker),
+								coin_kor_name: String(BithumbList[FindIndex].coin_kor_name),
+								gubun: '',
+								o_price: '0',
+								l_price: '0',
+								h_price: '0',
+								c_price: '0',
+								volume: '0',
+								price_volume: '0',
+								o_c_subtract: '0',
+								o_c_rate: '0',
+							})
+						}
+
+						if(YN15 == 'Y'){
+							list15.push({
+								coin_ticker: String(BithumbList[FindIndex].coin_ticker),
+								coin_kor_name: String(BithumbList[FindIndex].coin_kor_name),
+								gubun: gubun_15,
+								o_price: o_price_15,
+								l_price: l_price_15,
+								h_price: h_price_15,
+								c_price: c_price_15,
+								volume: volume_15,
+								price_volume: price_volume_15,
+								o_c_subtract: o_c_subtract_15,
+								o_c_rate: o_c_rate_15,
+							})
+						}else{
+							list15.push({
+								coin_ticker: String(BithumbList[FindIndex].coin_ticker),
+								coin_kor_name: String(BithumbList[FindIndex].coin_kor_name),
+								gubun: '',
+								o_price: '0',
+								l_price: '0',
+								h_price: '0',
+								c_price: '0',
+								volume: '0',
+								price_volume: '0',
+								o_c_subtract: '0',
+								o_c_rate: '0',
+							})
+						}
+						
+						if(list5.length == tmpBithumbList.length){
+							list5 = list5.sort((a,b) => Number(b.price_volume) - Number(a.price_volume));
+							
+							if(this.min5_rank1_coin_name != list5[0].coin_kor_name){
+								this.min5_rank1_coin = list5[0].coin_ticker;
+								this.min5_rank1_coin_name = list5[0].coin_kor_name;
+
+								if(this.min5_rank1_coin_name != ''){
+									if(list5[0].gubun == '상승'){
+										this.min5_rank1_border_color = 'red';
+									}else if(list5[0].gubun == '하락'){
+										this.min5_rank1_border_color = 'blue';
+									}else if(list5[0].gubun == '보합'){
+										this.min5_rank1_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min5_rank1_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank1_gubun = list5[0].gubun;
+							this.min5_rank1_open = list5[0].o_price;
+							this.min5_rank1_low = list5[0].l_price;
+							this.min5_rank1_high = list5[0].h_price;
+							this.min5_rank1_close = Number(list5[0].c_price).toLocaleString('ko-KR');
+							this.min5_rank1_o_c_rate = list5[0].o_c_rate;
+							this.min5_rank1_o_c_subtract = Number(list5[0].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank1_price_volume = Number(list5[0].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min5_rank4_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min5_rank4_gubun = response.data[3].gubun_5;
-					this.min5_rank4_open = response.data[3].o_price_5;
-					this.min5_rank4_low = response.data[3].l_price_5;
-					this.min5_rank4_high = response.data[3].h_price_5;
-					this.min5_rank4_close = response.data[3].format_c_price_5;
-					this.min5_rank4_o_c_rate = response.data[3].o_c_rate_5;
-					this.min5_rank4_o_c_subtract = response.data[3].o_c_subtract_5;
-					this.min5_rank4_price_volume = response.data[3].format_volume_price_5;
-					
-					if(this.min5_rank5_coin_name != response.data[4].Coin_Kor_Name){
-						this.min5_rank5_coin = response.data[4].API_Coin_Ticker;
-						this.min5_rank5_coin_name = response.data[4].Coin_Kor_Name;
+							if(this.min5_rank2_coin_name != list5[1].coin_kor_name){
+								this.min5_rank2_coin = list5[1].coin_ticker;
+								this.min5_rank2_coin_name = list5[1].coin_kor_name;
 
-						if(this.min5_rank5_coin_name != ''){
-							if(response.data[4].gubun_5 == '상승'){
-								this.min5_rank5_border_color = 'red';
-							}else if(response.data[4].gubun_5 == '하락'){
-								this.min5_rank5_border_color = 'blue';
-							}else if(response.data[4].gubun_5 == '보합'){
-								this.min5_rank5_border_color = 'black';
+								if(this.min5_rank2_coin_name != ''){
+									if(list5[1].gubun == '상승'){
+										this.min5_rank2_border_color = 'red';
+									}else if(list5[1].gubun == '하락'){
+										this.min5_rank2_border_color = 'blue';
+									}else if(list5[1].gubun == '보합'){
+										this.min5_rank2_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min5_rank2_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank2_gubun = list5[1].gubun;
+							this.min5_rank2_open = list5[1].o_price;
+							this.min5_rank2_low = list5[1].l_price;
+							this.min5_rank2_high = list5[1].h_price;
+							this.min5_rank2_close = Number(list5[1].c_price).toLocaleString('ko-KR');
+							this.min5_rank2_o_c_rate = list5[1].o_c_rate;
+							this.min5_rank2_o_c_subtract = Number(list5[1].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank2_price_volume = Number(list5[1].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min5_rank5_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min5_rank5_gubun = response.data[4].gubun_5;
-					this.min5_rank5_open = response.data[4].o_price_5;
-					this.min5_rank5_low = response.data[4].l_price_5;
-					this.min5_rank5_high = response.data[4].h_price_5;
-					this.min5_rank5_close = response.data[4].format_c_price_5;
-					this.min5_rank5_o_c_rate = response.data[4].o_c_rate_5;
-					this.min5_rank5_o_c_subtract = response.data[4].o_c_subtract_5;
-					this.min5_rank5_price_volume = response.data[4].format_volume_price_5;
+							if(this.min5_rank3_coin_name != list5[2].coin_kor_name){
+								this.min5_rank3_coin = list5[2].coin_ticker;
+								this.min5_rank3_coin_name = list5[2].coin_kor_name;
 
-					if(this.min5_rank6_coin_name != response.data[5].Coin_Kor_Name){
-						this.min5_rank6_coin = response.data[5].API_Coin_Ticker;
-						this.min5_rank6_coin_name = response.data[5].Coin_Kor_Name;
+								if(this.min5_rank3_coin_name != ''){
+									if(list5[2].gubun == '상승'){
+										this.min5_rank3_border_color = 'red';
+									}else if(list5[2].gubun == '하락'){
+										this.min5_rank3_border_color = 'blue';
+									}else if(list5[2].gubun == '보합'){
+										this.min5_rank3_border_color = 'black';
+									}
 
-						if(this.min5_rank6_coin_name != ''){
-							if(response.data[5].gubun_5 == '상승'){
-								this.min5_rank6_border_color = 'red';
-							}else if(response.data[5].gubun_5 == '하락'){
-								this.min5_rank6_border_color = 'blue';
-							}else if(response.data[5].gubun_5 == '보합'){
-								this.min5_rank6_border_color = 'black';
+									setTimeout(() => 
+										this.min5_rank3_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank3_gubun = list5[2].gubun;
+							this.min5_rank3_open = list5[2].o_price;
+							this.min5_rank3_low = list5[2].l_price;
+							this.min5_rank3_high = list5[2].h_price;
+							this.min5_rank3_close = Number(list5[2].c_price).toLocaleString('ko-KR');
+							this.min5_rank3_o_c_rate = list5[2].o_c_rate;
+							this.min5_rank3_o_c_subtract = Number(list5[2].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank3_price_volume = Number(list5[2].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min5_rank6_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min5_rank6_gubun = response.data[5].gubun_5;
-					this.min5_rank6_open = response.data[5].o_price_5;
-					this.min5_rank6_low = response.data[5].l_price_5;
-					this.min5_rank6_high = response.data[5].h_price_5;
-					this.min5_rank6_close = response.data[5].format_c_price_5;
-					this.min5_rank6_o_c_rate = response.data[5].o_c_rate_5;
-					this.min5_rank6_o_c_subtract = response.data[5].o_c_subtract_5;
-					this.min5_rank6_price_volume = response.data[5].format_volume_price_5;
-					
-					if(this.min5_rank7_coin_name != response.data[6].Coin_Kor_Name){
-						this.min5_rank7_coin = response.data[6].API_Coin_Ticker;
-						this.min5_rank7_coin_name = response.data[6].Coin_Kor_Name;
+							if(this.min5_rank4_coin_name != list5[3].coin_kor_name){
+								this.min5_rank4_coin = list5[3].coin_ticker;
+								this.min5_rank4_coin_name = list5[3].coin_kor_name;
 
-						if(this.min5_rank7_coin_name != ''){
-							if(response.data[6].gubun_5 == '상승'){
-								this.min5_rank7_border_color = 'red';
-							}else if(response.data[6].gubun_5 == '하락'){
-								this.min5_rank7_border_color = 'blue';
-							}else if(response.data[6].gubun_5 == '보합'){
-								this.min5_rank7_border_color = 'black';
+								if(this.min5_rank4_coin_name != ''){
+									if(list5[3].gubun == '상승'){
+										this.min5_rank4_border_color = 'red';
+									}else if(list5[3].gubun == '하락'){
+										this.min5_rank4_border_color = 'blue';
+									}else if(list5[3].gubun == '보합'){
+										this.min5_rank4_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min5_rank4_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank4_gubun = list5[3].gubun;
+							this.min5_rank4_open = list5[3].o_price;
+							this.min5_rank4_low = list5[3].l_price;
+							this.min5_rank4_high = list5[3].h_price;
+							this.min5_rank4_close = Number(list5[3].c_price).toLocaleString('ko-KR');
+							this.min5_rank4_o_c_rate = list5[3].o_c_rate;
+							this.min5_rank4_o_c_subtract = Number(list5[3].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank4_price_volume = Number(list5[3].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min5_rank7_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min5_rank7_gubun = response.data[6].gubun_5;
-					this.min5_rank7_open = response.data[6].o_price_5;
-					this.min5_rank7_low = response.data[6].l_price_5;
-					this.min5_rank7_high = response.data[6].h_price_5;
-					this.min5_rank7_close = response.data[6].format_c_price_5;
-					this.min5_rank7_o_c_rate = response.data[6].o_c_rate_5;
-					this.min5_rank7_o_c_subtract = response.data[6].o_c_subtract_5;
-					this.min5_rank7_price_volume = response.data[6].format_volume_price_5;
+							if(this.min5_rank5_coin_name != list5[4].coin_kor_name){
+								this.min5_rank5_coin = list5[4].coin_ticker;
+								this.min5_rank5_coin_name = list5[4].coin_kor_name;
 
-					if(this.min5_rank8_coin_name != response.data[7].Coin_Kor_Name){
-						this.min5_rank8_coin = response.data[7].API_Coin_Ticker;
-						this.min5_rank8_coin_name = response.data[7].Coin_Kor_Name;
+								if(this.min5_rank5_coin_name != ''){
+									if(list5[4].gubun == '상승'){
+										this.min5_rank5_border_color = 'red';
+									}else if(list5[4].gubun == '하락'){
+										this.min5_rank5_border_color = 'blue';
+									}else if(list5[4].gubun == '보합'){
+										this.min5_rank5_border_color = 'black';
+									}
 
-						if(this.min5_rank8_coin_name != ''){
-							if(response.data[7].gubun_5 == '상승'){
-								this.min5_rank8_border_color = 'red';
-							}else if(response.data[7].gubun_5 == '하락'){
-								this.min5_rank8_border_color = 'blue';
-							}else if(response.data[7].gubun_5 == '보합'){
-								this.min5_rank8_border_color = 'black';
+									setTimeout(() => 
+										this.min5_rank5_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank5_gubun = list5[4].gubun;
+							this.min5_rank5_open = list5[4].o_price;
+							this.min5_rank5_low = list5[4].l_price;
+							this.min5_rank5_high = list5[4].h_price;
+							this.min5_rank5_close = Number(list5[4].c_price).toLocaleString('ko-KR');
+							this.min5_rank5_o_c_rate = list5[4].o_c_rate;
+							this.min5_rank5_o_c_subtract = Number(list5[4].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank5_price_volume = Number(list5[4].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min5_rank8_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min5_rank8_gubun = response.data[7].gubun_5;
-					this.min5_rank8_open = response.data[7].o_price_5;
-					this.min5_rank8_low = response.data[7].l_price_5;
-					this.min5_rank8_high = response.data[7].h_price_5;
-					this.min5_rank8_close = response.data[7].format_c_price_5;
-					this.min5_rank8_o_c_rate = response.data[7].o_c_rate_5;
-					this.min5_rank8_o_c_subtract = response.data[7].o_c_subtract_5;
-					this.min5_rank8_price_volume = response.data[7].format_volume_price_5;
+							if(this.min5_rank6_coin_name != list5[5].coin_kor_name){
+								this.min5_rank6_coin = list5[5].coin_ticker;
+								this.min5_rank6_coin_name = list5[5].coin_kor_name;
 
-					if(this.min5_rank9_coin_name != response.data[8].Coin_Kor_Name){
-						this.min5_rank9_coin = response.data[8].API_Coin_Ticker;
-						this.min5_rank9_coin_name = response.data[8].Coin_Kor_Name;
+								if(this.min5_rank6_coin_name != ''){
+									if(list5[5].gubun == '상승'){
+										this.min5_rank6_border_color = 'red';
+									}else if(list5[5].gubun == '하락'){
+										this.min5_rank6_border_color = 'blue';
+									}else if(list5[5].gubun == '보합'){
+										this.min5_rank6_border_color = 'black';
+									}
 
-						if(this.min5_rank9_coin_name != ''){
-							if(response.data[8].gubun_5 == '상승'){
-								this.min5_rank9_border_color = 'red';
-							}else if(response.data[8].gubun_5 == '하락'){
-								this.min5_rank9_border_color = 'blue';
-							}else if(response.data[8].gubun_5 == '보합'){
-								this.min5_rank9_border_color = 'black';
+									setTimeout(() => 
+										this.min5_rank6_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank6_gubun = list5[5].gubun;
+							this.min5_rank6_open = list5[5].o_price;
+							this.min5_rank6_low = list5[5].l_price;
+							this.min5_rank6_high = list5[5].h_price;
+							this.min5_rank6_close = Number(list5[5].c_price).toLocaleString('ko-KR');
+							this.min5_rank6_o_c_rate = list5[5].o_c_rate;
+							this.min5_rank6_o_c_subtract = Number(list5[5].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank6_price_volume = Number(list5[5].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min5_rank9_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min5_rank9_gubun = response.data[8].gubun_5;
-					this.min5_rank9_open = response.data[8].o_price_5;
-					this.min5_rank9_low = response.data[8].l_price_5;
-					this.min5_rank9_high = response.data[8].h_price_5;
-					this.min5_rank9_close = response.data[8].format_c_price_5;
-					this.min5_rank9_o_c_rate = response.data[8].o_c_rate_5;
-					this.min5_rank9_o_c_subtract = response.data[8].o_c_subtract_5;
-					this.min5_rank9_price_volume = response.data[8].format_volume_price_5;
-					
-					if(this.min5_rank10_coin_name != response.data[9].Coin_Kor_Name){
-						this.min5_rank10_coin = response.data[9].API_Coin_Ticker;
-						this.min5_rank10_coin_name = response.data[9].Coin_Kor_Name;
+							if(this.min5_rank7_coin_name != list5[6].coin_kor_name){
+								this.min5_rank7_coin = list5[6].coin_ticker;
+								this.min5_rank7_coin_name = list5[6].coin_kor_name;
 
-						if(this.min5_rank10_coin_name != ''){
-							if(response.data[9].gubun_5 == '상승'){
-								this.min5_rank10_border_color = 'red';
-							}else if(response.data[9].gubun_5 == '하락'){
-								this.min5_rank10_border_color = 'blue';
-							}else if(response.data[9].gubun_5 == '보합'){
-								this.min5_rank10_border_color = 'black';
+								if(this.min5_rank7_coin_name != ''){
+									if(list5[6].gubun == '상승'){
+										this.min5_rank7_border_color = 'red';
+									}else if(list5[6].gubun == '하락'){
+										this.min5_rank7_border_color = 'blue';
+									}else if(list5[6].gubun == '보합'){
+										this.min5_rank7_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min5_rank7_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank7_gubun = list5[6].gubun;
+							this.min5_rank7_open = list5[6].o_price;
+							this.min5_rank7_low = list5[6].l_price;
+							this.min5_rank7_high = list5[6].h_price;
+							this.min5_rank7_close = Number(list5[6].c_price).toLocaleString('ko-KR');
+							this.min5_rank7_o_c_rate = list5[6].o_c_rate;
+							this.min5_rank7_o_c_subtract = Number(list5[6].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank7_price_volume = Number(list5[6].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min5_rank10_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min5_rank10_gubun = response.data[9].gubun_5;
-					this.min5_rank10_open = response.data[9].o_price_5;
-					this.min5_rank10_low = response.data[9].l_price_5;
-					this.min5_rank10_high = response.data[9].h_price_5;
-					this.min5_rank10_close = response.data[9].format_c_price_5;
-					this.min5_rank10_o_c_rate = response.data[9].o_c_rate_5;
-					this.min5_rank10_o_c_subtract = response.data[9].o_c_subtract_5;
-					this.min5_rank10_price_volume = response.data[9].format_volume_price_5;
+							if(this.min5_rank8_coin_name != list5[7].coin_kor_name){
+								this.min5_rank8_coin = list5[7].coin_ticker;
+								this.min5_rank8_coin_name = list5[7].coin_kor_name;
 
-					list15.sort(function (a, b) {
-						return Number(b.volume_price_15) - Number(a.volume_price_15);
-					});
-					
-					this.min15_api_datetime_kst = (list15[0].API_DATETIME_KST_15).substring(0, 16);
-					this.min15_gijun_datetime_kst = list15[0].CURRENT_DATETIME_KST;
-					
-					if(this.min15_rank1_coin_name != list15[0].Coin_Kor_Name){
-						this.min15_rank1_coin = list15[0].API_Coin_Ticker;
-						this.min15_rank1_coin_name = list15[0].Coin_Kor_Name;
+								if(this.min5_rank8_coin_name != ''){
+									if(list5[7].gubun == '상승'){
+										this.min5_rank8_border_color = 'red';
+									}else if(list5[7].gubun == '하락'){
+										this.min5_rank8_border_color = 'blue';
+									}else if(list5[7].gubun == '보합'){
+										this.min5_rank8_border_color = 'black';
+									}
 
-						if(this.min5_rank1_coin_name != ''){
-							if(list15[0].gubun_15 == '상승'){
-								this.min15_rank1_border_color = 'red';
-							}else if(list15[0].gubun_15 == '하락'){
-								this.min15_rank1_border_color = 'blue';
-							}else if(list15[0].gubun_15 == '보합'){
-								this.min15_rank1_border_color = 'black';
+									setTimeout(() => 
+										this.min5_rank8_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank8_gubun = list5[7].gubun;
+							this.min5_rank8_open = list5[7].o_price;
+							this.min5_rank8_low = list5[7].l_price;
+							this.min5_rank8_high = list5[7].h_price;
+							this.min5_rank8_close = Number(list5[7].c_price).toLocaleString('ko-KR');
+							this.min5_rank8_o_c_rate = list5[7].o_c_rate;
+							this.min5_rank8_o_c_subtract = Number(list5[7].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank8_price_volume = Number(list5[7].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min15_rank1_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min15_rank1_gubun = list15[0].gubun_15;
-					this.min15_rank1_open = list15[0].o_price_15;
-					this.min15_rank1_low = list15[0].l_price_15;
-					this.min15_rank1_high = list15[0].h_price_15;
-					this.min15_rank1_close = list15[0].format_c_price_15;
-					this.min15_rank1_o_c_rate = list15[0].o_c_rate_15;
-					this.min15_rank1_o_c_subtract = list15[0].o_c_subtract_15;
-					this.min15_rank1_price_volume = list15[0].format_volume_price_15;
+							if(this.min5_rank9_coin_name != list5[8].coin_kor_name){
+								this.min5_rank9_coin = list5[8].coin_ticker;
+								this.min5_rank9_coin_name = list5[8].coin_kor_name;
 
-					if(this.min15_rank2_coin_name != list15[1].Coin_Kor_Name){
-						this.min15_rank2_coin = list15[1].API_Coin_Ticker;
-						this.min15_rank2_coin_name = list15[1].Coin_Kor_Name;
+								if(this.min5_rank9_coin_name != ''){
+									if(list5[8].gubun == '상승'){
+										this.min5_rank9_border_color = 'red';
+									}else if(list5[8].gubun == '하락'){
+										this.min5_rank9_border_color = 'blue';
+									}else if(list5[8].gubun == '보합'){
+										this.min5_rank9_border_color = 'black';
+									}
 
-						if(this.min15_rank2_coin_name != ''){
-							if(list15[1].gubun_15 == '상승'){
-								this.min15_rank2_border_color = 'red';
-							}else if(list15[1].gubun_15 == '하락'){
-								this.min15_rank2_border_color = 'blue';
-							}else if(list15[1].gubun_15 == '보합'){
-								this.min15_rank2_border_color = 'black';
+									setTimeout(() => 
+										this.min5_rank9_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank9_gubun = list5[8].gubun;
+							this.min5_rank9_open = list5[8].o_price;
+							this.min5_rank9_low = list5[8].l_price;
+							this.min5_rank9_high = list5[8].h_price;
+							this.min5_rank9_close = Number(list5[8].c_price).toLocaleString('ko-KR');
+							this.min5_rank9_o_c_rate = list5[8].o_c_rate;
+							this.min5_rank9_o_c_subtract = Number(list5[8].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank9_price_volume = Number(list5[8].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min15_rank2_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min15_rank2_gubun = list15[1].gubun_15;
-					this.min15_rank2_open = list15[1].o_price_15;
-					this.min15_rank2_low = list15[1].l_price_15;
-					this.min15_rank2_high = list15[1].h_price_15;
-					this.min15_rank2_close = list15[1].format_c_price_15;
-					this.min15_rank2_o_c_rate = list15[1].o_c_rate_15;
-					this.min15_rank2_o_c_subtract = list15[1].o_c_subtract_15;
-					this.min15_rank2_price_volume = list15[1].format_volume_price_15;
+							if(this.min5_rank10_coin_name != list5[9].coin_kor_name){
+								this.min5_rank10_coin = list5[9].coin_ticker;
+								this.min5_rank10_coin_name = list5[9].coin_kor_name;
 
-					if(this.min15_rank3_coin_name != list15[2].Coin_Kor_Name){
-						this.min15_rank3_coin = list15[2].API_Coin_Ticker;
-						this.min15_rank3_coin_name = list15[2].Coin_Kor_Name;
+								if(this.min5_rank10_coin_name != ''){
+									if(list5[9].gubun == '상승'){
+										this.min5_rank10_border_color = 'red';
+									}else if(list5[9].gubun == '하락'){
+										this.min5_rank10_border_color = 'blue';
+									}else if(list5[9].gubun == '보합'){
+										this.min5_rank10_border_color = 'black';
+									}
 
-						if(this.min15_rank3_coin_name != ''){
-							if(list15[2].gubun_15 == '상승'){
-								this.min15_rank3_border_color = 'red';
-							}else if(list15[2].gubun_15 == '하락'){
-								this.min15_rank3_border_color = 'blue';
-							}else if(list15[2].gubun_15 == '보합'){
-								this.min15_rank3_border_color = 'black';
+									setTimeout(() => 
+										this.min5_rank10_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min5_rank10_gubun = list5[9].gubun;
+							this.min5_rank10_open = list5[9].o_price;
+							this.min5_rank10_low = list5[9].l_price;
+							this.min5_rank10_high = list5[9].h_price;
+							this.min5_rank10_close = Number(list5[9].c_price).toLocaleString('ko-KR');
+							this.min5_rank10_o_c_rate = list5[9].o_c_rate;
+							this.min5_rank10_o_c_subtract = Number(list5[9].o_c_subtract).toLocaleString('ko-KR');
+							this.min5_rank10_price_volume = Number(list5[9].price_volume).toLocaleString('ko-KR');
 
-							setTimeout(() => 
-								this.min15_rank3_border_color = 'white'
-							, 500);
 						}
-					}
-					this.min15_rank3_gubun = list15[2].gubun_15;
-					this.min15_rank3_open = list15[2].o_price_15;
-					this.min15_rank3_low = list15[2].l_price_15;
-					this.min15_rank3_high = list15[2].h_price_15;
-					this.min15_rank3_close = list15[2].format_c_price_15;
-					this.min15_rank3_o_c_rate = list15[2].o_c_rate_15;
-					this.min15_rank3_o_c_subtract = list15[2].o_c_subtract_15;
-					this.min15_rank3_price_volume = list15[2].format_volume_price_15;
-					
-					if(this.min15_rank4_coin_name != list15[3].Coin_Kor_Name){
-						this.min15_rank4_coin = list15[3].API_Coin_Ticker;
-						this.min15_rank4_coin_name = list15[3].Coin_Kor_Name;
 
-						if(this.min15_rank4_coin_name != ''){
-							if(list15[3].gubun_15 == '상승'){
-								this.min15_rank4_border_color = 'red';
-							}else if(list15[3].gubun_15 == '하락'){
-								this.min15_rank4_border_color = 'blue';
-							}else if(list15[3].gubun_15 == '보합'){
-								this.min15_rank4_border_color = 'black';
+						if(list15.length == tmpBithumbList.length){
+							list15 = list15.sort((a,b) => Number(b.price_volume) - Number(a.price_volume));
+							
+							if(this.min15_rank1_coin_name != list15[0].coin_kor_name){
+								this.min15_rank1_coin = list15[0].coin_ticker;
+								this.min15_rank1_coin_name = list15[0].coin_kor_name;
+
+								if(this.min15_rank1_coin_name != ''){
+									if(list15[0].gubun == '상승'){
+										this.min15_rank1_border_color = 'red';
+									}else if(list15[0].gubun == '하락'){
+										this.min15_rank1_border_color = 'blue';
+									}else if(list15[0].gubun == '보합'){
+										this.min15_rank1_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min15_rank1_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min15_rank1_gubun = list15[0].gubun;
+							this.min15_rank1_open = list15[0].o_price;
+							this.min15_rank1_low = list15[0].l_price;
+							this.min15_rank1_high = list15[0].h_price;
+							this.min15_rank1_close = Number(list15[0].c_price).toLocaleString('ko-KR');
+							this.min15_rank1_o_c_rate = list15[0].o_c_rate;
+							this.min15_rank1_o_c_subtract = Number(list15[0].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank1_price_volume = Number(list15[0].price_volume).toLocaleString('ko-KR');
+							
+							if(this.min15_rank2_coin_name != list15[1].coin_kor_name){
+								this.min15_rank2_coin = list15[1].coin_ticker;
+								this.min15_rank2_coin_name = list15[1].coin_kor_name;
 
-							setTimeout(() => 
-								this.min15_rank4_border_color = 'white'
-							, 500);
-						}
-					}
-					this.min15_rank4_gubun = list15[3].gubun_15;
-					this.min15_rank4_open = list15[3].o_price_15;
-					this.min15_rank4_low = list15[3].l_price_15;
-					this.min15_rank4_high = list15[3].h_price_15;
-					this.min15_rank4_close = list15[3].format_c_price_15;
-					this.min15_rank4_o_c_rate = list15[3].o_c_rate_15;
-					this.min15_rank4_o_c_subtract = list15[3].o_c_subtract_15;
-					this.min15_rank4_price_volume = list15[3].format_volume_price_15;
-					
-					if(this.min15_rank5_coin_name != list15[4].Coin_Kor_Name){
-						this.min15_rank5_coin = list15[4].API_Coin_Ticker;
-						this.min15_rank5_coin_name = list15[4].Coin_Kor_Name;
+								if(this.min15_rank2_coin_name != ''){
+									if(list15[1].gubun == '상승'){
+										this.min15_rank2_border_color = 'red';
+									}else if(list15[1].gubun == '하락'){
+										this.min15_rank2_border_color = 'blue';
+									}else if(list15[1].gubun == '보합'){
+										this.min15_rank2_border_color = 'black';
+									}
 
-						if(this.min15_rank5_coin_name != ''){
-							if(list15[4].gubun_15 == '상승'){
-								this.min15_rank5_border_color = 'red';
-							}else if(list15[4].gubun_15 == '하락'){
-								this.min15_rank5_border_color = 'blue';
-							}else if(list15[4].gubun_15 == '보합'){
-								this.min15_rank5_border_color = 'black';
+									setTimeout(() => 
+										this.min15_rank2_border_color = 'white'
+									, 500);
+								}
 							}
+							this.min15_rank2_gubun = list15[1].gubun;
+							this.min15_rank2_open = list15[1].o_price;
+							this.min15_rank2_low = list15[1].l_price;
+							this.min15_rank2_high = list15[1].h_price;
+							this.min15_rank2_close = Number(list15[1].c_price).toLocaleString('ko-KR');
+							this.min15_rank2_o_c_rate = list15[1].o_c_rate;
+							this.min15_rank2_o_c_subtract = Number(list15[1].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank2_price_volume = Number(list15[1].price_volume).toLocaleString('ko-KR');
+							
+							if(this.min15_rank3_coin_name != list15[2].coin_kor_name){
+								this.min15_rank3_coin = list15[2].coin_ticker;
+								this.min15_rank3_coin_name = list15[2].coin_kor_name;
 
-							setTimeout(() => 
-								this.min15_rank5_border_color = 'white'
-							, 500);
+								if(this.min15_rank3_coin_name != ''){
+									if(list15[2].gubun == '상승'){
+										this.min15_rank3_border_color = 'red';
+									}else if(list15[2].gubun == '하락'){
+										this.min15_rank3_border_color = 'blue';
+									}else if(list15[2].gubun == '보합'){
+										this.min15_rank3_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min15_rank3_border_color = 'white'
+									, 500);
+								}
+							}
+							this.min15_rank3_gubun = list15[2].gubun;
+							this.min15_rank3_open = list15[2].o_price;
+							this.min15_rank3_low = list15[2].l_price;
+							this.min15_rank3_high = list15[2].h_price;
+							this.min15_rank3_close = Number(list15[2].c_price).toLocaleString('ko-KR');
+							this.min15_rank3_o_c_rate = list15[2].o_c_rate;
+							this.min15_rank3_o_c_subtract = Number(list15[2].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank3_price_volume = Number(list15[2].price_volume).toLocaleString('ko-KR');
+							
+							if(this.min15_rank4_coin_name != list15[3].coin_kor_name){
+								this.min15_rank4_coin = list15[3].coin_ticker;
+								this.min15_rank4_coin_name = list15[3].coin_kor_name;
+
+								if(this.min15_rank4_coin_name != ''){
+									if(list15[3].gubun == '상승'){
+										this.min15_rank4_border_color = 'red';
+									}else if(list15[3].gubun == '하락'){
+										this.min15_rank4_border_color = 'blue';
+									}else if(list15[3].gubun == '보합'){
+										this.min15_rank4_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min15_rank4_border_color = 'white'
+									, 500);
+								}
+							}
+							this.min15_rank4_gubun = list15[3].gubun;
+							this.min15_rank4_open = list15[3].o_price;
+							this.min15_rank4_low = list15[3].l_price;
+							this.min15_rank4_high = list15[3].h_price;
+							this.min15_rank4_close = Number(list15[3].c_price).toLocaleString('ko-KR');
+							this.min15_rank4_o_c_rate = list15[3].o_c_rate;
+							this.min15_rank4_o_c_subtract = Number(list15[3].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank4_price_volume = Number(list15[3].price_volume).toLocaleString('ko-KR');
+							
+							if(this.min15_rank5_coin_name != list15[4].coin_kor_name){
+								this.min15_rank5_coin = list15[4].coin_ticker;
+								this.min15_rank5_coin_name = list15[4].coin_kor_name;
+
+								if(this.min15_rank5_coin_name != ''){
+									if(list15[4].gubun == '상승'){
+										this.min15_rank5_border_color = 'red';
+									}else if(list15[4].gubun == '하락'){
+										this.min15_rank5_border_color = 'blue';
+									}else if(list15[4].gubun == '보합'){
+										this.min15_rank5_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min15_rank5_border_color = 'white'
+									, 500);
+								}
+							}
+							this.min15_rank5_gubun = list15[4].gubun;
+							this.min15_rank5_open = list15[4].o_price;
+							this.min15_rank5_low = list15[4].l_price;
+							this.min15_rank5_high = list15[4].h_price;
+							this.min15_rank5_close = Number(list15[4].c_price).toLocaleString('ko-KR');
+							this.min15_rank5_o_c_rate = list15[4].o_c_rate;
+							this.min15_rank5_o_c_subtract = Number(list15[4].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank5_price_volume = Number(list15[4].price_volume).toLocaleString('ko-KR');
+							
+							if(this.min15_rank6_coin_name != list15[5].coin_kor_name){
+								this.min15_rank6_coin = list15[5].coin_ticker;
+								this.min15_rank6_coin_name = list15[5].coin_kor_name;
+
+								if(this.min15_rank6_coin_name != ''){
+									if(list15[5].gubun == '상승'){
+										this.min15_rank6_border_color = 'red';
+									}else if(list15[5].gubun == '하락'){
+										this.min15_rank6_border_color = 'blue';
+									}else if(list15[5].gubun == '보합'){
+										this.min15_rank6_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min15_rank6_border_color = 'white'
+									, 500);
+								}
+							}
+							this.min15_rank6_gubun = list15[5].gubun;
+							this.min15_rank6_open = list15[5].o_price;
+							this.min15_rank6_low = list15[5].l_price;
+							this.min15_rank6_high = list15[5].h_price;
+							this.min15_rank6_close = Number(list15[5].c_price).toLocaleString('ko-KR');
+							this.min15_rank6_o_c_rate = list15[5].o_c_rate;
+							this.min15_rank6_o_c_subtract = Number(list15[5].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank6_price_volume = Number(list15[5].price_volume).toLocaleString('ko-KR');
+							
+							if(this.min15_rank7_coin_name != list15[6].coin_kor_name){
+								this.min15_rank7_coin = list15[6].coin_ticker;
+								this.min15_rank7_coin_name = list15[6].coin_kor_name;
+
+								if(this.min15_rank7_coin_name != ''){
+									if(list15[6].gubun == '상승'){
+										this.min15_rank7_border_color = 'red';
+									}else if(list15[6].gubun == '하락'){
+										this.min15_rank7_border_color = 'blue';
+									}else if(list15[6].gubun == '보합'){
+										this.min15_rank7_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min15_rank7_border_color = 'white'
+									, 500);
+								}
+							}
+							this.min15_rank7_gubun = list15[6].gubun;
+							this.min15_rank7_open = list15[6].o_price;
+							this.min15_rank7_low = list15[6].l_price;
+							this.min15_rank7_high = list15[6].h_price;
+							this.min15_rank7_close = Number(list15[6].c_price).toLocaleString('ko-KR');
+							this.min15_rank7_o_c_rate = list15[6].o_c_rate;
+							this.min15_rank7_o_c_subtract = Number(list15[6].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank7_price_volume = Number(list15[6].price_volume).toLocaleString('ko-KR');
+							
+							if(this.min15_rank8_coin_name != list15[7].coin_kor_name){
+								this.min15_rank8_coin = list15[7].coin_ticker;
+								this.min15_rank8_coin_name = list15[7].coin_kor_name;
+
+								if(this.min15_rank8_coin_name != ''){
+									if(list15[7].gubun == '상승'){
+										this.min15_rank8_border_color = 'red';
+									}else if(list15[7].gubun == '하락'){
+										this.min15_rank8_border_color = 'blue';
+									}else if(list15[7].gubun == '보합'){
+										this.min15_rank8_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min15_rank8_border_color = 'white'
+									, 500);
+								}
+							}
+							this.min15_rank8_gubun = list15[7].gubun;
+							this.min15_rank8_open = list15[7].o_price;
+							this.min15_rank8_low = list15[7].l_price;
+							this.min15_rank8_high = list15[7].h_price;
+							this.min15_rank8_close = Number(list15[7].c_price).toLocaleString('ko-KR');
+							this.min15_rank8_o_c_rate = list15[7].o_c_rate;
+							this.min15_rank8_o_c_subtract = Number(list15[7].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank8_price_volume = Number(list15[7].price_volume).toLocaleString('ko-KR');
+							
+							if(this.min15_rank9_coin_name != list15[8].coin_kor_name){
+								this.min15_rank9_coin = list15[8].coin_ticker;
+								this.min15_rank9_coin_name = list15[8].coin_kor_name;
+
+								if(this.min15_rank9_coin_name != ''){
+									if(list15[8].gubun == '상승'){
+										this.min15_rank9_border_color = 'red';
+									}else if(list15[8].gubun == '하락'){
+										this.min15_rank9_border_color = 'blue';
+									}else if(list15[8].gubun == '보합'){
+										this.min15_rank9_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min15_rank9_border_color = 'white'
+									, 500);
+								}
+							}
+							this.min15_rank9_gubun = list15[8].gubun;
+							this.min15_rank9_open = list15[8].o_price;
+							this.min15_rank9_low = list15[8].l_price;
+							this.min15_rank9_high = list15[8].h_price;
+							this.min15_rank9_close = Number(list15[8].c_price).toLocaleString('ko-KR');
+							this.min15_rank9_o_c_rate = list15[8].o_c_rate;
+							this.min15_rank9_o_c_subtract = Number(list15[8].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank9_price_volume = Number(list15[8].price_volume).toLocaleString('ko-KR');
+							
+							if(this.min15_rank10_coin_name != list15[9].coin_kor_name){
+								this.min15_rank10_coin = list15[9].coin_ticker;
+								this.min15_rank10_coin_name = list15[9].coin_kor_name;
+
+								if(this.min15_rank10_coin_name != ''){
+									if(list15[9].gubun == '상승'){
+										this.min15_rank10_border_color = 'red';
+									}else if(list15[9].gubun == '하락'){
+										this.min15_rank10_border_color = 'blue';
+									}else if(list15[9].gubun == '보합'){
+										this.min15_rank10_border_color = 'black';
+									}
+
+									setTimeout(() => 
+										this.min15_rank10_border_color = 'white'
+									, 500);
+								}
+							}
+							this.min15_rank10_gubun = list15[9].gubun;
+							this.min15_rank10_open = list15[9].o_price;
+							this.min15_rank10_low = list15[9].l_price;
+							this.min15_rank10_high = list15[9].h_price;
+							this.min15_rank10_close = Number(list15[9].c_price).toLocaleString('ko-KR');
+							this.min15_rank10_o_c_rate = list15[9].o_c_rate;
+							this.min15_rank10_o_c_subtract = Number(list15[9].o_c_subtract).toLocaleString('ko-KR');
+							this.min15_rank10_price_volume = Number(list15[9].price_volume).toLocaleString('ko-KR');
+							
+							console.log('종료 ' + (new Date()))
+
+							if(list5.length == tmpBithumbList.length && list15.length == tmpBithumbList.length){
+								var today = new Date();
+								var year = today.getFullYear();
+								var month = ('0' + (today.getMonth() + 1)).slice(-2);
+								var day = ('0' + today.getDate()).slice(-2);
+								var hours = ('0' + today.getHours()).slice(-2); 
+								var minutes = ('0' + today.getMinutes()).slice(-2);
+								var seconds = ('0' + today.getSeconds()).slice(-2); 
+								
+								this.min5_gijun_datetime_kst = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+								this.min15_gijun_datetime_kst = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+
+								this.RequestCompleteYN = 'Y'
+							}
 						}
-					}
-					this.min15_rank5_gubun = list15[4].gubun_15;
-					this.min15_rank5_open = list15[4].o_price_15;
-					this.min15_rank5_low = list15[4].l_price_15;
-					this.min15_rank5_high = list15[4].h_price_15;
-					this.min15_rank5_close = list15[4].format_c_price_15;
-					this.min15_rank5_o_c_rate = list15[4].o_c_rate_15;
-					this.min15_rank5_o_c_subtract = list15[4].o_c_subtract_15;
-					this.min15_rank5_price_volume = list15[4].format_volume_price_15;
+					})
 				}
-
-				if(this.min15_rank6_coin_name != list15[5].Coin_Kor_Name){
-					this.min15_rank6_coin = list15[5].API_Coin_Ticker;
-					this.min15_rank6_coin_name = list15[5].Coin_Kor_Name;
-
-					if(this.min15_rank6_coin_name != ''){
-						if(list15[5].gubun_15 == '상승'){
-							this.min15_rank6_border_color = 'red';
-						}else if(list15[5].gubun_15 == '하락'){
-							this.min15_rank6_border_color = 'blue';
-						}else if(list15[5].gubun_15 == '보합'){
-							this.min15_rank6_border_color = 'black';
-						}
-
-						setTimeout(() => 
-							this.min15_rank6_border_color = 'white'
-						, 500);
-					}
-				}
-				this.min15_rank6_gubun = list15[5].gubun_15;
-				this.min15_rank6_open = list15[5].o_price_15;
-				this.min15_rank6_low = list15[5].l_price_15;
-				this.min15_rank6_high = list15[5].h_price_15;
-				this.min15_rank6_close = list15[5].format_c_price_15;
-				this.min15_rank6_o_c_rate = list15[5].o_c_rate_15;
-				this.min15_rank6_o_c_subtract = list15[5].o_c_subtract_15;
-				this.min15_rank6_price_volume = list15[5].format_volume_price_15;
-				
-				if(this.min15_rank7_coin_name != list15[6].Coin_Kor_Name){
-					this.min15_rank7_coin = list15[6].API_Coin_Ticker;
-					this.min15_rank7_coin_name = list15[6].Coin_Kor_Name;
-
-					if(this.min15_rank7_coin_name != ''){
-						if(list15[6].gubun_15 == '상승'){
-							this.min15_rank7_border_color = 'red';
-						}else if(list15[6].gubun_15 == '하락'){
-							this.min15_rank7_border_color = 'blue';
-						}else if(list15[6].gubun_15 == '보합'){
-							this.min15_rank7_border_color = 'black';
-						}
-
-						setTimeout(() => 
-							this.min15_rank7_border_color = 'white'
-						, 500);
-					}
-				}
-				this.min15_rank7_gubun = list15[6].gubun_15;
-				this.min15_rank7_open = list15[6].o_price_15;
-				this.min15_rank7_low = list15[6].l_price_15;
-				this.min15_rank7_high = list15[6].h_price_15;
-				this.min15_rank7_close = list15[6].format_c_price_15;
-				this.min15_rank7_o_c_rate = list15[6].o_c_rate_15;
-				this.min15_rank7_o_c_subtract = list15[6].o_c_subtract_15;
-				this.min15_rank7_price_volume = list15[6].format_volume_price_15;
-
-				if(this.min15_rank8_coin_name != list15[7].Coin_Kor_Name){
-					this.min15_rank8_coin = list15[7].API_Coin_Ticker;
-					this.min15_rank8_coin_name = list15[7].Coin_Kor_Name;
-
-					if(this.min15_rank8_coin_name != ''){
-						if(list15[7].gubun_15 == '상승'){
-							this.min15_rank8_border_color = 'red';
-						}else if(list15[7].gubun_15 == '하락'){
-							this.min15_rank8_border_color = 'blue';
-						}else if(list15[7].gubun_15 == '보합'){
-							this.min15_rank8_border_color = 'black';
-						}
-
-						setTimeout(() => 
-							this.min15_rank8_border_color = 'white'
-						, 500);
-					}
-				}
-				this.min15_rank8_gubun = list15[7].gubun_15;
-				this.min15_rank8_open = list15[7].o_price_15;
-				this.min15_rank8_low = list15[7].l_price_15;
-				this.min15_rank8_high = list15[7].h_price_15;
-				this.min15_rank8_close = list15[7].format_c_price_15;
-				this.min15_rank8_o_c_rate = list15[7].o_c_rate_15;
-				this.min15_rank8_o_c_subtract = list15[7].o_c_subtract_15;
-				this.min15_rank8_price_volume = list15[7].format_volume_price_15;
-
-				if(this.min15_rank9_coin_name != list15[8].Coin_Kor_Name){
-					this.min15_rank9_coin = list15[8].API_Coin_Ticker;
-					this.min15_rank9_coin_name = list15[8].Coin_Kor_Name;
-
-					if(this.min15_rank9_coin_name != ''){
-						if(list15[8].gubun_15 == '상승'){
-							this.min15_rank9_border_color = 'red';
-						}else if(list15[8].gubun_15 == '하락'){
-							this.min15_rank9_border_color = 'blue';
-						}else if(list15[8].gubun_15 == '보합'){
-							this.min15_rank9_border_color = 'black';
-						}
-
-						setTimeout(() => 
-							this.min15_rank9_border_color = 'white'
-						, 500);
-					}
-				}
-				this.min15_rank9_gubun = list15[8].gubun_15;
-				this.min15_rank9_open = list15[8].o_price_15;
-				this.min15_rank9_low = list15[8].l_price_15;
-				this.min15_rank9_high = list15[8].h_price_15;
-				this.min15_rank9_close = list15[8].format_c_price_15;
-				this.min15_rank9_o_c_rate = list15[8].o_c_rate_15;
-				this.min15_rank9_o_c_subtract = list15[8].o_c_subtract_15;
-				this.min15_rank9_price_volume = list15[8].format_volume_price_15;
-				
-				if(this.min15_rank10_coin_name != list15[9].Coin_Kor_Name){
-					this.min15_rank10_coin = list15[9].API_Coin_Ticker;
-					this.min15_rank10_coin_name = list15[9].Coin_Kor_Name;
-
-					if(this.min15_rank10_coin_name != ''){
-						if(list15[9].gubun_15 == '상승'){
-							this.min15_rank10_border_color = 'red';
-						}else if(list15[9].gubun_15 == '하락'){
-							this.min15_rank10_border_color = 'blue';
-						}else if(list15[9].gubun_15 == '보합'){
-							this.min15_rank10_border_color = 'black';
-						}
-
-						setTimeout(() => 
-							this.min15_rank10_border_color = 'white'
-						, 500);
-					}
-				}
-				this.min15_rank10_gubun = list15[9].gubun_15;
-				this.min15_rank10_open = list15[9].o_price_15;
-				this.min15_rank10_low = list15[9].l_price_15;
-				this.min15_rank10_high = list15[9].h_price_15;
-				this.min15_rank10_close = list15[9].format_c_price_15;
-				this.min15_rank10_o_c_rate = list15[9].o_c_rate_15;
-				this.min15_rank10_o_c_subtract = list15[9].o_c_subtract_15;
-				this.min15_rank10_price_volume = list15[9].format_volume_price_15;
-
-				this.min_search_yn = 'Y'
 			})
 		},
 		CurrentDataTime() {
 			var mi = new Date().getMinutes() < 10? "0" + new Date().getMinutes(): new Date().getMinutes();
 			var ss = new Date().getSeconds() < 10? "0" + new Date().getSeconds(): new Date().getSeconds();
-			
 			if(Number(ss) == 0){
 				//this.Data_Notice();
+				//this.Data_MIN_5_15_Make();
 			}
-			
-			if(this.min5_gijun_datetime_kst != '' && this.min15_gijun_datetime_kst != ''){
+
+			if(this.RequestCompleteYN == 'Y' && (Number(ss) == 0 || Number(ss) == 8 || Number(ss) == 16 || Number(ss) == 24 || Number(ss) == 32 || Number(ss) == 40 || Number(ss) == 48 || Number(ss) == 54)){
+				//this.Data_Notice();
+				this.Data_MIN_5_15_Make();
+			}
+
+			if(this.min5_gijun_datetime_kst != '' || this.min15_gijun_datetime_kst != ''){
 				var min5_mi = (this.min5_gijun_datetime_kst).substr(14, 2)
-
-				if(Number(min5_mi) == 0 && Number(mi) == 2){
+				var min15_mi = (this.min15_gijun_datetime_kst).substr(14, 2)
+				if((Number(min5_mi) == 0 && Number(mi) == 2) || (Number(min15_mi) == 0 && Number(mi) == 2)){
 					this.Data_MIN_5_15_Make();
-				}else if((Number(min5_mi) < Number(mi)-1) || (Number(min5_mi) > Number(mi)+1)){
-					this.Data_MIN_5_15_Make();
-				}
-
-				if(this.min_search_yn == 'Y' && (Number(ss) == 0 || Number(ss) == 5 || Number(ss) == 10 || Number(ss) == 15 || Number(ss) == 20 || Number(ss) == 25 || Number(ss) == 30 || Number(ss) == 35 || Number(ss) == 40 || Number(ss) == 45 || Number(ss) == 50 || Number(ss) == 55)){
+				}else if((Number(min5_mi) < Number(mi)-1) || (Number(min5_mi) > Number(mi)+1) || (Number(min15_mi) < Number(mi)-1) || (Number(min15_mi) > Number(mi)+1)){
 					this.Data_MIN_5_15_Make();
 				}
 			}

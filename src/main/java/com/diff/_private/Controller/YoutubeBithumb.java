@@ -280,8 +280,8 @@ public class YoutubeBithumb {
 		long TIMESTMAP = System.currentTimeMillis();
 		String CURRENT_DATETIME_KST = SDF.format(System.currentTimeMillis());
 		
-		System.out.println("> GIJUN_DATETIME_5 : " + GIJUN_DATETIME_5);
-		System.out.println("> GIJUN_DATETIME_15 : " + GIJUN_DATETIME_15);
+		//System.out.println("> GIJUN_DATETIME_5 : " + GIJUN_DATETIME_5);
+		//System.out.println("> GIJUN_DATETIME_15 : " + GIJUN_DATETIME_15);
         
 		List<HashMap<String, String>> CoinList = MainService.BithumbCoinList();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
@@ -316,7 +316,7 @@ public class YoutubeBithumb {
 		            reader.close();
 		        }
 		        
-		        System.out.println("["+conn.getResponseCode()+"]["+str_url+"]["+RESPONSE_DATA+"]");
+		        //System.out.println("["+conn.getResponseCode()+"]["+str_url+"]["+RESPONSE_DATA+"]");
 		        
 		        if(!RESPONSE_DATA.equals("")) {
 		        	JSONObject jObject = new JSONObject(RESPONSE_DATA);

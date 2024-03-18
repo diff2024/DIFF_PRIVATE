@@ -94,8 +94,12 @@ public class MainService {
 		return MainMapper.BYBIT_DAY_RANKING(map);
 	}
 	
-	public List<HashMap<String, String>> YoutubeList() throws Exception{
-		return MainMapper.YoutubeList();
+	public List<HashMap<String, String>> ShortList() throws Exception{
+		return MainMapper.ShortList();
+	}
+	
+	public List<HashMap<String, String>> VideoList() throws Exception{
+		return MainMapper.VideoList();
 	}
 	
 	public List<HashMap<String, String>> ReportList() throws Exception{
@@ -116,5 +120,21 @@ public class MainService {
 	
 	public List<HashMap<String, String>> BithumbCoinList_Script(HashMap<String, String> map) throws Exception{
 		return MainMapper.BithumbCoinList_Script(map);
+	}
+	
+	public List<HashMap<String, String>> BITHUMB_BTC_OPEN_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BITHUMB_BTC_OPEN_HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> UPBIT_BTC_OPEN_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.UPBIT_BTC_OPEN_HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> BITHUMB_BTC_OPEN_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.BITHUMB_BTC_OPEN_4HOUR_Ticker_Comparison(map);
+	}
+	
+	public List<HashMap<String, String>> UPBIT_BTC_OPEN_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception{
+		return MainMapper.UPBIT_BTC_OPEN_4HOUR_Ticker_Comparison(map);
 	}
 }

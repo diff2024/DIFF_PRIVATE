@@ -34,6 +34,9 @@ const Report = () => {
 const Short = () => {
 	return import("./views/Coin/Short.vue")	
 }
+const Video = () => {
+	return import("./views/Coin/Video.vue")	
+}
 const CoinMainList = () => {
 	return import("./views/Coin/CoinMainList.vue")	
 }
@@ -168,6 +171,16 @@ export const router = new Router({
       path: '/Short/:date/:market',
       name: 'Short',
       component: Short
+    },
+    {
+      path: '/Video',
+      name: 'Video',
+      component: Video
+    },
+    {
+      path: '/Video/:date/:market',
+      name: 'Video',
+      component: Video
     },
     {
       path: '/CoinLiveList',

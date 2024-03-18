@@ -13,21 +13,6 @@
 				<v-card-title xs12 sm12 md12 class="fontBold" style="font-size:18px; font-weight:bold; padding-left: 60px; padding-top: 20px; padding-bottom: 10px;">
 					유튜브 Short
 				</v-card-title>
-				<v-card-text>
-					<v-row style="padding-left:15px; padding-top:0px; padding-bottom:0px;">
-						<v-col lg="1" md="1" sm="2" cols="2" style="padding-top:0px; padding-bottom:10px; text-align:right;">
-							
-						</v-col>
-						<v-col lg="10" md="10" sm="8" cols="8" style="padding-top:0px; padding-bottom:10px; text-align:right;">
-							<v-btn depressed dark small color="primary" style="float:right; margin-top:17px; margin-left:10px;">
-								<v-icon small>search</v-icon>&nbsp;<span style="padding-bottom:2px;" @click="makeDay">조회</span>
-							</v-btn>
-						</v-col>
-						<v-col lg="1" md="1" sm="2" cols="2" style="padding-top:0px; padding-bottom:10px; text-align:right; vertical-align: middle;">
-							
-						</v-col>
-					</v-row>
-				</v-card-text>
 			</v-card>
 		</v-flex>
 		<v-flex xs12 sm12 md12>
@@ -146,7 +131,7 @@ export default {
 	},
 	beforeMount() {
        this.columnDefs = [
-           {headerName: 'Short', field:"id", width:250, cellStyle: {textAlign: "left"}, sortable: false, filter: true, resizable:true},
+           {headerName: 'Short', field:"id", width:220, cellStyle: {textAlign: "left"}, sortable: false, filter: true, resizable:true},
 		   {headerName: '일자', field:"yyyymmdd", hide:true, sortable: false, filter: true, resizable:true},
 		   {headerName: '거래소', field:"market", hide:true, sortable: false, filter: true, resizable:true},
 		   {headerName: '비트코인 코인티커', field:"btc_coin_ticker", hide:true, sortable: false, filter: true, resizable:true},
@@ -243,7 +228,7 @@ export default {
 		makeDay () {
 			this.rowData = [];
 			this.isLoading = true;
-			axios.get('/Main/YoutubeList')
+			axios.get('/Main/ShortList')
 			.then(response => {
 				for(var x=0; x<response.data.length; x++){
 					this.rowData.push({
