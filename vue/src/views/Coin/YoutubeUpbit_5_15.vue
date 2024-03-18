@@ -1411,7 +1411,7 @@ export default {
 					this.min5_rank10_o_c_subtract = response.data[9].o_c_subtract;
 					this.min5_rank10_price_volume = response.data[9].format_volume_price;
 
-					if(Number(mi) in (0, 1, 2, 3, 4, 15, 16, 17, 18, 19, 30, 31, 32, 33, 34, 45, 46, 47, 48, 49)){
+					if(Number(mi) == 0 || Number(mi) == 1 || Number(mi) == 2 || Number(mi) == 3 || Number(mi) == 4 || Number(mi) == 15 || Number(mi) == 16 || Number(mi) == 17 || Number(mi) == 18 || Number(mi) == 19 || Number(mi) == 30 || Number(mi) == 31 || Number(mi) == 32 || Number(mi) == 33 || Number(mi) == 34 || Number(mi) == 45 || Number(mi) == 46 || Number(mi) == 47 || Number(mi) == 48 || Number(mi) == 49){
 						this.min15_api_datetime_kst = this.min5_api_datetime_kst;
 						this.min15_gijun_datetime_kst = this.min5_gijun_datetime_kst;
 
@@ -1592,7 +1592,7 @@ export default {
 		},
 		Data_MIN15_Make(){
 			var mi = new Date().getMinutes() < 10? "0" + new Date().getMinutes(): new Date().getMinutes();
-			if(Number(mi) in (0, 1, 2, 3, 4, 15, 16, 17, 18, 19, 30, 31, 32, 33, 34, 45, 46, 47, 48, 49)){
+			if(Number(mi) == 0 || Number(mi) == 1 || Number(mi) == 2 || Number(mi) == 3 || Number(mi) == 4 || Number(mi) == 15 || Number(mi) == 16 || Number(mi) == 17 || Number(mi) == 18 || Number(mi) == 19 || Number(mi) == 30 || Number(mi) == 31 || Number(mi) == 32 || Number(mi) == 33 || Number(mi) == 34 || Number(mi) == 45 || Number(mi) == 46 || Number(mi) == 47 || Number(mi) == 48 || Number(mi) == 49){
 				this.min15_search_yn = 'Y'
 				return;
 			}
