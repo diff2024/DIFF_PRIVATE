@@ -1222,7 +1222,14 @@ export default {
 					result += arr1.charAt(n);
 				}
 			}
-			return num3Arr[0] + "." + result.split("").reverse().join("");
+
+			var return_data = ''
+			if((result.split("").reverse().join("")) == ''){
+				return_data = num3Arr[0]
+			}else{
+				return_data = num3Arr[0] + "." + result.split("").reverse().join("")
+			}
+			return return_data;
 		},
 		gridSizeFit (params) {
 			// 모니터나 브라우저 크기에 따라 반응하여 그리드 컬럼 사이즈를 조정합니다.

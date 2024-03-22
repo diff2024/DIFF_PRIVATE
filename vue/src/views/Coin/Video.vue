@@ -1551,28 +1551,28 @@ export default {
 		},
 		getYoutubeShortMake(){
 			if(this.search_date != '' && this.search_market != ''){
-				var short_title = ''
-				//short_title = this.search_date + ' ';
-				short_title = (this.search_date).substring(2, 4) + '년 ';
+				var video_title = ''
+				//video_title = this.search_date + ' ';
+				video_title = (this.search_date).substring(2, 4) + '년 ';
 
 				if((this.search_date).substring(5, 6) == '0'){
-					short_title += (this.search_date).substring(6, 7) + '월 '
+					video_title += (this.search_date).substring(6, 7) + '월 '
 				}else{
-					short_title += (this.search_date).substring(5, 7) + '월 '
+					video_title += (this.search_date).substring(5, 7) + '월 '
 				}
 
 				if((this.search_date).substring(8, 9) == '0'){
-					short_title += (this.search_date).substring(9, 10) +'일';
+					video_title += (this.search_date).substring(9, 10) +'일';
 				}else{
-					short_title += (this.search_date).substring(8, 10) +'일';
+					video_title += (this.search_date).substring(8, 10) +'일';
 				}
 
 				if(this.search_market == 'upbit'){
-					short_title += '<br/>업비트 '
+					video_title += '<br/>업비트 '
 				}else if(this.search_market == 'bithumb'){
-					short_title += '<br/>빗썸 '
+					video_title += '<br/>빗썸 '
 				}
-				short_title += '코인 순위'
+				video_title += '코인 분석'
 
 				this.btc_o_c_price_rate = this.zeroCut(this.btc_o_c_price_rate)
 				this.btc_l_h_price_rate = this.zeroCut(this.btc_l_h_price_rate)
@@ -1611,11 +1611,11 @@ export default {
 				*/
 
 				this.video_html = '<div id="video_title" style="color:black; width:500px; padding-top:50px; padding-bottom:50px;">'
-				this.video_html += '<h1 style="text-align:center; vertical-align:middle; line-height:1.5; font-size:36px;">'+short_title+'</h1>';
+				this.video_html += '<h1 style="text-align:center; vertical-align:middle; line-height:1.5; font-size:36px;">'+video_title+'</h1>';
 				this.video_html += '</div>'
 				this.video_html += '<br/><br/>';
 				this.video_html += '<div style="color:black;">';
-				this.video_html += short_title.replaceAll('<br/><br/>', ' ').replaceAll('<br/>', ' ')+'를 알아보겠습니다.';
+				this.video_html += video_title.replaceAll('<br/><br/>', ' ').replaceAll('<br/>', ' ')+'을 시작하겠습니다.';
 				this.video_html += '<br/><br/>';
 				this.video_html += '먼저 기준이 되는 '+this.btc_coin_name+'는 '+this.btc_o_price+'원으로 시작해 젓가 '+this.btc_l_price+'원, 곳가 '+this.btc_h_price+'원을 기록하고 '+this.btc_c_price+'원으로 마감하였고, 시까대비종까는 '+this.btc_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.btc_l_h_price_rate+'% 상승 하였습니다.';
 				this.video_html += '<br/><br/>';
@@ -4148,7 +4148,14 @@ export default {
 					result += arr1.charAt(n);
 				}
 			}
-			return num3Arr[0] + "." + result.split("").reverse().join("");
+
+			var return_data = ''
+			if((result.split("").reverse().join("")) == ''){
+				return_data = num3Arr[0]
+			}else{
+				return_data = num3Arr[0] + "." + result.split("").reverse().join("")
+			}
+			return return_data;
 		},
 		gridSizeFit (params) {
 			// 모니터나 브라우저 크기에 따라 반응하여 그리드 컬럼 사이즈를 조정합니다.
