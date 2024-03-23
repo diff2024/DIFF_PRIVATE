@@ -1199,7 +1199,7 @@ export default {
 			}
 		},
 		zeroCut(nn) {
-			if (nn == 0 || nn == undefined || nn == null){
+			if (nn == undefined || nn == null){
 				return nn;
 			}
 

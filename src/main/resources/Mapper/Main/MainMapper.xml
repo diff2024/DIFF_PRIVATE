@@ -235,9 +235,9 @@
 	</select>
 	
 	<select id="UPBIT_DAY_RANKING" parameterType="HashMap" resultType="HashMap">
-		select replace(x.coin_ticker, 'KRW-', '') coin_ticker, y.coin_kor_name, x.ranking
+		select replace(x.coin_ticker, 'KRW-', '') coin_ticker, y.coin_kor_name, y.coin_particle, y.coin_particle2, x.ranking, x.status
 			 , case when x.status = '상승' then 'red' when x.status = '하락' then 'blue' when x.status = '보합' then 'black' end color
-			 , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate
+			 , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate, x.l_h_price_rate
 		  from upbit_coin_report_daily x, upbit_coin_info y
 		 where x.coin_ticker = y.coin_ticker
 		   and y.coin_delete_yn = 'N'
@@ -452,9 +452,9 @@
 	</select>
 	
 	<select id="BITHUMB_DAY_RANKING" parameterType="HashMap" resultType="HashMap">
-		select x.coin_ticker coin_ticker, y.coin_kor_name, x.ranking
+		select x.coin_ticker coin_ticker, y.coin_kor_name, y.coin_particle, y.coin_particle2, x.ranking, x.status
 			 , case when x.status = '상승' then 'red' when x.status = '하락' then 'blue' when x.status = '보합' then 'black' end color
-			 , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate
+			 , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate, x.l_h_price_rate
 		  from bithumb_coin_report_daily x, bithumb_coin_info y
 		 where x.coin_ticker = y.coin_ticker
 		   and y.coin_delete_yn = 'N'

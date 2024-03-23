@@ -5,6 +5,9 @@
 .ag-header-cell-label {
   justify-content: center;
 }
+.googleChartTitle {
+    text-align: center;
+}
 </style>
 <template>
 	<v-layout wrap row>
@@ -31,6 +34,7 @@
 								</ag-grid-vue>
 							</v-col>
 							<v-col id="daily_video" lg="8" md="8" sm="8" cols="8" style="padding-top:0px;">
+								<div v-html="video_title_html"></div>
 								<div v-html="video_html"></div>
 							</v-col>
 						</v-row>
@@ -53,9 +57,12 @@ export default {
 			gridOptions: null,
 			columnDefs: null,
             rowData: [],
+			video_title_html: '',
 			video_html: '',
 			search_date: '',
+			search_date_kor: '',
 			search_market: '',
+			rankList: [],
 
 			/* ClickCoin */
 			btc_coin_ticker: '',
@@ -638,6 +645,19 @@ export default {
 		if(this.$route.params.date !== undefined && this.$route.params.market !== undefined){
 			this.search_date = this.$route.params.date
 			this.search_market = this.$route.params.market
+
+			this.search_date_kor = (this.search_date).substring(2, 4) + '년 ';
+			if((this.search_date).substring(5, 6) == '0'){
+				this.search_date_kor += (this.search_date).substring(6, 7) + '월 '
+			}else{
+				this.search_date_kor += (this.search_date).substring(5, 7) + '월 '
+			}
+
+			if((this.search_date).substring(8, 9) == '0'){
+				this.search_date_kor += (this.search_date).substring(9, 10) +'일';
+			}else{
+				this.search_date_kor += (this.search_date).substring(8, 10) +'일';
+			}
 		}else{
 			let today = new Date();
 			let year = today.getFullYear();
@@ -651,6 +671,18 @@ export default {
 				date = '0'+date
 			}
 			this.search_date = year+'-'+month+'-'+date
+			this.search_date_kor = (this.search_date).substring(2, 4) + '년 ';
+			if((this.search_date).substring(5, 6) == '0'){
+				this.search_date_kor += (this.search_date).substring(6, 7) + '월 '
+			}else{
+				this.search_date_kor += (this.search_date).substring(5, 7) + '월 '
+			}
+
+			if((this.search_date).substring(8, 9) == '0'){
+				this.search_date_kor += (this.search_date).substring(9, 10) +'일';
+			}else{
+				this.search_date_kor += (this.search_date).substring(8, 10) +'일';
+			}
 		}
 	},
 	mounted (){
@@ -667,7 +699,6 @@ export default {
 						id: '['+response.data[x].yyyymmdd+'] ['+response.data[x].kor_market+']',
 						yyyymmdd: response.data[x].yyyymmdd,
 						market: response.data[x].market,
-
 						btc_coin_ticker: response.data[x].btc_coin_ticker,
 						btc_coin_name: response.data[x].btc_coin_name,
 						btc_coin_particle: response.data[x].btc_coin_particle,
@@ -956,8 +987,10 @@ export default {
 						rank5_c_20_24: response.data[x].rank5_c_20_24,
 						rank5_v_20_24: response.data[x].rank5_v_20_24,
 					})
-
+					
 					if(this.search_date == response.data[x].yyyymmdd && this.search_market == response.data[x].market){
+						this.makeRankList();
+
 						this.btc_coin_ticker = response.data[x].btc_coin_ticker;
 						this.btc_coin_name = response.data[x].btc_coin_name;
 						this.btc_coin_particle = response.data[x].btc_coin_particle;
@@ -1246,16 +1279,29 @@ export default {
 						this.rank5_c_20_24 = response.data[x].rank5_c_20_24;
 						this.rank5_v_20_24 = response.data[x].rank5_v_20_24;
 
-						this.getYoutubeShortMake();
+						setTimeout(this.getYoutubeVideoMake(), 5000);
 					}
 				}
 				this.isLoading = false;
 			})
 		},
 		onRowClicked(params) {
-			console.log(params)
 			this.search_date = params.data.yyyymmdd;
+			this.search_date_kor = (this.search_date).substring(2, 4) + '년 ';
+			if((this.search_date).substring(5, 6) == '0'){
+				this.search_date_kor += (this.search_date).substring(6, 7) + '월 '
+			}else{
+				this.search_date_kor += (this.search_date).substring(5, 7) + '월 '
+			}
+
+			if((this.search_date).substring(8, 9) == '0'){
+				this.search_date_kor += (this.search_date).substring(9, 10) +'일';
+			}else{
+				this.search_date_kor += (this.search_date).substring(8, 10) +'일';
+			}
 			this.search_market = params.data.market;
+			
+			this.makeRankList();
 
 			this.$router.push('/Video/'+this.search_date+'/'+this.search_market)
 
@@ -1547,9 +1593,9 @@ export default {
 			this.rank5_c_20_24 = params.data.rank5_c_20_24;
 			this.rank5_v_20_24 = params.data.rank5_v_20_24;
 
-			this.getYoutubeShortMake();
+			setTimeout(this.getYoutubeVideoMake(), 5000);
 		},
-		getYoutubeShortMake(){
+		getYoutubeVideoMake(){
 			if(this.search_date != '' && this.search_market != ''){
 				var video_title = ''
 				//video_title = this.search_date + ' ';
@@ -1610,31 +1656,28 @@ export default {
 				상승율 1위는 게이머코인으로 122원으로 시작해 젓가 117원, 곳가 214원을 기록하고 201원으로 마감하였고, 시까대비종까는 64.75% 상승하였고, 젓가대비곳가는 82.91% 상승 하였습니다.
 				*/
 
-				this.video_html = '<div id="video_title" style="color:black; width:500px; padding-top:50px; padding-bottom:50px;">'
-				this.video_html += '<h1 style="text-align:center; vertical-align:middle; line-height:1.5; font-size:36px;">'+video_title+'</h1>';
-				this.video_html += '</div>'
-				this.video_html += '<br/><br/>';
-				this.video_html += '<div style="color:black;">';
-				this.video_html += video_title.replaceAll('<br/><br/>', ' ').replaceAll('<br/>', ' ')+'을 시작하겠습니다.';
-				this.video_html += '<br/><br/>';
-				this.video_html += '먼저 기준이 되는 '+this.btc_coin_name+'는 '+this.btc_o_price+'원으로 시작해 젓가 '+this.btc_l_price+'원, 곳가 '+this.btc_h_price+'원을 기록하고 '+this.btc_c_price+'원으로 마감하였고, 시까대비종까는 '+this.btc_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.btc_l_h_price_rate+'% 상승 하였습니다.';
-				this.video_html += '<br/><br/>';
-				this.video_html += '상승율 5위는 '+this.rank5_coin_name+this.rank5_coin_particle+' '+this.rank5_o_price+'원으로 시작해 젓가 '+this.rank5_l_price+'원, 곳가 '+this.rank5_h_price+'원을 기록하고 '+this.rank5_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank5_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank5_l_h_price_rate+'% 상승 하였습니다.';
-				this.video_html += '<br/><br/>';
-				this.video_html += '상승율 4위는 '+this.rank4_coin_name+this.rank4_coin_particle+' '+this.rank4_o_price+'원으로 시작해 젓가 '+this.rank4_l_price+'원, 곳가 '+this.rank4_h_price+'원을 기록하고 '+this.rank4_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank4_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank4_l_h_price_rate+'% 상승 하였습니다.';
-				this.video_html += '<br/><br/>';
-				this.video_html += '상승율 3위는 '+this.rank3_coin_name+this.rank3_coin_particle+' '+this.rank3_o_price+'원으로 시작해 젓가 '+this.rank3_l_price+'원, 곳가 '+this.rank3_h_price+'원을 기록하고 '+this.rank3_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank3_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
-				this.video_html += '<br/><br/>';
-				this.video_html += '상승율 2위는 '+this.rank2_coin_name+this.rank2_coin_particle+' '+this.rank2_o_price+'원으로 시작해 젓가 '+this.rank2_l_price+'원, 곳가 '+this.rank2_h_price+'원을 기록하고 '+this.rank2_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank2_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank2_l_h_price_rate+'% 상승 하였습니다.';
-				this.video_html += '<br/><br/>';
-				this.video_html += '상승율 1위는 '+this.rank1_coin_name+this.rank1_coin_particle+' '+this.rank1_o_price+'원으로 시작해 젓가 '+this.rank1_l_price+'원, 곳가 '+this.rank1_h_price+'원을 기록하고 '+this.rank1_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank1_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
-				this.video_html += '<br/><br/>';
-				this.video_html += '영상 시청 감사드리며, 더 많은 정보가 필요하시면 코인분석기 채널 방문하셔서 좋아요와 구독 부탁 드립니다.';
-				this.video_html += '</div>';
-				this.video_html += '<br/>';
-				this.video_html += '<br/>';
-				this.video_html += '<br/>';
-
+				this.video_title_html = '<div id="video_title" style="color:black; width:500px; padding-top:50px; padding-bottom:50px;">'
+				this.video_title_html += '<h1 style="text-align:center; vertical-align:middle; line-height:1.5; font-size:36px;">'+video_title+'</h1>';
+				this.video_title_html += '</div>'
+				this.video_title_html += '<br/><br/>';
+				this.video_title_html += '<div style="color:black;">';
+				this.video_title_html += video_title.replaceAll('<br/><br/>', ' ').replaceAll('<br/>', ' ')+'을 시작하겠습니다.';
+				this.video_title_html += '<br/><br/>';
+				this.video_title_html += '먼저 기준이 되는 '+this.btc_coin_name+'는 '+this.btc_o_price+'원으로 시작해 젓가 '+this.btc_l_price+'원, 곳가 '+this.btc_h_price+'원을 기록하고 '+this.btc_c_price+'원으로 마감하였고, 시까대비종까는 '+this.btc_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.btc_l_h_price_rate+'% 상승 하였습니다.';
+				this.video_title_html += '<br/><br/>';
+				this.video_title_html += '상승율 5위는 '+this.rank5_coin_name+this.rank5_coin_particle+' '+this.rank5_o_price+'원으로 시작해 젓가 '+this.rank5_l_price+'원, 곳가 '+this.rank5_h_price+'원을 기록하고 '+this.rank5_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank5_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank5_l_h_price_rate+'% 상승 하였습니다.';
+				this.video_title_html += '<br/><br/>';
+				this.video_title_html += '상승율 4위는 '+this.rank4_coin_name+this.rank4_coin_particle+' '+this.rank4_o_price+'원으로 시작해 젓가 '+this.rank4_l_price+'원, 곳가 '+this.rank4_h_price+'원을 기록하고 '+this.rank4_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank4_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank4_l_h_price_rate+'% 상승 하였습니다.';
+				this.video_title_html += '<br/><br/>';
+				this.video_title_html += '상승율 3위는 '+this.rank3_coin_name+this.rank3_coin_particle+' '+this.rank3_o_price+'원으로 시작해 젓가 '+this.rank3_l_price+'원, 곳가 '+this.rank3_h_price+'원을 기록하고 '+this.rank3_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank3_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
+				this.video_title_html += '<br/><br/>';
+				this.video_title_html += '상승율 2위는 '+this.rank2_coin_name+this.rank2_coin_particle+' '+this.rank2_o_price+'원으로 시작해 젓가 '+this.rank2_l_price+'원, 곳가 '+this.rank2_h_price+'원을 기록하고 '+this.rank2_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank2_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank2_l_h_price_rate+'% 상승 하였습니다.';
+				this.video_title_html += '<br/><br/>';
+				this.video_title_html += '상승율 1위는 '+this.rank1_coin_name+this.rank1_coin_particle+' '+this.rank1_o_price+'원으로 시작해 젓가 '+this.rank1_l_price+'원, 곳가 '+this.rank1_h_price+'원을 기록하고 '+this.rank1_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank1_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
+				this.video_title_html += '</div>';
+				this.video_title_html += '<br/><br/>';
+				
+				this.video_html = '';
 				/* 아래에서부터는 돈표시가 되어야함, 근데 소수점 이하는 돈표시하면 소수점이 이상하게 나오는 경우가 발생하여 999원 기준으로 미리 수정함. */
 				if(Number(this.btc_o_price) > 999){
 					this.btc_o_price = Number(this.btc_o_price).toLocaleString('ko-KR')
@@ -2969,9 +3012,13 @@ export default {
 				}
 				
 				if(this.search_market == 'bithumb'){
+					this.video_html += '<div id="bithumb_btc_open_summary_graph_script"></div>'
+					this.video_html += '<div id="bithumb_btc_open_day_graph_script"></div>'
 					this.video_html += '<div id="bithumb_btc_open_hour_graph_script"></div>'
 					this.video_html += '<div id="bithumb_btc_open_4hour_graph_script"></div>'
 				}else if(this.search_market == 'upbit'){
+					this.video_html += '<div id="upbit_btc_open_summary_graph_script"></div>'
+					this.video_html += '<div id="upbit_btc_open_day_graph_script"></div>'
 					this.video_html += '<div id="upbit_btc_open_hour_graph_script"></div>'
 					this.video_html += '<div id="upbit_btc_open_4hour_graph_script"></div>'
 				}
@@ -4093,8 +4140,21 @@ export default {
 				this.video_html += '</tbody>'
 				this.video_html += '</table>'
 				this.video_html += '<br/><br/>'
+
 				if(this.search_market == 'bithumb'){
 					setTimeout(function() {
+						var head_bithumb_summary = document.getElementById("bithumb_btc_open_summary_graph_script");
+						var script_bithumb_summary = document.createElement('script');
+						script_bithumb_summary.type = 'application/javascript';
+						script_bithumb_summary.src = '../../../bithumb_btc_open_summary_graph_script.js';
+						head_bithumb_summary.appendChild(script_bithumb_summary);
+
+						var head_bithumb_day = document.getElementById("bithumb_btc_open_day_graph_script");
+						var script_bithumb_day = document.createElement('script');
+						script_bithumb_day.type = 'application/javascript';
+						script_bithumb_day.src = '../../../bithumb_btc_open_day_graph_script.js';
+						head_bithumb_day.appendChild(script_bithumb_day);
+
 						var head_bithumb_hour = document.getElementById("bithumb_btc_open_hour_graph_script");
 						var script_bithumb_hour = document.createElement('script');
 						script_bithumb_hour.type = 'application/javascript';
@@ -4109,6 +4169,18 @@ export default {
 					}, 2500);
 				}else if(this.search_market == 'upbit'){
 					setTimeout(function() {
+						var head_upbit_summary = document.getElementById("upbit_btc_open_summary_graph_script");
+						var script_upbit_summary = document.createElement('script');
+						script_upbit_summary.type = 'application/javascript';
+						script_upbit_summary.src = '../../../upbit_btc_open_summary_graph_script.js';
+						head_upbit_summary.appendChild(script_upbit_summary);
+
+						var head_upbit_day = document.getElementById("upbit_btc_open_day_graph_script");
+						var script_upbit_day = document.createElement('script');
+						script_upbit_day.type = 'application/javascript';
+						script_upbit_day.src = '../../../upbit_btc_open_day_graph_script.js';
+						head_upbit_day.appendChild(script_upbit_day);
+
 						var head_upbit_hour = document.getElementById("upbit_btc_open_hour_graph_script");
 						var script_upbit_hour = document.createElement('script');
 						script_upbit_hour.type = 'application/javascript';
@@ -4124,8 +4196,512 @@ export default {
 				}
 			}
 		},
+		makeRankList(){
+			if(this.search_market == 'upbit'){
+				axios.get('/Main/UPBIT_DAY_RANKING?date='+this.search_date)
+				.then(response2 => {
+					this.rankList = response2.data;
+					
+					var temp_video_title_html = '<div style="color:black;">'
+					var temp_video_html = ''
+					var last_rank = ''
+					var total_ranking = String((Number(this.rankList.length)-1));
+					var rise_ranking = '0';
+					var rise_coin = '';
+					var drop_ranking = '0';
+					var drop_coin = '';
+					var station_ranking = '0';
+					var station_coin = '';
+
+					for(var i=1; i<this.rankList.length; i++){
+						if(String(this.rankList[i].status) == '상승'){
+							rise_ranking = String(Number(rise_ranking)+1)
+
+							if(rise_coin != ''){
+								rise_coin += ', '
+							}
+							rise_coin += this.rankList[i].coin_ticker
+						}else if(String(this.rankList[i].status) == '하락'){
+							drop_ranking = String(Number(drop_ranking)+1)
+							
+							if(drop_coin != ''){
+								drop_coin += ', '
+							}
+							drop_coin += this.rankList[i].coin_ticker
+						}else{
+							station_ranking = String(Number(station_ranking)+1)
+
+							if(station_coin != ''){
+								station_coin += ', '
+							}
+							station_coin += this.rankList[i].coin_ticker
+						}
+					}
+
+					this.video_html += '<table id="tbl_rank_summary" width="1000px" style="color:black; border-spacing:0px; border-color:black; font-size:13px; padding:10px;">'
+					this.video_html += '<colgroup>'
+					this.video_html += '<col style="width: 400px">'
+					this.video_html += '<col style="width: 500px">'
+					this.video_html += '</colgroup>'
+					this.video_html += '<tbody>'
+					this.video_html += '<tr>'
+					this.video_html += '<td colspan="3" style="border: 1px solid black; border-bottom:0px solid black; text-align:center; font-size:32px; font-weight:bold; padding:5px; padding-top:20px; padding-bottom:20px;">'
+					this.video_html += this.search_date_kor +' 업비트 코인 분석'
+					this.video_html += '</td>'
+					this.video_html += '</tr>'
+					this.video_html += '<tr>'
+					this.video_html += '<td rowspan="3" style="border: 1px solid black; border-right:0px solid black; text-align:center; font-size:20px; font-weight:bold; padding:5px;">'
+					this.video_html += '<div style="text-align:center; padding:0px; width:100%;" id="upbit_open_summary_graph"></div>'
+					this.video_html += '</td>'
+					this.video_html += '<td style="border: 1px solid black; font-size:15px; padding:5px; color:red; font-weight:bold;"'
+					if(station_ranking == '0'){
+						this.video_html += ' rowspan="2" '
+					}
+					this.video_html += '>'
+					this.video_html += rise_coin
+					this.video_html += '</td>'
+					this.video_html += '</tr>'
+					if(station_ranking == '0'){
+						this.video_html += '<tr>'
+						this.video_html += '</tr>'
+					}else{
+						this.video_html += '<tr>'
+						this.video_html += '<td style="border: 1px solid black; border-top: 0px solid black; font-size:15px; padding:5px; color:black; font-weight:bold;">'
+						this.video_html += station_coin
+						this.video_html += '</td>'
+						this.video_html += '</tr>'
+					}
+					this.video_html += '<tr>'
+					this.video_html += '<td style="border: 1px solid black; border-top: 0px solid black; font-size:15px; padding:5px; color:blue; font-weight:bold;">'
+					this.video_html += drop_coin
+					this.video_html += '</td>'
+					this.video_html += '</tr>'
+					this.video_html += '</tbody>'
+					this.video_html += '</table>'
+					this.video_html += '</br></br>'
+
+					for(var i=1; i<this.rankList.length; i++){
+						var rank_ranking = this.rankList[i].ranking
+						var rank_coin_ticker = this.rankList[i].coin_ticker
+						var rank_coin_kor_name = this.rankList[i].coin_kor_name
+						var rank_status = this.rankList[i].status
+						var rank_o_c_rate = this.rankList[i].o_c_price_rate
+						var rank_l_h_rate = this.rankList[i].l_h_price_rate
+						var rank_open_price = this.rankList[i].o_price
+						var rank_low_price = this.rankList[i].l_price
+						var rank_high_price = this.rankList[i].h_price
+						var rank_close_price = this.rankList[i].c_price
+
+						if(Number(rank_open_price) > 999){
+							rank_open_price = Number(rank_open_price).toLocaleString('ko-KR')
+						}else{
+							rank_open_price = rank_open_price
+						}
+
+						if(Number(rank_low_price) > 999){
+							rank_low_price = Number(rank_low_price).toLocaleString('ko-KR')
+						}else{
+							rank_low_price = rank_low_price
+						}
+
+						if(Number(rank_high_price) > 999){
+							rank_high_price = Number(rank_high_price).toLocaleString('ko-KR')
+						}else{
+							rank_high_price = rank_high_price
+						}
+
+						if(Number(rank_close_price) > 999){
+							rank_close_price = Number(rank_close_price).toLocaleString('ko-KR')
+						}else{
+							rank_close_price = rank_close_price
+						}
+
+						rank_o_c_rate = this.zeroCut(rank_o_c_rate)
+						rank_l_h_rate = this.zeroCut(rank_l_h_rate)
+
+						if(i%10 == 1){
+							if(temp_video_title_html != '<div style="color:black;">'){
+								temp_video_title_html += '<br/><br/>'
+
+								temp_video_html += '<tr>'
+								temp_video_html += '<td colspan="8" style="border: 1px solid black; border-top: 0px solid black; padding-left: 25px;">'
+								temp_video_html += '<div style="text-align:left; padding:0px; width:100%;" id="upbit_btc_open_day_rank'+String(last_rank)+'_graph"></div>'
+								temp_video_html += '</td>'
+								temp_video_html += '</tr>'
+								temp_video_html += '</tbody>'
+								temp_video_html += '</table><br/><br/>'
+							}else{
+								temp_video_title_html += this.search_date_kor + ' 비트코인을 제외한 업비트 코인 총 '+ String(total_ranking) + '개 중'
+								
+								if(String(rise_ranking) != '0'){
+									temp_video_title_html += ' 상승 ' + String(rise_ranking) + '건'
+								}
+								if(String(drop_ranking) != '0'){
+									if(String(rise_ranking) != '0'){
+										temp_video_title_html += ', '
+									}
+									temp_video_title_html += ' 하락 ' + String(drop_ranking) + '건'
+								}
+								if(String(station_ranking) != '0'){
+									if(String(rise_ranking) != '0' || String(drop_ranking) != '0'){
+										temp_video_title_html += ', '
+									}
+									temp_video_title_html += ' 보합 ' + String(station_ranking) + '건'
+								}
+								temp_video_title_html += '을 기록하였습니다. 상세한 변동율 순위를 알아보겠습니다.<br/><br/>'
+							}
+
+							last_rank = String(i)
+							temp_video_html += '<table id="tbl_rank'+String(i)+'" style="color:black; border-spacing:0px; border-color:black; font-size:13px; padding:10px;">'
+							temp_video_html += '<colgroup>'
+							temp_video_html += '<col style="width: 70px">'
+							temp_video_html += '<col style="width: 320px">'
+							temp_video_html += '<col style="width: 170px">'
+							temp_video_html += '<col style="width: 170px">'
+							temp_video_html += '<col style="width: 160px">'
+							temp_video_html += '<col style="width: 160px">'
+							temp_video_html += '<col style="width: 160px">'
+							temp_video_html += '<col style="width: 160px">'
+							temp_video_html += '</colgroup>'
+							temp_video_html += '<tbody>'
+							temp_video_html += '<tr>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; text-align:center; font-size:20px; font-weight:bold; padding:5px;">순위</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-left:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">코인</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">시가대비종가</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">저가대비고가</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">시가</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">고가</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">저가</td>'
+							temp_video_html += '<td style="border: 1px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">종가</td>'
+							temp_video_html += '</tr>'
+							temp_video_html += '<tr>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-size:18px; font-weight:bold;">기준</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:left; font-size:18px; padding:5px;">비트코인 [BTC]</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
+							if(String(this.btc_o_c_price_rate).includes('-')){
+								temp_video_html += ' color:blue;'
+							}else{
+								temp_video_html += ' color:red;'
+							}
+							temp_video_html += '">'+String(this.btc_o_c_price_rate)+'%</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
+							if(String(this.btc_l_h_price_rate).includes('-')){
+								temp_video_html += ' color:blue;'
+							}else{
+								temp_video_html += ' color:red;'
+							}
+							temp_video_html += '">'+String(this.btc_l_h_price_rate)+'%</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+this.btc_o_price+'</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+this.btc_h_price+'</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+this.btc_l_price+'</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-top:0px solid black; padding:5px; text-align:right; font-size:18px;">'+this.btc_c_price+'</td>'
+							temp_video_html += '</tr>'
+							
+							var last_ranking = String(Number(i)+9);
+							if(Number(last_ranking) > (Number(this.rankList.length)-1)){
+								last_ranking = (Number(this.rankList.length)-1)
+							}
+							temp_video_title_html += '순위 '+String(i)+'위에서 '+String(last_ranking)+'위는 '
+						}else{
+							temp_video_title_html += ', '
+						}
+
+						temp_video_html += '<tr>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; font-weight:bold; padding-right:5px;">'+rank_ranking+'</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:left; font-size:18px; padding:5px;">'+rank_coin_kor_name+' ['+rank_coin_ticker+']</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
+						if(String(rank_o_c_rate).includes('-')){
+							temp_video_html += ' color:blue;'
+						}else{
+							temp_video_html += ' color:red;'
+						}
+						temp_video_html += '">'+rank_o_c_rate+'%</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
+						if(String(rank_l_h_rate).includes('-')){
+							temp_video_html += ' color:blue;'
+						}else{
+							temp_video_html += ' color:red;'
+						}
+						temp_video_html += '">'+rank_l_h_rate+'%</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+rank_open_price+'</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+rank_high_price+'</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+rank_low_price+'</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-top:0px solid black; padding:5px; text-align:right; font-size:18px;">'+rank_close_price+'</td>'
+						temp_video_html += '</tr>'
+
+						temp_video_title_html += rank_coin_kor_name + ' ' +  rank_o_c_rate+ '%'
+					}
+					temp_video_title_html += '를 기록하였습니다.<br/><br/>'
+					temp_video_title_html += '영상 시청 감사드리며, 더 많은 정보가 필요하시면 코인분석기 채널 방문하셔서 좋아요와 구독 부탁 드립니다.'
+					temp_video_title_html += '<br/><br/>'
+					temp_video_title_html += '<div>'
+					
+					temp_video_html += '<tr>'
+					temp_video_html += '<td colspan="8" style="border: 1px solid black; border-top: 0px solid black; padding-left: 25px;">'
+					temp_video_html += '<div style="text-align:left; padding:0px; width:100%;" id="upbit_btc_open_day_rank'+String(last_rank)+'_graph"></div>'
+					temp_video_html += '</td>'
+					temp_video_html += '</tr>'
+					temp_video_html += '</tbody>'
+					temp_video_html += '</table>'
+					
+					this.video_title_html += temp_video_title_html
+					this.video_html += temp_video_html
+				});
+			}else if(this.search_market == 'bithumb'){
+				var temp_video_title_html = ''
+				axios.get('/Main/BITHUMB_DAY_RANKING?date='+this.search_date)
+				.then(response2 => {
+					this.rankList = response2.data;
+					
+					var temp_video_title_html = '<div style="color:black;">'
+					var temp_video_html = ''
+					var last_rank = ''
+					var total_ranking = String((Number(this.rankList.length)-1));
+					var rise_ranking = '0';
+					var rise_coin = '';
+					var drop_ranking = '0';
+					var drop_coin = '';
+					var station_ranking = '0';
+					var station_coin = '';
+
+					for(var i=1; i<this.rankList.length; i++){
+						if(String(this.rankList[i].status) == '상승'){
+							rise_ranking = String(Number(rise_ranking)+1)
+
+							if(rise_coin != ''){
+								rise_coin += ', '
+							}
+							rise_coin += this.rankList[i].coin_ticker
+						}else if(String(this.rankList[i].status) == '하락'){
+							drop_ranking = String(Number(drop_ranking)+1)
+							
+							if(drop_coin != ''){
+								drop_coin += ', '
+							}
+							drop_coin += this.rankList[i].coin_ticker
+						}else{
+							station_ranking = String(Number(station_ranking)+1)
+
+							if(station_coin != ''){
+								station_coin += ', '
+							}
+							station_coin += this.rankList[i].coin_ticker
+						}
+					}
+
+					this.video_html += '<table id="tbl_rank_summary" width="1200px" style="color:black; border-spacing:0px; border-color:black; font-size:13px; padding:10px;">'
+					this.video_html += '<colgroup>'
+					this.video_html += '<col style="width: 400px">'
+					this.video_html += '<col style="width: 1200px">'
+					this.video_html += '</colgroup>'
+					this.video_html += '<tbody>'
+					this.video_html += '<tr>'
+					this.video_html += '<td colspan="3" style="border: 1px solid black; border-bottom:0px solid black; text-align:center; font-size:32px; font-weight:bold; padding:5px; padding-top:20px; padding-bottom:20px;">'
+					this.video_html += this.search_date_kor +' 빗썸 코인 분석'
+					this.video_html += '</td>'
+					this.video_html += '</tr>'
+					this.video_html += '<tr>'
+					this.video_html += '<td rowspan="3" style="border: 1px solid black; border-right:0px solid black; text-align:center; font-size:20px; font-weight:bold; padding:5px;">'
+					this.video_html += '<div style="text-align:center; padding:0px; width:100%;" id="bithumb_open_summary_graph"></div>'
+					this.video_html += '</td>'
+					this.video_html += '<td style="border: 1px solid black; font-size:15px; padding:5px; color:red; font-weight:bold;"'
+					if(station_ranking == '0'){
+						this.video_html += ' rowspan="2" '
+					}
+					this.video_html += '>'
+					this.video_html += rise_coin
+					this.video_html += '</td>'
+					this.video_html += '</tr>'
+					if(station_ranking == '0'){
+						this.video_html += '<tr>'
+						this.video_html += '</tr>'
+					}else{
+						this.video_html += '<tr>'
+						this.video_html += '<td style="border: 1px solid black; border-top: 0px solid black; font-size:15px; padding:5px; color:black; font-weight:bold;">'
+						this.video_html += station_coin
+						this.video_html += '</td>'
+						this.video_html += '</tr>'
+					}
+					this.video_html += '<tr>'
+					this.video_html += '<td style="border: 1px solid black; border-top: 0px solid black; font-size:15px; padding:5px; color:blue; font-weight:bold;">'
+					this.video_html += drop_coin
+					this.video_html += '</td>'
+					this.video_html += '</tr>'
+					this.video_html += '</tbody>'
+					this.video_html += '</table>'
+					this.video_html += '</br></br>'
+
+					for(var i=1; i<this.rankList.length; i++){
+						var rank_ranking = this.rankList[i].ranking
+						var rank_coin_ticker = this.rankList[i].coin_ticker
+						var rank_coin_kor_name = this.rankList[i].coin_kor_name
+						var rank_status = this.rankList[i].status
+						var rank_o_c_rate = this.rankList[i].o_c_price_rate
+						var rank_l_h_rate = this.rankList[i].l_h_price_rate
+						var rank_open_price = this.rankList[i].o_price
+						var rank_low_price = this.rankList[i].l_price
+						var rank_high_price = this.rankList[i].h_price
+						var rank_close_price = this.rankList[i].c_price
+
+						if(Number(rank_open_price) > 999){
+							rank_open_price = Number(rank_open_price).toLocaleString('ko-KR')
+						}else{
+							rank_open_price = rank_open_price
+						}
+
+						if(Number(rank_low_price) > 999){
+							rank_low_price = Number(rank_low_price).toLocaleString('ko-KR')
+						}else{
+							rank_low_price = rank_low_price
+						}
+
+						if(Number(rank_high_price) > 999){
+							rank_high_price = Number(rank_high_price).toLocaleString('ko-KR')
+						}else{
+							rank_high_price = rank_high_price
+						}
+
+						if(Number(rank_close_price) > 999){
+							rank_close_price = Number(rank_close_price).toLocaleString('ko-KR')
+						}else{
+							rank_close_price = rank_close_price
+						}
+
+						rank_o_c_rate = this.zeroCut(rank_o_c_rate)
+						rank_l_h_rate = this.zeroCut(rank_l_h_rate)
+
+						if(i%10 == 1){
+							if(temp_video_title_html != '<div style="color:black;">'){
+								temp_video_title_html += '<br/><br/>'
+
+								temp_video_html += '<tr>'
+								temp_video_html += '<td colspan="8" style="border: 1px solid black; border-top: 0px solid black; padding-left: 25px;">'
+								temp_video_html += '<div style="text-align:left; padding:0px; width:100%;" id="bithumb_btc_open_day_rank'+String(last_rank)+'_graph"></div>'
+								temp_video_html += '</td>'
+								temp_video_html += '</tr>'
+								temp_video_html += '</tbody>'
+								temp_video_html += '</table><br/><br/>'
+							}else{
+								temp_video_title_html += this.search_date_kor + ' 비트코인을 제외한 빗썸 코인 총 '+ String(total_ranking) + '개 중'
+								
+								if(String(rise_ranking) != '0'){
+									temp_video_title_html += ' 상승 ' + String(rise_ranking) + '건'
+								}
+								if(String(drop_ranking) != '0'){
+									if(String(rise_ranking) != '0'){
+										temp_video_title_html += ', '
+									}
+									temp_video_title_html += ' 하락 ' + String(drop_ranking) + '건'
+								}
+								if(String(station_ranking) != '0'){
+									if(String(rise_ranking) != '0' || String(drop_ranking) != '0'){
+										temp_video_title_html += ', '
+									}
+									temp_video_title_html += ' 보합 ' + String(station_ranking) + '건'
+								}
+								temp_video_title_html += '을 기록하였습니다. 상세한 변동율 순위를 알아보겠습니다.<br/><br/>'
+							}
+
+							last_rank = String(i)
+							temp_video_html += '<table id="tbl_rank'+String(i)+'" style="color:black; border-spacing:0px; border-color:black; font-size:13px; padding:10px;">'
+							temp_video_html += '<colgroup>'
+							temp_video_html += '<col style="width: 70px">'
+							temp_video_html += '<col style="width: 320px">'
+							temp_video_html += '<col style="width: 170px">'
+							temp_video_html += '<col style="width: 170px">'
+							temp_video_html += '<col style="width: 160px">'
+							temp_video_html += '<col style="width: 160px">'
+							temp_video_html += '<col style="width: 160px">'
+							temp_video_html += '<col style="width: 160px">'
+							temp_video_html += '</colgroup>'
+							temp_video_html += '<tbody>'
+							temp_video_html += '<tr>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; text-align:center; font-size:20px; font-weight:bold; padding:5px;">순위</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-left:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">코인</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">시가대비종가</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">저가대비고가</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">시가</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">고가</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">저가</td>'
+							temp_video_html += '<td style="border: 1px solid black; padding-right:3px; text-align:center; font-size:20px; font-weight:bold; padding:5px;">종가</td>'
+							temp_video_html += '</tr>'
+							temp_video_html += '<tr>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-size:18px; font-weight:bold;">기준</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:left; font-size:18px; padding:5px;">비트코인 [BTC]</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
+							if(String(this.btc_o_c_price_rate).includes('-')){
+								temp_video_html += ' color:blue;'
+							}else{
+								temp_video_html += ' color:red;'
+							}
+							temp_video_html += '">'+String(this.btc_o_c_price_rate)+'%</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
+							if(String(this.btc_l_h_price_rate).includes('-')){
+								temp_video_html += ' color:blue;'
+							}else{
+								temp_video_html += ' color:red;'
+							}
+							temp_video_html += '">'+String(this.btc_l_h_price_rate)+'%</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+this.btc_o_price+'</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+this.btc_h_price+'</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+this.btc_l_price+'</td>'
+							temp_video_html += '<td style="border: 1px solid black; border-top:0px solid black; padding:5px; text-align:right; font-size:18px;">'+this.btc_c_price+'</td>'
+							temp_video_html += '</tr>'
+							
+							var last_ranking = String(Number(i)+9);
+							if(Number(last_ranking) > (Number(this.rankList.length)-1)){
+								last_ranking = (Number(this.rankList.length)-1)
+							}
+							temp_video_title_html += '순위 '+String(i)+'위에서 '+String(last_ranking)+'위는 '
+						}else{
+							temp_video_title_html += ', '
+						}
+
+						temp_video_html += '<tr>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; font-weight:bold; padding-right:5px;">'+rank_ranking+'</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:left; font-size:18px; padding:5px;">'+rank_coin_kor_name+' ['+rank_coin_ticker+']</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
+						if(String(rank_o_c_rate).includes('-')){
+							temp_video_html += ' color:blue;'
+						}else{
+							temp_video_html += ' color:red;'
+						}
+						temp_video_html += '">'+rank_o_c_rate+'%</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
+						if(String(rank_l_h_rate).includes('-')){
+							temp_video_html += ' color:blue;'
+						}else{
+							temp_video_html += ' color:red;'
+						}
+						temp_video_html += '">'+rank_l_h_rate+'%</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+rank_open_price+'</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+rank_high_price+'</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;">'+rank_low_price+'</td>'
+						temp_video_html += '<td style="border: 1px solid black; border-top:0px solid black; padding:5px; text-align:right; font-size:18px;">'+rank_close_price+'</td>'
+						temp_video_html += '</tr>'
+
+						temp_video_title_html += rank_coin_kor_name + ' ' +  rank_o_c_rate+ '%'
+					}
+					temp_video_title_html += '를 기록하였습니다.<br/><br/>'
+					temp_video_title_html += '영상 시청 감사드리며, 더 많은 정보가 필요하시면 코인분석기 채널 방문하셔서 좋아요와 구독 부탁 드립니다.'
+					temp_video_title_html += '<br/><br/>'
+					temp_video_title_html += '<div>'
+					
+					temp_video_html += '<tr>'
+					temp_video_html += '<td colspan="8" style="border: 1px solid black; border-top: 0px solid black; padding-left: 25px;">'
+					temp_video_html += '<div style="text-align:left; padding:0px; width:100%;" id="bithumb_btc_open_day_rank'+String(last_rank)+'_graph"></div>'
+					temp_video_html += '</td>'
+					temp_video_html += '</tr>'
+					temp_video_html += '</tbody>'
+					temp_video_html += '</table>'
+					
+					this.video_title_html += temp_video_title_html
+					this.video_html += temp_video_html
+				});
+			}
+		},
 		zeroCut(nn) {
-			if (nn == 0 || nn == undefined || nn == null){
+			if (nn == undefined || nn == null){
 				return nn;
 			}
 
