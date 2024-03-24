@@ -4334,21 +4334,21 @@ export default {
 								temp_video_title_html += this.search_date_kor + ' 비트코인을 제외한 업비트 코인 총 '+ String(total_ranking) + '개 중'
 								
 								if(String(rise_ranking) != '0'){
-									temp_video_title_html += ' 상승 ' + String(rise_ranking) + '건'
+									temp_video_title_html += ' 상승 ' + String(rise_ranking) + '개'
 								}
-								if(String(drop_ranking) != '0'){
+								if(String(station_ranking) != '0'){
 									if(String(rise_ranking) != '0'){
 										temp_video_title_html += ', '
 									}
-									temp_video_title_html += ' 하락 ' + String(drop_ranking) + '건'
+									temp_video_title_html += ' 보합 ' + String(station_ranking) + '개'
 								}
-								if(String(station_ranking) != '0'){
-									if(String(rise_ranking) != '0' || String(drop_ranking) != '0'){
+								if(String(drop_ranking) != '0'){
+									if(String(rise_ranking) != '0' || String(station_ranking) != '0'){
 										temp_video_title_html += ', '
 									}
-									temp_video_title_html += ' 보합 ' + String(station_ranking) + '건'
+									temp_video_title_html += ' 하락 ' + String(drop_ranking) + '개'
 								}
-								temp_video_title_html += '을 기록하였습니다. 상세한 변동율 순위를 알아보겠습니다.<br/><br/>'
+								temp_video_title_html += '를 기록하였습니다. 상세한 변동율 순위를 알아보겠습니다.<br/><br/>'
 							}
 
 							last_rank = String(i)
@@ -4585,21 +4585,21 @@ export default {
 								temp_video_title_html += this.search_date_kor + ' 비트코인을 제외한 빗썸 코인 총 '+ String(total_ranking) + '개 중'
 								
 								if(String(rise_ranking) != '0'){
-									temp_video_title_html += ' 상승 ' + String(rise_ranking) + '건'
+									temp_video_title_html += ' 상승 ' + String(rise_ranking) + '개'
 								}
-								if(String(drop_ranking) != '0'){
+								if(String(station_ranking) != '0'){
 									if(String(rise_ranking) != '0'){
 										temp_video_title_html += ', '
 									}
-									temp_video_title_html += ' 하락 ' + String(drop_ranking) + '건'
+									temp_video_title_html += ' 보합 ' + String(station_ranking) + '개'
 								}
-								if(String(station_ranking) != '0'){
-									if(String(rise_ranking) != '0' || String(drop_ranking) != '0'){
+								if(String(drop_ranking) != '0'){
+									if(String(rise_ranking) != '0' || String(station_ranking) != '0'){
 										temp_video_title_html += ', '
 									}
-									temp_video_title_html += ' 보합 ' + String(station_ranking) + '건'
+									temp_video_title_html += ' 하락 ' + String(drop_ranking) + '개'
 								}
-								temp_video_title_html += '을 기록하였습니다. 상세한 변동율 순위를 알아보겠습니다.<br/><br/>'
+								temp_video_title_html += '를 기록하였습니다. 상세한 변동율 순위를 알아보겠습니다.<br/><br/>'
 							}
 
 							last_rank = String(i)

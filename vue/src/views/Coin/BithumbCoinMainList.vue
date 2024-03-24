@@ -33,11 +33,17 @@
 							<v-btn depressed dark small color="info" style="float:right; margin-top:17px; margin-left:10px;">
 								<v-icon small>menu</v-icon>&nbsp;<span id="btn_make_report" style="padding-bottom:2px;" @click="makeReport">일일 리포트 생성</span>
 							</v-btn>
-							<v-btn depressed dark small color="red" style="float:right; margin-top:17px; margin-left:10px;" :to="{ name: 'youtubebithumb_60_240'}" target="_blank">
-								<v-icon small>tv</v-icon>&nbsp;<span id="btn_live_60_240" style="padding-bottom:2px;">60/240 Live</span>
+							<v-btn depressed dark small color="red" style="float:right; margin-top:17px; margin-left:10px;" :to="{ name: 'youtubebithumb_240'}" target="_blank">
+								<v-icon small>tv</v-icon>&nbsp;<span id="btn_live_240" style="padding-bottom:2px;">240 Live</span>
 							</v-btn>
-							<v-btn depressed dark small color="red" style="float:right; margin-top:17px;" :to="{ name: 'youtubebithumb_5_15'}" target="_blank">
-								<v-icon small>tv</v-icon>&nbsp;<span id="btn_live_5_15" style="padding-bottom:2px; ">5/15 Live</span>
+							<v-btn depressed dark small color="red" style="float:right; margin-top:17px; margin-left:10px;" :to="{ name: 'youtubebithumb_60'}" target="_blank">
+								<v-icon small>tv</v-icon>&nbsp;<span id="btn_live_60" style="padding-bottom:2px;">60 Live</span>
+							</v-btn>
+							<v-btn depressed dark small color="red" style="float:right; margin-top:17px; margin-left:10px;	" :to="{ name: 'youtubebithumb_15'}" target="_blank">
+								<v-icon small>tv</v-icon>&nbsp;<span id="btn_live_15" style="padding-bottom:2px; ">15 Live</span>
+							</v-btn>
+							<v-btn depressed dark small color="red" style="float:right; margin-top:17px;" :to="{ name: 'youtubebithumb_5'}" target="_blank">
+								<v-icon small>tv</v-icon>&nbsp;<span id="btn_live_5" style="padding-bottom:2px; ">5 Live</span>
 							</v-btn>
 						</v-col>
 						<v-col lg="1" md="1" sm="2" cols="2" style="padding-top:0px; padding-bottom:0px; text-align:right; vertical-align: middle;">

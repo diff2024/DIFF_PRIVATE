@@ -16,17 +16,29 @@ const Main = () => {
 const Test = () => {
 	return import("./views/Test.vue")
 }
-const YoutubeUpbit_5_15 = () => {
-  return import("./views/Coin/YoutubeUpbit_5_15.vue")
+const YoutubeUpbit_5 = () => {
+  return import("./views/Coin/YoutubeUpbit_5.vue")
 }
-const YoutubeUpbit_60_240 = () => {
-  return import("./views/Coin/YoutubeUpbit_60_240.vue")
+const YoutubeUpbit_15 = () => {
+  return import("./views/Coin/YoutubeUpbit_15.vue")
 }
-const YoutubeBithumb_5_15 = () => {
-  return import("./views/Coin/YoutubeBithumb_5_15.vue")
+const YoutubeUpbit_60 = () => {
+  return import("./views/Coin/YoutubeUpbit_60.vue")
 }
-const YoutubeBithumb_60_240 = () => {
-  return import("./views/Coin/YoutubeBithumb_60_240.vue")
+const YoutubeUpbit_240 = () => {
+  return import("./views/Coin/YoutubeUpbit_240.vue")
+}
+const YoutubeBithumb_5 = () => {
+  return import("./views/Coin/YoutubeBithumb_5.vue")
+}
+const YoutubeBithumb_15 = () => {
+  return import("./views/Coin/YoutubeBithumb_15.vue")
+}
+const YoutubeBithumb_60 = () => {
+  return import("./views/Coin/YoutubeBithumb_60.vue")
+}
+const YoutubeBithumb_240 = () => {
+  return import("./views/Coin/YoutubeBithumb_240.vue")
 }
 const Report = () => {
 	return import("./views/Coin/Report.vue")	
@@ -78,24 +90,44 @@ export const router = new Router({
       component: Main,
     },
     {
-      path: '/YoutubeUpbit_5_15',
-      name: 'youtubeupbit_5_15',
-      component: YoutubeUpbit_5_15
+      path: '/YoutubeUpbit_5',
+      name: 'youtubeupbit_5',
+      component: YoutubeUpbit_5
     },
     {
-      path: '/YoutubeUpbit_60_240',
-      name: 'youtubeupbit_60_240',
-      component: YoutubeUpbit_60_240
+      path: '/YoutubeUpbit_15',
+      name: 'youtubeupbit_15',
+      component: YoutubeUpbit_15
     },
     {
-      path: '/YoutubeBithumb_5_15',
-      name: 'youtubebithumb_5_15',
-      component: YoutubeBithumb_5_15
+      path: '/YoutubeUpbit_60',
+      name: 'youtubeupbit_60',
+      component: YoutubeUpbit_60
     },
     {
-      path: '/YoutubeBithumb_60_240',
-      name: 'youtubebithumb_60_240',
-      component: YoutubeBithumb_60_240
+      path: '/YoutubeUpbit_240',
+      name: 'youtubeupbit_240',
+      component: YoutubeUpbit_240
+    },
+    {
+      path: '/YoutubeBithumb_5',
+      name: 'youtubebithumb_5',
+      component: YoutubeBithumb_5
+    },
+    {
+      path: '/YoutubeBithumb_15',
+      name: 'youtubebithumb_15',
+      component: YoutubeBithumb_15
+    },
+    {
+      path: '/YoutubeBithumb_60',
+      name: 'youtubebithumb_60',
+      component: YoutubeBithumb_60
+    },
+    {
+      path: '/YoutubeBithumb_240',
+      name: 'youtubebithumb_240',
+      component: YoutubeBithumb_240
     },
     {
       path: '/test',

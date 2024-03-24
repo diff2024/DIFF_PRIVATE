@@ -44,7 +44,7 @@ function drawChart() {
         }
         data_btc.addRows(array_data_btc);
         var options_btc = {
-            title: 'BTC 시가대비 증감율(%)',	
+            title: 'BTC 시가대비 변동율(%)',	
             titleTextStyle: {
                 fontName: '맑은 고딕',
                 fontSize: 20,
