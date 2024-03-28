@@ -20,16 +20,16 @@
   <div>
 	<v-flex xs12 sm12 md12>
 		<v-row>
-			<v-col xl="12" md="12" sm="12" style="height:70px; padding-top:0px;"></v-col>
+			<v-col xl="12" md="12" sm="12" style="height:50px; padding-top:0px;"></v-col>
 		</v-row>
 		<v-row>
-			<v-col xl="6" md="6" sm="6" style="text-align:center; padding-top:0px; padding-right:40px; padding-left:25px;">
+			<v-col xl="6" md="6" sm="6" style="text-align:center; padding-top:0px; padding-right:25px; padding-left:25px;">
 				<v-row>
-					<v-col xl="8" md="8" sm="8" style="padding-left:20px; text-align:left; font-weight:bold; font-size:35px;">
-						빗썸 15분 거래대금 [{{ min15_api_datetime_kst }}]
+					<v-col xl="8" md="8" sm="8" style="padding-left:20px; text-align:left; font-weight:bold; font-size:32px;">
+						빗썸 15분 거래대금 [{{ api_datetime_kst }}]
 					</v-col>
-					<v-col xl="4" md="4" sm="4" style="padding-right:0px; text-align:right; font-weight:bold; font-size:35px;">
-						{{ min15_gijun_datetime_kst }}
+					<v-col xl="4" md="4" sm="4" style="padding-right:20px; text-align:right; font-weight:bold; font-size:32px;">
+						{{ current_datetime_kst }}
 					</v-col>
 				</v-row>
 				<v-row>
@@ -48,20 +48,20 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank1_border_color }">
-						{{ min15_volume_rank1_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank1_border_color }">
+						{{ volume_rank1_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank1_close }}
+						{{ volume_rank1_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank1_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank1_o_c_rate }}</td>
+								<template v-if="this.volume_rank1_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank1_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank1_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank1_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank1_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank1_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -69,11 +69,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank1_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank1_o_c_subtract }}</td>
+								<template v-if="this.volume_rank1_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank1_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank1_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank1_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank1_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank1_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -82,25 +82,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank1_price_volume }}
+						{{ volume_rank1_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank2_border_color }">
-						{{ min15_volume_rank2_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank2_border_color }">
+						{{ volume_rank2_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank2_close }}
+						{{ volume_rank2_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank2_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank2_o_c_rate }}</td>
+								<template v-if="this.volume_rank2_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank2_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank2_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank2_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank2_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank2_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -108,11 +108,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank2_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank2_o_c_subtract }}</td>
+								<template v-if="this.volume_rank2_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank2_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank2_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank2_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank2_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank2_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -121,25 +121,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank2_price_volume }}
+						{{ volume_rank2_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank3_border_color }">
-						{{ min15_volume_rank3_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank3_border_color }">
+						{{ volume_rank3_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank3_close }}
+						{{ volume_rank3_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank3_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank3_o_c_rate }}</td>
+								<template v-if="this.volume_rank3_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank3_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank3_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank3_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank3_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank3_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -147,11 +147,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank3_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank3_o_c_subtract }}</td>
+								<template v-if="this.volume_rank3_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank3_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank3_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank3_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank3_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank3_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -160,25 +160,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank3_price_volume }}
+						{{ volume_rank3_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank4_border_color }">
-						{{ min15_volume_rank4_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank4_border_color }">
+						{{ volume_rank4_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank4_close }}
+						{{ volume_rank4_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank4_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank4_o_c_rate }}</td>
+								<template v-if="this.volume_rank4_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank4_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank4_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank4_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank4_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank4_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -186,11 +186,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank4_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank4_o_c_subtract }}</td>
+								<template v-if="this.volume_rank4_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank4_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank4_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank4_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank4_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank4_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -199,25 +199,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank4_price_volume }}
+						{{ volume_rank4_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank5_border_color }">
-						{{ min15_volume_rank5_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank5_border_color }">
+						{{ volume_rank5_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank5_close }}
+						{{ volume_rank5_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank5_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank5_o_c_rate }}</td>
+								<template v-if="this.volume_rank5_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank5_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank5_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank5_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank5_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank5_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -225,11 +225,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank5_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank5_o_c_subtract }}</td>
+								<template v-if="this.volume_rank5_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank5_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank5_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank5_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank5_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank5_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -238,25 +238,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank5_price_volume }}
+						{{ volume_rank5_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank6_border_color }">
-						{{ min15_volume_rank6_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank6_border_color }">
+						{{ volume_rank6_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank6_close }}
+						{{ volume_rank6_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank6_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank6_o_c_rate }}</td>
+								<template v-if="this.volume_rank6_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank6_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank6_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank6_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank6_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank6_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -264,11 +264,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank6_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank6_o_c_subtract }}</td>
+								<template v-if="this.volume_rank6_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank6_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank6_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank6_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank6_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank6_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -277,25 +277,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank6_price_volume }}
+						{{ volume_rank6_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank7_border_color }">
-						{{ min15_volume_rank7_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank7_border_color }">
+						{{ volume_rank7_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank7_close }}
+						{{ volume_rank7_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank7_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank7_o_c_rate }}</td>
+								<template v-if="this.volume_rank7_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank7_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank7_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank7_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank7_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank7_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -303,11 +303,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank7_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank7_o_c_subtract }}</td>
+								<template v-if="this.volume_rank7_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank7_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank7_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank7_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank7_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank7_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -316,25 +316,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank7_price_volume }}
+						{{ volume_rank7_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank8_border_color }">
-						{{ min15_volume_rank8_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank8_border_color }">
+						{{ volume_rank8_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank8_close }}
+						{{ volume_rank8_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank8_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank8_o_c_rate }}</td>
+								<template v-if="this.volume_rank8_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank8_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank8_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank8_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank8_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank8_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -342,11 +342,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank8_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank8_o_c_subtract }}</td>
+								<template v-if="this.volume_rank8_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank8_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank8_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank8_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank8_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank8_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -355,25 +355,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank8_price_volume }}
+						{{ volume_rank8_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank9_border_color }">
-						{{ min15_volume_rank9_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank9_border_color }">
+						{{ volume_rank9_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank9_close }}
+						{{ volume_rank9_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank9_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank9_o_c_rate }}</td>
+								<template v-if="this.volume_rank9_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank9_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank9_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank9_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank9_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank9_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -381,11 +381,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank9_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank9_o_c_subtract }}</td>
+								<template v-if="this.volume_rank9_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank9_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank9_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank9_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank9_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank9_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -394,25 +394,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank9_price_volume }}
+						{{ volume_rank9_price_volume }}
 					</v-col>
 				</v-row>
 				
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_volume_rank10_border_color }">
-						{{ min15_volume_rank10_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + volume_rank10_border_color }">
+						{{ volume_rank10_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank10_close }}
+						{{ volume_rank10_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_volume_rank10_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_volume_rank10_o_c_rate }}</td>
+								<template v-if="this.volume_rank10_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ volume_rank10_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank10_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_volume_rank10_o_c_rate }}</td>
+								<template v-else-if="this.volume_rank10_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ volume_rank10_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -420,11 +420,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_volume_rank10_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_volume_rank10_o_c_subtract }}</td>
+								<template v-if="this.volume_rank10_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ volume_rank10_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_volume_rank10_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_volume_rank10_o_c_subtract }}</td>
+								<template v-else-if="this.volume_rank10_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ volume_rank10_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -433,17 +433,17 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:10px; padding-right:5px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_volume_rank10_price_volume }}
+						{{ volume_rank10_price_volume }}
 					</v-col>
 				</v-row>
 			</v-col>
-			<v-col xl="6" md="6" sm="6" style="text-align:center; padding-top:0px; padding-left:40px; padding-right:25px;">
+			<v-col xl="6" md="6" sm="6" style="text-align:center; padding-top:0px; padding-left:25px; padding-right:25px;">
 				<v-row>
-					<v-col xl="8" md="8" sm="8" style="padding-left:20px; text-align:left; font-weight:bold; font-size:35px;">
-						빗썸 15분 변동율 [{{ min15_api_datetime_kst }}]
+					<v-col xl="8" md="8" sm="8" style="padding-left:20px; text-align:left; font-weight:bold; font-size:32px;">
+						빗썸 15분 변동율 [{{ api_datetime_kst }}]
 					</v-col>
-					<v-col xl="4" md="4" sm="4" style="padding-right:25px; text-align:right; font-weight:bold; font-size:35px;">
-						{{ min15_gijun_datetime_kst }}
+					<v-col xl="4" md="4" sm="4" style="padding-right:20px; text-align:right; font-weight:bold; font-size:32px;">
+						{{ current_datetime_kst }}
 					</v-col>
 				</v-row>
 				<v-row>
@@ -462,20 +462,20 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank1_border_color }">
-						{{ min15_oc_rank1_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank1_border_color }">
+						{{ oc_rank1_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank1_close }}
+						{{ oc_rank1_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank1_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank1_o_c_rate }}</td>
+								<template v-if="this.oc_rank1_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank1_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank1_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank1_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank1_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank1_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -483,11 +483,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank1_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank1_o_c_subtract }}</td>
+								<template v-if="this.oc_rank1_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank1_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank1_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank1_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank1_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank1_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -496,25 +496,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank1_price_volume }}
+						{{ oc_rank1_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank2_border_color }">
-						{{ min15_oc_rank2_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank2_border_color }">
+						{{ oc_rank2_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank2_close }}
+						{{ oc_rank2_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank2_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank2_o_c_rate }}</td>
+								<template v-if="this.oc_rank2_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank2_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank2_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank2_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank2_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank2_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -522,11 +522,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank2_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank2_o_c_subtract }}</td>
+								<template v-if="this.oc_rank2_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank2_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank2_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank2_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank2_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank2_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -535,25 +535,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank2_price_volume }}
+						{{ oc_rank2_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank3_border_color }">
-						{{ min15_oc_rank3_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank3_border_color }">
+						{{ oc_rank3_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank3_close }}
+						{{ oc_rank3_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank3_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank3_o_c_rate }}</td>
+								<template v-if="this.oc_rank3_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank3_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank3_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank3_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank3_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank3_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -561,11 +561,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank3_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank3_o_c_subtract }}</td>
+								<template v-if="this.oc_rank3_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank3_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank3_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank3_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank3_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank3_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -574,25 +574,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank3_price_volume }}
+						{{ oc_rank3_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank4_border_color }">
-						{{ min15_oc_rank4_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank4_border_color }">
+						{{ oc_rank4_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank4_close }}
+						{{ oc_rank4_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank4_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank4_o_c_rate }}</td>
+								<template v-if="this.oc_rank4_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank4_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank4_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank4_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank4_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank4_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -600,11 +600,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank4_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank4_o_c_subtract }}</td>
+								<template v-if="this.oc_rank4_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank4_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank4_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank4_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank4_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank4_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -613,25 +613,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank4_price_volume }}
+						{{ oc_rank4_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank5_border_color }">
-						{{ min15_oc_rank5_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank5_border_color }">
+						{{ oc_rank5_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank5_close }}
+						{{ oc_rank5_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank5_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank5_o_c_rate }}</td>
+								<template v-if="this.oc_rank5_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank5_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank5_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank5_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank5_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank5_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -639,11 +639,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank5_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank5_o_c_subtract }}</td>
+								<template v-if="this.oc_rank5_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank5_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank5_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank5_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank5_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank5_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -652,25 +652,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank5_price_volume }}
+						{{ oc_rank5_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank6_border_color }">
-						{{ min15_oc_rank6_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank6_border_color }">
+						{{ oc_rank6_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank6_close }}
+						{{ oc_rank6_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank6_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank6_o_c_rate }}</td>
+								<template v-if="this.oc_rank6_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank6_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank6_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank6_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank6_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank6_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -678,11 +678,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank6_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank6_o_c_subtract }}</td>
+								<template v-if="this.oc_rank6_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank6_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank6_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank6_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank6_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank6_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -691,25 +691,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank6_price_volume }}
+						{{ oc_rank6_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank7_border_color }">
-						{{ min15_oc_rank7_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank7_border_color }">
+						{{ oc_rank7_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank7_close }}
+						{{ oc_rank7_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank7_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank7_o_c_rate }}</td>
+								<template v-if="this.oc_rank7_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank7_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank7_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank7_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank7_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank7_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -717,11 +717,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank7_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank7_o_c_subtract }}</td>
+								<template v-if="this.oc_rank7_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank7_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank7_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank7_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank7_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank7_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -730,25 +730,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank7_price_volume }}
+						{{ oc_rank7_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank8_border_color }">
-						{{ min15_oc_rank8_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank8_border_color }">
+						{{ oc_rank8_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank8_close }}
+						{{ oc_rank8_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank8_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank8_o_c_rate }}</td>
+								<template v-if="this.oc_rank8_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank8_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank8_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank8_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank8_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank8_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -756,11 +756,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank8_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank8_o_c_subtract }}</td>
+								<template v-if="this.oc_rank8_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank8_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank8_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank8_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank8_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank8_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -769,25 +769,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank8_price_volume }}
+						{{ oc_rank8_price_volume }}
 					</v-col>
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank9_border_color }">
-						{{ min15_oc_rank9_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank9_border_color }">
+						{{ oc_rank9_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank9_close }}
+						{{ oc_rank9_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank9_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank9_o_c_rate }}</td>
+								<template v-if="this.oc_rank9_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank9_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank9_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank9_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank9_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank9_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -795,11 +795,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank9_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank9_o_c_subtract }}</td>
+								<template v-if="this.oc_rank9_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank9_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank9_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank9_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank9_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank9_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -808,25 +808,25 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank9_price_volume }}
+						{{ oc_rank9_price_volume }}
 					</v-col>
 				</v-row>
 				
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min15_oc_rank10_border_color }">
-						{{ min15_oc_rank10_coin_name }}
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + oc_rank10_border_color }">
+						{{ oc_rank10_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank10_close }}
+						{{ oc_rank10_close }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="display:flex; justify-content:right; padding-left:0px; padding-right:0px; padding-top: 5px;">
 						<table>
 							<tr>
-								<template v-if="this.min15_oc_rank10_gubun == '상승'">
-									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ min15_oc_rank10_o_c_rate }}</td>
+								<template v-if="this.oc_rank10_gubun == '상승'">
+									<td style="color:red; font-size:28px; text-align:right;">▲&nbsp;{{ oc_rank10_o_c_rate }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank10_gubun == '하락'">
-									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ min15_oc_rank10_o_c_rate }}</td>
+								<template v-else-if="this.oc_rank10_gubun == '하락'">
+									<td style="color:blue; font-size:28px; text-align:right;">▼&nbsp;{{ oc_rank10_o_c_rate }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:28px; text-align:right;">&nbsp;0.00%</td>
@@ -834,11 +834,11 @@
 								
 							</tr>
 							<tr>
-								<template v-if="this.min15_oc_rank10_gubun == '상승'">
-									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ min15_oc_rank10_o_c_subtract }}</td>
+								<template v-if="this.oc_rank10_gubun == '상승'">
+									<td style="color:red; font-size:24px; text-align:right;">▲&nbsp;{{ oc_rank10_o_c_subtract }}</td>
 								</template>
-								<template v-else-if="this.min15_oc_rank10_gubun == '하락'">
-									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ min15_oc_rank10_o_c_subtract }}</td>
+								<template v-else-if="this.oc_rank10_gubun == '하락'">
+									<td style="color:blue; font-size:24px; text-align:right;">▼&nbsp;{{ oc_rank10_o_c_subtract }}</td>
 								</template>
 								<template v-else>
 									<td style="color:black; font-size:24px; text-align:right;">&nbsp;0</td>
@@ -847,7 +847,7 @@
 						</table>
 					</v-col>
 					<v-col xl="4" md="4" sm="4" style="text-align: right; padding-left:5px; padding-right:20px; padding-top:15px; color:black; font-size:36px;">
-						{{ min15_oc_rank10_price_volume }}
+						{{ oc_rank10_price_volume }}
 					</v-col>
 				</v-row>
 			</v-col>
@@ -869,248 +869,248 @@ export default {
 			notice_msg: '',
 			RequestCompleteYN: 'N',
 			
-			min15_api_datetime_kst : '',
-			min15_gijun_datetime_kst : '',
+			api_datetime_kst : '',
+			current_datetime_kst : '',
 
-			min15_volume_rank1_coin : '',
-			min15_volume_rank1_coin_name : '',
-			min15_volume_rank1_border_color : 'white',
-			min15_volume_rank1_gubun : '',
-			min15_volume_rank1_open : '',
-			min15_volume_rank1_low : '',
-			min15_volume_rank1_high : '',
-			min15_volume_rank1_close : '',
-			min15_volume_rank1_o_c_rate : '',
-			min15_volume_rank1_o_c_subtract : '',
-			min15_volume_rank1_price_volume : '',
+			volume_rank1_coin : '',
+			volume_rank1_coin_name : '',
+			volume_rank1_border_color : 'white',
+			volume_rank1_gubun : '',
+			volume_rank1_open : '',
+			volume_rank1_low : '',
+			volume_rank1_high : '',
+			volume_rank1_close : '',
+			volume_rank1_o_c_rate : '',
+			volume_rank1_o_c_subtract : '',
+			volume_rank1_price_volume : '',
 
-			min15_volume_rank2_coin : '',
-			min15_volume_rank2_coin_name : '',
-			min15_volume_rank2_border_color : 'white',
-			min15_volume_rank2_gubun : '',
-			min15_volume_rank2_open : '',
-			min15_volume_rank2_low : '',
-			min15_volume_rank2_high : '',
-			min15_volume_rank2_close : '',
-			min15_volume_rank2_o_c_rate : '',
-			min15_volume_rank2_o_c_subtract : '',
-			min15_volume_rank2_price_volume : '',
+			volume_rank2_coin : '',
+			volume_rank2_coin_name : '',
+			volume_rank2_border_color : 'white',
+			volume_rank2_gubun : '',
+			volume_rank2_open : '',
+			volume_rank2_low : '',
+			volume_rank2_high : '',
+			volume_rank2_close : '',
+			volume_rank2_o_c_rate : '',
+			volume_rank2_o_c_subtract : '',
+			volume_rank2_price_volume : '',
 
-			min15_volume_rank3_coin : '',
-			min15_volume_rank3_coin_name : '',
-			min15_volume_rank3_border_color : 'white',
-			min15_volume_rank3_gubun : '',
-			min15_volume_rank3_open : '',
-			min15_volume_rank3_low : '',
-			min15_volume_rank3_high : '',
-			min15_volume_rank3_close : '',
-			min15_volume_rank3_o_c_rate : '',
-			min15_volume_rank3_o_c_subtract : '',
-			min15_volume_rank3_price_volume : '',
+			volume_rank3_coin : '',
+			volume_rank3_coin_name : '',
+			volume_rank3_border_color : 'white',
+			volume_rank3_gubun : '',
+			volume_rank3_open : '',
+			volume_rank3_low : '',
+			volume_rank3_high : '',
+			volume_rank3_close : '',
+			volume_rank3_o_c_rate : '',
+			volume_rank3_o_c_subtract : '',
+			volume_rank3_price_volume : '',
 
-			min15_volume_rank4_coin : '',
-			min15_volume_rank4_coin_name : '',
-			min15_volume_rank4_border_color : 'white',
-			min15_volume_rank4_gubun : '',
-			min15_volume_rank4_open : '',
-			min15_volume_rank4_low : '',
-			min15_volume_rank4_high : '',
-			min15_volume_rank4_close : '',
-			min15_volume_rank4_o_c_rate : '',
-			min15_volume_rank4_o_c_subtract : '',
-			min15_volume_rank4_price_volume : '',
+			volume_rank4_coin : '',
+			volume_rank4_coin_name : '',
+			volume_rank4_border_color : 'white',
+			volume_rank4_gubun : '',
+			volume_rank4_open : '',
+			volume_rank4_low : '',
+			volume_rank4_high : '',
+			volume_rank4_close : '',
+			volume_rank4_o_c_rate : '',
+			volume_rank4_o_c_subtract : '',
+			volume_rank4_price_volume : '',
 
-			min15_volume_rank5_coin : '',
-			min15_volume_rank5_coin_name : '',
-			min15_volume_rank5_border_color : 'white',
-			min15_volume_rank5_gubun : '',
-			min15_volume_rank5_open : '',
-			min15_volume_rank5_low : '',
-			min15_volume_rank5_high : '',
-			min15_volume_rank5_close : '',
-			min15_volume_rank5_o_c_rate : '',
-			min15_volume_rank5_o_c_subtract : '',
-			min15_volume_rank5_price_volume : '',
+			volume_rank5_coin : '',
+			volume_rank5_coin_name : '',
+			volume_rank5_border_color : 'white',
+			volume_rank5_gubun : '',
+			volume_rank5_open : '',
+			volume_rank5_low : '',
+			volume_rank5_high : '',
+			volume_rank5_close : '',
+			volume_rank5_o_c_rate : '',
+			volume_rank5_o_c_subtract : '',
+			volume_rank5_price_volume : '',
 
-			min15_volume_rank6_coin : '',
-			min15_volume_rank6_coin_name : '',
-			min15_volume_rank6_border_color : 'white',
-			min15_volume_rank6_gubun : '',
-			min15_volume_rank6_open : '',
-			min15_volume_rank6_low : '',
-			min15_volume_rank6_high : '',
-			min15_volume_rank6_close : '',
-			min15_volume_rank6_o_c_rate : '',
-			min15_volume_rank6_o_c_subtract : '',
-			min15_volume_rank6_price_volume : '',
+			volume_rank6_coin : '',
+			volume_rank6_coin_name : '',
+			volume_rank6_border_color : 'white',
+			volume_rank6_gubun : '',
+			volume_rank6_open : '',
+			volume_rank6_low : '',
+			volume_rank6_high : '',
+			volume_rank6_close : '',
+			volume_rank6_o_c_rate : '',
+			volume_rank6_o_c_subtract : '',
+			volume_rank6_price_volume : '',
 
-			min15_volume_rank7_coin : '',
-			min15_volume_rank7_coin_name : '',
-			min15_volume_rank7_border_color : 'white',
-			min15_volume_rank7_gubun : '',
-			min15_volume_rank7_open : '',
-			min15_volume_rank7_low : '',
-			min15_volume_rank7_high : '',
-			min15_volume_rank7_close : '',
-			min15_volume_rank7_o_c_rate : '',
-			min15_volume_rank7_o_c_subtract : '',
-			min15_volume_rank7_price_volume : '',
+			volume_rank7_coin : '',
+			volume_rank7_coin_name : '',
+			volume_rank7_border_color : 'white',
+			volume_rank7_gubun : '',
+			volume_rank7_open : '',
+			volume_rank7_low : '',
+			volume_rank7_high : '',
+			volume_rank7_close : '',
+			volume_rank7_o_c_rate : '',
+			volume_rank7_o_c_subtract : '',
+			volume_rank7_price_volume : '',
 
-			min15_volume_rank8_coin : '',
-			min15_volume_rank8_coin_name : '',
-			min15_volume_rank8_border_color : 'white',
-			min15_volume_rank8_gubun : '',
-			min15_volume_rank8_open : '',
-			min15_volume_rank8_low : '',
-			min15_volume_rank8_high : '',
-			min15_volume_rank8_close : '',
-			min15_volume_rank8_o_c_rate : '',
-			min15_volume_rank8_o_c_subtract : '',
-			min15_volume_rank8_price_volume : '',
+			volume_rank8_coin : '',
+			volume_rank8_coin_name : '',
+			volume_rank8_border_color : 'white',
+			volume_rank8_gubun : '',
+			volume_rank8_open : '',
+			volume_rank8_low : '',
+			volume_rank8_high : '',
+			volume_rank8_close : '',
+			volume_rank8_o_c_rate : '',
+			volume_rank8_o_c_subtract : '',
+			volume_rank8_price_volume : '',
 
-			min15_volume_rank9_coin : '',
-			min15_volume_rank9_coin_name : '',
-			min15_volume_rank9_border_color : 'white',
-			min15_volume_rank9_gubun : '',
-			min15_volume_rank9_open : '',
-			min15_volume_rank9_low : '',
-			min15_volume_rank9_high : '',
-			min15_volume_rank9_close : '',
-			min15_volume_rank9_o_c_rate : '',
-			min15_volume_rank9_o_c_subtract : '',
-			min15_volume_rank9_price_volume : '',
+			volume_rank9_coin : '',
+			volume_rank9_coin_name : '',
+			volume_rank9_border_color : 'white',
+			volume_rank9_gubun : '',
+			volume_rank9_open : '',
+			volume_rank9_low : '',
+			volume_rank9_high : '',
+			volume_rank9_close : '',
+			volume_rank9_o_c_rate : '',
+			volume_rank9_o_c_subtract : '',
+			volume_rank9_price_volume : '',
 
-			min15_volume_rank10_coin : '',
-			min15_volume_rank10_coin_name : '',
-			min15_volume_rank10_border_color : 'white',
-			min15_volume_rank10_gubun : '',
-			min15_volume_rank10_open : '',
-			min15_volume_rank10_low : '',
-			min15_volume_rank10_high : '',
-			min15_volume_rank10_close : '',
-			min15_volume_rank10_o_c_rate : '',
-			min15_volume_rank10_o_c_subtract : '',
-			min15_volume_rank10_price_volume : '',
+			volume_rank10_coin : '',
+			volume_rank10_coin_name : '',
+			volume_rank10_border_color : 'white',
+			volume_rank10_gubun : '',
+			volume_rank10_open : '',
+			volume_rank10_low : '',
+			volume_rank10_high : '',
+			volume_rank10_close : '',
+			volume_rank10_o_c_rate : '',
+			volume_rank10_o_c_subtract : '',
+			volume_rank10_price_volume : '',
 
-			min15_oc_rank1_coin : '',
-			min15_oc_rank1_coin_name : '',
-			min15_oc_rank1_border_color : 'white',
-			min15_oc_rank1_gubun : '',
-			min15_oc_rank1_open : '',
-			min15_oc_rank1_low : '',
-			min15_oc_rank1_high : '',
-			min15_oc_rank1_close : '',
-			min15_oc_rank1_o_c_rate : '',
-			min15_oc_rank1_o_c_subtract : '',
-			min15_oc_rank1_price_volume : '',
+			oc_rank1_coin : '',
+			oc_rank1_coin_name : '',
+			oc_rank1_border_color : 'white',
+			oc_rank1_gubun : '',
+			oc_rank1_open : '',
+			oc_rank1_low : '',
+			oc_rank1_high : '',
+			oc_rank1_close : '',
+			oc_rank1_o_c_rate : '',
+			oc_rank1_o_c_subtract : '',
+			oc_rank1_price_volume : '',
 
-			min15_oc_rank2_coin : '',
-			min15_oc_rank2_coin_name : '',
-			min15_oc_rank2_border_color : 'white',
-			min15_oc_rank2_gubun : '',
-			min15_oc_rank2_open : '',
-			min15_oc_rank2_low : '',
-			min15_oc_rank2_high : '',
-			min15_oc_rank2_close : '',
-			min15_oc_rank2_o_c_rate : '',
-			min15_oc_rank2_o_c_subtract : '',
-			min15_oc_rank2_price_volume : '',
+			oc_rank2_coin : '',
+			oc_rank2_coin_name : '',
+			oc_rank2_border_color : 'white',
+			oc_rank2_gubun : '',
+			oc_rank2_open : '',
+			oc_rank2_low : '',
+			oc_rank2_high : '',
+			oc_rank2_close : '',
+			oc_rank2_o_c_rate : '',
+			oc_rank2_o_c_subtract : '',
+			oc_rank2_price_volume : '',
 
-			min15_oc_rank3_coin : '',
-			min15_oc_rank3_coin_name : '',
-			min15_oc_rank3_border_color : 'white',
-			min15_oc_rank3_gubun : '',
-			min15_oc_rank3_open : '',
-			min15_oc_rank3_low : '',
-			min15_oc_rank3_high : '',
-			min15_oc_rank3_close : '',
-			min15_oc_rank3_o_c_rate : '',
-			min15_oc_rank3_o_c_subtract : '',
-			min15_oc_rank3_price_volume : '',
+			oc_rank3_coin : '',
+			oc_rank3_coin_name : '',
+			oc_rank3_border_color : 'white',
+			oc_rank3_gubun : '',
+			oc_rank3_open : '',
+			oc_rank3_low : '',
+			oc_rank3_high : '',
+			oc_rank3_close : '',
+			oc_rank3_o_c_rate : '',
+			oc_rank3_o_c_subtract : '',
+			oc_rank3_price_volume : '',
 
-			min15_oc_rank4_coin : '',
-			min15_oc_rank4_coin_name : '',
-			min15_oc_rank4_border_color : 'white',
-			min15_oc_rank4_gubun : '',
-			min15_oc_rank4_open : '',
-			min15_oc_rank4_low : '',
-			min15_oc_rank4_high : '',
-			min15_oc_rank4_close : '',
-			min15_oc_rank4_o_c_rate : '',
-			min15_oc_rank4_o_c_subtract : '',
-			min15_oc_rank4_price_volume : '',
+			oc_rank4_coin : '',
+			oc_rank4_coin_name : '',
+			oc_rank4_border_color : 'white',
+			oc_rank4_gubun : '',
+			oc_rank4_open : '',
+			oc_rank4_low : '',
+			oc_rank4_high : '',
+			oc_rank4_close : '',
+			oc_rank4_o_c_rate : '',
+			oc_rank4_o_c_subtract : '',
+			oc_rank4_price_volume : '',
 
-			min15_oc_rank5_coin : '',
-			min15_oc_rank5_coin_name : '',
-			min15_oc_rank5_border_color : 'white',
-			min15_oc_rank5_gubun : '',
-			min15_oc_rank5_open : '',
-			min15_oc_rank5_low : '',
-			min15_oc_rank5_high : '',
-			min15_oc_rank5_close : '',
-			min15_oc_rank5_o_c_rate : '',
-			min15_oc_rank5_o_c_subtract : '',
-			min15_oc_rank5_price_volume : '',
+			oc_rank5_coin : '',
+			oc_rank5_coin_name : '',
+			oc_rank5_border_color : 'white',
+			oc_rank5_gubun : '',
+			oc_rank5_open : '',
+			oc_rank5_low : '',
+			oc_rank5_high : '',
+			oc_rank5_close : '',
+			oc_rank5_o_c_rate : '',
+			oc_rank5_o_c_subtract : '',
+			oc_rank5_price_volume : '',
 
-			min15_oc_rank6_coin : '',
-			min15_oc_rank6_coin_name : '',
-			min15_oc_rank6_border_color : 'white',
-			min15_oc_rank6_gubun : '',
-			min15_oc_rank6_open : '',
-			min15_oc_rank6_low : '',
-			min15_oc_rank6_high : '',
-			min15_oc_rank6_close : '',
-			min15_oc_rank6_o_c_rate : '',
-			min15_oc_rank6_o_c_subtract : '',
-			min15_oc_rank6_price_volume : '',
+			oc_rank6_coin : '',
+			oc_rank6_coin_name : '',
+			oc_rank6_border_color : 'white',
+			oc_rank6_gubun : '',
+			oc_rank6_open : '',
+			oc_rank6_low : '',
+			oc_rank6_high : '',
+			oc_rank6_close : '',
+			oc_rank6_o_c_rate : '',
+			oc_rank6_o_c_subtract : '',
+			oc_rank6_price_volume : '',
 
-			min15_oc_rank7_coin : '',
-			min15_oc_rank7_coin_name : '',
-			min15_oc_rank7_border_color : 'white',
-			min15_oc_rank7_gubun : '',
-			min15_oc_rank7_open : '',
-			min15_oc_rank7_low : '',
-			min15_oc_rank7_high : '',
-			min15_oc_rank7_close : '',
-			min15_oc_rank7_o_c_rate : '',
-			min15_oc_rank7_o_c_subtract : '',
-			min15_oc_rank7_price_volume : '',
+			oc_rank7_coin : '',
+			oc_rank7_coin_name : '',
+			oc_rank7_border_color : 'white',
+			oc_rank7_gubun : '',
+			oc_rank7_open : '',
+			oc_rank7_low : '',
+			oc_rank7_high : '',
+			oc_rank7_close : '',
+			oc_rank7_o_c_rate : '',
+			oc_rank7_o_c_subtract : '',
+			oc_rank7_price_volume : '',
 
-			min15_oc_rank8_coin : '',
-			min15_oc_rank8_coin_name : '',
-			min15_oc_rank8_border_color : 'white',
-			min15_oc_rank8_gubun : '',
-			min15_oc_rank8_open : '',
-			min15_oc_rank8_low : '',
-			min15_oc_rank8_high : '',
-			min15_oc_rank8_close : '',
-			min15_oc_rank8_o_c_rate : '',
-			min15_oc_rank8_o_c_subtract : '',
-			min15_oc_rank8_price_volume : '',
+			oc_rank8_coin : '',
+			oc_rank8_coin_name : '',
+			oc_rank8_border_color : 'white',
+			oc_rank8_gubun : '',
+			oc_rank8_open : '',
+			oc_rank8_low : '',
+			oc_rank8_high : '',
+			oc_rank8_close : '',
+			oc_rank8_o_c_rate : '',
+			oc_rank8_o_c_subtract : '',
+			oc_rank8_price_volume : '',
 
-			min15_oc_rank9_coin : '',
-			min15_oc_rank9_coin_name : '',
-			min15_oc_rank9_border_color : 'white',
-			min15_oc_rank9_gubun : '',
-			min15_oc_rank9_open : '',
-			min15_oc_rank9_low : '',
-			min15_oc_rank9_high : '',
-			min15_oc_rank9_close : '',
-			min15_oc_rank9_o_c_rate : '',
-			min15_oc_rank9_o_c_subtract : '',
-			min15_oc_rank9_price_volume : '',
+			oc_rank9_coin : '',
+			oc_rank9_coin_name : '',
+			oc_rank9_border_color : 'white',
+			oc_rank9_gubun : '',
+			oc_rank9_open : '',
+			oc_rank9_low : '',
+			oc_rank9_high : '',
+			oc_rank9_close : '',
+			oc_rank9_o_c_rate : '',
+			oc_rank9_o_c_subtract : '',
+			oc_rank9_price_volume : '',
 
-			min15_oc_rank10_coin : '',
-			min15_oc_rank10_coin_name : '',
-			min15_oc_rank10_border_color : 'white',
-			min15_oc_rank10_gubun : '',
-			min15_oc_rank10_open : '',
-			min15_oc_rank10_low : '',
-			min15_oc_rank10_high : '',
-			min15_oc_rank10_close : '',
-			min15_oc_rank10_o_c_rate : '',
-			min15_oc_rank10_o_c_subtract : '',
-			min15_oc_rank10_price_volume : '',
+			oc_rank10_coin : '',
+			oc_rank10_coin_name : '',
+			oc_rank10_border_color : 'white',
+			oc_rank10_gubun : '',
+			oc_rank10_open : '',
+			oc_rank10_low : '',
+			oc_rank10_high : '',
+			oc_rank10_close : '',
+			oc_rank10_o_c_rate : '',
+			oc_rank10_o_c_subtract : '',
+			oc_rank10_price_volume : '',
       	}
     },
 	components: {
@@ -1123,953 +1123,564 @@ export default {
 	},
 	methods: {
 		Data_MIN_15_Make(){
-			const headerDict = {
-				'Cache-Control': 'no-cache',
-				'Pragma': 'no-cache',
-				'Expires': '0',
-				'Access-Control-Allow-Origin': '*',
-				'Access-Control-Allow-Headers': 'X-Requested-With'
-			}
-
-			const requestOptions = {                                                                                                                                                                                 
-				headers: new Headers(headerDict), 
-			};
-			
 			this.RequestCompleteYN = 'N'
-			var BithumbList = [];
-			var tmpBithumbList = [];
-			var list15_volume = [];
-			var list15_oc = [];
-
-			console.log('시작 ' + (new Date()))
-			
-			axios.get('/YoutubeBithumb/BithumbCoinInfo')
+			axios({
+				url: '/YoutubeBithumb/MIN15',
+				method: 'get',
+				timeout: 60000
+			})
 			.then(response => {
-				let start = new Date();
-				let end = new Date();
-				BithumbList = response.data;
-				for(var i=0; i<BithumbList.length; i++){
-					var ticker = BithumbList[i].coin_ticker;
-					var kor_name = BithumbList[i].coin_kor_name;
-					var number = BithumbList[i].coin_number;
-					var timestamp15 = BithumbList[i].timestamp15;
-					var gijun_datetime_15 = BithumbList[i].gijun_datetime_15;
+				if(response.status == 200){
+					var list_volume = response.data;
 					
-					tmpBithumbList.push('https://gw.bithumb.com/observer/chart/public/candlesticknew_trview/'+String(number)+'_C0100/1M');
-					axios.get('https://gw.bithumb.com/observer/chart/public/candlesticknew_trview/'+String(number)+'_C0100/1M', {
-						headers: {
-							'Cache-Control': 'no-cache',
-							'Pragma': 'no-cache',
-							'Expires': '0',
-						},
-					})
-					//tmpBithumbList.push('https://gw.bithumb.com/observer/chart/public/candlesticknew_trview/'+String(number)+'_C0100/1M');
-					//this.$http.get("https://gw.bithumb.com/observer/chart/public/candlesticknew_trview/"+String(number)+"_C0100/1M", requestOptions)
-					.then(response => {
-						var FindIndex = tmpBithumbList.findIndex(function(data, index){ 
-							//return data === response.url
-							return data === response.config.url
-						});
+					this.api_datetime_kst = ((list_volume[0].API_DATETIME_KST).substr(0, 16)).replace("20", "");
+					this.current_datetime_kst = (list_volume[0].CURRENT_DATETIME_KST).replace("20", "");
 
-						var bithumb_list = response.data.data;
-						var bithumb_list_timestamp = bithumb_list['t'];
-						var bithumb_list_open = bithumb_list['o'];
-						var bithumb_list_low = bithumb_list['l'];
-						var bithumb_list_high = bithumb_list['h'];
-						var bithumb_list_close = bithumb_list['c'];
-						var bithumb_list_volume = bithumb_list['v'];
+					if(this.volume_rank1_coin_name != list_volume[0].Coin_Kor_Name){
+						this.volume_rank1_coin = list_volume[0].API_Coin_Ticker;
+						this.volume_rank1_coin_name = list_volume[0].Coin_Kor_Name;
 
-						var YN15 = 'N'
-
-						var o_price_15 = ''
-						var l_price_15 = ''
-						var h_price_15 = ''
-						var c_price_15 = ''
-						var o_c_subtract_15 = ''
-						var o_c_rate_15 = ''
-						var volume_15 = '0'
-						var gubun_15 = ''
-						var price_volume_15 = ''
-						
-						for(var a=0; a<bithumb_list_timestamp.length; a++){
-							var tmp_timestamp = bithumb_list_timestamp[a]
-							var tmp_o_price = bithumb_list_open[a]
-							var tmp_l_price = bithumb_list_low[a]
-							var tmp_h_price = bithumb_list_high[a]
-							var tmp_c_price = bithumb_list_close[a]
-							var tmp_volume = bithumb_list_volume[a]
-							
-							if(BigInt(timestamp15) <= BigInt(tmp_timestamp)){
-								YN15 = 'Y'
-
-								if(o_price_15 == '') {
-									o_price_15 = tmp_o_price;
-								}
-								
-								if(l_price_15 == '' && h_price_15 == '') {
-									l_price_15 = tmp_l_price;
-									h_price_15 = tmp_h_price;
-								}else{
-									if(parseFloat(l_price_15) > parseFloat(tmp_l_price)){
-										l_price_15 = tmp_l_price
-									}
-
-									if(parseFloat(h_price_15) < parseFloat(tmp_h_price)){
-										h_price_15 = tmp_h_price
-									}
-								}
-
-								c_price_15 = tmp_c_price;
-
-								if(parseFloat(c_price_15) > parseFloat(o_price_15)){
-									gubun_15 = '상승'
-								}else if(parseFloat(c_price_15) < parseFloat(o_price_15)){
-									gubun_15 = '하락'
-								}else{
-									gubun_15 = '보합'
-								}
-								volume_15 = (parseFloat(volume_15) + parseFloat(tmp_volume)).toFixed(8)
-								price_volume_15 = (parseFloat(volume_15) * parseFloat(c_price_15)).toFixed(0)
-								o_c_subtract_15 = (Math.round((parseFloat(c_price_15) - parseFloat(o_price_15)) * 10000000000) / 10000000000)
-								o_c_rate_15 = ((parseFloat(o_c_subtract_15)/parseFloat(o_price_15))*100).toFixed(2)
+						if(this.volume_rank1_coin_name != ''){
+							if(list_volume[0].gubun == '상승'){
+								this.volume_rank1_border_color = 'red';
+							}else if(list_volume[0].gubun == '하락'){
+								this.volume_rank1_border_color = 'blue';
+							}else if(list_volume[0].gubun == '보합'){
+								this.volume_rank1_border_color = 'black';
 							}
+
+							setTimeout(() => 
+								this.volume_rank1_border_color = 'white'
+							, 500);
 						}
+					}
+					this.volume_rank1_gubun = list_volume[0].gubun;
+					this.volume_rank1_open = list_volume[0].o_price;
+					this.volume_rank1_low = list_volume[0].l_price;
+					this.volume_rank1_high = list_volume[0].h_price;
+					this.volume_rank1_close = list_volume[0].format_c_price;
+					this.volume_rank1_o_c_rate = list_volume[0].o_c_rate;
+					this.volume_rank1_o_c_subtract = list_volume[0].o_c_subtract;
+					this.volume_rank1_price_volume = list_volume[0].format_volume_price;
 
-						o_c_rate_15 = o_c_rate_15.replace('-0.00','0.00')
-						this.min15_api_datetime_kst = (gijun_datetime_15.substr(0, 16)).replace('20','')
+					if(this.volume_rank2_coin_name != list_volume[1].Coin_Kor_Name){
+						this.volume_rank2_coin = list_volume[1].API_Coin_Ticker;
+						this.volume_rank2_coin_name = list_volume[1].Coin_Kor_Name;
 
-						if(YN15 == 'Y'){
-							list15_volume.push({
-								coin_ticker: String(BithumbList[FindIndex].coin_ticker),
-								coin_kor_name: String(BithumbList[FindIndex].coin_kor_name),
-								gubun: gubun_15,
-								o_price: o_price_15,
-								l_price: l_price_15,
-								h_price: h_price_15,
-								c_price: c_price_15,
-								volume: volume_15,
-								price_volume: price_volume_15,
-								o_c_subtract: o_c_subtract_15,
-								o_c_rate: o_c_rate_15,
-							})
-						}else{
-							list15_volume.push({
-								coin_ticker: String(BithumbList[FindIndex].coin_ticker),
-								coin_kor_name: String(BithumbList[FindIndex].coin_kor_name),
-								gubun: '',
-								o_price: '0',
-								l_price: '0',
-								h_price: '0',
-								c_price: '0',
-								volume: '0',
-								price_volume: '0',
-								o_c_subtract: '0',
-								o_c_rate: '0',
-							})
+						if(this.volume_rank2_coin_name != ''){
+							if(list_volume[1].gubun == '상승'){
+								this.volume_rank2_border_color = 'red';
+							}else if(list_volume[1].gubun == '하락'){
+								this.volume_rank2_border_color = 'blue';
+							}else if(list_volume[1].gubun == '보합'){
+								this.volume_rank2_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.volume_rank2_border_color = 'white'
+							, 500);
 						}
+					}
+					this.volume_rank2_gubun = list_volume[1].gubun;
+					this.volume_rank2_open = list_volume[1].o_price;
+					this.volume_rank2_low = list_volume[1].l_price;
+					this.volume_rank2_high = list_volume[1].h_price;
+					this.volume_rank2_close = list_volume[1].format_c_price;
+					this.volume_rank2_o_c_rate = list_volume[1].o_c_rate;
+					this.volume_rank2_o_c_subtract = list_volume[1].o_c_subtract;
+					this.volume_rank2_price_volume = list_volume[1].format_volume_price;
 
-						if(list15_volume.length == tmpBithumbList.length){
-							list15_volume = list15_volume.sort((a,b) => Number(b.price_volume) - Number(a.price_volume));
-							
-							if(this.min15_volume_rank1_coin_name != list15_volume[0].coin_kor_name){
-								this.min15_volume_rank1_coin = list15_volume[0].coin_ticker;
-								this.min15_volume_rank1_coin_name = list15_volume[0].coin_kor_name;
+					if(this.volume_rank3_coin_name != list_volume[2].Coin_Kor_Name){
+						this.volume_rank3_coin = list_volume[2].API_Coin_Ticker;
+						this.volume_rank3_coin_name = list_volume[2].Coin_Kor_Name;
 
-								if(this.min15_volume_rank1_coin_name != ''){
-									if(list15_volume[0].gubun == '상승'){
-										this.min15_volume_rank1_border_color = 'red';
-									}else if(list15_volume[0].gubun == '하락'){
-										this.min15_volume_rank1_border_color = 'blue';
-									}else if(list15_volume[0].gubun == '보합'){
-										this.min15_volume_rank1_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank1_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank1_gubun = list15_volume[0].gubun;
-							this.min15_volume_rank1_open = list15_volume[0].o_price;
-							this.min15_volume_rank1_low = list15_volume[0].l_price;
-							this.min15_volume_rank1_high = list15_volume[0].h_price;
-							this.min15_volume_rank1_close = '';
-							this.min15_volume_rank1_o_c_rate = list15_volume[0].o_c_rate + '%';
-							this.min15_volume_rank1_o_c_subtract = '';
-							this.min15_volume_rank1_price_volume = Number(list15_volume[0].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[0].c_price) > 999){
-								this.min15_volume_rank1_close = Number(list15_volume[0].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank1_close = list15_volume[0].c_price
+						if(this.volume_rank3_coin_name != ''){
+							if(list_volume[2].gubun == '상승'){
+								this.volume_rank3_border_color = 'red';
+							}else if(list_volume[2].gubun == '하락'){
+								this.volume_rank3_border_color = 'blue';
+							}else if(list_volume[2].gubun == '보합'){
+								this.volume_rank3_border_color = 'black';
 							}
 
-							if(Math.abs(list15_volume[0].o_c_subtract) > 999){
-								this.min15_volume_rank1_o_c_subtract = Number(list15_volume[0].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank1_o_c_subtract = list15_volume[0].o_c_subtract
-							}
-
-							if(this.min15_volume_rank2_coin_name != list15_volume[1].coin_kor_name){
-								this.min15_volume_rank2_coin = list15_volume[1].coin_ticker;
-								this.min15_volume_rank2_coin_name = list15_volume[1].coin_kor_name;
-
-								if(this.min15_volume_rank2_coin_name != ''){
-									if(list15_volume[1].gubun == '상승'){
-										this.min15_volume_rank2_border_color = 'red';
-									}else if(list15_volume[1].gubun == '하락'){
-										this.min15_volume_rank2_border_color = 'blue';
-									}else if(list15_volume[1].gubun == '보합'){
-										this.min15_volume_rank2_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank2_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank2_gubun = list15_volume[1].gubun;
-							this.min15_volume_rank2_open = list15_volume[1].o_price;
-							this.min15_volume_rank2_low = list15_volume[1].l_price;
-							this.min15_volume_rank2_high = list15_volume[1].h_price;
-							this.min15_volume_rank2_close = '';
-							this.min15_volume_rank2_o_c_rate = list15_volume[1].o_c_rate + '%';
-							this.min15_volume_rank2_o_c_subtract = '';
-							this.min15_volume_rank2_price_volume = Number(list15_volume[1].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[1].c_price) > 999){
-								this.min15_volume_rank2_close = Number(list15_volume[1].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank2_close = list15_volume[1].c_price
-							}
-
-							if(Math.abs(list15_volume[1].o_c_subtract) > 999){
-								this.min15_volume_rank2_o_c_subtract = Number(list15_volume[1].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank2_o_c_subtract = list15_volume[1].o_c_subtract
-							}
-
-							if(this.min15_volume_rank3_coin_name != list15_volume[2].coin_kor_name){
-								this.min15_volume_rank3_coin = list15_volume[2].coin_ticker;
-								this.min15_volume_rank3_coin_name = list15_volume[2].coin_kor_name;
-
-								if(this.min15_volume_rank3_coin_name != ''){
-									if(list15_volume[2].gubun == '상승'){
-										this.min15_volume_rank3_border_color = 'red';
-									}else if(list15_volume[2].gubun == '하락'){
-										this.min15_volume_rank3_border_color = 'blue';
-									}else if(list15_volume[2].gubun == '보합'){
-										this.min15_volume_rank3_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank3_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank3_gubun = list15_volume[2].gubun;
-							this.min15_volume_rank3_open = list15_volume[2].o_price;
-							this.min15_volume_rank3_low = list15_volume[2].l_price;
-							this.min15_volume_rank3_high = list15_volume[2].h_price;
-							this.min15_volume_rank3_close = '';
-							this.min15_volume_rank3_o_c_rate = list15_volume[2].o_c_rate + '%';
-							this.min15_volume_rank3_o_c_subtract = '';
-							this.min15_volume_rank3_price_volume = Number(list15_volume[2].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[2].c_price) > 999){
-								this.min15_volume_rank3_close = Number(list15_volume[2].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank3_close = list15_volume[2].c_price
-							}
-
-							if(Math.abs(list15_volume[2].o_c_subtract) > 999){
-								this.min15_volume_rank3_o_c_subtract = Number(list15_volume[2].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank3_o_c_subtract = list15_volume[2].o_c_subtract
-							}
-
-							if(this.min15_volume_rank4_coin_name != list15_volume[3].coin_kor_name){
-								this.min15_volume_rank4_coin = list15_volume[3].coin_ticker;
-								this.min15_volume_rank4_coin_name = list15_volume[3].coin_kor_name;
-
-								if(this.min15_volume_rank4_coin_name != ''){
-									if(list15_volume[3].gubun == '상승'){
-										this.min15_volume_rank4_border_color = 'red';
-									}else if(list15_volume[3].gubun == '하락'){
-										this.min15_volume_rank4_border_color = 'blue';
-									}else if(list15_volume[3].gubun == '보합'){
-										this.min15_volume_rank4_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank4_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank4_gubun = list15_volume[3].gubun;
-							this.min15_volume_rank4_open = list15_volume[3].o_price;
-							this.min15_volume_rank4_low = list15_volume[3].l_price;
-							this.min15_volume_rank4_high = list15_volume[3].h_price;
-							this.min15_volume_rank4_close = '';
-							this.min15_volume_rank4_o_c_rate = list15_volume[3].o_c_rate + '%';
-							this.min15_volume_rank4_o_c_subtract = '';
-							this.min15_volume_rank4_price_volume = Number(list15_volume[3].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[3].c_price) > 999){
-								this.min15_volume_rank4_close = Number(list15_volume[3].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank4_close = list15_volume[3].c_price
-							}
-
-							if(Math.abs(list15_volume[3].o_c_subtract) > 999){
-								this.min15_volume_rank4_o_c_subtract = Number(list15_volume[3].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank4_o_c_subtract = list15_volume[3].o_c_subtract
-							}
-
-							if(this.min15_volume_rank5_coin_name != list15_volume[4].coin_kor_name){
-								this.min15_volume_rank5_coin = list15_volume[4].coin_ticker;
-								this.min15_volume_rank5_coin_name = list15_volume[4].coin_kor_name;
-
-								if(this.min15_volume_rank5_coin_name != ''){
-									if(list15_volume[4].gubun == '상승'){
-										this.min15_volume_rank5_border_color = 'red';
-									}else if(list15_volume[4].gubun == '하락'){
-										this.min15_volume_rank5_border_color = 'blue';
-									}else if(list15_volume[4].gubun == '보합'){
-										this.min15_volume_rank5_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank5_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank5_gubun = list15_volume[4].gubun;
-							this.min15_volume_rank5_open = list15_volume[4].o_price;
-							this.min15_volume_rank5_low = list15_volume[4].l_price;
-							this.min15_volume_rank5_high = list15_volume[4].h_price;
-							this.min15_volume_rank5_close = '';
-							this.min15_volume_rank5_o_c_rate = list15_volume[4].o_c_rate + '%';
-							this.min15_volume_rank5_o_c_subtract = '';
-							this.min15_volume_rank5_price_volume = Number(list15_volume[4].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[4].c_price) > 999){
-								this.min15_volume_rank5_close = Number(list15_volume[4].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank5_close = list15_volume[4].c_price
-							}
-
-							if(Math.abs(list15_volume[4].o_c_subtract) > 999){
-								this.min15_volume_rank5_o_c_subtract = Number(list15_volume[4].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank5_o_c_subtract = list15_volume[4].o_c_subtract
-							}
-
-							if(this.min15_volume_rank6_coin_name != list15_volume[5].coin_kor_name){
-								this.min15_volume_rank6_coin = list15_volume[5].coin_ticker;
-								this.min15_volume_rank6_coin_name = list15_volume[5].coin_kor_name;
-
-								if(this.min15_volume_rank6_coin_name != ''){
-									if(list15_volume[5].gubun == '상승'){
-										this.min15_volume_rank6_border_color = 'red';
-									}else if(list15_volume[5].gubun == '하락'){
-										this.min15_volume_rank6_border_color = 'blue';
-									}else if(list15_volume[5].gubun == '보합'){
-										this.min15_volume_rank6_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank6_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank6_gubun = list15_volume[5].gubun;
-							this.min15_volume_rank6_open = list15_volume[5].o_price;
-							this.min15_volume_rank6_low = list15_volume[5].l_price;
-							this.min15_volume_rank6_high = list15_volume[5].h_price;
-							this.min15_volume_rank6_close = '';
-							this.min15_volume_rank6_o_c_rate = list15_volume[5].o_c_rate + '%';
-							this.min15_volume_rank6_o_c_subtract = '';
-							this.min15_volume_rank6_price_volume = Number(list15_volume[5].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[5].c_price) > 999){
-								this.min15_volume_rank6_close = Number(list15_volume[5].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank6_close = list15_volume[5].c_price
-							}
-
-							if(Math.abs(list15_volume[5].o_c_subtract) > 999){
-								this.min15_volume_rank6_o_c_subtract = Number(list15_volume[5].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank6_o_c_subtract = list15_volume[5].o_c_subtract
-							}
-
-							if(this.min15_volume_rank7_coin_name != list15_volume[6].coin_kor_name){
-								this.min15_volume_rank7_coin = list15_volume[6].coin_ticker;
-								this.min15_volume_rank7_coin_name = list15_volume[6].coin_kor_name;
-
-								if(this.min15_volume_rank7_coin_name != ''){
-									if(list15_volume[6].gubun == '상승'){
-										this.min15_volume_rank7_border_color = 'red';
-									}else if(list15_volume[6].gubun == '하락'){
-										this.min15_volume_rank7_border_color = 'blue';
-									}else if(list15_volume[6].gubun == '보합'){
-										this.min15_volume_rank7_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank7_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank7_gubun = list15_volume[6].gubun;
-							this.min15_volume_rank7_open = list15_volume[6].o_price;
-							this.min15_volume_rank7_low = list15_volume[6].l_price;
-							this.min15_volume_rank7_high = list15_volume[6].h_price;
-							this.min15_volume_rank7_close = '';
-							this.min15_volume_rank7_o_c_rate = list15_volume[6].o_c_rate + '%';
-							this.min15_volume_rank7_o_c_subtract = '';
-							this.min15_volume_rank7_price_volume = Number(list15_volume[6].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[6].c_price) > 999){
-								this.min15_volume_rank7_close = Number(list15_volume[6].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank7_close = list15_volume[6].c_price
-							}
-
-							if(Math.abs(list15_volume[6].o_c_subtract) > 999){
-								this.min15_volume_rank7_o_c_subtract = Number(list15_volume[6].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank7_o_c_subtract = list15_volume[6].o_c_subtract
-							}
-
-							if(this.min15_volume_rank8_coin_name != list15_volume[7].coin_kor_name){
-								this.min15_volume_rank8_coin = list15_volume[7].coin_ticker;
-								this.min15_volume_rank8_coin_name = list15_volume[7].coin_kor_name;
-
-								if(this.min15_volume_rank8_coin_name != ''){
-									if(list15_volume[7].gubun == '상승'){
-										this.min15_volume_rank8_border_color = 'red';
-									}else if(list15_volume[7].gubun == '하락'){
-										this.min15_volume_rank8_border_color = 'blue';
-									}else if(list15_volume[7].gubun == '보합'){
-										this.min15_volume_rank8_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank8_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank8_gubun = list15_volume[7].gubun;
-							this.min15_volume_rank8_open = list15_volume[7].o_price;
-							this.min15_volume_rank8_low = list15_volume[7].l_price;
-							this.min15_volume_rank8_high = list15_volume[7].h_price;
-							this.min15_volume_rank8_close = '';
-							this.min15_volume_rank8_o_c_rate = list15_volume[7].o_c_rate + '%';
-							this.min15_volume_rank8_o_c_subtract = '';
-							this.min15_volume_rank8_price_volume = Number(list15_volume[7].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[7].c_price) > 999){
-								this.min15_volume_rank8_close = Number(list15_volume[7].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank8_close = list15_volume[7].c_price
-							}
-
-							if(Math.abs(list15_volume[7].o_c_subtract) > 999){
-								this.min15_volume_rank8_o_c_subtract = Number(list15_volume[7].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank8_o_c_subtract = list15_volume[7].o_c_subtract
-							}
-
-							if(this.min15_volume_rank9_coin_name != list15_volume[8].coin_kor_name){
-								this.min15_volume_rank9_coin = list15_volume[8].coin_ticker;
-								this.min15_volume_rank9_coin_name = list15_volume[8].coin_kor_name;
-
-								if(this.min15_volume_rank9_coin_name != ''){
-									if(list15_volume[8].gubun == '상승'){
-										this.min15_volume_rank9_border_color = 'red';
-									}else if(list15_volume[8].gubun == '하락'){
-										this.min15_volume_rank9_border_color = 'blue';
-									}else if(list15_volume[8].gubun == '보합'){
-										this.min15_volume_rank9_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank9_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank9_gubun = list15_volume[8].gubun;
-							this.min15_volume_rank9_open = list15_volume[8].o_price;
-							this.min15_volume_rank9_low = list15_volume[8].l_price;
-							this.min15_volume_rank9_high = list15_volume[8].h_price;
-							this.min15_volume_rank9_close = '';
-							this.min15_volume_rank9_o_c_rate = list15_volume[8].o_c_rate + '%';
-							this.min15_volume_rank9_o_c_subtract = '';
-							this.min15_volume_rank9_price_volume = Number(list15_volume[8].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[8].c_price) > 999){
-								this.min15_volume_rank9_close = Number(list15_volume[8].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank9_close = list15_volume[8].c_price
-							}
-
-							if(Math.abs(list15_volume[8].o_c_subtract) > 999){
-								this.min15_volume_rank9_o_c_subtract = Number(list15_volume[8].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank9_o_c_subtract = list15_volume[8].o_c_subtract
-							}
-
-							if(this.min15_volume_rank10_coin_name != list15_volume[9].coin_kor_name){
-								this.min15_volume_rank10_coin = list15_volume[9].coin_ticker;
-								this.min15_volume_rank10_coin_name = list15_volume[9].coin_kor_name;
-
-								if(this.min15_volume_rank10_coin_name != ''){
-									if(list15_volume[9].gubun == '상승'){
-										this.min15_volume_rank10_border_color = 'red';
-									}else if(list15_volume[9].gubun == '하락'){
-										this.min15_volume_rank10_border_color = 'blue';
-									}else if(list15_volume[9].gubun == '보합'){
-										this.min15_volume_rank10_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_volume_rank10_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_volume_rank10_gubun = list15_volume[9].gubun;
-							this.min15_volume_rank10_open = list15_volume[9].o_price;
-							this.min15_volume_rank10_low = list15_volume[9].l_price;
-							this.min15_volume_rank10_high = list15_volume[9].h_price;
-							this.min15_volume_rank10_close = '';
-							this.min15_volume_rank10_o_c_rate = list15_volume[9].o_c_rate + '%';
-							this.min15_volume_rank10_o_c_subtract = '';
-							this.min15_volume_rank10_price_volume = Number(list15_volume[9].price_volume).toLocaleString('ko-KR');
-
-							if(Number(list15_volume[9].c_price) > 999){
-								this.min15_volume_rank10_close = Number(list15_volume[9].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank10_close = list15_volume[9].c_price
-							}
-
-							if(Math.abs(list15_volume[9].o_c_subtract) > 999){
-								this.min15_volume_rank10_o_c_subtract = Number(list15_volume[9].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_volume_rank10_o_c_subtract = list15_volume[9].o_c_subtract
-							}
-
-							list15_oc = list15_volume.sort((a,b) => Number(b.o_c_rate) - Number(a.o_c_rate));
-							if(this.min15_oc_rank1_coin_name != list15_oc[0].coin_kor_name){
-								this.min15_oc_rank1_coin = list15_oc[0].coin_ticker;
-								this.min15_oc_rank1_coin_name = list15_oc[0].coin_kor_name;
-
-								if(this.min15_oc_rank1_coin_name != ''){
-									if(list15_oc[0].gubun == '상승'){
-										this.min15_oc_rank1_border_color = 'red';
-									}else if(list15_oc[0].gubun == '하락'){
-										this.min15_oc_rank1_border_color = 'blue';
-									}else if(list15_oc[0].gubun == '보합'){
-										this.min15_oc_rank1_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank1_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank1_gubun = list15_oc[0].gubun;
-							this.min15_oc_rank1_open = list15_oc[0].o_price;
-							this.min15_oc_rank1_low = list15_oc[0].l_price;
-							this.min15_oc_rank1_high = list15_oc[0].h_price;
-							this.min15_oc_rank1_close = '';
-							this.min15_oc_rank1_o_c_rate = list15_oc[0].o_c_rate + '%';
-							this.min15_oc_rank1_o_c_subtract = '';
-							this.min15_oc_rank1_price_volume = Number(list15_oc[0].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[0].c_price) > 999){
-								this.min15_oc_rank1_close = Number(list15_oc[0].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank1_close = list15_oc[0].c_price
-							}
-
-							if(Math.abs(list15_oc[0].o_c_subtract) > 999){
-								this.min15_oc_rank1_o_c_subtract = Number(list15_oc[0].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank1_o_c_subtract = list15_oc[0].o_c_subtract
-							}
-
-							if(this.min15_oc_rank2_coin_name != list15_oc[1].coin_kor_name){
-								this.min15_oc_rank2_coin = list15_oc[1].coin_ticker;
-								this.min15_oc_rank2_coin_name = list15_oc[1].coin_kor_name;
-
-								if(this.min15_oc_rank2_coin_name != ''){
-									if(list15_oc[1].gubun == '상승'){
-										this.min15_oc_rank2_border_color = 'red';
-									}else if(list15_oc[1].gubun == '하락'){
-										this.min15_oc_rank2_border_color = 'blue';
-									}else if(list15_oc[1].gubun == '보합'){
-										this.min15_oc_rank2_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank2_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank2_gubun = list15_oc[1].gubun;
-							this.min15_oc_rank2_open = list15_oc[1].o_price;
-							this.min15_oc_rank2_low = list15_oc[1].l_price;
-							this.min15_oc_rank2_high = list15_oc[1].h_price;
-							this.min15_oc_rank2_close = '';
-							this.min15_oc_rank2_o_c_rate = list15_oc[1].o_c_rate + '%';
-							this.min15_oc_rank2_o_c_subtract = '';
-							this.min15_oc_rank2_price_volume = Number(list15_oc[1].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[1].c_price) > 999){
-								this.min15_oc_rank2_close = Number(list15_oc[1].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank2_close = list15_oc[1].c_price
-							}
-
-							if(Math.abs(list15_oc[1].o_c_subtract) > 999){
-								this.min15_oc_rank2_o_c_subtract = Number(list15_oc[1].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank2_o_c_subtract = list15_oc[1].o_c_subtract
-							}
-
-							if(this.min15_oc_rank3_coin_name != list15_oc[2].coin_kor_name){
-								this.min15_oc_rank3_coin = list15_oc[2].coin_ticker;
-								this.min15_oc_rank3_coin_name = list15_oc[2].coin_kor_name;
-
-								if(this.min15_oc_rank3_coin_name != ''){
-									if(list15_oc[2].gubun == '상승'){
-										this.min15_oc_rank3_border_color = 'red';
-									}else if(list15_oc[2].gubun == '하락'){
-										this.min15_oc_rank3_border_color = 'blue';
-									}else if(list15_oc[2].gubun == '보합'){
-										this.min15_oc_rank3_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank3_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank3_gubun = list15_oc[2].gubun;
-							this.min15_oc_rank3_open = list15_oc[2].o_price;
-							this.min15_oc_rank3_low = list15_oc[2].l_price;
-							this.min15_oc_rank3_high = list15_oc[2].h_price;
-							this.min15_oc_rank3_close = '';
-							this.min15_oc_rank3_o_c_rate = list15_oc[2].o_c_rate + '%';
-							this.min15_oc_rank3_o_c_subtract = '';
-							this.min15_oc_rank3_price_volume = Number(list15_oc[2].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[2].c_price) > 999){
-								this.min15_oc_rank3_close = Number(list15_oc[2].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank3_close = list15_oc[2].c_price
-							}
-
-							if(Math.abs(list15_oc[2].o_c_subtract) > 999){
-								this.min15_oc_rank3_o_c_subtract = Number(list15_oc[2].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank3_o_c_subtract = list15_oc[2].o_c_subtract
-							}
-
-							if(this.min15_oc_rank4_coin_name != list15_oc[3].coin_kor_name){
-								this.min15_oc_rank4_coin = list15_oc[3].coin_ticker;
-								this.min15_oc_rank4_coin_name = list15_oc[3].coin_kor_name;
-
-								if(this.min15_oc_rank4_coin_name != ''){
-									if(list15_oc[3].gubun == '상승'){
-										this.min15_oc_rank4_border_color = 'red';
-									}else if(list15_oc[3].gubun == '하락'){
-										this.min15_oc_rank4_border_color = 'blue';
-									}else if(list15_oc[3].gubun == '보합'){
-										this.min15_oc_rank4_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank4_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank4_gubun = list15_oc[3].gubun;
-							this.min15_oc_rank4_open = list15_oc[3].o_price;
-							this.min15_oc_rank4_low = list15_oc[3].l_price;
-							this.min15_oc_rank4_high = list15_oc[3].h_price;
-							this.min15_oc_rank4_close = '';
-							this.min15_oc_rank4_o_c_rate = list15_oc[3].o_c_rate + '%';
-							this.min15_oc_rank4_o_c_subtract = '';
-							this.min15_oc_rank4_price_volume = Number(list15_oc[3].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[3].c_price) > 999){
-								this.min15_oc_rank4_close = Number(list15_oc[3].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank4_close = list15_oc[3].c_price
-							}
-
-							if(Math.abs(list15_oc[3].o_c_subtract) > 999){
-								this.min15_oc_rank4_o_c_subtract = Number(list15_oc[3].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank4_o_c_subtract = list15_oc[3].o_c_subtract
-							}
-
-							if(this.min15_oc_rank5_coin_name != list15_oc[4].coin_kor_name){
-								this.min15_oc_rank5_coin = list15_oc[4].coin_ticker;
-								this.min15_oc_rank5_coin_name = list15_oc[4].coin_kor_name;
-
-								if(this.min15_oc_rank5_coin_name != ''){
-									if(list15_oc[4].gubun == '상승'){
-										this.min15_oc_rank5_border_color = 'red';
-									}else if(list15_oc[4].gubun == '하락'){
-										this.min15_oc_rank5_border_color = 'blue';
-									}else if(list15_oc[4].gubun == '보합'){
-										this.min15_oc_rank5_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank5_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank5_gubun = list15_oc[4].gubun;
-							this.min15_oc_rank5_open = list15_oc[4].o_price;
-							this.min15_oc_rank5_low = list15_oc[4].l_price;
-							this.min15_oc_rank5_high = list15_oc[4].h_price;
-							this.min15_oc_rank5_close = '';
-							this.min15_oc_rank5_o_c_rate = list15_oc[4].o_c_rate + '%';
-							this.min15_oc_rank5_o_c_subtract = '';
-							this.min15_oc_rank5_price_volume = Number(list15_oc[4].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[4].c_price) > 999){
-								this.min15_oc_rank5_close = Number(list15_oc[4].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank5_close = list15_oc[4].c_price
-							}
-
-							if(Math.abs(list15_oc[4].o_c_subtract) > 999){
-								this.min15_oc_rank5_o_c_subtract = Number(list15_oc[4].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank5_o_c_subtract = list15_oc[4].o_c_subtract
-							}
-
-							if(this.min15_oc_rank6_coin_name != list15_oc[5].coin_kor_name){
-								this.min15_oc_rank6_coin = list15_oc[5].coin_ticker;
-								this.min15_oc_rank6_coin_name = list15_oc[5].coin_kor_name;
-
-								if(this.min15_oc_rank6_coin_name != ''){
-									if(list15_oc[5].gubun == '상승'){
-										this.min15_oc_rank6_border_color = 'red';
-									}else if(list15_oc[5].gubun == '하락'){
-										this.min15_oc_rank6_border_color = 'blue';
-									}else if(list15_oc[5].gubun == '보합'){
-										this.min15_oc_rank6_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank6_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank6_gubun = list15_oc[5].gubun;
-							this.min15_oc_rank6_open = list15_oc[5].o_price;
-							this.min15_oc_rank6_low = list15_oc[5].l_price;
-							this.min15_oc_rank6_high = list15_oc[5].h_price;
-							this.min15_oc_rank6_close = '';
-							this.min15_oc_rank6_o_c_rate = list15_oc[5].o_c_rate + '%';
-							this.min15_oc_rank6_o_c_subtract = '';
-							this.min15_oc_rank6_price_volume = Number(list15_oc[5].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[5].c_price) > 999){
-								this.min15_oc_rank6_close = Number(list15_oc[5].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank6_close = list15_oc[5].c_price
-							}
-
-							if(Math.abs(list15_oc[5].o_c_subtract) > 999){
-								this.min15_oc_rank6_o_c_subtract = Number(list15_oc[5].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank6_o_c_subtract = list15_oc[5].o_c_subtract
-							}
-
-							if(this.min15_oc_rank7_coin_name != list15_oc[6].coin_kor_name){
-								this.min15_oc_rank7_coin = list15_oc[6].coin_ticker;
-								this.min15_oc_rank7_coin_name = list15_oc[6].coin_kor_name;
-
-								if(this.min15_oc_rank7_coin_name != ''){
-									if(list15_oc[6].gubun == '상승'){
-										this.min15_oc_rank7_border_color = 'red';
-									}else if(list15_oc[6].gubun == '하락'){
-										this.min15_oc_rank7_border_color = 'blue';
-									}else if(list15_oc[6].gubun == '보합'){
-										this.min15_oc_rank7_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank7_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank7_gubun = list15_oc[6].gubun;
-							this.min15_oc_rank7_open = list15_oc[6].o_price;
-							this.min15_oc_rank7_low = list15_oc[6].l_price;
-							this.min15_oc_rank7_high = list15_oc[6].h_price;
-							this.min15_oc_rank7_close = '';
-							this.min15_oc_rank7_o_c_rate = list15_oc[6].o_c_rate + '%';
-							this.min15_oc_rank7_o_c_subtract = '';
-							this.min15_oc_rank7_price_volume = Number(list15_oc[6].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[6].c_price) > 999){
-								this.min15_oc_rank7_close = Number(list15_oc[6].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank7_close = list15_oc[6].c_price
-							}
-
-							if(Math.abs(list15_oc[6].o_c_subtract) > 999){
-								this.min15_oc_rank7_o_c_subtract = Number(list15_oc[6].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank7_o_c_subtract = list15_oc[6].o_c_subtract
-							}
-
-							if(this.min15_oc_rank8_coin_name != list15_oc[7].coin_kor_name){
-								this.min15_oc_rank8_coin = list15_oc[7].coin_ticker;
-								this.min15_oc_rank8_coin_name = list15_oc[7].coin_kor_name;
-
-								if(this.min15_oc_rank8_coin_name != ''){
-									if(list15_oc[7].gubun == '상승'){
-										this.min15_oc_rank8_border_color = 'red';
-									}else if(list15_oc[7].gubun == '하락'){
-										this.min15_oc_rank8_border_color = 'blue';
-									}else if(list15_oc[7].gubun == '보합'){
-										this.min15_oc_rank8_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank8_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank8_gubun = list15_oc[7].gubun;
-							this.min15_oc_rank8_open = list15_oc[7].o_price;
-							this.min15_oc_rank8_low = list15_oc[7].l_price;
-							this.min15_oc_rank8_high = list15_oc[7].h_price;
-							this.min15_oc_rank8_close = '';
-							this.min15_oc_rank8_o_c_rate = list15_oc[7].o_c_rate + '%';
-							this.min15_oc_rank8_o_c_subtract = '';
-							this.min15_oc_rank8_price_volume = Number(list15_oc[7].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[7].c_price) > 999){
-								this.min15_oc_rank8_close = Number(list15_oc[7].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank8_close = list15_oc[7].c_price
-							}
-
-							if(Math.abs(list15_oc[7].o_c_subtract) > 999){
-								this.min15_oc_rank8_o_c_subtract = Number(list15_oc[7].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank8_o_c_subtract = list15_oc[7].o_c_subtract
-							}
-
-							if(this.min15_oc_rank9_coin_name != list15_oc[8].coin_kor_name){
-								this.min15_oc_rank9_coin = list15_oc[8].coin_ticker;
-								this.min15_oc_rank9_coin_name = list15_oc[8].coin_kor_name;
-
-								if(this.min15_oc_rank9_coin_name != ''){
-									if(list15_oc[8].gubun == '상승'){
-										this.min15_oc_rank9_border_color = 'red';
-									}else if(list15_oc[8].gubun == '하락'){
-										this.min15_oc_rank9_border_color = 'blue';
-									}else if(list15_oc[8].gubun == '보합'){
-										this.min15_oc_rank9_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank9_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank9_gubun = list15_oc[8].gubun;
-							this.min15_oc_rank9_open = list15_oc[8].o_price;
-							this.min15_oc_rank9_low = list15_oc[8].l_price;
-							this.min15_oc_rank9_high = list15_oc[8].h_price;
-							this.min15_oc_rank9_close = '';
-							this.min15_oc_rank9_o_c_rate = list15_oc[8].o_c_rate + '%';
-							this.min15_oc_rank9_o_c_subtract = '';
-							this.min15_oc_rank9_price_volume = Number(list15_oc[8].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[8].c_price) > 999){
-								this.min15_oc_rank9_close = Number(list15_oc[8].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank9_close = list15_oc[8].c_price
-							}
-
-							if(Math.abs(list15_oc[8].o_c_subtract) > 999){
-								this.min15_oc_rank9_o_c_subtract = Number(list15_oc[8].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank9_o_c_subtract = list15_oc[8].o_c_subtract
-							}
-
-							if(this.min15_oc_rank10_coin_name != list15_oc[9].coin_kor_name){
-								this.min15_oc_rank10_coin = list15_oc[9].coin_ticker;
-								this.min15_oc_rank10_coin_name = list15_oc[9].coin_kor_name;
-
-								if(this.min15_oc_rank10_coin_name != ''){
-									if(list15_oc[9].gubun == '상승'){
-										this.min15_oc_rank10_border_color = 'red';
-									}else if(list15_oc[9].gubun == '하락'){
-										this.min15_oc_rank10_border_color = 'blue';
-									}else if(list15_oc[9].gubun == '보합'){
-										this.min15_oc_rank10_border_color = 'black';
-									}
-
-									setTimeout(() => 
-										this.min15_oc_rank10_border_color = 'white'
-									, 500);
-								}
-							}
-							this.min15_oc_rank10_gubun = list15_oc[9].gubun;
-							this.min15_oc_rank10_open = list15_oc[9].o_price;
-							this.min15_oc_rank10_low = list15_oc[9].l_price;
-							this.min15_oc_rank10_high = list15_oc[9].h_price;
-							this.min15_oc_rank10_close = '';
-							this.min15_oc_rank10_o_c_rate = list15_oc[9].o_c_rate + '%';
-							this.min15_oc_rank10_o_c_subtract = '';
-							this.min15_oc_rank10_price_volume = Number(list15_oc[9].price_volume).toLocaleString('ko-KR');
-							
-							if(Number(list15_oc[9].c_price) > 999){
-								this.min15_oc_rank10_close = Number(list15_oc[9].c_price).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank10_close = list15_oc[9].c_price
-							}
-
-							if(Math.abs(list15_oc[9].o_c_subtract) > 999){
-								this.min15_oc_rank10_o_c_subtract = Number(list15_oc[9].o_c_subtract).toLocaleString('ko-KR')
-							}else{
-								this.min15_oc_rank10_o_c_subtract = list15_oc[9].o_c_subtract
-							}
-
-							console.log('종료 ' + (new Date()))
+							setTimeout(() => 
+								this.volume_rank3_border_color = 'white'
+							, 500);
 						}
+					}
+					this.volume_rank3_gubun = list_volume[2].gubun;
+					this.volume_rank3_open = list_volume[2].o_price;
+					this.volume_rank3_low = list_volume[2].l_price;
+					this.volume_rank3_high = list_volume[2].h_price;
+					this.volume_rank3_close = list_volume[2].format_c_price;
+					this.volume_rank3_o_c_rate = list_volume[2].o_c_rate;
+					this.volume_rank3_o_c_subtract = list_volume[2].o_c_subtract;
+					this.volume_rank3_price_volume = list_volume[2].format_volume_price;
 
-						if(list15_volume.length == tmpBithumbList.length){
-							var today = new Date();
-							var year = today.getFullYear();
-							var month = ('0' + (today.getMonth() + 1)).slice(-2);
-							var day = ('0' + today.getDate()).slice(-2);
-							var hours = ('0' + today.getHours()).slice(-2); 
-							var minutes = ('0' + today.getMinutes()).slice(-2);
-							var seconds = ('0' + today.getSeconds()).slice(-2); 
-							
-							this.min15_gijun_datetime_kst = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
-							this.min15_gijun_datetime_kst = (this.min15_gijun_datetime_kst).replace('20','')
+					if(this.volume_rank4_coin_name != list_volume[3].Coin_Kor_Name){
+						this.volume_rank4_coin = list_volume[3].API_Coin_Ticker;
+						this.volume_rank4_coin_name = list_volume[3].Coin_Kor_Name;
 
-							this.RequestCompleteYN = 'Y'
+						if(this.volume_rank4_coin_name != ''){
+							if(list_volume[3].gubun == '상승'){
+								this.volume_rank4_border_color = 'red';
+							}else if(list_volume[3].gubun == '하락'){
+								this.volume_rank4_border_color = 'blue';
+							}else if(list_volume[3].gubun == '보합'){
+								this.volume_rank4_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.volume_rank4_border_color = 'white'
+							, 500);
 						}
-					})
+					}
+					this.volume_rank4_gubun = list_volume[3].gubun;
+					this.volume_rank4_open = list_volume[3].o_price;
+					this.volume_rank4_low = list_volume[3].l_price;
+					this.volume_rank4_high = list_volume[3].h_price;
+					this.volume_rank4_close = list_volume[3].format_c_price;
+					this.volume_rank4_o_c_rate = list_volume[3].o_c_rate;
+					this.volume_rank4_o_c_subtract = list_volume[3].o_c_subtract;
+					this.volume_rank4_price_volume = list_volume[3].format_volume_price;
+
+					if(this.volume_rank5_coin_name != list_volume[4].Coin_Kor_Name){
+						this.volume_rank5_coin = list_volume[4].API_Coin_Ticker;
+						this.volume_rank5_coin_name = list_volume[4].Coin_Kor_Name;
+
+						if(this.volume_rank5_coin_name != ''){
+							if(list_volume[4].gubun == '상승'){
+								this.volume_rank5_border_color = 'red';
+							}else if(list_volume[4].gubun == '하락'){
+								this.volume_rank5_border_color = 'blue';
+							}else if(list_volume[4].gubun == '보합'){
+								this.volume_rank5_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.volume_rank5_border_color = 'white'
+							, 500);
+						}
+					}
+					this.volume_rank5_gubun = list_volume[4].gubun;
+					this.volume_rank5_open = list_volume[4].o_price;
+					this.volume_rank5_low = list_volume[4].l_price;
+					this.volume_rank5_high = list_volume[4].h_price;
+					this.volume_rank5_close = list_volume[4].format_c_price;
+					this.volume_rank5_o_c_rate = list_volume[4].o_c_rate;
+					this.volume_rank5_o_c_subtract = list_volume[4].o_c_subtract;
+					this.volume_rank5_price_volume = list_volume[4].format_volume_price;
+
+					if(this.volume_rank6_coin_name != list_volume[5].Coin_Kor_Name){
+						this.volume_rank6_coin = list_volume[5].API_Coin_Ticker;
+						this.volume_rank6_coin_name = list_volume[5].Coin_Kor_Name;
+
+						if(this.volume_rank6_coin_name != ''){
+							if(list_volume[5].gubun == '상승'){
+								this.volume_rank6_border_color = 'red';
+							}else if(list_volume[5].gubun == '하락'){
+								this.volume_rank6_border_color = 'blue';
+							}else if(list_volume[5].gubun == '보합'){
+								this.volume_rank6_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.volume_rank6_border_color = 'white'
+							, 500);
+						}
+					}
+					this.volume_rank6_gubun = list_volume[5].gubun;
+					this.volume_rank6_open = list_volume[5].o_price;
+					this.volume_rank6_low = list_volume[5].l_price;
+					this.volume_rank6_high = list_volume[5].h_price;
+					this.volume_rank6_close = list_volume[5].format_c_price;
+					this.volume_rank6_o_c_rate = list_volume[5].o_c_rate;
+					this.volume_rank6_o_c_subtract = list_volume[5].o_c_subtract;
+					this.volume_rank6_price_volume = list_volume[5].format_volume_price;
+
+					if(this.volume_rank7_coin_name != list_volume[6].Coin_Kor_Name){
+						this.volume_rank7_coin = list_volume[6].API_Coin_Ticker;
+						this.volume_rank7_coin_name = list_volume[6].Coin_Kor_Name;
+
+						if(this.volume_rank7_coin_name != ''){
+							if(list_volume[6].gubun == '상승'){
+								this.volume_rank7_border_color = 'red';
+							}else if(list_volume[6].gubun == '하락'){
+								this.volume_rank7_border_color = 'blue';
+							}else if(list_volume[6].gubun == '보합'){
+								this.volume_rank7_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.volume_rank7_border_color = 'white'
+							, 500);
+						}
+					}
+					this.volume_rank7_gubun = list_volume[6].gubun;
+					this.volume_rank7_open = list_volume[6].o_price;
+					this.volume_rank7_low = list_volume[6].l_price;
+					this.volume_rank7_high = list_volume[6].h_price;
+					this.volume_rank7_close = list_volume[6].format_c_price;
+					this.volume_rank7_o_c_rate = list_volume[6].o_c_rate;
+					this.volume_rank7_o_c_subtract = list_volume[6].o_c_subtract;
+					this.volume_rank7_price_volume = list_volume[6].format_volume_price;
+
+					if(this.volume_rank8_coin_name != list_volume[7].Coin_Kor_Name){
+						this.volume_rank8_coin = list_volume[7].API_Coin_Ticker;
+						this.volume_rank8_coin_name = list_volume[7].Coin_Kor_Name;
+
+						if(this.volume_rank8_coin_name != ''){
+							if(list_volume[7].gubun == '상승'){
+								this.volume_rank8_border_color = 'red';
+							}else if(list_volume[7].gubun == '하락'){
+								this.volume_rank8_border_color = 'blue';
+							}else if(list_volume[7].gubun == '보합'){
+								this.volume_rank8_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.volume_rank8_border_color = 'white'
+							, 500);
+						}
+					}
+					this.volume_rank8_gubun = list_volume[7].gubun;
+					this.volume_rank8_open = list_volume[7].o_price;
+					this.volume_rank8_low = list_volume[7].l_price;
+					this.volume_rank8_high = list_volume[7].h_price;
+					this.volume_rank8_close = list_volume[7].format_c_price;
+					this.volume_rank8_o_c_rate = list_volume[7].o_c_rate;
+					this.volume_rank8_o_c_subtract = list_volume[7].o_c_subtract;
+					this.volume_rank8_price_volume = list_volume[7].format_volume_price;
+
+					if(this.volume_rank9_coin_name != list_volume[8].Coin_Kor_Name){
+						this.volume_rank9_coin = list_volume[8].API_Coin_Ticker;
+						this.volume_rank9_coin_name = list_volume[8].Coin_Kor_Name;
+
+						if(this.volume_rank9_coin_name != ''){
+							if(list_volume[8].gubun == '상승'){
+								this.volume_rank9_border_color = 'red';
+							}else if(list_volume[8].gubun == '하락'){
+								this.volume_rank9_border_color = 'blue';
+							}else if(list_volume[8].gubun == '보합'){
+								this.volume_rank9_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.volume_rank9_border_color = 'white'
+							, 500);
+						}
+					}
+					this.volume_rank9_gubun = list_volume[8].gubun;
+					this.volume_rank9_open = list_volume[8].o_price;
+					this.volume_rank9_low = list_volume[8].l_price;
+					this.volume_rank9_high = list_volume[8].h_price;
+					this.volume_rank9_close = list_volume[8].format_c_price;
+					this.volume_rank9_o_c_rate = list_volume[8].o_c_rate;
+					this.volume_rank9_o_c_subtract = list_volume[8].o_c_subtract;
+					this.volume_rank9_price_volume = list_volume[8].format_volume_price;
+
+					if(this.volume_rank10_coin_name != list_volume[9].Coin_Kor_Name){
+						this.volume_rank10_coin = list_volume[9].API_Coin_Ticker;
+						this.volume_rank10_coin_name = list_volume[9].Coin_Kor_Name;
+
+						if(this.volume_rank10_coin_name != ''){
+							if(list_volume[9].gubun == '상승'){
+								this.volume_rank10_border_color = 'red';
+							}else if(list_volume[9].gubun == '하락'){
+								this.volume_rank10_border_color = 'blue';
+							}else if(list_volume[9].gubun == '보합'){
+								this.volume_rank10_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.volume_rank10_border_color = 'white'
+							, 500);
+						}
+					}
+					this.volume_rank10_gubun = list_volume[9].gubun;
+					this.volume_rank10_open = list_volume[9].o_price;
+					this.volume_rank10_low = list_volume[9].l_price;
+					this.volume_rank10_high = list_volume[9].h_price;
+					this.volume_rank10_close = list_volume[9].format_c_price;
+					this.volume_rank10_o_c_rate = list_volume[9].o_c_rate;
+					this.volume_rank10_o_c_subtract = list_volume[9].o_c_subtract;
+					this.volume_rank10_price_volume = list_volume[9].format_volume_price;
+
+					var list_oc = list_volume.sort((a,b) => Number(b.o_c_rate.replace('%', '')) - Number(a.o_c_rate.replace('%', '')));
+
+					if(this.oc_rank1_coin_name != list_oc[0].Coin_Kor_Name){
+						this.oc_rank1_coin = list_oc[0].API_Coin_Ticker;
+						this.oc_rank1_coin_name = list_oc[0].Coin_Kor_Name;
+
+						if(this.oc_rank1_coin_name != ''){
+							if(list_oc[0].gubun == '상승'){
+								this.oc_rank1_border_color = 'red';
+							}else if(list_oc[0].gubun == '하락'){
+								this.oc_rank1_border_color = 'blue';
+							}else if(list_oc[0].gubun == '보합'){
+								this.oc_rank1_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank1_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank1_gubun = list_oc[0].gubun;
+					this.oc_rank1_open = list_oc[0].o_price;
+					this.oc_rank1_low = list_oc[0].l_price;
+					this.oc_rank1_high = list_oc[0].h_price;
+					this.oc_rank1_close = list_oc[0].format_c_price;
+					this.oc_rank1_o_c_rate = list_oc[0].o_c_rate;
+					this.oc_rank1_o_c_subtract = list_oc[0].o_c_subtract;
+					this.oc_rank1_price_volume = list_oc[0].format_volume_price;
+
+					if(this.oc_rank2_coin_name != list_oc[1].Coin_Kor_Name){
+						this.oc_rank2_coin = list_oc[1].API_Coin_Ticker;
+						this.oc_rank2_coin_name = list_oc[1].Coin_Kor_Name;
+
+						if(this.oc_rank2_coin_name != ''){
+							if(list_oc[1].gubun == '상승'){
+								this.oc_rank2_border_color = 'red';
+							}else if(list_oc[1].gubun == '하락'){
+								this.oc_rank2_border_color = 'blue';
+							}else if(list_oc[1].gubun == '보합'){
+								this.oc_rank2_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank2_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank2_gubun = list_oc[1].gubun;
+					this.oc_rank2_open = list_oc[1].o_price;
+					this.oc_rank2_low = list_oc[1].l_price;
+					this.oc_rank2_high = list_oc[1].h_price;
+					this.oc_rank2_close = list_oc[1].format_c_price;
+					this.oc_rank2_o_c_rate = list_oc[1].o_c_rate;
+					this.oc_rank2_o_c_subtract = list_oc[1].o_c_subtract;
+					this.oc_rank2_price_volume = list_oc[1].format_volume_price;
+
+					if(this.oc_rank3_coin_name != list_oc[2].Coin_Kor_Name){
+						this.oc_rank3_coin = list_oc[2].API_Coin_Ticker;
+						this.oc_rank3_coin_name = list_oc[2].Coin_Kor_Name;
+
+						if(this.oc_rank3_coin_name != ''){
+							if(list_oc[2].gubun == '상승'){
+								this.oc_rank3_border_color = 'red';
+							}else if(list_oc[2].gubun == '하락'){
+								this.oc_rank3_border_color = 'blue';
+							}else if(list_oc[2].gubun == '보합'){
+								this.oc_rank3_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank3_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank3_gubun = list_oc[2].gubun;
+					this.oc_rank3_open = list_oc[2].o_price;
+					this.oc_rank3_low = list_oc[2].l_price;
+					this.oc_rank3_high = list_oc[2].h_price;
+					this.oc_rank3_close = list_oc[2].format_c_price;
+					this.oc_rank3_o_c_rate = list_oc[2].o_c_rate;
+					this.oc_rank3_o_c_subtract = list_oc[2].o_c_subtract;
+					this.oc_rank3_price_volume = list_oc[2].format_volume_price;
+
+					if(this.oc_rank4_coin_name != list_oc[3].Coin_Kor_Name){
+						this.oc_rank4_coin = list_oc[3].API_Coin_Ticker;
+						this.oc_rank4_coin_name = list_oc[3].Coin_Kor_Name;
+
+						if(this.oc_rank4_coin_name != ''){
+							if(list_oc[3].gubun == '상승'){
+								this.oc_rank4_border_color = 'red';
+							}else if(list_oc[3].gubun == '하락'){
+								this.oc_rank4_border_color = 'blue';
+							}else if(list_oc[3].gubun == '보합'){
+								this.oc_rank4_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank4_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank4_gubun = list_oc[3].gubun;
+					this.oc_rank4_open = list_oc[3].o_price;
+					this.oc_rank4_low = list_oc[3].l_price;
+					this.oc_rank4_high = list_oc[3].h_price;
+					this.oc_rank4_close = list_oc[3].format_c_price;
+					this.oc_rank4_o_c_rate = list_oc[3].o_c_rate;
+					this.oc_rank4_o_c_subtract = list_oc[3].o_c_subtract;
+					this.oc_rank4_price_volume = list_oc[3].format_volume_price;
+
+					if(this.oc_rank5_coin_name != list_oc[4].Coin_Kor_Name){
+						this.oc_rank5_coin = list_oc[4].API_Coin_Ticker;
+						this.oc_rank5_coin_name = list_oc[4].Coin_Kor_Name;
+
+						if(this.oc_rank5_coin_name != ''){
+							if(list_oc[4].gubun == '상승'){
+								this.oc_rank5_border_color = 'red';
+							}else if(list_oc[4].gubun == '하락'){
+								this.oc_rank5_border_color = 'blue';
+							}else if(list_oc[4].gubun == '보합'){
+								this.oc_rank5_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank5_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank5_gubun = list_oc[4].gubun;
+					this.oc_rank5_open = list_oc[4].o_price;
+					this.oc_rank5_low = list_oc[4].l_price;
+					this.oc_rank5_high = list_oc[4].h_price;
+					this.oc_rank5_close = list_oc[4].format_c_price;
+					this.oc_rank5_o_c_rate = list_oc[4].o_c_rate;
+					this.oc_rank5_o_c_subtract = list_oc[4].o_c_subtract;
+					this.oc_rank5_price_volume = list_oc[4].format_volume_price;
+
+					if(this.oc_rank6_coin_name != list_oc[5].Coin_Kor_Name){
+						this.oc_rank6_coin = list_oc[5].API_Coin_Ticker;
+						this.oc_rank6_coin_name = list_oc[5].Coin_Kor_Name;
+
+						if(this.oc_rank6_coin_name != ''){
+							if(list_oc[5].gubun == '상승'){
+								this.oc_rank6_border_color = 'red';
+							}else if(list_oc[5].gubun == '하락'){
+								this.oc_rank6_border_color = 'blue';
+							}else if(list_oc[5].gubun == '보합'){
+								this.oc_rank6_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank6_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank6_gubun = list_oc[5].gubun;
+					this.oc_rank6_open = list_oc[5].o_price;
+					this.oc_rank6_low = list_oc[5].l_price;
+					this.oc_rank6_high = list_oc[5].h_price;
+					this.oc_rank6_close = list_oc[5].format_c_price;
+					this.oc_rank6_o_c_rate = list_oc[5].o_c_rate;
+					this.oc_rank6_o_c_subtract = list_oc[5].o_c_subtract;
+					this.oc_rank6_price_volume = list_oc[5].format_volume_price;
+
+					if(this.oc_rank7_coin_name != list_oc[6].Coin_Kor_Name){
+						this.oc_rank7_coin = list_oc[6].API_Coin_Ticker;
+						this.oc_rank7_coin_name = list_oc[6].Coin_Kor_Name;
+
+						if(this.oc_rank7_coin_name != ''){
+							if(list_oc[6].gubun == '상승'){
+								this.oc_rank7_border_color = 'red';
+							}else if(list_oc[6].gubun == '하락'){
+								this.oc_rank7_border_color = 'blue';
+							}else if(list_oc[6].gubun == '보합'){
+								this.oc_rank7_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank7_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank7_gubun = list_oc[6].gubun;
+					this.oc_rank7_open = list_oc[6].o_price;
+					this.oc_rank7_low = list_oc[6].l_price;
+					this.oc_rank7_high = list_oc[6].h_price;
+					this.oc_rank7_close = list_oc[6].format_c_price;
+					this.oc_rank7_o_c_rate = list_oc[6].o_c_rate;
+					this.oc_rank7_o_c_subtract = list_oc[6].o_c_subtract;
+					this.oc_rank7_price_volume = list_oc[6].format_volume_price;
+
+					if(this.oc_rank8_coin_name != list_oc[7].Coin_Kor_Name){
+						this.oc_rank8_coin = list_oc[7].API_Coin_Ticker;
+						this.oc_rank8_coin_name = list_oc[7].Coin_Kor_Name;
+
+						if(this.oc_rank8_coin_name != ''){
+							if(list_oc[7].gubun == '상승'){
+								this.oc_rank8_border_color = 'red';
+							}else if(list_oc[7].gubun == '하락'){
+								this.oc_rank8_border_color = 'blue';
+							}else if(list_oc[7].gubun == '보합'){
+								this.oc_rank8_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank8_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank8_gubun = list_oc[7].gubun;
+					this.oc_rank8_open = list_oc[7].o_price;
+					this.oc_rank8_low = list_oc[7].l_price;
+					this.oc_rank8_high = list_oc[7].h_price;
+					this.oc_rank8_close = list_oc[7].format_c_price;
+					this.oc_rank8_o_c_rate = list_oc[7].o_c_rate;
+					this.oc_rank8_o_c_subtract = list_oc[7].o_c_subtract;
+					this.oc_rank8_price_volume = list_oc[7].format_volume_price;
+
+					if(this.oc_rank9_coin_name != list_oc[8].Coin_Kor_Name){
+						this.oc_rank9_coin = list_oc[8].API_Coin_Ticker;
+						this.oc_rank9_coin_name = list_oc[8].Coin_Kor_Name;
+
+						if(this.oc_rank9_coin_name != ''){
+							if(list_oc[8].gubun == '상승'){
+								this.oc_rank9_border_color = 'red';
+							}else if(list_oc[8].gubun == '하락'){
+								this.oc_rank9_border_color = 'blue';
+							}else if(list_oc[8].gubun == '보합'){
+								this.oc_rank9_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank9_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank9_gubun = list_oc[8].gubun;
+					this.oc_rank9_open = list_oc[8].o_price;
+					this.oc_rank9_low = list_oc[8].l_price;
+					this.oc_rank9_high = list_oc[8].h_price;
+					this.oc_rank9_close = list_oc[8].format_c_price;
+					this.oc_rank9_o_c_rate = list_oc[8].o_c_rate;
+					this.oc_rank9_o_c_subtract = list_oc[8].o_c_subtract;
+					this.oc_rank9_price_volume = list_oc[8].format_volume_price;
+
+					if(this.oc_rank10_coin_name != list_oc[9].Coin_Kor_Name){
+						this.oc_rank10_coin = list_oc[9].API_Coin_Ticker;
+						this.oc_rank10_coin_name = list_oc[9].Coin_Kor_Name;
+
+						if(this.oc_rank10_coin_name != ''){
+							if(list_oc[9].gubun == '상승'){
+								this.oc_rank10_border_color = 'red';
+							}else if(list_oc[9].gubun == '하락'){
+								this.oc_rank10_border_color = 'blue';
+							}else if(list_oc[9].gubun == '보합'){
+								this.oc_rank10_border_color = 'black';
+							}
+
+							setTimeout(() => 
+								this.oc_rank10_border_color = 'white'
+							, 500);
+						}
+					}
+					this.oc_rank10_gubun = list_oc[9].gubun;
+					this.oc_rank10_open = list_oc[9].o_price;
+					this.oc_rank10_low = list_oc[9].l_price;
+					this.oc_rank10_high = list_oc[9].h_price;
+					this.oc_rank10_close = list_oc[9].format_c_price;
+					this.oc_rank10_o_c_rate = list_oc[9].o_c_rate;
+					this.oc_rank10_o_c_subtract = list_oc[9].o_c_subtract;
+					this.oc_rank10_price_volume = list_oc[9].format_volume_price;
+
+					this.RequestCompleteYN = 'Y'
+				}else{
+					this.RequestCompleteYN = 'Y'
 				}
 			})
 		},
@@ -2081,16 +1692,16 @@ export default {
 				//this.Data_MIN_15_Make();
 			}
 
-			if(this.RequestCompleteYN == 'Y' && (Number(ss) == 0 || Number(ss) == 10 || Number(ss) == 20 || Number(ss) == 30 || Number(ss) == 40 || Number(ss) == 50)){
+			if(this.RequestCompleteYN == 'Y' && (Number(ss) == 0 || Number(ss) == 20 || Number(ss) == 40)){
 				this.Data_MIN_15_Make();
 			}
 
-			if(this.min15_gijun_datetime_kst != ''){
-				var min15_mi = (this.min15_gijun_datetime_kst).substr(12, 2)
+			if(this.current_datetime_kst != ''){
+				var mi = (this.current_datetime_kst).substr(12, 2)
 				
-				if((Number(min15_mi) == 0 && Number(mi) == 2) || (Number(min15_mi) == 0 && Number(mi) == 2)){
+				if((Number(mi) == 0 && Number(mi) == 2) || (Number(mi) == 0 && Number(mi) == 2)){
 					this.Data_MIN_15_Make();
-				}else if((Number(min15_mi) < Number(mi)-1) || (Number(min15_mi) > Number(mi)+1) || (Number(min15_mi) < Number(mi)-1) || (Number(min15_mi) > Number(mi)+1)){
+				}else if((Number(mi) < Number(mi)-1) || (Number(mi) > Number(mi)+1) || (Number(mi) < Number(mi)-1) || (Number(mi) > Number(mi)+1)){
 					this.Data_MIN_15_Make();
 				}
 			}
