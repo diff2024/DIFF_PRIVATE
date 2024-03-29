@@ -1638,24 +1638,6 @@ export default {
 				this.rank1_o_c_price_rate = this.zeroCut(this.rank1_o_c_price_rate)
 				this.rank1_l_h_price_rate = this.zeroCut(this.rank1_l_h_price_rate)
 
-				/*
-				24년 3월 9일 빗썸 코인 분석을 시작하겠습니다.
-
-				24년 3월 9일 빗썸 원화 코인 272종 중 시가대비종가 기준 상승인 코인이 197종, 하락인 코인이 68종, 보합인 코인이 7종입니다.
-
-				먼저 기준이 되는 비트코인는 95949000원으로 시작해 젓가 93795000원, 곳가 98000000원을 기록하고 95477000원으로 마감하였고, 시까대비종까는 -0.49% 하락하였고, 젓가대비곳가는 4.48% 상승 하였습니다.
-
-				상승율 5위는 일드길드게임즈로 901원으로 시작해 젓가 840원, 곳가 1304원을 기록하고 1227원으로 마감하였고, 시까대비종까는 36.18% 상승하였고, 젓가대비곳가는 55.24% 상승 하였습니다.
-
-				상승율 4위는 라이브피어로 22880원으로 시작해 젓가 21450원, 곳가 37770원을 기록하고 31900원으로 마감하였고, 시까대비종까는 39.42% 상승하였고, 젓가대비곳가는 76.08% 상승 하였습니다.
-
-				상승율 3위는 월드코인으로 10120원으로 시작해 젓가 9845원, 곳가 15500원을 기록하고 14370원으로 마감하였고, 시까대비종까는 42.% 상승하였고, 젓가대비곳가는 57.44% 상승 하였습니다.
-
-				상승율 2위는 알에스에스쓰리로 358원으로 시작해 젓가 333원, 곳가 552원을 기록하고 515원으로 마감하였고, 시까대비종까는 43.85% 상승하였고, 젓가대비곳가는 65.77% 상승 하였습니다.
-
-				상승율 1위는 게이머코인으로 122원으로 시작해 젓가 117원, 곳가 214원을 기록하고 201원으로 마감하였고, 시까대비종까는 64.75% 상승하였고, 젓가대비곳가는 82.91% 상승 하였습니다.
-				*/
-
 				this.video_title_html = '<div id="video_title" style="color:black; width:500px; padding-top:50px; padding-bottom:50px;">'
 				this.video_title_html += '<h1 style="text-align:center; vertical-align:middle; line-height:1.5; font-size:36px;">'+video_title+'</h1>';
 				this.video_title_html += '</div>'
@@ -4378,14 +4360,18 @@ export default {
 							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-size:18px; font-weight:bold;">기준</td>'
 							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:left; font-size:18px; padding:5px;">비트코인 [BTC]</td>'
 							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
-							if(String(this.btc_o_c_price_rate).includes('-')){
+							if(String(this.btc_o_price) == String(this.btc_c_price)){
+								temp_video_html += ' color:black;'
+							}else if(String(this.btc_o_c_price_rate).includes('-')){
 								temp_video_html += ' color:blue;'
 							}else{
 								temp_video_html += ' color:red;'
 							}
 							temp_video_html += '">'+String(this.btc_o_c_price_rate)+'%</td>'
 							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
-							if(String(this.btc_l_h_price_rate).includes('-')){
+							if(String(this.btc_l_price) == String(this.btc_h_price)){
+								temp_video_html += ' color:black;'
+							}else if(String(this.btc_l_h_price_rate).includes('-')){
 								temp_video_html += ' color:blue;'
 							}else{
 								temp_video_html += ' color:red;'
@@ -4410,14 +4396,18 @@ export default {
 						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; font-weight:bold; padding-right:5px;">'+rank_ranking+'</td>'
 						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:left; font-size:18px; padding:5px;">'+rank_coin_kor_name+' ['+rank_coin_ticker+']</td>'
 						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
-						if(String(rank_o_c_rate).includes('-')){
+						if(String(rank_open_price) == String(rank_close_price)){
+							temp_video_html += ' color:black;'
+						}else if(String(rank_o_c_rate).includes('-')){
 							temp_video_html += ' color:blue;'
 						}else{
 							temp_video_html += ' color:red;'
 						}
 						temp_video_html += '">'+rank_o_c_rate+'%</td>'
 						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
-						if(String(rank_l_h_rate).includes('-')){
+						if(String(rank_low_price) == String(rank_high_price)){
+							temp_video_html += ' color:black;'
+						}else if(String(rank_l_h_rate).includes('-')){
 							temp_video_html += ' color:blue;'
 						}else{
 							temp_video_html += ' color:red;'
@@ -4629,14 +4619,18 @@ export default {
 							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:center; font-size:18px; font-weight:bold;">기준</td>'
 							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:left; font-size:18px; padding:5px;">비트코인 [BTC]</td>'
 							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
-							if(String(this.btc_o_c_price_rate).includes('-')){
+							if(String(this.btc_o_price) == String(this.btc_c_price)){
+								temp_video_html += ' color:black;'
+							}else if(String(this.btc_o_c_price_rate).includes('-')){
 								temp_video_html += ' color:blue;'
 							}else{
 								temp_video_html += ' color:red;'
 							}
 							temp_video_html += '">'+String(this.btc_o_c_price_rate)+'%</td>'
 							temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
-							if(String(this.btc_l_h_price_rate).includes('-')){
+							if(String(this.btc_l_price) == String(this.btc_h_price)){
+								temp_video_html += ' color:black;'
+							}else if(String(this.btc_l_h_price_rate).includes('-')){
 								temp_video_html += ' color:blue;'
 							}else{
 								temp_video_html += ' color:red;'
@@ -4661,14 +4655,18 @@ export default {
 						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; font-weight:bold; padding-right:5px;">'+rank_ranking+'</td>'
 						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:left; font-size:18px; padding:5px;">'+rank_coin_kor_name+' ['+rank_coin_ticker+']</td>'
 						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
-						if(String(rank_o_c_rate).includes('-')){
+						if(String(rank_open_price) == String(rank_close_price)){
+							temp_video_html += ' color:black;'
+						}else if(String(rank_o_c_rate).includes('-')){
 							temp_video_html += ' color:blue;'
 						}else{
 							temp_video_html += ' color:red;'
 						}
 						temp_video_html += '">'+rank_o_c_rate+'%</td>'
 						temp_video_html += '<td style="border: 1px solid black; border-right:0px solid black; border-top:0px solid black; text-align:right; font-size:18px; padding:5px;'
-						if(String(rank_l_h_rate).includes('-')){
+						if(String(rank_low_price) == String(rank_high_price)){
+							temp_video_html += ' color:black;'
+						}else if(String(rank_l_h_rate).includes('-')){
 							temp_video_html += ' color:blue;'
 						}else{
 							temp_video_html += ' color:red;'

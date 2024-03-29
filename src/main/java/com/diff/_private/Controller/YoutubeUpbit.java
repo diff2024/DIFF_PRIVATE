@@ -9,6 +9,7 @@ import java.net.URL;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -133,8 +134,25 @@ public class YoutubeUpbit {
         String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_5)).substring(0, 10);
         String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
         
-		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+		List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("api_coin_ticker", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			if(x == Math.ceil(CoinList.size()/2)) {
@@ -330,8 +348,25 @@ public class YoutubeUpbit {
         String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_15)).substring(0, 10);
         String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
         
-		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+        List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("api_coin_ticker", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			if(x == Math.ceil(CoinList.size()/2)) {
@@ -516,8 +551,25 @@ public class YoutubeUpbit {
         String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_60)).substring(0, 10);
         String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
         
-		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+        List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("api_coin_ticker", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			if(x == Math.ceil(CoinList.size()/2)) {
@@ -721,8 +773,25 @@ public class YoutubeUpbit {
         String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_240)).substring(0, 10);
         String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
         
-		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+        List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("api_coin_ticker", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			if(x == Math.ceil(CoinList.size()/2)) {
@@ -932,8 +1001,25 @@ public class YoutubeUpbit {
         String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_5)).substring(0, 10);
         String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
         
-		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+        List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("api_coin_ticker", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			if(x == Math.ceil(CoinList.size()/2)) {
@@ -1129,8 +1215,25 @@ public class YoutubeUpbit {
         String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_15)).substring(0, 10);
         String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
         
-		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+        List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("api_coin_ticker", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			if(x == Math.ceil(CoinList.size()/2)) {
@@ -1315,8 +1418,25 @@ public class YoutubeUpbit {
         String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_60)).substring(0, 10);
         String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
         
-		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+        List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("api_coin_ticker", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			if(x == Math.ceil(CoinList.size()/2)) {
@@ -1520,8 +1640,25 @@ public class YoutubeUpbit {
         String FROM_TIMESTAMP = (Long.toString(TIMESTMAP_240)).substring(0, 10);
         String TO_TIMESTAMP = (Long.toString(TIMESTMAP)).substring(0, 10);
         
-		List<HashMap<String, String>> CoinList = MainService.UpbitCoinList();
+        List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("api_coin_ticker", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			if(x == Math.ceil(CoinList.size()/2)) {

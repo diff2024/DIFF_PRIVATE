@@ -26,9 +26,12 @@ import com.diff._private.Service.BitCoinService;
 import com.diff._private.Service.BinanceCoinService;
 import com.diff._private.Service.BinanceFuturesCoinService;
 import com.diff._private.Service.BybitCoinService;
+
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -72,6 +75,70 @@ public class Schedule {
 	
 	@Autowired
 	BybitCoinService BybitCoinService;
+	
+	@Scheduled(cron = "55 0/5 * * * *")
+    public void CointInfoTextList() throws Exception {
+		/*
+		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[CointInfoTextList-시작][" + START_DATETIME + "] 시작");
+		
+		List<HashMap<String, String>> UpbitCoinList = MainService.UpbitCoinList();
+		List<HashMap<String, String>> BithumbCoinList = MainService.BithumbCoinList();
+		
+		String BithumbText = "";
+		String UpbitText = "";
+		
+		for(int x=0; x<BithumbCoinList.size(); x++) {
+			String coin_ticker = BithumbCoinList.get(x).get("coin_ticker");
+			String coin_kor_name = BithumbCoinList.get(x).get("coin_kor_name");
+			String coin_number = BithumbCoinList.get(x).get("coin_number");
+			
+			if(BithumbText.equals("")) {
+				BithumbText += coin_ticker+"▦"+coin_kor_name+"▦"+coin_number;
+			} else {
+				BithumbText += "▒"+coin_ticker+"▦"+coin_kor_name+"▦"+coin_number;
+			}
+		}
+		
+		for(int x=0; x<UpbitCoinList.size(); x++) {
+			String coin_ticker = UpbitCoinList.get(x).get("coin_ticker");
+			String api_coin_ticker = UpbitCoinList.get(x).get("api_coin_ticker");
+			String coin_kor_name = UpbitCoinList.get(x).get("coin_kor_name");
+			
+			if(UpbitText.equals("")) {
+				UpbitText += coin_ticker+"▦"+api_coin_ticker+"▦"+coin_kor_name;
+			} else {
+				UpbitText += "▒"+coin_ticker+"▦"+api_coin_ticker+"▦"+coin_kor_name;
+			}
+		}
+		
+		String Path = "C:\\Coin";
+        String BithumbFileName = "BithumbCointInfo.txt";
+        String UpbitFileName = "UpbitCointInfo.txt";
+        
+        File BithumbFile = new File(Path, BithumbFileName);
+        File UpbitFile = new File(Path, UpbitFileName);
+        
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(BithumbFile));
+            writer.write(BithumbText);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(UpbitFile));
+            writer.write(UpbitText);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[CointInfoTextList-종료][" + END_DATETIME + "] 종료");
+		*/
+	}
 	
 	@Async
 	@Scheduled(cron = "0 30 0/1 * * *")

@@ -20,7 +20,7 @@
   <div>
 	<v-flex xs12 sm12 md12>
 		<v-row>
-			<v-col xl="12" md="12" sm="12" style="height:70px; padding-top:0px;"></v-col>
+			<v-col xl="12" md="12" sm="12" style="height:40px; padding-top:0px;"></v-col>
 		</v-row>
 		<v-row>
 			<v-col xl="6" md="6" sm="6" style="text-align:center; padding-top:0px; padding-right:40px; padding-left:25px;">
@@ -48,7 +48,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank1_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank1_border_color, 'font-size': min60_volume_rank1_font_size }">
 						{{ min60_volume_rank1_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -87,7 +87,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank2_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank2_border_color, 'font-size': min60_volume_rank2_font_size }">
 						{{ min60_volume_rank2_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -126,7 +126,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank3_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank3_border_color, 'font-size': min60_volume_rank3_font_size }">
 						{{ min60_volume_rank3_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -165,7 +165,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank4_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank4_border_color, 'font-size': min60_volume_rank4_font_size }">
 						{{ min60_volume_rank4_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -204,7 +204,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank5_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank5_border_color, 'font-size': min60_volume_rank5_font_size }">
 						{{ min60_volume_rank5_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -243,7 +243,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank6_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank6_border_color, 'font-size': min60_volume_rank6_font_size }">
 						{{ min60_volume_rank6_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -282,7 +282,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank7_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank7_border_color, 'font-size': min60_volume_rank7_font_size }">
 						{{ min60_volume_rank7_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -321,7 +321,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank8_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank8_border_color, 'font-size': min60_volume_rank8_font_size }">
 						{{ min60_volume_rank8_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -360,7 +360,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank9_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank9_border_color, 'font-size': min60_volume_rank9_font_size }">
 						{{ min60_volume_rank9_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -399,7 +399,7 @@
 				</v-row>
 				
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank10_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-left:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_volume_rank10_border_color, 'font-size': min60_volume_rank10_font_size }">
 						{{ min60_volume_rank10_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -463,7 +463,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank1_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank1_border_color, 'font-size': min60_oc_rank1_font_size }">
 						{{ min60_oc_rank1_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -502,7 +502,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank2_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank2_border_color, 'font-size': min60_oc_rank2_font_size }">
 						{{ min60_oc_rank2_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -541,7 +541,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank3_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank3_border_color, 'font-size': min60_oc_rank3_font_size }">
 						{{ min60_oc_rank3_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -580,7 +580,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank4_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank4_border_color, 'font-size': min60_oc_rank4_font_size }">
 						{{ min60_oc_rank4_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -619,7 +619,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank5_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank5_border_color, 'font-size': min60_oc_rank5_font_size }">
 						{{ min60_oc_rank5_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -658,7 +658,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank6_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank6_border_color, 'font-size': min60_oc_rank6_font_size }">
 						{{ min60_oc_rank6_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -697,7 +697,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank7_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank7_border_color, 'font-size': min60_oc_rank7_font_size }">
 						{{ min60_oc_rank7_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -736,7 +736,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank8_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank8_border_color, 'font-size': min60_oc_rank8_font_size }">
 						{{ min60_oc_rank8_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -775,7 +775,7 @@
 				</v-row>
 
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank9_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank9_border_color, 'font-size': min60_oc_rank9_font_size }">
 						{{ min60_oc_rank9_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -814,7 +814,7 @@
 				</v-row>
 				
 				<v-row>
-					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank10_border_color }">
+					<v-col xl="4" md="4" sm="4" style="text-align: left; padding-right:20px; padding-right:0px; padding-top: 15px; color:black; font-weight:bold; font-size:40px;" v-bind:style="{ border: '3px solid ' + min60_oc_rank10_border_color, 'font-size': min60_oc_rank10_font_size }">
 						{{ min60_oc_rank10_coin_name }}
 					</v-col>
 					<v-col xl="2" md="2" sm="2" style="text-align: right; padding-left:0px; padding-right:0px; padding-top:15px; color:black; font-size:36px;">
@@ -879,6 +879,7 @@ export default {
 			min60_volume_rank1_coin : '',
 			min60_volume_rank1_coin_name : '',
 			min60_volume_rank1_border_color : 'white',
+			min60_volume_rank1_font_size : '',
 			min60_volume_rank1_gubun : '',
 			min60_volume_rank1_open : '',
 			min60_volume_rank1_low : '',
@@ -891,6 +892,7 @@ export default {
 			min60_volume_rank2_coin : '',
 			min60_volume_rank2_coin_name : '',
 			min60_volume_rank2_border_color : 'white',
+			min60_volume_rank2_font_size : '',
 			min60_volume_rank2_gubun : '',
 			min60_volume_rank2_open : '',
 			min60_volume_rank2_low : '',
@@ -903,6 +905,7 @@ export default {
 			min60_volume_rank3_coin : '',
 			min60_volume_rank3_coin_name : '',
 			min60_volume_rank3_border_color : 'white',
+			min60_volume_rank3_font_size : '',
 			min60_volume_rank3_gubun : '',
 			min60_volume_rank3_open : '',
 			min60_volume_rank3_low : '',
@@ -915,6 +918,7 @@ export default {
 			min60_volume_rank4_coin : '',
 			min60_volume_rank4_coin_name : '',
 			min60_volume_rank4_border_color : 'white',
+			min60_volume_rank4_font_size : '',
 			min60_volume_rank4_gubun : '',
 			min60_volume_rank4_open : '',
 			min60_volume_rank4_low : '',
@@ -927,6 +931,7 @@ export default {
 			min60_volume_rank5_coin : '',
 			min60_volume_rank5_coin_name : '',
 			min60_volume_rank5_border_color : 'white',
+			min60_volume_rank5_font_size : '',
 			min60_volume_rank5_gubun : '',
 			min60_volume_rank5_open : '',
 			min60_volume_rank5_low : '',
@@ -939,6 +944,7 @@ export default {
 			min60_volume_rank6_coin : '',
 			min60_volume_rank6_coin_name : '',
 			min60_volume_rank6_border_color : 'white',
+			min60_volume_rank6_font_size : '',
 			min60_volume_rank6_gubun : '',
 			min60_volume_rank6_open : '',
 			min60_volume_rank6_low : '',
@@ -951,6 +957,7 @@ export default {
 			min60_volume_rank7_coin : '',
 			min60_volume_rank7_coin_name : '',
 			min60_volume_rank7_border_color : 'white',
+			min60_volume_rank7_font_size : '',
 			min60_volume_rank7_gubun : '',
 			min60_volume_rank7_open : '',
 			min60_volume_rank7_low : '',
@@ -963,6 +970,7 @@ export default {
 			min60_volume_rank8_coin : '',
 			min60_volume_rank8_coin_name : '',
 			min60_volume_rank8_border_color : 'white',
+			min60_volume_rank8_font_size : '',
 			min60_volume_rank8_gubun : '',
 			min60_volume_rank8_open : '',
 			min60_volume_rank8_low : '',
@@ -975,6 +983,7 @@ export default {
 			min60_volume_rank9_coin : '',
 			min60_volume_rank9_coin_name : '',
 			min60_volume_rank9_border_color : 'white',
+			min60_volume_rank9_font_size : '',
 			min60_volume_rank9_gubun : '',
 			min60_volume_rank9_open : '',
 			min60_volume_rank9_low : '',
@@ -987,6 +996,7 @@ export default {
 			min60_volume_rank10_coin : '',
 			min60_volume_rank10_coin_name : '',
 			min60_volume_rank10_border_color : 'white',
+			min60_volume_rank10_font_size : '',
 			min60_volume_rank10_gubun : '',
 			min60_volume_rank10_open : '',
 			min60_volume_rank10_low : '',
@@ -999,6 +1009,7 @@ export default {
 			min60_oc_rank1_coin : '',
 			min60_oc_rank1_coin_name : '',
 			min60_oc_rank1_border_color : 'white',
+			min60_oc_rank1_font_size : '',
 			min60_oc_rank1_gubun : '',
 			min60_oc_rank1_open : '',
 			min60_oc_rank1_low : '',
@@ -1011,6 +1022,7 @@ export default {
 			min60_oc_rank2_coin : '',
 			min60_oc_rank2_coin_name : '',
 			min60_oc_rank2_border_color : 'white',
+			min60_oc_rank2_font_size : '',
 			min60_oc_rank2_gubun : '',
 			min60_oc_rank2_open : '',
 			min60_oc_rank2_low : '',
@@ -1023,6 +1035,7 @@ export default {
 			min60_oc_rank3_coin : '',
 			min60_oc_rank3_coin_name : '',
 			min60_oc_rank3_border_color : 'white',
+			min60_oc_rank3_font_size : '',
 			min60_oc_rank3_gubun : '',
 			min60_oc_rank3_open : '',
 			min60_oc_rank3_low : '',
@@ -1035,6 +1048,7 @@ export default {
 			min60_oc_rank4_coin : '',
 			min60_oc_rank4_coin_name : '',
 			min60_oc_rank4_border_color : 'white',
+			min60_oc_rank4_font_size : '',
 			min60_oc_rank4_gubun : '',
 			min60_oc_rank4_open : '',
 			min60_oc_rank4_low : '',
@@ -1047,6 +1061,7 @@ export default {
 			min60_oc_rank5_coin : '',
 			min60_oc_rank5_coin_name : '',
 			min60_oc_rank5_border_color : 'white',
+			min60_oc_rank5_font_size : '',
 			min60_oc_rank5_gubun : '',
 			min60_oc_rank5_open : '',
 			min60_oc_rank5_low : '',
@@ -1059,6 +1074,7 @@ export default {
 			min60_oc_rank6_coin : '',
 			min60_oc_rank6_coin_name : '',
 			min60_oc_rank6_border_color : 'white',
+			min60_oc_rank6_font_size : '',
 			min60_oc_rank6_gubun : '',
 			min60_oc_rank6_open : '',
 			min60_oc_rank6_low : '',
@@ -1071,6 +1087,7 @@ export default {
 			min60_oc_rank7_coin : '',
 			min60_oc_rank7_coin_name : '',
 			min60_oc_rank7_border_color : 'white',
+			min60_oc_rank7_font_size : '',
 			min60_oc_rank7_gubun : '',
 			min60_oc_rank7_open : '',
 			min60_oc_rank7_low : '',
@@ -1083,6 +1100,7 @@ export default {
 			min60_oc_rank8_coin : '',
 			min60_oc_rank8_coin_name : '',
 			min60_oc_rank8_border_color : 'white',
+			min60_oc_rank8_font_size : '',
 			min60_oc_rank8_gubun : '',
 			min60_oc_rank8_open : '',
 			min60_oc_rank8_low : '',
@@ -1095,6 +1113,7 @@ export default {
 			min60_oc_rank9_coin : '',
 			min60_oc_rank9_coin_name : '',
 			min60_oc_rank9_border_color : 'white',
+			min60_oc_rank9_font_size : '',
 			min60_oc_rank9_gubun : '',
 			min60_oc_rank9_open : '',
 			min60_oc_rank9_low : '',
@@ -1107,6 +1126,7 @@ export default {
 			min60_oc_rank10_coin : '',
 			min60_oc_rank10_coin_name : '',
 			min60_oc_rank10_border_color : 'white',
+			min60_oc_rank10_font_size : '',
 			min60_oc_rank10_gubun : '',
 			min60_oc_rank10_open : '',
 			min60_oc_rank10_low : '',
@@ -1143,6 +1163,14 @@ export default {
 							this.min60_volume_rank1_coin = this.list60_volume[0].API_Coin_Ticker;
 							this.min60_volume_rank1_coin_name = this.list60_volume[0].Coin_Kor_Name;
 
+							if((this.min60_volume_rank1_coin_name).trim().length > 10){
+								this.min60_volume_rank1_font_size = ' 32px '
+							}else if((this.min60_volume_rank1_coin_name).trim().length == 10){
+								this.min60_volume_rank1_font_size = ' 36px '
+							}else{
+								this.min60_volume_rank1_font_size = ' 40px '
+							}
+							
 							if(this.min60_volume_rank1_coin_name != ''){
 								if(this.list60_volume[0].gubun == '상승'){
 									this.min60_volume_rank1_border_color = 'red';
@@ -1171,6 +1199,14 @@ export default {
 						this.min60_volume_rank2_coin = this.list60_volume[1].API_Coin_Ticker;
 						this.min60_volume_rank2_coin_name = this.list60_volume[1].Coin_Kor_Name;
 
+						if((this.min60_volume_rank2_coin_name).trim().length > 10){
+							this.min60_volume_rank2_font_size = ' 32px '
+						}else if((this.min60_volume_rank2_coin_name).trim().length == 10){
+							this.min60_volume_rank2_font_size = ' 36px '
+						}else{
+							this.min60_volume_rank2_font_size = ' 40px '
+						}
+						
 						if(this.min60_volume_rank2_coin_name != ''){
 							if(this.list60_volume[1].gubun == '상승'){
 								this.min60_volume_rank2_border_color = 'red';
@@ -1197,6 +1233,14 @@ export default {
 					if(this.min60_volume_rank3_coin_name != this.list60_volume[2].Coin_Kor_Name){
 						this.min60_volume_rank3_coin = this.list60_volume[2].API_Coin_Ticker;
 						this.min60_volume_rank3_coin_name = this.list60_volume[2].Coin_Kor_Name;
+
+						if((this.min60_volume_rank3_coin_name).trim().length > 10){
+							this.min60_volume_rank3_font_size = ' 32px '
+						}else if((this.min60_volume_rank3_coin_name).trim().length == 10){
+							this.min60_volume_rank3_font_size = ' 36px '
+						}else{
+							this.min60_volume_rank3_font_size = ' 40px '
+						}
 
 						if(this.min60_volume_rank3_coin_name != ''){
 							if(this.list60_volume[2].gubun == '상승'){
@@ -1225,6 +1269,14 @@ export default {
 						this.min60_volume_rank4_coin = this.list60_volume[3].API_Coin_Ticker;
 						this.min60_volume_rank4_coin_name = this.list60_volume[3].Coin_Kor_Name;
 
+						if((this.min60_volume_rank4_coin_name).trim().length > 10){
+							this.min60_volume_rank4_font_size = ' 32px '
+						}else if((this.min60_volume_rank4_coin_name).trim().length == 10){
+							this.min60_volume_rank4_font_size = ' 36px '
+						}else{
+							this.min60_volume_rank4_font_size = ' 40px '
+						}
+
 						if(this.min60_volume_rank4_coin_name != ''){
 							if(this.list60_volume[3].gubun == '상승'){
 								this.min60_volume_rank4_border_color = 'red';
@@ -1251,6 +1303,14 @@ export default {
 					if(this.min60_volume_rank5_coin_name != this.list60_volume[4].Coin_Kor_Name){
 						this.min60_volume_rank5_coin = this.list60_volume[4].API_Coin_Ticker;
 						this.min60_volume_rank5_coin_name = this.list60_volume[4].Coin_Kor_Name;
+
+						if((this.min60_volume_rank5_coin_name).trim().length > 10){
+							this.min60_volume_rank5_font_size = ' 32px '
+						}else if((this.min60_volume_rank5_coin_name).trim().length == 10){
+							this.min60_volume_rank5_font_size = ' 36px '
+						}else{
+							this.min60_volume_rank5_font_size = ' 40px '
+						}
 
 						if(this.min60_volume_rank5_coin_name != ''){
 							if(this.list60_volume[4].gubun == '상승'){
@@ -1279,6 +1339,14 @@ export default {
 						this.min60_volume_rank6_coin = this.list60_volume[5].API_Coin_Ticker;
 						this.min60_volume_rank6_coin_name = this.list60_volume[5].Coin_Kor_Name;
 
+						if((this.min60_volume_rank6_coin_name).trim().length > 10){
+							this.min60_volume_rank6_font_size = ' 32px '
+						}else if((this.min60_volume_rank6_coin_name).trim().length == 10){
+							this.min60_volume_rank6_font_size = ' 36px '
+						}else{
+							this.min60_volume_rank6_font_size = ' 40px '
+						}
+
 						if(this.min60_volume_rank6_coin_name != ''){
 							if(this.list60_volume[5].gubun == '상승'){
 								this.min60_volume_rank6_border_color = 'red';
@@ -1305,6 +1373,14 @@ export default {
 					if(this.min60_volume_rank7_coin_name != this.list60_volume[6].Coin_Kor_Name){
 						this.min60_volume_rank7_coin = this.list60_volume[6].API_Coin_Ticker;
 						this.min60_volume_rank7_coin_name = this.list60_volume[6].Coin_Kor_Name;
+
+						if((this.min60_volume_rank7_coin_name).trim().length > 10){
+							this.min60_volume_rank7_font_size = ' 32px '
+						}else if((this.min60_volume_rank7_coin_name).trim().length == 10){
+							this.min60_volume_rank7_font_size = ' 36px '
+						}else{
+							this.min60_volume_rank7_font_size = ' 40px '
+						}
 
 						if(this.min60_volume_rank7_coin_name != ''){
 							if(this.list60_volume[6].gubun == '상승'){
@@ -1333,6 +1409,14 @@ export default {
 						this.min60_volume_rank8_coin = this.list60_volume[7].API_Coin_Ticker;
 						this.min60_volume_rank8_coin_name = this.list60_volume[7].Coin_Kor_Name;
 
+						if((this.min60_volume_rank8_coin_name).trim().length > 10){
+							this.min60_volume_rank8_font_size = ' 32px '
+						}else if((this.min60_volume_rank8_coin_name).trim().length == 10){
+							this.min60_volume_rank8_font_size = ' 36px '
+						}else{
+							this.min60_volume_rank8_font_size = ' 40px '
+						}
+
 						if(this.min60_volume_rank8_coin_name != ''){
 							if(this.list60_volume[7].gubun == '상승'){
 								this.min60_volume_rank8_border_color = 'red';
@@ -1360,6 +1444,14 @@ export default {
 						this.min60_volume_rank9_coin = this.list60_volume[8].API_Coin_Ticker;
 						this.min60_volume_rank9_coin_name = this.list60_volume[8].Coin_Kor_Name;
 
+						if((this.min60_volume_rank9_coin_name).trim().length > 10){
+							this.min60_volume_rank9_font_size = ' 32px '
+						}else if((this.min60_volume_rank9_coin_name).trim().length == 10){
+							this.min60_volume_rank9_font_size = ' 36px '
+						}else{
+							this.min60_volume_rank9_font_size = ' 40px '
+						}
+
 						if(this.min60_volume_rank9_coin_name != ''){
 							if(this.list60_volume[8].gubun == '상승'){
 								this.min60_volume_rank9_border_color = 'red';
@@ -1386,6 +1478,14 @@ export default {
 					if(this.min60_volume_rank10_coin_name != this.list60_volume[9].Coin_Kor_Name){
 						this.min60_volume_rank10_coin = this.list60_volume[9].API_Coin_Ticker;
 						this.min60_volume_rank10_coin_name = this.list60_volume[9].Coin_Kor_Name;
+						
+						if((this.min60_volume_rank10_coin_name).trim().length > 10){
+							this.min60_volume_rank10_font_size = ' 32px '
+						}else if((this.min60_volume_rank10_coin_name).trim().length == 10){
+							this.min60_volume_rank10_font_size = ' 36px '
+						}else{
+							this.min60_volume_rank10_font_size = ' 40px '
+						}
 
 						if(this.min60_volume_rank10_coin_name != ''){
 							if(this.list60_volume[9].gubun == '상승'){
@@ -1411,12 +1511,20 @@ export default {
 					this.min60_volume_rank10_price_volume = this.list60_volume[9].format_volume_price;
 
 					this.list60_oc = this.list60_oc.sort((a,b) => Number(String(b.o_c_rate).replace('%','')) - Number(String(a.o_c_rate).replace('%','')));
-
+					
 					if(this.min60_oc_rank1_coin_name != this.list60_oc[0].Coin_Kor_Name){
 						if(!(Number(new Date().getMinutes())%5==0 && Number(new Date().getSeconds()) < 5)){
 							this.min60_oc_rank1_coin = this.list60_oc[0].API_Coin_Ticker;
 							this.min60_oc_rank1_coin_name = this.list60_oc[0].Coin_Kor_Name;
 
+							if((this.min60_oc_rank1_coin_name).trim().length > 10){
+								this.min60_oc_rank1_font_size = ' 32px '
+							}else if((this.min60_oc_rank1_coin_name).trim().length == 10){
+								this.min60_oc_rank1_font_size = ' 36px '
+							}else{
+								this.min60_oc_rank1_font_size = ' 40px '
+							}
+							
 							if(this.min60_oc_rank1_coin_name != ''){
 								if(this.list60_oc[0].gubun == '상승'){
 									this.min60_oc_rank1_border_color = 'red';
@@ -1445,6 +1553,14 @@ export default {
 						this.min60_oc_rank2_coin = this.list60_oc[1].API_Coin_Ticker;
 						this.min60_oc_rank2_coin_name = this.list60_oc[1].Coin_Kor_Name;
 
+						if((this.min60_oc_rank2_coin_name).trim().length > 10){
+							this.min60_oc_rank2_font_size = ' 32px '
+						}else if((this.min60_oc_rank2_coin_name).trim().length == 10){
+							this.min60_oc_rank2_font_size = ' 36px '
+						}else{
+							this.min60_oc_rank2_font_size = ' 40px '
+						}
+						
 						if(this.min60_oc_rank2_coin_name != ''){
 							if(this.list60_oc[1].gubun == '상승'){
 								this.min60_oc_rank2_border_color = 'red';
@@ -1471,6 +1587,14 @@ export default {
 					if(this.min60_oc_rank3_coin_name != this.list60_oc[2].Coin_Kor_Name){
 						this.min60_oc_rank3_coin = this.list60_oc[2].API_Coin_Ticker;
 						this.min60_oc_rank3_coin_name = this.list60_oc[2].Coin_Kor_Name;
+
+						if((this.min60_oc_rank3_coin_name).trim().length > 10){
+							this.min60_oc_rank3_font_size = ' 32px '
+						}else if((this.min60_oc_rank3_coin_name).trim().length == 10){
+							this.min60_oc_rank3_font_size = ' 36px '
+						}else{
+							this.min60_oc_rank3_font_size = ' 40px '
+						}
 
 						if(this.min60_oc_rank3_coin_name != ''){
 							if(this.list60_oc[2].gubun == '상승'){
@@ -1499,6 +1623,14 @@ export default {
 						this.min60_oc_rank4_coin = this.list60_oc[3].API_Coin_Ticker;
 						this.min60_oc_rank4_coin_name = this.list60_oc[3].Coin_Kor_Name;
 
+						if((this.min60_oc_rank4_coin_name).trim().length > 10){
+							this.min60_oc_rank4_font_size = ' 32px '
+						}else if((this.min60_oc_rank4_coin_name).trim().length == 10){
+							this.min60_oc_rank4_font_size = ' 36px '
+						}else{
+							this.min60_oc_rank4_font_size = ' 40px '
+						}
+
 						if(this.min60_oc_rank4_coin_name != ''){
 							if(this.list60_oc[3].gubun == '상승'){
 								this.min60_oc_rank4_border_color = 'red';
@@ -1525,6 +1657,14 @@ export default {
 					if(this.min60_oc_rank5_coin_name != this.list60_oc[4].Coin_Kor_Name){
 						this.min60_oc_rank5_coin = this.list60_oc[4].API_Coin_Ticker;
 						this.min60_oc_rank5_coin_name = this.list60_oc[4].Coin_Kor_Name;
+
+						if((this.min60_oc_rank5_coin_name).trim().length > 10){
+							this.min60_oc_rank5_font_size = ' 32px '
+						}else if((this.min60_oc_rank5_coin_name).trim().length == 10){
+							this.min60_oc_rank5_font_size = ' 36px '
+						}else{
+							this.min60_oc_rank5_font_size = ' 40px '
+						}
 
 						if(this.min60_oc_rank5_coin_name != ''){
 							if(this.list60_oc[4].gubun == '상승'){
@@ -1553,6 +1693,14 @@ export default {
 						this.min60_oc_rank6_coin = this.list60_oc[5].API_Coin_Ticker;
 						this.min60_oc_rank6_coin_name = this.list60_oc[5].Coin_Kor_Name;
 
+						if((this.min60_oc_rank6_coin_name).trim().length > 10){
+							this.min60_oc_rank6_font_size = ' 32px '
+						}else if((this.min60_oc_rank6_coin_name).trim().length == 10){
+							this.min60_oc_rank6_font_size = ' 36px '
+						}else{
+							this.min60_oc_rank6_font_size = ' 40px '
+						}
+
 						if(this.min60_oc_rank6_coin_name != ''){
 							if(this.list60_oc[5].gubun == '상승'){
 								this.min60_oc_rank6_border_color = 'red';
@@ -1580,6 +1728,14 @@ export default {
 						this.min60_oc_rank7_coin = this.list60_oc[6].API_Coin_Ticker;
 						this.min60_oc_rank7_coin_name = this.list60_oc[6].Coin_Kor_Name;
 
+						if((this.min60_oc_rank7_coin_name).trim().length > 10){
+							this.min60_oc_rank7_font_size = ' 32px '
+						}else if((this.min60_oc_rank7_coin_name).trim().length == 10){
+							this.min60_oc_rank7_font_size = ' 36px '
+						}else{
+							this.min60_oc_rank7_font_size = ' 40px '
+						}
+						
 						if(this.min60_oc_rank7_coin_name != ''){
 							if(this.list60_oc[6].gubun == '상승'){
 								this.min60_oc_rank7_border_color = 'red';
@@ -1606,6 +1762,14 @@ export default {
 					if(this.min60_oc_rank8_coin_name != this.list60_oc[7].Coin_Kor_Name){
 						this.min60_oc_rank8_coin = this.list60_oc[7].API_Coin_Ticker;
 						this.min60_oc_rank8_coin_name = this.list60_oc[7].Coin_Kor_Name;
+
+						if((this.min60_oc_rank8_coin_name).trim().length > 10){
+							this.min60_oc_rank8_font_size = ' 32px '
+						}else if((this.min60_oc_rank8_coin_name).trim().length == 10){
+							this.min60_oc_rank8_font_size = ' 36px '
+						}else{
+							this.min60_oc_rank8_font_size = ' 40px '
+						}
 
 						if(this.min60_oc_rank8_coin_name != ''){
 							if(this.list60_oc[7].gubun == '상승'){
@@ -1634,6 +1798,14 @@ export default {
 						this.min60_oc_rank9_coin = this.list60_oc[8].API_Coin_Ticker;
 						this.min60_oc_rank9_coin_name = this.list60_oc[8].Coin_Kor_Name;
 
+						if((this.min60_oc_rank9_coin_name).trim().length > 10){
+							this.min60_oc_rank9_font_size = ' 32px '
+						}else if((this.min60_oc_rank9_coin_name).trim().length == 10){
+							this.min60_oc_rank9_font_size = ' 36px '
+						}else{
+							this.min60_oc_rank9_font_size = ' 40px '
+						}
+
 						if(this.min60_oc_rank9_coin_name != ''){
 							if(this.list60_oc[8].gubun == '상승'){
 								this.min60_oc_rank9_border_color = 'red';
@@ -1660,6 +1832,14 @@ export default {
 					if(this.min60_oc_rank10_coin_name != this.list60_oc[9].Coin_Kor_Name){
 						this.min60_oc_rank10_coin = this.list60_oc[9].API_Coin_Ticker;
 						this.min60_oc_rank10_coin_name = this.list60_oc[9].Coin_Kor_Name;
+
+						if((this.min60_oc_rank10_coin_name).trim().length > 10){
+							this.min60_oc_rank10_font_size = ' 32px '
+						}else if((this.min60_oc_rank10_coin_name).trim().length == 10){
+							this.min60_oc_rank10_font_size = ' 36px '
+						}else{
+							this.min60_oc_rank10_font_size = ' 40px '
+						}
 
 						if(this.min60_oc_rank10_coin_name != ''){
 							if(this.list60_oc[9].gubun == '상승'){

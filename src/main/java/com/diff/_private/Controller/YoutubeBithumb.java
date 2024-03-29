@@ -9,6 +9,7 @@ import java.net.URL;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -264,8 +265,25 @@ public class YoutubeBithumb {
 		long TIMESTMAP = System.currentTimeMillis();
 		String CURRENT_DATETIME_KST = SDF.format(System.currentTimeMillis());
 		
-		List<HashMap<String, String>> CoinList = MainService.BithumbCoinList();
+		List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_number", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
@@ -482,8 +500,25 @@ public class YoutubeBithumb {
 		long TIMESTMAP = System.currentTimeMillis();
 		String CURRENT_DATETIME_KST = SDF.format(System.currentTimeMillis());
 		
-		List<HashMap<String, String>> CoinList = MainService.BithumbCoinList();
+		List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_number", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
@@ -691,8 +726,25 @@ public class YoutubeBithumb {
 		long TIMESTMAP = System.currentTimeMillis();
 		String CURRENT_DATETIME_KST = SDF.format(System.currentTimeMillis());
 		
-		List<HashMap<String, String>> CoinList = MainService.BithumbCoinList();
+		List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_number", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
@@ -914,8 +966,25 @@ public class YoutubeBithumb {
 		long TIMESTMAP = System.currentTimeMillis();
 		String CURRENT_DATETIME_KST = SDF.format(System.currentTimeMillis());
 		
-		List<HashMap<String, String>> CoinList = MainService.BithumbCoinList();
+		List<HashMap<String, String>> CoinList = new ArrayList<HashMap<String, String>>();
 		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbCointInfo.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("▒");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("coin_ticker", FULL_ARRAY_STRING[0]);
+		    	map.put("coin_kor_name", FULL_ARRAY_STRING[1]);
+		    	map.put("coin_number", FULL_ARRAY_STRING[2]);
+		    	
+		    	CoinList.add(map);
+		    }
+		}
+		FileReader.close();
 		
 		for(int x=0; x<CoinList.size(); x++) {
 			String Coin_Ticker = CoinList.get(x).get("coin_ticker");
