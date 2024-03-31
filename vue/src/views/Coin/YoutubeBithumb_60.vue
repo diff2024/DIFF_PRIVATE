@@ -1145,7 +1145,7 @@ export default {
 		Data_MIN_60_Make(){
 			this.RequestCompleteYN = 'N'
 			axios({
-				url: '/YoutubeBithumb/MIN60',
+				url: '/YoutubeBithumb/MIN60_T',
 				method: 'get',
 				timeout: 60000
 			})
@@ -1882,7 +1882,7 @@ export default {
 				//this.Data_MIN_60_Make();
 			}
 
-			if(this.RequestCompleteYN == 'Y' && (Number(ss) == 0 || Number(ss) == 30)){
+			if(this.RequestCompleteYN == 'Y' && (Number(ss) == 55 || Number(ss) == 25)){
 				this.Data_MIN_60_Make();
 			}
 

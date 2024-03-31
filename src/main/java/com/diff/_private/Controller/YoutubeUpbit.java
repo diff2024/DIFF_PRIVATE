@@ -140,7 +140,7 @@ public class YoutubeUpbit {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -354,7 +354,7 @@ public class YoutubeUpbit {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -557,7 +557,7 @@ public class YoutubeUpbit {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -779,7 +779,7 @@ public class YoutubeUpbit {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -1007,7 +1007,7 @@ public class YoutubeUpbit {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -1221,7 +1221,7 @@ public class YoutubeUpbit {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -1424,7 +1424,7 @@ public class YoutubeUpbit {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -1646,7 +1646,7 @@ public class YoutubeUpbit {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\UpbitCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	

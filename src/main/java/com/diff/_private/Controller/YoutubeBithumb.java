@@ -271,7 +271,7 @@ public class YoutubeBithumb {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -300,12 +300,12 @@ public class YoutubeBithumb {
 		        conn.setUseCaches(false); // 캐싱데이터를 받을지 안받을지
 		        conn.setDefaultUseCaches(false); // 캐싱데이터 디폴트 값 설정
 		        conn.connect();
-		        
+		        //System.out.println("["+Coin_Ticker+"]["+Coin_Kor_Name+"]["+Coin_Number+"] " +conn.getResponseCode());
 		        String RESPONSE_DATA = "";
 		        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
 		            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		            String line = null;
-		            while(true){
+		            while(reader != null){
 		                line = reader.readLine();
 		                if(line == null)
 		                    break;
@@ -313,6 +313,8 @@ public class YoutubeBithumb {
 		                RESPONSE_DATA += line;
 		            }
 		            reader.close();
+		        } else {
+		        	System.out.println("ERROR CODE ["+conn.getResponseCode()+"]["+Coin_Ticker+"]["+Coin_Kor_Name+"]["+Coin_Number+"]");
 		        }
 		        
 		        //System.out.println("["+conn.getResponseCode()+"]["+str_url+"]["+RESPONSE_DATA+"]");
@@ -462,6 +464,55 @@ public class YoutubeBithumb {
 		return APICoinList;
 	}
 	
+	@GetMapping(path = "/MIN5_T")
+	public List<HashMap<String, String>> MIN5_T () throws Exception{
+		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[빗썸][" + START_DATETIME + "] MIN5_T 종료");
+		
+		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbLive1M.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("■");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("CURRENT_DATETIME_KST", FULL_ARRAY_STRING[0]);
+	        	map.put("Coin_Ticker", FULL_ARRAY_STRING[1]);
+        		map.put("API_Coin_Ticker", FULL_ARRAY_STRING[1]);
+        		map.put("Coin_Kor_Name", FULL_ARRAY_STRING[2]);
+        		map.put("API_DATETIME_KST", FULL_ARRAY_STRING[3]);
+        		map.put("gubun", FULL_ARRAY_STRING[4]);
+        		map.put("o_price", FULL_ARRAY_STRING[5]);
+        		map.put("l_price", FULL_ARRAY_STRING[6]);
+        		map.put("h_price", FULL_ARRAY_STRING[7]);
+        		map.put("c_price", FULL_ARRAY_STRING[8]);
+        		map.put("format_c_price", FULL_ARRAY_STRING[9]);
+        		map.put("o_c_rate", FULL_ARRAY_STRING[10]);
+        		map.put("o_c_subtract", FULL_ARRAY_STRING[11]);
+        		map.put("volume", FULL_ARRAY_STRING[12]);
+        		map.put("volume_price", FULL_ARRAY_STRING[13]);
+        		map.put("format_volume_price", FULL_ARRAY_STRING[14]);
+		    	APICoinList.add(map);
+		    }
+		}
+		FileReader.close();
+		
+		Collections.sort(APICoinList, new Comparator<HashMap<String,String>>(){
+			public int compare(HashMap<String,String> map1, HashMap<String,String> map2){
+				if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 1) return 1;
+                else if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 0) return 0;
+                else return -1;
+			}
+		});
+		
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[빗썸][" + END_DATETIME + "] MIN5_T 종료");
+		return APICoinList;
+	}
+	
 	@GetMapping(path = "/MIN15")
 	public List<HashMap<String, String>> MIN15() throws Exception{
 		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
@@ -506,7 +557,7 @@ public class YoutubeBithumb {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -540,7 +591,7 @@ public class YoutubeBithumb {
 		        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
 		            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		            String line = null;
-		            while(true){
+		            while(reader != null){
 		                line = reader.readLine();
 		                if(line == null)
 		                    break;
@@ -548,6 +599,8 @@ public class YoutubeBithumb {
 		                RESPONSE_DATA += line;
 		            }
 		            reader.close();
+		        } else {
+		        	System.out.println("ERROR CODE ["+conn.getResponseCode()+"]["+Coin_Ticker+"]["+Coin_Kor_Name+"]["+Coin_Number+"]");
 		        }
 		        
 		        //System.out.println("["+conn.getResponseCode()+"]["+str_url+"]["+RESPONSE_DATA+"]");
@@ -698,6 +751,55 @@ public class YoutubeBithumb {
 		return APICoinList;
 	}
 	
+	@GetMapping(path = "/MIN15_T")
+	public List<HashMap<String, String>> MIN15_T () throws Exception{
+		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[빗썸][" + START_DATETIME + "] MIN15_T 시작");
+		
+		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbLive1M.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("■");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("CURRENT_DATETIME_KST", FULL_ARRAY_STRING[0]);
+	        	map.put("Coin_Ticker", FULL_ARRAY_STRING[1]);
+        		map.put("API_Coin_Ticker", FULL_ARRAY_STRING[1]);
+        		map.put("Coin_Kor_Name", FULL_ARRAY_STRING[2]);
+        		map.put("API_DATETIME_KST", FULL_ARRAY_STRING[15]);
+        		map.put("gubun", FULL_ARRAY_STRING[16]);
+        		map.put("o_price", FULL_ARRAY_STRING[17]);
+        		map.put("l_price", FULL_ARRAY_STRING[18]);
+        		map.put("h_price", FULL_ARRAY_STRING[19]);
+        		map.put("c_price", FULL_ARRAY_STRING[20]);
+        		map.put("format_c_price", FULL_ARRAY_STRING[21]);
+        		map.put("o_c_rate", FULL_ARRAY_STRING[22]);
+        		map.put("o_c_subtract", FULL_ARRAY_STRING[23]);
+        		map.put("volume", FULL_ARRAY_STRING[24]);
+        		map.put("volume_price", FULL_ARRAY_STRING[25]);
+        		map.put("format_volume_price", FULL_ARRAY_STRING[26]);
+		    	APICoinList.add(map);
+		    }
+		}
+		FileReader.close();
+		
+		Collections.sort(APICoinList, new Comparator<HashMap<String,String>>(){
+			public int compare(HashMap<String,String> map1, HashMap<String,String> map2){
+				if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 1) return 1;
+                else if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 0) return 0;
+                else return -1;
+			}
+		});
+		
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[빗썸][" + END_DATETIME + "] MIN15_T 종료");
+		return APICoinList;
+	}
+	
 	@GetMapping(path = "/MIN60")
 	public List<HashMap<String, String>> MIN60() throws Exception{
 		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
@@ -732,7 +834,7 @@ public class YoutubeBithumb {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -766,7 +868,7 @@ public class YoutubeBithumb {
 		        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
 		            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		            String line = null;
-		            while(true){
+		            while(reader != null){
 		                line = reader.readLine();
 		                if(line == null)
 		                    break;
@@ -774,6 +876,8 @@ public class YoutubeBithumb {
 		                RESPONSE_DATA += line;
 		            }
 		            reader.close();
+		        } else {
+		        	System.out.println("ERROR CODE ["+conn.getResponseCode()+"]["+Coin_Ticker+"]["+Coin_Kor_Name+"]["+Coin_Number+"]");
 		        }
 		        
 		        //System.out.println("[RESPONSE_DATA]["+str_url+"]["+RESPONSE_DATA+"]");
@@ -923,6 +1027,55 @@ public class YoutubeBithumb {
 		return APICoinList;
 	}
 	
+	@GetMapping(path = "/MIN60_T")
+	public List<HashMap<String, String>> MIN60_T () throws Exception{
+		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[빗썸][" + START_DATETIME + "] MIN60_T 시작");
+		
+		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbLive1H.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("■");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("CURRENT_DATETIME_KST", FULL_ARRAY_STRING[0]);
+	        	map.put("Coin_Ticker", FULL_ARRAY_STRING[1]);
+        		map.put("API_Coin_Ticker", FULL_ARRAY_STRING[1]);
+        		map.put("Coin_Kor_Name", FULL_ARRAY_STRING[2]);
+        		map.put("API_DATETIME_KST", FULL_ARRAY_STRING[3]);
+        		map.put("gubun", FULL_ARRAY_STRING[4]);
+        		map.put("o_price", FULL_ARRAY_STRING[5]);
+        		map.put("l_price", FULL_ARRAY_STRING[6]);
+        		map.put("h_price", FULL_ARRAY_STRING[7]);
+        		map.put("c_price", FULL_ARRAY_STRING[8]);
+        		map.put("format_c_price", FULL_ARRAY_STRING[9]);
+        		map.put("o_c_rate", FULL_ARRAY_STRING[10]);
+        		map.put("o_c_subtract", FULL_ARRAY_STRING[11]);
+        		map.put("volume", FULL_ARRAY_STRING[12]);
+        		map.put("volume_price", FULL_ARRAY_STRING[13]);
+        		map.put("format_volume_price", FULL_ARRAY_STRING[14]);
+		    	APICoinList.add(map);
+		    }
+		}
+		FileReader.close();
+		
+		Collections.sort(APICoinList, new Comparator<HashMap<String,String>>(){
+			public int compare(HashMap<String,String> map1, HashMap<String,String> map2){
+				if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 1) return 1;
+                else if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 0) return 0;
+                else return -1;
+			}
+		});
+		
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[빗썸][" + END_DATETIME + "] MIN60_T 종료");
+		return APICoinList;
+	}
+	
 	@GetMapping(path = "/MIN240")
 	public List<HashMap<String, String>> MIN240() throws Exception{
 		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
@@ -972,7 +1125,7 @@ public class YoutubeBithumb {
 		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbCointInfo.txt"));
 		String reader_str = "";
 		while ((reader_str = FileReader.readLine()) != null) {
-			String[] ARRAY_STRING = reader_str.split("▒");
+			String[] ARRAY_STRING = reader_str.split("■");
 		    for (String STRING : ARRAY_STRING){
 		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
 		    	
@@ -1006,7 +1159,7 @@ public class YoutubeBithumb {
 		        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
 		            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		            String line = null;
-		            while(true){
+		            while(reader != null){
 		                line = reader.readLine();
 		                if(line == null)
 		                    break;
@@ -1014,6 +1167,8 @@ public class YoutubeBithumb {
 		                RESPONSE_DATA += line;
 		            }
 		            reader.close();
+		        } else {
+		        	System.out.println("ERROR CODE ["+conn.getResponseCode()+"]["+Coin_Ticker+"]["+Coin_Kor_Name+"]["+Coin_Number+"]");
 		        }
 		        
 		        //System.out.println("[RESPONSE_DATA]["+str_url+"]["+RESPONSE_DATA+"]");
@@ -1161,6 +1316,55 @@ public class YoutubeBithumb {
 		
 		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
 		System.out.println("[빗썸][" + END_DATETIME + "] MIN240 종료");
+		return APICoinList;
+	}
+	
+	@GetMapping(path = "/MIN240_T")
+	public List<HashMap<String, String>> MIN240_T () throws Exception{
+		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[빗썸][" + START_DATETIME + "] MIN240_T 시작");
+		
+		List<HashMap<String, String>> APICoinList = new ArrayList<HashMap<String, String>>();
+		
+		BufferedReader FileReader = new BufferedReader(new FileReader("C:\\Coin\\BithumbLive1H.txt"));
+		String reader_str = "";
+		while ((reader_str = FileReader.readLine()) != null) {
+			String[] ARRAY_STRING = reader_str.split("■");
+		    for (String STRING : ARRAY_STRING){
+		    	String[] FULL_ARRAY_STRING = STRING.split("▦");
+		    	
+		    	HashMap<String, String> map = new HashMap<String, String>();
+		    	map.put("CURRENT_DATETIME_KST", FULL_ARRAY_STRING[0]);
+	        	map.put("Coin_Ticker", FULL_ARRAY_STRING[1]);
+        		map.put("API_Coin_Ticker", FULL_ARRAY_STRING[1]);
+        		map.put("Coin_Kor_Name", FULL_ARRAY_STRING[2]);
+        		map.put("API_DATETIME_KST", FULL_ARRAY_STRING[15]);
+        		map.put("gubun", FULL_ARRAY_STRING[16]);
+        		map.put("o_price", FULL_ARRAY_STRING[17]);
+        		map.put("l_price", FULL_ARRAY_STRING[18]);
+        		map.put("h_price", FULL_ARRAY_STRING[19]);
+        		map.put("c_price", FULL_ARRAY_STRING[20]);
+        		map.put("format_c_price", FULL_ARRAY_STRING[21]);
+        		map.put("o_c_rate", FULL_ARRAY_STRING[22]);
+        		map.put("o_c_subtract", FULL_ARRAY_STRING[23]);
+        		map.put("volume", FULL_ARRAY_STRING[24]);
+        		map.put("volume_price", FULL_ARRAY_STRING[25]);
+        		map.put("format_volume_price", FULL_ARRAY_STRING[26]);
+		    	APICoinList.add(map);
+		    }
+		}
+		FileReader.close();
+		
+		Collections.sort(APICoinList, new Comparator<HashMap<String,String>>(){
+			public int compare(HashMap<String,String> map1, HashMap<String,String> map2){
+				if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 1) return 1;
+                else if((new BigDecimal(map2.get("volume_price"))).compareTo(new BigDecimal(map1.get("volume_price"))) == 0) return 0;
+                else return -1;
+			}
+		});
+		
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[빗썸][" + END_DATETIME + "] MIN240_T 종료");
 		return APICoinList;
 	}
 	

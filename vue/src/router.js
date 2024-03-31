@@ -141,7 +141,7 @@ export const router = new Router({
     },
     {
       path: '/CoinMainList/:date',
-      name: 'coinMainList',
+      name: 'coinMainList2',
       component: CoinMainList
     },
     {
@@ -151,7 +151,7 @@ export const router = new Router({
     },
     {
       path: '/BithumbCoinMainList/:date',
-      name: 'bithumbcoinMainList',
+      name: 'bithumbcoinMainList2',
       component: BithumbCoinMainList
     },
     {
@@ -161,7 +161,7 @@ export const router = new Router({
     },
     {
       path: '/BinanceCoinMainList/:date',
-      name: 'binancecoinMainList',
+      name: 'binancecoinMainList2',
       component: BinanceCoinMainList
     },
     {
@@ -171,7 +171,7 @@ export const router = new Router({
     },
     {
       path: '/BinanceFuturesCoinMainList/:date',
-      name: 'binancefuturescoinMainList',
+      name: 'binancefuturescoinMainList2',
       component: BinanceFuturesCoinMainList
     },
     {
@@ -181,7 +181,7 @@ export const router = new Router({
     },
     {
       path: '/BybitCoinMainList/:date',
-      name: 'bybitcoinMainList',
+      name: 'bybitcoinMainList2',
       component: BybitCoinMainList
     },
     {
@@ -191,7 +191,7 @@ export const router = new Router({
     },
     {
       path: '/Report/:date/:market/:blog',
-      name: 'Report',
+      name: 'Report2',
       component: Report
     },
     {
@@ -201,7 +201,7 @@ export const router = new Router({
     },
     {
       path: '/Short/:date/:market',
-      name: 'Short',
+      name: 'Short2',
       component: Short
     },
     {
@@ -211,7 +211,7 @@ export const router = new Router({
     },
     {
       path: '/Video/:date/:market',
-      name: 'Video',
+      name: 'Video2',
       component: Video
     },
     {

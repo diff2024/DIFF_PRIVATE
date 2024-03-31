@@ -32,7 +32,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.simple.parser.JSONParser;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,11 +61,16 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.diff._private.Service.BinanceCoinService;
+import com.diff._private.Service.BinanceFuturesCoinService;
+import com.diff._private.Service.BitCoinService;
+import com.diff._private.Service.BybitCoinService;
 import com.diff._private.Service.CoinService;
 import com.diff._private.Service.MainService;
 import java.util.Calendar;
@@ -76,9 +80,21 @@ import java.util.Locale;
 @RestController
 @RequestMapping("/Main")
 public class Main {
+
+	@Autowired
+	BitCoinService BitCoinService;
 	
 	@Autowired
 	CoinService CoinService;
+	
+	@Autowired
+	BinanceCoinService BinanceCoinService;
+	
+	@Autowired
+	BinanceFuturesCoinService BinanceFuturesCoinService;
+	
+	@Autowired
+	BybitCoinService BybitCoinService;
 	
 	@Autowired
 	MainService MainService;
@@ -96,6 +112,121 @@ public class Main {
 		System.out.println("[" + END_DATETIME + "] SelectCodeData 종료");
 		
 		return CodeValue;
+	}
+	
+	@Async
+	@PostMapping(path = "/ReportReg")
+	public void ReportReg(HttpServletRequest req) throws Exception {
+		String Type = (req.getParameter("type")==null)?"":req.getParameter("type");
+		String Date = (req.getParameter("date")==null)?"":req.getParameter("date");
+		
+		String START_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + START_DATETIME + "] ReportReg ["+Date+" / "+Type+"] 시작");
+		
+		if(!Date.equals("") && !Type.equals("")) {
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date SetDate = transFormat.parse(Date);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(SetDate);
+			cal.add(Calendar.DATE , -1);
+			String Yesterday = new java.text.SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+
+			HashMap<String, String> SettingMap = MainService.CoinAnalysisSetting();
+			HashMap<String, String> ParamMap = new HashMap<String, String>();
+			ParamMap.put("date", Date);
+			ParamMap.put("yyyymmdd", Date);
+			ParamMap.put("yesterday", Yesterday);
+			ParamMap.put("BithumbReportAD1", SettingMap.get("bithumb_report_ad1"));
+			ParamMap.put("BithumbReportAD2", SettingMap.get("bithumb_report_ad2"));
+			ParamMap.put("BithumbReportAD3", SettingMap.get("bithumb_report_ad3"));
+			ParamMap.put("BithumbReportAD4", SettingMap.get("bithumb_report_ad4"));
+			ParamMap.put("BithumbReportAD5", SettingMap.get("bithumb_report_ad5"));
+			ParamMap.put("UpbitReportAD1", SettingMap.get("upbit_report_ad1"));
+			ParamMap.put("UpbitReportAD2", SettingMap.get("upbit_report_ad2"));
+			ParamMap.put("UpbitReportAD3", SettingMap.get("upbit_report_ad3"));
+			ParamMap.put("UpbitReportAD4", SettingMap.get("upbit_report_ad4"));
+			ParamMap.put("UpbitReportAD5", SettingMap.get("upbit_report_ad5"));
+			ParamMap.put("BinanceReportAD1", SettingMap.get("binance_report_ad1"));
+			ParamMap.put("BinanceReportAD2", SettingMap.get("binance_report_ad2"));
+			ParamMap.put("BinanceReportAD3", SettingMap.get("binance_report_ad3"));
+			ParamMap.put("BinanceReportAD4", SettingMap.get("binance_report_ad4"));
+			ParamMap.put("BinanceReportAD5", SettingMap.get("binance_report_ad5"));
+			ParamMap.put("BybitReportAD1", SettingMap.get("bybit_report_ad1"));
+			ParamMap.put("BybitReportAD2", SettingMap.get("bybit_report_ad2"));
+			ParamMap.put("BybitReportAD3", SettingMap.get("bybit_report_ad3"));
+			ParamMap.put("BybitReportAD4", SettingMap.get("bybit_report_ad4"));
+			ParamMap.put("BybitReportAD5", SettingMap.get("bybit_report_ad5"));
+			
+			if(Type.equals("bithumb")) {
+				ParamMap.put("MainRankingCount", SettingMap.get("bithumb_report_main_ranking"));
+				ParamMap.put("SubRankingCount", SettingMap.get("bithumb_report_sub_ranking"));
+				ParamMap.put("blog_id", "1");
+				ParamMap.put("blog_id", "2");
+				
+				BitCoinService.CoinAnalysisDelete(ParamMap);
+				Thread.sleep(1500);
+				BitCoinService.CoinAnalysisCreate(ParamMap);
+				BitCoinService.CoinAnalysisHourGraphCreate(ParamMap);
+				BitCoinService.CoinAnalysis4HourGraphCreate(ParamMap);
+				BitCoinService.WordPressReportHTMLCreate(ParamMap);
+				BitCoinService.TiStoryReportHTMLCreate(ParamMap);
+			} else if(Type.equals("upbit")) {
+				ParamMap.put("MainRankingCount", SettingMap.get("upbit_report_main_ranking"));
+				ParamMap.put("SubRankingCount", SettingMap.get("upbit_report_sub_ranking"));
+				ParamMap.put("blog_id", "1");
+				ParamMap.put("blog_id", "3");
+				
+				CoinService.CoinAnalysisDelete(ParamMap);
+				Thread.sleep(1500);
+				CoinService.CoinAnalysisCreate(ParamMap);
+				CoinService.CoinAnalysisHourGraphCreate(ParamMap);
+				CoinService.CoinAnalysis4HourGraphCreate(ParamMap);
+				CoinService.WordPressReportHTMLCreate(ParamMap);
+				CoinService.TiStoryReportHTMLCreate(ParamMap);
+			}else if(Type.equals("binance")) {
+				ParamMap.put("MainRankingCount", SettingMap.get("binance_report_main_ranking"));
+				ParamMap.put("SubRankingCount", SettingMap.get("binance_report_sub_ranking"));
+				ParamMap.put("blog_id", "1");
+				ParamMap.put("blog_id", "4");
+				
+				BinanceCoinService.CoinAnalysisDelete(ParamMap);
+				Thread.sleep(1500);
+				BinanceCoinService.CoinAnalysisCreate(ParamMap);
+				BinanceCoinService.CoinAnalysisHourGraphCreate(ParamMap);
+				BinanceCoinService.CoinAnalysis4HourGraphCreate(ParamMap);
+				BinanceCoinService.WordPressReportHTMLCreate(ParamMap);
+				BinanceCoinService.TiStoryReportHTMLCreate(ParamMap);
+			}else if(Type.equals("binance_futures")) {
+				ParamMap.put("MainRankingCount", SettingMap.get("binance_report_main_ranking"));
+				ParamMap.put("SubRankingCount", SettingMap.get("binance_report_sub_ranking"));
+				ParamMap.put("blog_id", "1");
+				ParamMap.put("blog_id", "5");
+				
+				BinanceFuturesCoinService.CoinAnalysisDelete(ParamMap);
+				Thread.sleep(1500);
+				BinanceFuturesCoinService.CoinAnalysisCreate(ParamMap);
+				BinanceFuturesCoinService.CoinAnalysisHourGraphCreate(ParamMap);
+				BinanceFuturesCoinService.CoinAnalysis4HourGraphCreate(ParamMap);
+				BinanceFuturesCoinService.WordPressReportHTMLCreate(ParamMap);
+				BinanceFuturesCoinService.TiStoryReportHTMLCreate(ParamMap);
+			}else if(Type.equals("bybit")) {
+				ParamMap.put("MainRankingCount", SettingMap.get("bybit_report_main_ranking"));
+				ParamMap.put("SubRankingCount", SettingMap.get("bybit_report_sub_ranking"));
+				ParamMap.put("blog_id", "1");
+				ParamMap.put("blog_id", "6");
+				
+				BybitCoinService.CoinAnalysisDelete(ParamMap);
+				Thread.sleep(1500);
+				BybitCoinService.CoinAnalysisCreate(ParamMap);
+				BybitCoinService.CoinAnalysisHourGraphCreate(ParamMap);
+				BybitCoinService.CoinAnalysis4HourGraphCreate(ParamMap);
+				BybitCoinService.WordPressReportHTMLCreate(ParamMap);
+				BybitCoinService.TiStoryReportHTMLCreate(ParamMap);
+			}
+		}
+		
+		String END_DATETIME = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format((Calendar.getInstance()).getTime());
+		System.out.println("[" + END_DATETIME + "] ReportReg ["+Date+" / "+Type+"] 종료");
 	}
 	 
 	@GetMapping(path = "/Main_5MIN")
