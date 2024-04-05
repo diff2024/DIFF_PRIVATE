@@ -10,6 +10,9 @@ public interface BybitCoinMapper {
 	public List<HashMap<String, String>> MainGridList(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> MainLiveRankList(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> CoinInfo() throws Exception;
+	public void BlogUploadLogDelete(HashMap<String, String> map) throws Exception;
+	public void BlogUploadLogCreate(HashMap<String, String> map) throws Exception;
+	public void BlogUploadLogUpdate(HashMap<String, String> map) throws Exception;
 	public void CoinAnalysisDelete(HashMap<String, String> map) throws Exception;
 	public void CoinAnalysisCreate(HashMap<String, String> map) throws Exception;
 	public void CoinAnalysisHourGraphDelete(HashMap<String, String> map) throws Exception;

@@ -531,7 +531,27 @@ export default {
 				this.short_html += '<br/><br/>';
 				this.short_html += '상승율 1위는 '+this.rank1_coin_name+this.rank1_coin_particle+' '+this.rank1_o_price+'원으로 시작해 젓가 '+this.rank1_l_price+'원, 곳가 '+this.rank1_h_price+'원을 기록하고 '+this.rank1_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank1_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
-				this.short_html += '영상 시청 감사드리며, 더 많은 정보가 필요하시면 코인분석기 채널 방문하셔서 좋아요와 구독 부탁 드립니다.';
+				this.short_html += '영상 시청 감사드리며, 코인분석기 채널 방문하셔서 '
+				this.short_html += (this.search_date).substring(2, 4) + '년 ';
+
+				if((this.search_date).substring(5, 6) == '0'){
+					this.short_html += (this.search_date).substring(6, 7) + '월 '
+				}else{
+					this.short_html += (this.search_date).substring(5, 7) + '월 '
+				}
+
+				if((this.search_date).substring(8, 9) == '0'){
+					this.short_html += (this.search_date).substring(9, 10) +'일';
+				}else{
+					this.short_html += (this.search_date).substring(8, 10) +'일';
+				}
+
+				if(this.search_market == 'upbit'){
+					this.short_html += ' 업비트 '
+				}else if(this.search_market == 'bithumb'){
+					this.short_html += ' 빗썸 '
+				}
+				this.short_html += '코인 분석 영상 시청 부탁드리며, 좋아요와 구독 부탁 드립니다.';
 				this.short_html += '</div>';
 				this.short_html += '<br/>';
 				this.short_html += '<br/>';

@@ -1963,4 +1963,34 @@
 	     order by cast(x.o_c_price_rate as numeric) desc 
  		 limit 7
 	</select>
+	
+	<update id="BlogUploadLogDelete" parameterType="HashMap">
+		update blog_upload_log 
+		   set delete_yn = 'Y' 
+		 where yyyymmdd = #{yyyymmdd} and gubun = 'bithumb' 
+	</update>
+	
+	<insert id="BlogUploadLogCreate" parameterType="HashMap">
+		insert into blog_upload_log 
+			(yyyymmdd, gubun, start_datetime)
+		values
+			(#{yyyymmdd}, 'bithumb', (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8))))
+	</insert>
+
+	<update id="BlogUploadLogUpdate" parameterType="HashMap">
+		update blog_upload_log 
+		<if test='log_number == "1" '>
+		   set datetime_1st = (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8)))
+		</if>
+		<if test='log_number == "2" '>
+		   set datetime_2nd = (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8)))
+		</if>
+		<if test='log_number == "3" '>
+		   set datetime_3rd = (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8)))
+		</if>
+		<if test='log_number == "4" '>
+		   set datetime_4th = (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8))), end_datetime = (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8)))
+		</if>
+		 where yyyymmdd = #{yyyymmdd} and gubun = 'bithumb' and delete_yn = 'N' 
+	</update>
 </mapper>

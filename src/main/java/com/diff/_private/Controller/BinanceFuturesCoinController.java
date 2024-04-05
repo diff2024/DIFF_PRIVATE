@@ -162,13 +162,22 @@ public class BinanceFuturesCoinController {
 	    
 	    BinanceFuturesCoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
+	    BinanceFuturesCoinService.BlogUploadLogCreate(map);
 	    BinanceFuturesCoinService.CoinAnalysisCreate(map);
+	    map.put("log_number", "1");
+	    BinanceFuturesCoinService.BlogUploadLogUpdate(map);
 	    BinanceFuturesCoinService.CoinAnalysisHourGraphCreate(map);
+	    map.put("log_number", "2");
+	    BinanceFuturesCoinService.BlogUploadLogUpdate(map);
 	    BinanceFuturesCoinService.CoinAnalysis4HourGraphCreate(map);
+	    map.put("log_number", "3");
+	    BinanceFuturesCoinService.BlogUploadLogUpdate(map);
 	    map.put("blog_id", "1");
 	    BinanceFuturesCoinService.WordPressReportHTMLCreate(map);
 	    map.put("blog_id", "5");
 	    BinanceFuturesCoinService.TiStoryReportHTMLCreate(map);
+	    map.put("log_number", "4");
+	    BinanceFuturesCoinService.BlogUploadLogUpdate(map);
 	}
 	
 	@GetMapping(path = "/CoinDailyReportList")

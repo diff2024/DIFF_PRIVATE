@@ -750,7 +750,7 @@ public class Schedule {
 			        		
 			        		BigDecimal BD_O_C_SUBTRACT_240 = (BD_C_PRICE_240.multiply(new BigDecimal("10000000000")).subtract(BD_O_PRICE_240.multiply(new BigDecimal("10000000000")))).divide(new BigDecimal("10000000000"));
 			        		BigDecimal BD_O_C_RATE_240 = new BigDecimal("0");
-			        		if(!(BD_O_C_RATE_240.toString()).equals("0")) {
+			        		if(!(BD_O_PRICE_240.toString()).equals("0")) {
 			        			BD_O_C_RATE_240 = ((BD_C_PRICE_240.subtract(BD_O_PRICE_240)).divide(BD_O_PRICE_240, 6, RoundingMode.HALF_UP)).multiply(BD_100);
 			        		}
 			        		BigDecimal BD_PRICE_VOLUME_240 = BD_C_PRICE_240.multiply(BD_VOLUME_240);
@@ -795,7 +795,7 @@ public class Schedule {
 			        		
 			        		BigDecimal BD_O_C_SUBTRACT_60 = (BD_C_PRICE_60.multiply(new BigDecimal("10000000000")).subtract(BD_O_PRICE_60.multiply(new BigDecimal("10000000000")))).divide(new BigDecimal("10000000000"));
 			        		BigDecimal BD_O_C_RATE_60 = new BigDecimal("0");
-			        		if(!(BD_O_C_RATE_60.toString()).equals("0")) {
+			        		if(!(BD_O_PRICE_60.toString()).equals("0")) {
 			        			BD_O_C_RATE_60 = ((BD_C_PRICE_60.subtract(BD_O_PRICE_60)).divide(BD_O_PRICE_60, 6, RoundingMode.HALF_UP)).multiply(BD_100);
 			        		}
 			        		BigDecimal BD_PRICE_VOLUME_60 = BD_C_PRICE_60.multiply(BD_VOLUME_60);
@@ -986,103 +986,193 @@ public class Schedule {
 	    if((Integer.parseInt(HHNow) >= 16) || (Integer.parseInt(HHNow) <= 2)) {
         	BitCoinService.CoinAnalysisDelete(BithumbMap);
     		Thread.sleep(1500);
+    		BitCoinService.BlogUploadLogCreate(map);
     		BitCoinService.CoinAnalysisCreate(BithumbMap);
+    		BithumbMap.put("log_number", "1");
+	    	BitCoinService.BlogUploadLogUpdate(BithumbMap);
     		BitCoinService.CoinAnalysisHourGraphCreate(BithumbMap);
+    		BithumbMap.put("log_number", "2");
+	    	BitCoinService.BlogUploadLogUpdate(BithumbMap);
     	    BitCoinService.CoinAnalysis4HourGraphCreate(BithumbMap);
+    	    BithumbMap.put("log_number", "3");
+	    	BitCoinService.BlogUploadLogUpdate(BithumbMap);
     	    BithumbMap.put("blog_id", "1");
 		    BitCoinService.WordPressReportHTMLCreate(BithumbMap);
 		    BithumbMap.put("blog_id", "2");
 		    BitCoinService.TiStoryReportHTMLCreate(BithumbMap);
+		    BithumbMap.put("log_number", "4");
+	    	BitCoinService.BlogUploadLogUpdate(map);
 		    
 		    UpbitCoinService.CoinAnalysisDelete(UpbitMap);
 		    Thread.sleep(1500);
+		    UpbitCoinService.BlogUploadLogCreate(UpbitMap);
     		UpbitCoinService.CoinAnalysisCreate(UpbitMap);
+    		UpbitMap.put("log_number", "1");
+	    	UpbitCoinService.BlogUploadLogUpdate(UpbitMap);
     		UpbitCoinService.CoinAnalysisHourGraphCreate(UpbitMap);
-    		UpbitCoinService.CoinAnalysis4HourGraphCreate(UpbitMap);
+    		UpbitMap.put("log_number", "2");
+	    	UpbitCoinService.BlogUploadLogUpdate(UpbitMap);
+	    	UpbitCoinService.CoinAnalysis4HourGraphCreate(UpbitMap);
+	    	UpbitMap.put("log_number", "3");
+	    	UpbitCoinService.BlogUploadLogUpdate(UpbitMap);
     		UpbitMap.put("blog_id", "1");
     	    UpbitCoinService.WordPressReportHTMLCreate(UpbitMap);
     	    UpbitMap.put("blog_id", "3");
     	    UpbitCoinService.TiStoryReportHTMLCreate(UpbitMap);
+    	    UpbitMap.put("log_number", "4");
+	    	UpbitCoinService.BlogUploadLogUpdate(UpbitMap);
     	    
     	    BinanceCoinService.CoinAnalysisDelete(BinanceMap);
 		    Thread.sleep(1500);
+		    BinanceCoinService.BlogUploadLogCreate(BinanceMap);
 		    BinanceCoinService.CoinAnalysisCreate(BinanceMap);
+		    BinanceMap.put("log_number", "1");
+	    	BinanceCoinService.BlogUploadLogUpdate(BinanceMap);
 		    BinanceCoinService.CoinAnalysisHourGraphCreate(BinanceMap);
+		    BinanceMap.put("log_number", "2");
+	    	BinanceCoinService.BlogUploadLogUpdate(BinanceMap);
 		    BinanceCoinService.CoinAnalysis4HourGraphCreate(BinanceMap);
+		    BinanceMap.put("log_number", "3");
+	    	BinanceCoinService.BlogUploadLogUpdate(BinanceMap);
     		BinanceMap.put("blog_id", "1");
     		BinanceCoinService.WordPressReportHTMLCreate(BinanceMap);
     	    BinanceMap.put("blog_id", "4");
     	    BinanceCoinService.TiStoryReportHTMLCreate(BinanceMap);
+    	    BinanceMap.put("log_number", "4");
+	    	BinanceCoinService.BlogUploadLogUpdate(BinanceMap);
     	    
     	    BinanceFuturesCoinService.CoinAnalysisDelete(BinanceMap);
 		    Thread.sleep(1500);
+		    BinanceFuturesCoinService.BlogUploadLogCreate(BinanceMap);
 		    BinanceFuturesCoinService.CoinAnalysisCreate(BinanceMap);
+		    BinanceMap.put("log_number", "1");
+	    	BinanceFuturesCoinService.BlogUploadLogUpdate(BinanceMap);
 		    BinanceFuturesCoinService.CoinAnalysisHourGraphCreate(BinanceMap);
+		    BinanceMap.put("log_number", "2");
+	    	BinanceFuturesCoinService.BlogUploadLogUpdate(BinanceMap);
 		    BinanceFuturesCoinService.CoinAnalysis4HourGraphCreate(BinanceMap);
+		    BinanceMap.put("log_number", "3");
+	    	BinanceFuturesCoinService.BlogUploadLogUpdate(BinanceMap);
     		BinanceMap.put("blog_id", "1");
     		BinanceFuturesCoinService.WordPressReportHTMLCreate(BinanceMap);
     	    BinanceMap.put("blog_id", "5");
     	    BinanceFuturesCoinService.TiStoryReportHTMLCreate(BinanceMap);
+    	    BinanceMap.put("log_number", "4");
+	    	BinanceFuturesCoinService.BlogUploadLogUpdate(BinanceMap);
     	    
     	    BybitCoinService.CoinAnalysisDelete(BybitMap);
 		    Thread.sleep(1500);
+		    BybitCoinService.BlogUploadLogCreate(BybitMap);
 		    BybitCoinService.CoinAnalysisCreate(BybitMap);
+		    BybitMap.put("log_number", "1");
+	    	BybitCoinService.BlogUploadLogUpdate(BybitMap);
 		    BybitCoinService.CoinAnalysisHourGraphCreate(BybitMap);
+		    BybitMap.put("log_number", "2");
+	    	BybitCoinService.BlogUploadLogUpdate(BybitMap);
 		    BybitCoinService.CoinAnalysis4HourGraphCreate(BybitMap);
+		    BybitMap.put("log_number", "3");
+	    	BybitCoinService.BlogUploadLogUpdate(BybitMap);
 		    BybitMap.put("blog_id", "1");
     		BybitCoinService.WordPressReportHTMLCreate(BybitMap);
     		BybitMap.put("blog_id", "6");
     	    BybitCoinService.TiStoryReportHTMLCreate(BybitMap);
+    	    BybitMap.put("log_number", "4");
+	    	BybitCoinService.BlogUploadLogUpdate(BybitMap);
         }else {
         	UpbitCoinService.CoinAnalysisDelete(UpbitMap);
 		    Thread.sleep(1500);
+		    UpbitCoinService.BlogUploadLogCreate(UpbitMap);
     		UpbitCoinService.CoinAnalysisCreate(UpbitMap);
+    		UpbitMap.put("log_number", "1");
+	    	UpbitCoinService.BlogUploadLogUpdate(UpbitMap);
     		UpbitCoinService.CoinAnalysisHourGraphCreate(UpbitMap);
-    		UpbitCoinService.CoinAnalysis4HourGraphCreate(UpbitMap);
+    		UpbitMap.put("log_number", "2");
+	    	UpbitCoinService.BlogUploadLogUpdate(UpbitMap);
+	    	UpbitCoinService.CoinAnalysis4HourGraphCreate(UpbitMap);
+	    	UpbitMap.put("log_number", "3");
+	    	UpbitCoinService.BlogUploadLogUpdate(UpbitMap);
     		UpbitMap.put("blog_id", "1");
     	    UpbitCoinService.WordPressReportHTMLCreate(UpbitMap);
     	    UpbitMap.put("blog_id", "3");
     	    UpbitCoinService.TiStoryReportHTMLCreate(UpbitMap);
-        	
+    	    UpbitMap.put("log_number", "4");
+	    	UpbitCoinService.BlogUploadLogUpdate(UpbitMap);
+    	    
     	    BinanceCoinService.CoinAnalysisDelete(BinanceMap);
 		    Thread.sleep(1500);
+		    BinanceCoinService.BlogUploadLogCreate(BinanceMap);
 		    BinanceCoinService.CoinAnalysisCreate(BinanceMap);
+		    BinanceMap.put("log_number", "1");
+	    	BinanceCoinService.BlogUploadLogUpdate(BinanceMap);
 		    BinanceCoinService.CoinAnalysisHourGraphCreate(BinanceMap);
+		    BinanceMap.put("log_number", "2");
+	    	BinanceCoinService.BlogUploadLogUpdate(BinanceMap);
 		    BinanceCoinService.CoinAnalysis4HourGraphCreate(BinanceMap);
+		    BinanceMap.put("log_number", "3");
+	    	BinanceCoinService.BlogUploadLogUpdate(BinanceMap);
     		BinanceMap.put("blog_id", "1");
     		BinanceCoinService.WordPressReportHTMLCreate(BinanceMap);
     	    BinanceMap.put("blog_id", "4");
     	    BinanceCoinService.TiStoryReportHTMLCreate(BinanceMap);
+    	    BinanceMap.put("log_number", "4");
+	    	BinanceCoinService.BlogUploadLogUpdate(BinanceMap);
     	    
     	    BinanceFuturesCoinService.CoinAnalysisDelete(BinanceMap);
 		    Thread.sleep(1500);
+		    BinanceFuturesCoinService.BlogUploadLogCreate(BinanceMap);
 		    BinanceFuturesCoinService.CoinAnalysisCreate(BinanceMap);
+		    BinanceMap.put("log_number", "1");
+	    	BinanceFuturesCoinService.BlogUploadLogUpdate(BinanceMap);
 		    BinanceFuturesCoinService.CoinAnalysisHourGraphCreate(BinanceMap);
+		    BinanceMap.put("log_number", "2");
+	    	BinanceFuturesCoinService.BlogUploadLogUpdate(BinanceMap);
 		    BinanceFuturesCoinService.CoinAnalysis4HourGraphCreate(BinanceMap);
+		    BinanceMap.put("log_number", "3");
+	    	BinanceFuturesCoinService.BlogUploadLogUpdate(BinanceMap);
     		BinanceMap.put("blog_id", "1");
     		BinanceFuturesCoinService.WordPressReportHTMLCreate(BinanceMap);
     	    BinanceMap.put("blog_id", "5");
     	    BinanceFuturesCoinService.TiStoryReportHTMLCreate(BinanceMap);
+    	    BinanceMap.put("log_number", "4");
+	    	BinanceFuturesCoinService.BlogUploadLogUpdate(BinanceMap);
     	    
     	    BybitCoinService.CoinAnalysisDelete(BybitMap);
 		    Thread.sleep(1500);
+		    BybitCoinService.BlogUploadLogCreate(BybitMap);
 		    BybitCoinService.CoinAnalysisCreate(BybitMap);
+		    BybitMap.put("log_number", "1");
+	    	BybitCoinService.BlogUploadLogUpdate(BybitMap);
 		    BybitCoinService.CoinAnalysisHourGraphCreate(BybitMap);
+		    BybitMap.put("log_number", "2");
+	    	BybitCoinService.BlogUploadLogUpdate(BybitMap);
 		    BybitCoinService.CoinAnalysis4HourGraphCreate(BybitMap);
+		    BybitMap.put("log_number", "3");
+	    	BybitCoinService.BlogUploadLogUpdate(BybitMap);
 		    BybitMap.put("blog_id", "1");
     		BybitCoinService.WordPressReportHTMLCreate(BybitMap);
     		BybitMap.put("blog_id", "6");
     	    BybitCoinService.TiStoryReportHTMLCreate(BybitMap);
+    	    BybitMap.put("log_number", "4");
+	    	BybitCoinService.BlogUploadLogUpdate(BybitMap);
     	    
     	    BitCoinService.CoinAnalysisDelete(BithumbMap);
     		Thread.sleep(1500);
+    		BitCoinService.BlogUploadLogCreate(map);
     		BitCoinService.CoinAnalysisCreate(BithumbMap);
+    		BithumbMap.put("log_number", "1");
+	    	BitCoinService.BlogUploadLogUpdate(BithumbMap);
     		BitCoinService.CoinAnalysisHourGraphCreate(BithumbMap);
+    		BithumbMap.put("log_number", "2");
+	    	BitCoinService.BlogUploadLogUpdate(BithumbMap);
     	    BitCoinService.CoinAnalysis4HourGraphCreate(BithumbMap);
+    	    BithumbMap.put("log_number", "3");
+	    	BitCoinService.BlogUploadLogUpdate(BithumbMap);
     	    BithumbMap.put("blog_id", "1");
 		    BitCoinService.WordPressReportHTMLCreate(BithumbMap);
 		    BithumbMap.put("blog_id", "2");
-		    BitCoinService.TiStoryReportHTMLCreate(BithumbMap);  
+		    BitCoinService.TiStoryReportHTMLCreate(BithumbMap);
+		    BithumbMap.put("log_number", "4");
+	    	BitCoinService.BlogUploadLogUpdate(map);
         }
         */
 	}

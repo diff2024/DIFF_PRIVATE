@@ -172,13 +172,22 @@ public class BybitCoinController {
 	    
 	    BybitCoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
+	    BybitCoinService.BlogUploadLogCreate(map);
 	    BybitCoinService.CoinAnalysisCreate(map);
+	    map.put("log_number", "1");
+	    BybitCoinService.BlogUploadLogUpdate(map);
 	    BybitCoinService.CoinAnalysisHourGraphCreate(map);
+	    map.put("log_number", "2");
+	    BybitCoinService.BlogUploadLogUpdate(map);
 	    BybitCoinService.CoinAnalysis4HourGraphCreate(map);
+	    map.put("log_number", "3");
+	    BybitCoinService.BlogUploadLogUpdate(map);
 	    map.put("blog_id", "1");
 	    BybitCoinService.WordPressReportHTMLCreate(map);
 	    map.put("blog_id", "6");
 	    BybitCoinService.TiStoryReportHTMLCreate(map);
+	    map.put("log_number", "4");
+	    BybitCoinService.BlogUploadLogUpdate(map);
 	}
 	
 	@GetMapping(path = "/CoinDailyReportList")

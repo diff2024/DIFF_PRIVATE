@@ -76,6 +76,9 @@ const BinanceFuturesCoinLiveList = () => {
 const BybitCoinMainList = () => {
 	return import("./views/Coin/BybitCoinMainList.vue")	
 }
+const BlogReportMake = () => {
+	return import("./views/Coin/BlogReportMake.vue")	
+}
 const BybitCoinLiveList = () => {
 	return import("./views/Coin/BybitCoinLiveList.vue")	
 }
@@ -183,6 +186,11 @@ export const router = new Router({
       path: '/BybitCoinMainList/:date',
       name: 'bybitcoinMainList2',
       component: BybitCoinMainList
+    },
+    {
+      path: '/BlogReportMake/:date',
+      name: 'blogreportmake',
+      component: BlogReportMake
     },
     {
       path: '/Report',

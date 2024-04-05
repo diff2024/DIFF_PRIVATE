@@ -34,7 +34,16 @@ public class BinanceFuturesCoinService {
 		return BinanceFuturesCoinMapper.MainGridList(map);
 	}
 	
+	public void BlogUploadLogCreate(HashMap<String, String> map) throws Exception{
+		BinanceFuturesCoinMapper.BlogUploadLogCreate(map);
+	}
+	
+	public void BlogUploadLogUpdate(HashMap<String, String> map) throws Exception{
+		BinanceFuturesCoinMapper.BlogUploadLogUpdate(map);
+	}
+	
 	public void CoinAnalysisDelete(HashMap<String, String> map) throws Exception{
+		BinanceFuturesCoinMapper.BlogUploadLogDelete(map);
 		BinanceFuturesCoinMapper.CoinAnalysisDelete(map);
 		BinanceFuturesCoinMapper.CoinAnalysisHourGraphDelete(map);
 		BinanceFuturesCoinMapper.CoinAnalysis4HourGraphDelete(map);

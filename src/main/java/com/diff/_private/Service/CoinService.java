@@ -36,7 +36,16 @@ public class CoinService {
 		return CoinMapper.MainGridList(map);
 	}
 	
+	public void BlogUploadLogCreate(HashMap<String, String> map) throws Exception{
+		CoinMapper.BlogUploadLogCreate(map);
+	}
+	
+	public void BlogUploadLogUpdate(HashMap<String, String> map) throws Exception{
+		CoinMapper.BlogUploadLogUpdate(map);
+	}
+	
 	public void CoinAnalysisDelete(HashMap<String, String> map) throws Exception{
+		CoinMapper.BlogUploadLogDelete(map);
 		CoinMapper.CoinAnalysisDelete(map);
 		CoinMapper.CoinAnalysisHourGraphDelete(map);
 		CoinMapper.CoinAnalysis4HourGraphDelete(map);

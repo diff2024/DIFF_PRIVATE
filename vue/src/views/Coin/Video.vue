@@ -1645,17 +1645,95 @@ export default {
 				this.video_title_html += '<div style="color:black;">';
 				this.video_title_html += video_title.replaceAll('<br/><br/>', ' ').replaceAll('<br/>', ' ')+'을 시작하겠습니다.';
 				this.video_title_html += '<br/><br/>';
-				this.video_title_html += '먼저 기준이 되는 '+this.btc_coin_name+'는 '+this.btc_o_price+'원으로 시작해 젓가 '+this.btc_l_price+'원, 곳가 '+this.btc_h_price+'원을 기록하고 '+this.btc_c_price+'원으로 마감하였고, 시까대비종까는 '+this.btc_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.btc_l_h_price_rate+'% 상승 하였습니다.';
+				this.video_title_html += '먼저 기준이 되는 '+this.btc_coin_name+'는 '+this.btc_o_price+'원으로 시작해 젓가 '+this.btc_l_price+'원, 곳가 '+this.btc_h_price+'원을 기록하고 '+this.btc_c_price+'원으로 마감하였고, 시까대비종까는 '+this.btc_o_c_price_rate+'% '
+				if(Number(this.btc_o_c_price_rate) == 0){
+					this.video_title_html += '보합이였고, '
+				}else if(Number(this.btc_o_c_price_rate) > 0){
+					this.video_title_html += '상승하였고, '
+				}else if(Number(this.btc_o_c_price_rate) < 0){
+					this.video_title_html += '하락하였고, '
+				}
+				this.video_title_html += '젓가대비곳가는 '+this.btc_l_h_price_rate+'% 상승 하였습니다.';
 				this.video_title_html += '<br/><br/>';
-				this.video_title_html += '상승율 5위는 '+this.rank5_coin_name+this.rank5_coin_particle+' '+this.rank5_o_price+'원으로 시작해 젓가 '+this.rank5_l_price+'원, 곳가 '+this.rank5_h_price+'원을 기록하고 '+this.rank5_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank5_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank5_l_h_price_rate+'% 상승 하였습니다.';
+
+				if(Number(this.rank5_o_c_price_rate) > 0){
+					this.video_title_html += '상승율 '
+				}else if(Number(this.rank5_o_c_price_rate) < 0){
+					this.video_title_html += '최저 하락율 '
+				}
+				this.video_title_html += '5위는 '+this.rank5_coin_name+this.rank5_coin_particle+' '+this.rank5_o_price+'원으로 시작해 젓가 '+this.rank5_l_price+'원, 곳가 '+this.rank5_h_price+'원을 기록하고 '+this.rank5_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank5_o_c_price_rate+'% '
+				if(Number(this.rank5_o_c_price_rate) == 0){
+					this.video_title_html += '보합이였고, '
+				}else if(Number(this.rank5_o_c_price_rate) > 0){
+					this.video_title_html += '상승하였고, '
+				}else if(Number(this.rank5_o_c_price_rate) < 0){
+					this.video_title_html += '하락하였고, '
+				}
+				this.video_title_html += '젓가대비곳가는 '+this.rank5_l_h_price_rate+'% 상승 하였습니다.';
 				this.video_title_html += '<br/><br/>';
-				this.video_title_html += '상승율 4위는 '+this.rank4_coin_name+this.rank4_coin_particle+' '+this.rank4_o_price+'원으로 시작해 젓가 '+this.rank4_l_price+'원, 곳가 '+this.rank4_h_price+'원을 기록하고 '+this.rank4_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank4_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank4_l_h_price_rate+'% 상승 하였습니다.';
+
+				if(Number(this.rank4_o_c_price_rate) > 0){
+					this.video_title_html += '상승율 '
+				}else if(Number(this.rank4_o_c_price_rate) < 0){
+					this.video_title_html += '최저 하락율 '
+				}
+				this.video_title_html += '4위는 '+this.rank4_coin_name+this.rank4_coin_particle+' '+this.rank4_o_price+'원으로 시작해 젓가 '+this.rank4_l_price+'원, 곳가 '+this.rank4_h_price+'원을 기록하고 '+this.rank4_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank4_o_c_price_rate+'% '
+				if(Number(this.rank4_o_c_price_rate) == 0){
+					this.video_title_html += '보합이였고, '
+				}else if(Number(this.rank4_o_c_price_rate) > 0){
+					this.video_title_html += '상승하였고, '
+				}else if(Number(this.rank4_o_c_price_rate) < 0){
+					this.video_title_html += '하락하였고, '
+				}
+				this.video_title_html += '젓가대비곳가는 '+this.rank4_l_h_price_rate+'% 상승 하였습니다.';
 				this.video_title_html += '<br/><br/>';
-				this.video_title_html += '상승율 3위는 '+this.rank3_coin_name+this.rank3_coin_particle+' '+this.rank3_o_price+'원으로 시작해 젓가 '+this.rank3_l_price+'원, 곳가 '+this.rank3_h_price+'원을 기록하고 '+this.rank3_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank3_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
+
+				if(Number(this.rank3_o_c_price_rate) > 0){
+					this.video_title_html += '상승율 '
+				}else if(Number(this.rank3_o_c_price_rate) < 0){
+					this.video_title_html += '최저 하락율 '
+				}
+				this.video_title_html += '3위는 '+this.rank3_coin_name+this.rank3_coin_particle+' '+this.rank3_o_price+'원으로 시작해 젓가 '+this.rank3_l_price+'원, 곳가 '+this.rank3_h_price+'원을 기록하고 '+this.rank3_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank3_o_c_price_rate+'% '
+				if(Number(this.rank3_o_c_price_rate) == 0){
+					this.video_title_html += '보합이였고, '
+				}else if(Number(this.rank3_o_c_price_rate) > 0){
+					this.video_title_html += '상승하였고, '
+				}else if(Number(this.rank3_o_c_price_rate) < 0){
+					this.video_title_html += '하락하였고, '
+				}
+				this.video_title_html += '젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
 				this.video_title_html += '<br/><br/>';
-				this.video_title_html += '상승율 2위는 '+this.rank2_coin_name+this.rank2_coin_particle+' '+this.rank2_o_price+'원으로 시작해 젓가 '+this.rank2_l_price+'원, 곳가 '+this.rank2_h_price+'원을 기록하고 '+this.rank2_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank2_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank2_l_h_price_rate+'% 상승 하였습니다.';
+
+				if(Number(this.rank2_o_c_price_rate) > 0){
+					this.video_title_html += '상승율 '
+				}else if(Number(this.rank2_o_c_price_rate) < 0){
+					this.video_title_html += '최저 하락율 '
+				}
+				this.video_title_html += '2위는 '+this.rank2_coin_name+this.rank2_coin_particle+' '+this.rank2_o_price+'원으로 시작해 젓가 '+this.rank2_l_price+'원, 곳가 '+this.rank2_h_price+'원을 기록하고 '+this.rank2_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank2_o_c_price_rate+'% '
+				if(Number(this.rank2_o_c_price_rate) == 0){
+					this.video_title_html += '보합이였고, '
+				}else if(Number(this.rank2_o_c_price_rate) > 0){
+					this.video_title_html += '상승하였고, '
+				}else if(Number(this.rank2_o_c_price_rate) < 0){
+					this.video_title_html += '하락하였고, '
+				}
+				this.video_title_html += '젓가대비곳가는 '+this.rank2_l_h_price_rate+'% 상승 하였습니다.';
 				this.video_title_html += '<br/><br/>';
-				this.video_title_html += '상승율 1위는 '+this.rank1_coin_name+this.rank1_coin_particle+' '+this.rank1_o_price+'원으로 시작해 젓가 '+this.rank1_l_price+'원, 곳가 '+this.rank1_h_price+'원을 기록하고 '+this.rank1_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank1_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
+
+				if(Number(this.rank1_o_c_price_rate) > 0){
+					this.video_title_html += '상승율 '
+				}else if(Number(this.rank1_o_c_price_rate) < 0){
+					this.video_title_html += '최저 하락율 '
+				}
+				this.video_title_html += '1위는 '+this.rank1_coin_name+this.rank1_coin_particle+' '+this.rank1_o_price+'원으로 시작해 젓가 '+this.rank1_l_price+'원, 곳가 '+this.rank1_h_price+'원을 기록하고 '+this.rank1_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank1_o_c_price_rate+'% '
+				if(Number(this.rank1_o_c_price_rate) == 0){
+					this.video_title_html += '보합이였고, '
+				}else if(Number(this.rank1_o_c_price_rate) > 0){
+					this.video_title_html += '상승하였고, '
+				}else if(Number(this.rank1_o_c_price_rate) < 0){
+					this.video_title_html += '하락하였고, '
+				}
+				this.video_title_html += '젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
 				this.video_title_html += '</div>';
 				this.video_title_html += '<br/><br/>';
 				

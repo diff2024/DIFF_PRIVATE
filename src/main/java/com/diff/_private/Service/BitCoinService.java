@@ -33,7 +33,16 @@ public class BitCoinService {
 		return BitCoinMapper.MainGridList(map);
 	}
 	
+	public void BlogUploadLogCreate(HashMap<String, String> map) throws Exception{
+		BitCoinMapper.BlogUploadLogCreate(map);
+	}
+	
+	public void BlogUploadLogUpdate(HashMap<String, String> map) throws Exception{
+		BitCoinMapper.BlogUploadLogUpdate(map);
+	}
+	
 	public void CoinAnalysisDelete(HashMap<String, String> map) throws Exception{
+		BitCoinMapper.BlogUploadLogDelete(map);
 		BitCoinMapper.CoinAnalysisDelete(map);
 		BitCoinMapper.CoinAnalysisHourGraphDelete(map);
 		BitCoinMapper.CoinAnalysis4HourGraphDelete(map);

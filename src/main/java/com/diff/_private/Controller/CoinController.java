@@ -159,13 +159,22 @@ public class CoinController {
 	    
 	    CoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
+	    CoinService.BlogUploadLogCreate(map);
 	    CoinService.CoinAnalysisCreate(map);
+	    map.put("log_number", "1");
+	    CoinService.BlogUploadLogUpdate(map);
 	    CoinService.CoinAnalysisHourGraphCreate(map);
+	    map.put("log_number", "2");
+	    CoinService.BlogUploadLogUpdate(map);
 	    CoinService.CoinAnalysis4HourGraphCreate(map);
+	    map.put("log_number", "3");
+	    CoinService.BlogUploadLogUpdate(map);
 	    map.put("blog_id", "1");
 	    CoinService.WordPressReportHTMLCreate(map);
 	    map.put("blog_id", "3");
 	    CoinService.TiStoryReportHTMLCreate(map);
+	    map.put("log_number", "4");
+	    CoinService.BlogUploadLogUpdate(map);
 	}
 	
 	@GetMapping(path = "/CoinDailyReportList")

@@ -33,7 +33,16 @@ public class BybitCoinService {
 		return BybitCoinMapper.MainGridList(map);
 	}
 	
+	public void BlogUploadLogCreate(HashMap<String, String> map) throws Exception{
+		BybitCoinMapper.BlogUploadLogCreate(map);
+	}
+	
+	public void BlogUploadLogUpdate(HashMap<String, String> map) throws Exception{
+		BybitCoinMapper.BlogUploadLogUpdate(map);
+	}
+	
 	public void CoinAnalysisDelete(HashMap<String, String> map) throws Exception{
+		BybitCoinMapper.BlogUploadLogDelete(map);
 		BybitCoinMapper.CoinAnalysisDelete(map);
 		BybitCoinMapper.CoinAnalysisHourGraphDelete(map);
 		BybitCoinMapper.CoinAnalysis4HourGraphDelete(map);
