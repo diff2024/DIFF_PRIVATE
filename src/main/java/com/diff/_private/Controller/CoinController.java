@@ -160,15 +160,25 @@ public class CoinController {
 	    CoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
 	    CoinService.BlogUploadLogCreate(map);
+	    map.put("upload_start_datetime", CoinService.BlogUploadLogConfirm());
 	    CoinService.CoinAnalysisCreate(map);
 	    map.put("log_number", "1");
 	    CoinService.BlogUploadLogUpdate(map);
+	    if((CoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    CoinService.CoinAnalysisHourGraphCreate(map);
 	    map.put("log_number", "2");
 	    CoinService.BlogUploadLogUpdate(map);
+	    if((CoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    CoinService.CoinAnalysis4HourGraphCreate(map);
 	    map.put("log_number", "3");
 	    CoinService.BlogUploadLogUpdate(map);
+	    if((CoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    map.put("blog_id", "1");
 	    CoinService.WordPressReportHTMLCreate(map);
 	    map.put("blog_id", "3");

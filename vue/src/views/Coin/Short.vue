@@ -525,13 +525,52 @@ export default {
 				//this.short_html += '<br/><br/>';
 				//this.short_html += '상승율 4위는 '+this.rank4_coin_name+this.rank4_coin_particle+' '+this.rank4_o_price+'원으로 시작해 젓가 '+this.rank4_l_price+'원, 곳가 '+this.rank4_h_price+'원을 기록하고 '+this.rank4_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank4_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank4_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
-				this.short_html += '상승율 3위는 '+this.rank3_coin_name+this.rank3_coin_particle+' '+this.rank3_o_price+'원으로 시작해 젓가 '+this.rank3_l_price+'원, 곳가 '+this.rank3_h_price+'원을 기록하고 '+this.rank3_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank3_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
+				if(Number(this.rank3_o_c_price_rate) > 0){
+					this.short_html += '상승율 '
+				}else if(Number(this.rank3_o_c_price_rate) < 0){
+					this.short_html += '최저 하락율 '
+				}
+				this.short_html += ' 3위는 '+this.rank3_coin_name+this.rank3_coin_particle+' '+this.rank3_o_price+'원으로 시작해 젓가 '+this.rank3_l_price+'원, 곳가 '+this.rank3_h_price+'원을 기록하고 '+this.rank3_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank3_o_c_price_rate+'% '
+				if(Number(this.rank3_o_c_price_rate) == 0){
+					this.short_html += '보합이였고, '
+				}else if(Number(this.rank3_o_c_price_rate) > 0){
+					this.short_html += '상승하였고, '
+				}else if(Number(this.rank3_o_c_price_rate) < 0){
+					this.short_html += '하락하였고, '
+				}
+				this.short_html += ', 젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
-				this.short_html += '상승율 2위는 '+this.rank2_coin_name+this.rank2_coin_particle+' '+this.rank2_o_price+'원으로 시작해 젓가 '+this.rank2_l_price+'원, 곳가 '+this.rank2_h_price+'원을 기록하고 '+this.rank2_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank2_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank2_l_h_price_rate+'% 상승 하였습니다.';
+				if(Number(this.rank2_o_c_price_rate) > 0){
+					this.short_html += '상승율 '
+				}else if(Number(this.rank2_o_c_price_rate) < 0){
+					this.short_html += '최저 하락율 '
+				}
+				this.short_html += ' 2위는 '+this.rank2_coin_name+this.rank2_coin_particle+' '+this.rank2_o_price+'원으로 시작해 젓가 '+this.rank2_l_price+'원, 곳가 '+this.rank2_h_price+'원을 기록하고 '+this.rank2_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank2_o_c_price_rate+'% '
+				if(Number(this.rank2_o_c_price_rate) == 0){
+					this.short_html += '보합이였고, '
+				}else if(Number(this.rank2_o_c_price_rate) > 0){
+					this.short_html += '상승하였고, '
+				}else if(Number(this.rank2_o_c_price_rate) < 0){
+					this.short_html += '하락하였고, '
+				}
+				this.short_html += ', 젓가대비곳가는 '+this.rank2_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
-				this.short_html += '상승율 1위는 '+this.rank1_coin_name+this.rank1_coin_particle+' '+this.rank1_o_price+'원으로 시작해 젓가 '+this.rank1_l_price+'원, 곳가 '+this.rank1_h_price+'원을 기록하고 '+this.rank1_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank1_o_c_price_rate+'% 상승하였고, 젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
+				if(Number(this.rank1_o_c_price_rate) > 0){
+					this.short_html += '상승율 '
+				}else if(Number(this.rank1_o_c_price_rate) < 0){
+					this.short_html += '최저 하락율 '
+				}
+				this.short_html += ' 1위는 '+this.rank1_coin_name+this.rank1_coin_particle+' '+this.rank1_o_price+'원으로 시작해 젓가 '+this.rank1_l_price+'원, 곳가 '+this.rank1_h_price+'원을 기록하고 '+this.rank1_c_price+'원으로 마감하였고, 시까대비종까는 '+this.rank1_o_c_price_rate+'% '
+				if(Number(this.rank1_o_c_price_rate) == 0){
+					this.short_html += '보합이였고, '
+				}else if(Number(this.rank1_o_c_price_rate) > 0){
+					this.short_html += '상승하였고, '
+				}else if(Number(this.rank1_o_c_price_rate) < 0){
+					this.short_html += '하락하였고, '
+				}
+				this.short_html += ', 젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
-				this.short_html += '영상 시청 감사드리며, 코인분석기 채널 방문하셔서 '
+				this.short_html += '영상 시청 감사드리며, 아래의 '
 				this.short_html += (this.search_date).substring(2, 4) + '년 ';
 
 				if((this.search_date).substring(5, 6) == '0'){
@@ -552,6 +591,9 @@ export default {
 					this.short_html += ' 빗썸 '
 				}
 				this.short_html += '코인 분석 영상 시청 부탁드리며, 좋아요와 구독 부탁 드립니다.';
+				this.short_html += '<br/>';
+				this.short_html += '<br/>';
+				this.short_html += '영상 시청 감사드리며, 유튜브 코인분석기 채널 방문 부탁드립니다.';
 				this.short_html += '</div>';
 				this.short_html += '<br/>';
 				this.short_html += '<br/>';

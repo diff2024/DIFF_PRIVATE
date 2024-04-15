@@ -164,15 +164,25 @@ public class BitCoinController {
 	    BitCoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
 	    BitCoinService.BlogUploadLogCreate(map);
+	    map.put("upload_start_datetime", BitCoinService.BlogUploadLogConfirm());
 	    BitCoinService.CoinAnalysisCreate(map);
 	    map.put("log_number", "1");
 	    BitCoinService.BlogUploadLogUpdate(map);
+	    if((BitCoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    BitCoinService.CoinAnalysisHourGraphCreate(map);
 	    map.put("log_number", "2");
 	    BitCoinService.BlogUploadLogUpdate(map);
+	    if((BitCoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    BitCoinService.CoinAnalysis4HourGraphCreate(map);
 	    map.put("log_number", "3");
 	    BitCoinService.BlogUploadLogUpdate(map);
+	    if((BitCoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    map.put("blog_id", "1");
 	    BitCoinService.WordPressReportHTMLCreate(map);
 	    map.put("blog_id", "2");

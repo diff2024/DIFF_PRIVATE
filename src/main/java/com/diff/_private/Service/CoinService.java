@@ -44,6 +44,14 @@ public class CoinService {
 		CoinMapper.BlogUploadLogUpdate(map);
 	}
 	
+	public String BlogUploadLogConfirm() throws Exception{
+		return CoinMapper.BlogUploadLogConfirm();
+	}
+	
+	public String BlogUploadLogDeleteYN(HashMap<String, String> map) throws Exception{
+		return CoinMapper.BlogUploadLogDeleteYN(map);
+	}
+	
 	public void CoinAnalysisDelete(HashMap<String, String> map) throws Exception{
 		CoinMapper.BlogUploadLogDelete(map);
 		CoinMapper.CoinAnalysisDelete(map);

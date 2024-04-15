@@ -41,6 +41,14 @@ public class BybitCoinService {
 		BybitCoinMapper.BlogUploadLogUpdate(map);
 	}
 	
+	public String BlogUploadLogConfirm() throws Exception{
+		return BybitCoinMapper.BlogUploadLogConfirm();
+	}
+	
+	public String BlogUploadLogDeleteYN(HashMap<String, String> map) throws Exception{
+		return BybitCoinMapper.BlogUploadLogDeleteYN(map);
+	}
+	
 	public void CoinAnalysisDelete(HashMap<String, String> map) throws Exception{
 		BybitCoinMapper.BlogUploadLogDelete(map);
 		BybitCoinMapper.CoinAnalysisDelete(map);

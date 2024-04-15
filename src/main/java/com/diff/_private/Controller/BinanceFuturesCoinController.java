@@ -163,15 +163,25 @@ public class BinanceFuturesCoinController {
 	    BinanceFuturesCoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
 	    BinanceFuturesCoinService.BlogUploadLogCreate(map);
+	    map.put("upload_start_datetime", BinanceFuturesCoinService.BlogUploadLogConfirm());
 	    BinanceFuturesCoinService.CoinAnalysisCreate(map);
 	    map.put("log_number", "1");
 	    BinanceFuturesCoinService.BlogUploadLogUpdate(map);
+	    if((BinanceFuturesCoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    BinanceFuturesCoinService.CoinAnalysisHourGraphCreate(map);
 	    map.put("log_number", "2");
 	    BinanceFuturesCoinService.BlogUploadLogUpdate(map);
+	    if((BinanceFuturesCoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    BinanceFuturesCoinService.CoinAnalysis4HourGraphCreate(map);
 	    map.put("log_number", "3");
 	    BinanceFuturesCoinService.BlogUploadLogUpdate(map);
+	    if((BinanceFuturesCoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    map.put("blog_id", "1");
 	    BinanceFuturesCoinService.WordPressReportHTMLCreate(map);
 	    map.put("blog_id", "5");

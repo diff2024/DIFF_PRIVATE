@@ -51,7 +51,7 @@ function drawChart() {
                 color: 'black',
                 bold: true
             },
-            chartArea: { width: '95%' },
+            chartArea: { width: '93%' },
             legend : 'none',
             series: {
                 0: { color: '#F8941C' }

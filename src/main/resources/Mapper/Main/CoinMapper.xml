@@ -1972,10 +1972,18 @@
  		 limit 7
 	</select>
 	
+	<select id="BlogUploadLogConfirm" resultType="String">
+		select start_datetime from blog_upload_log where gubun = 'upbit' and end_datetime = '' and delete_yn = 'N' order by start_datetime limit 1
+	</select>
+	
+	<select id="BlogUploadLogDeleteYN" resultType="String" parameterType="HashMap">
+		select coalesce(max(delete_yn), 'N') delete_yn from blog_upload_log where gubun = 'upbit' and start_datetime = #{upload_start_datetime}
+	</select>
+	
 	<update id="BlogUploadLogDelete" parameterType="HashMap">
 		update blog_upload_log 
 		   set delete_yn = 'Y' 
-		 where yyyymmdd = #{yyyymmdd} and gubun = 'upbit' 
+		 where yyyymmdd = #{yyyymmdd} and gubun = 'upbit'
 	</update>
 	
 	<insert id="BlogUploadLogCreate" parameterType="HashMap">
@@ -1997,8 +2005,10 @@
 		   set datetime_3rd = (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8)))
 		</if>
 		<if test='log_number == "4" '>
-		   set datetime_4th = (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8))), end_datetime = (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8)))
+		   set datetime_4th = (select (cast(current_date as varchar) || ' ' || left(cast(current_time as varchar), 8)))
 		</if>
-		 where yyyymmdd = #{yyyymmdd} and gubun = 'upbit' and delete_yn = 'N' 
+		 where yyyymmdd = #{yyyymmdd} 
+		   and gubun = 'upbit'
+		   and start_datetime = #{upload_start_datetime}
 	</update>
 </mapper>

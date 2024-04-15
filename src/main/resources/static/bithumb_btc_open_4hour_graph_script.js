@@ -52,7 +52,7 @@ function drawChart() {
                 color: 'black',
                 bold: true
             },
-            chartArea: { width: '91%' },
+            chartArea: { width: '88%' },
             legend : 'none',
             series: {
                 0: { color: '#F8941C' }
@@ -72,7 +72,7 @@ function drawChart() {
                     bold: true
                 }
             },
-            width: 550,
+            width: 565,
             height: 250
         };
         
@@ -119,7 +119,7 @@ function drawChart() {
                     color: 'black',
                     bold: true
                 },
-                chartArea: { width: '91%' },
+                chartArea: { width: '88%' },
                 legend : 'none',
                 series: {
                     0: { color: '#FF3636' }

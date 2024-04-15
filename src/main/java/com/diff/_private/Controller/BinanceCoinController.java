@@ -163,15 +163,25 @@ public class BinanceCoinController {
 	    BinanceCoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
 	    BinanceCoinService.BlogUploadLogCreate(map);
+	    map.put("upload_start_datetime", BinanceCoinService.BlogUploadLogConfirm());
 	    BinanceCoinService.CoinAnalysisCreate(map);
 	    map.put("log_number", "1");
 	    BinanceCoinService.BlogUploadLogUpdate(map);
+	    if((BinanceCoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    BinanceCoinService.CoinAnalysisHourGraphCreate(map);
 	    map.put("log_number", "2");
 	    BinanceCoinService.BlogUploadLogUpdate(map);
+	    if((BinanceCoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    BinanceCoinService.CoinAnalysis4HourGraphCreate(map);
 	    map.put("log_number", "3");
 	    BinanceCoinService.BlogUploadLogUpdate(map);
+	    if((BinanceCoinService.BlogUploadLogDeleteYN(map)).equals("Y")) {
+	    	return;
+	    }
 	    map.put("blog_id", "1");
 	    BinanceCoinService.WordPressReportHTMLCreate(map);
 	    map.put("blog_id", "4");

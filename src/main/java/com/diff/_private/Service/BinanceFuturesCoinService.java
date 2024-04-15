@@ -42,6 +42,14 @@ public class BinanceFuturesCoinService {
 		BinanceFuturesCoinMapper.BlogUploadLogUpdate(map);
 	}
 	
+	public String BlogUploadLogConfirm() throws Exception{
+		return BinanceFuturesCoinMapper.BlogUploadLogConfirm();
+	}
+	
+	public String BlogUploadLogDeleteYN(HashMap<String, String> map) throws Exception{
+		return BinanceFuturesCoinMapper.BlogUploadLogDeleteYN(map);
+	}
+	
 	public void CoinAnalysisDelete(HashMap<String, String> map) throws Exception{
 		BinanceFuturesCoinMapper.BlogUploadLogDelete(map);
 		BinanceFuturesCoinMapper.CoinAnalysisDelete(map);
