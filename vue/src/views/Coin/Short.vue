@@ -538,7 +538,7 @@ export default {
 				}else if(Number(this.rank3_o_c_price_rate) < 0){
 					this.short_html += '하락하였고, '
 				}
-				this.short_html += ', 젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
+				this.short_html += '젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
 				if(Number(this.rank2_o_c_price_rate) > 0){
 					this.short_html += '상승율 '
@@ -553,7 +553,7 @@ export default {
 				}else if(Number(this.rank2_o_c_price_rate) < 0){
 					this.short_html += '하락하였고, '
 				}
-				this.short_html += ', 젓가대비곳가는 '+this.rank2_l_h_price_rate+'% 상승 하였습니다.';
+				this.short_html += '젓가대비곳가는 '+this.rank2_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
 				if(Number(this.rank1_o_c_price_rate) > 0){
 					this.short_html += '상승율 '
@@ -568,7 +568,7 @@ export default {
 				}else if(Number(this.rank1_o_c_price_rate) < 0){
 					this.short_html += '하락하였고, '
 				}
-				this.short_html += ', 젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
+				this.short_html += '젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
 				this.short_html += '영상 시청 감사드리며, 아래의 '
 				this.short_html += (this.search_date).substring(2, 4) + '년 ';
