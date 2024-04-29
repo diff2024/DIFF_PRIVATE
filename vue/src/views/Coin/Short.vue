@@ -570,27 +570,7 @@ export default {
 				}
 				this.short_html += '젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
-				this.short_html += '영상 시청 감사드리며, 아래의 '
-				this.short_html += (this.search_date).substring(2, 4) + '년 ';
-
-				if((this.search_date).substring(5, 6) == '0'){
-					this.short_html += (this.search_date).substring(6, 7) + '월 '
-				}else{
-					this.short_html += (this.search_date).substring(5, 7) + '월 '
-				}
-
-				if((this.search_date).substring(8, 9) == '0'){
-					this.short_html += (this.search_date).substring(9, 10) +'일';
-				}else{
-					this.short_html += (this.search_date).substring(8, 10) +'일';
-				}
-
-				if(this.search_market == 'upbit'){
-					this.short_html += ' 업비트 '
-				}else if(this.search_market == 'bithumb'){
-					this.short_html += ' 빗썸 '
-				}
-				this.short_html += '코인 분석 영상 시청 부탁드리며, 좋아요와 구독 부탁 드립니다.';
+				this.short_html += '영상 시청 감사드리며, 좋아요와 구독 부탁 드립니다.';
 				this.short_html += '<br/>';
 				this.short_html += '<br/>';
 				this.short_html += '영상 시청 감사드리며, 유튜브 코인분석기 채널 방문 부탁드립니다.';

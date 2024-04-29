@@ -4465,7 +4465,11 @@ export default {
 							if(Number(last_ranking) > (Number(this.rankList.length)-1)){
 								last_ranking = (Number(this.rankList.length)-1)
 							}
-							temp_video_title_html += '순위 '+String(i)+'위에서 '+String(last_ranking)+'위는 '
+							if(String(i) == String(last_ranking)){
+								temp_video_title_html += '순위 '+String(i)+'위는 '
+							}else{
+								temp_video_title_html += '순위 '+String(i)+'위에서 '+String(last_ranking)+'위는 '
+							}
 						}else{
 							temp_video_title_html += ', '
 						}
@@ -4724,7 +4728,11 @@ export default {
 							if(Number(last_ranking) > (Number(this.rankList.length)-1)){
 								last_ranking = (Number(this.rankList.length)-1)
 							}
-							temp_video_title_html += '순위 '+String(i)+'위에서 '+String(last_ranking)+'위는 '
+							if(String(i) == String(last_ranking)){
+								temp_video_title_html += '순위 '+String(i)+'위는 '
+							}else{
+								temp_video_title_html += '순위 '+String(i)+'위에서 '+String(last_ranking)+'위는 '
+							}
 						}else{
 							temp_video_title_html += ', '
 						}
