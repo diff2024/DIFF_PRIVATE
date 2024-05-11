@@ -471,6 +471,7 @@ export default {
 		},
 		getYoutubeShortMake(){
 			if(this.search_date != '' && this.search_market != ''){
+				var korea_date = ''
 				var short_title = ''
 				//short_title = this.search_date + ' ';
 				short_title = (this.search_date).substring(2, 4) + '년 ';
@@ -486,6 +487,8 @@ export default {
 				}else{
 					short_title += (this.search_date).substring(8, 10) +'일';
 				}
+
+				korea_date = short_title
 
 				if(this.search_market == 'upbit'){
 					short_title += '<br/>업비트 '
@@ -571,13 +574,75 @@ export default {
 				this.short_html += '젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
 				this.short_html += '영상 시청 감사드리며, 좋아요와 구독 부탁 드립니다.';
-				this.short_html += '<br/>';
-				this.short_html += '<br/>';
+				this.short_html += '<br/><br/>';
 				this.short_html += '영상 시청 감사드리며, 유튜브 코인분석기 채널 방문 부탁드립니다.';
+				this.short_html += '<br/><br/>';
+
+				this.short_html += korea_date+', ' +'빗썸, 업비트 코인 순위를 알아보겠습니다.';
+				this.short_html += '<br/>'
+				if(this.search_market == 'upbit'){
+					this.short_html += '업비트 '
+				}else if(this.search_market == 'bithumb'){
+					this.short_html += '빗썸 '
+				}
+				if(Number(this.rank3_o_c_price_rate) > 0){
+					this.short_html += '상승율 '
+				}else if(Number(this.rank3_o_c_price_rate) < 0){
+					this.short_html += '최저 하락율 '
+				}
+				this.short_html += ' 3위는 '+this.rank3_coin_name+this.rank3_coin_particle+' 시까대비종까는 '+this.rank3_o_c_price_rate+'% '
+				if(Number(this.rank3_o_c_price_rate) == 0){
+					this.short_html += '보합이였고, '
+				}else if(Number(this.rank3_o_c_price_rate) > 0){
+					this.short_html += '상승하였고, '
+				}else if(Number(this.rank3_o_c_price_rate) < 0){
+					this.short_html += '하락하였고, '
+				}
+				this.short_html += '젓가대비곳가는 '+this.rank3_l_h_price_rate+'% 상승 하였습니다.';
+				this.short_html += '<br/>';
+
+				if(this.search_market == 'upbit'){
+					this.short_html += '업비트 '
+				}else if(this.search_market == 'bithumb'){
+					this.short_html += '빗썸 '
+				}
+				if(Number(this.rank2_o_c_price_rate) > 0){
+					this.short_html += '상승율 '
+				}else if(Number(this.rank2_o_c_price_rate) < 0){
+					this.short_html += '최저 하락율 '
+				}
+				this.short_html += ' 2위는 '+this.rank2_coin_name+this.rank2_coin_particle+' 시까대비종까는 '+this.rank2_o_c_price_rate+'% '
+				if(Number(this.rank2_o_c_price_rate) == 0){
+					this.short_html += '보합이였고, '
+				}else if(Number(this.rank2_o_c_price_rate) > 0){
+					this.short_html += '상승하였고, '
+				}else if(Number(this.rank2_o_c_price_rate) < 0){
+					this.short_html += '하락하였고, '
+				}
+				this.short_html += '젓가대비곳가는 '+this.rank2_l_h_price_rate+'% 상승 하였습니다.';
+				this.short_html += '<br/>';
+
+				if(this.search_market == 'upbit'){
+					this.short_html += '업비트 '
+				}else if(this.search_market == 'bithumb'){
+					this.short_html += '빗썸 '
+				}
+				if(Number(this.rank1_o_c_price_rate) > 0){
+					this.short_html += '상승율 '
+				}else if(Number(this.rank1_o_c_price_rate) < 0){
+					this.short_html += '최저 하락율 '
+				}
+				this.short_html += ' 1위는 '+this.rank1_coin_name+this.rank1_coin_particle+' 시까대비종까는 '+this.rank1_o_c_price_rate+'% '
+				if(Number(this.rank1_o_c_price_rate) == 0){
+					this.short_html += '보합이였고, '
+				}else if(Number(this.rank1_o_c_price_rate) > 0){
+					this.short_html += '상승하였고, '
+				}else if(Number(this.rank1_o_c_price_rate) < 0){
+					this.short_html += '하락하였고, '
+				}
+				this.short_html += '젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
+				this.short_html += '<br/>';
 				this.short_html += '</div>';
-				this.short_html += '<br/>';
-				this.short_html += '<br/>';
-				this.short_html += '<br/>';
 
 				/* 아래에서부터는 돈표시가 되어야함, 근데 소수점 이하는 돈표시하면 소수점이 이상하게 나오는 경우가 발생하여 999원 기준으로 미리 수정함. */
 				if(Number(this.btc_o_price) > 999){
