@@ -49,6 +49,9 @@ const Short = () => {
 const Video = () => {
 	return import("./views/Coin/Video.vue")	
 }
+const BinanceFuturerAnalysis = () => {
+  return import("./views/Coin/BinanceFuturerAnalysis.vue")	
+}
 const CoinMainList = () => {
 	return import("./views/Coin/CoinMainList.vue")	
 }
@@ -191,6 +194,11 @@ export const router = new Router({
       path: '/BlogReportMake/:date',
       name: 'blogreportmake',
       component: BlogReportMake
+    },
+    {
+      path: '/BinanceFuturerAnalysis',
+      name: 'binanceFuturerAnalysis',
+      component: BinanceFuturerAnalysis
     },
     {
       path: '/Report',

@@ -2606,4 +2606,17 @@
 		 where 1=1
 		 order by datetime_kst
 	</select>
+	
+	
+	<select id="BINANCE_FUTURES_DAY_ANALYSIS" parameterType="HashMap" resultType="HashMap">
+		select replace(x.coin_ticker, 'USDT', '') coin_ticker, y.coin_kor_name
+		     , cast(case when replace(x.coin_ticker, 'USDT', '') = 'BTC' then '0' else ROW_NUMBER () OVER (ORDER BY cast(x.o_c_price_rate as float) desc) end as varchar) ranking
+		     , case when cast(x.o_price as float) <![CDATA[<]]> cast(x.c_price as float) then 'red' when cast(x.o_price as float) <![CDATA[>]]> cast(x.c_price as float) then 'blue' when x.o_price = x.c_price then 'black' end color
+		     , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate
+		  from binance_futures_coin_day x, binance_futures_coin_info y
+		 where x.coin_ticker = y.coin_ticker
+		   and y.coin_delete_yn = 'N'
+		   and left(x.datetime_kst, 10) = #{date}
+		 order by case when replace(x.coin_ticker, 'USDT', '') = 'BTC' then 0 else 1 end, cast(x.o_c_price_rate as float) desc
+	</select>
 </mapper>

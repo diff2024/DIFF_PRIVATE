@@ -36,4 +36,5 @@ public interface MainMapper {
 	public List<HashMap<String, String>> UPBIT_BTC_OPEN_HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> BITHUMB_BTC_OPEN_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;
 	public List<HashMap<String, String>> UPBIT_BTC_OPEN_4HOUR_Ticker_Comparison(HashMap<String, String> map) throws Exception;
+	public List<HashMap<String, String>> BINANCE_FUTURES_DAY_ANALYSIS(HashMap<String, String> map) throws Exception;
 }

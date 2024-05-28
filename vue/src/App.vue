@@ -42,6 +42,8 @@
 				<v-spacer></v-spacer>
 					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BybitCoinMainList')">바이비트 통계</span>
 				<v-spacer></v-spacer>
+					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/BinanceFuturerAnalysis')">바이낸스 선물 분석</span>
+				<v-spacer></v-spacer>
 					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/Report')">Report</span>
 				<v-spacer></v-spacer>
 					<span class="font-weight-light" style="cursor:pointer; font-size:14px;" @click="$router.push('/Short')">Short</span>
