@@ -2609,14 +2609,53 @@
 	
 	
 	<select id="BINANCE_FUTURES_DAY_ANALYSIS" parameterType="HashMap" resultType="HashMap">
-		select replace(x.coin_ticker, 'USDT', '') coin_ticker, y.coin_kor_name
-		     , cast(case when replace(x.coin_ticker, 'USDT', '') = 'BTC' then '0' else ROW_NUMBER () OVER (ORDER BY cast(x.o_c_price_rate as float) desc) end as varchar) ranking
-		     , case when cast(x.o_price as float) <![CDATA[<]]> cast(x.c_price as float) then 'red' when cast(x.o_price as float) <![CDATA[>]]> cast(x.c_price as float) then 'blue' when x.o_price = x.c_price then 'black' end color
-		     , x.o_price, x.l_price, x.h_price, x.c_price, x.o_c_price_rate
-		  from binance_futures_coin_day x, binance_futures_coin_info y
-		 where x.coin_ticker = y.coin_ticker
-		   and y.coin_delete_yn = 'N'
-		   and left(x.datetime_kst, 10) = #{date}
-		 order by case when replace(x.coin_ticker, 'USDT', '') = 'BTC' then 0 else 1 end, cast(x.o_c_price_rate as float) desc
+		select replace(x.coin_ticker, 'USDT', '') as id
+			 , x.o_c_type as gubun
+			 , x.between_date as std_date_end_date
+			 , cast(x.straight_days as varchar) as straight_days
+			 , cast(ROUND(((x.c_price - x.o_price)/x.o_price)*100,2) as varchar)  as accumulate_rate
+			 , cast(today_translation_rate as varchar) as today_rate
+			 , cast(ROUND(((x.today_c_price - x.o_price)/x.o_price)*100,2) as varchar)  as accumulate_today_rate
+			 , today_btc_atranslation_rate as btc_rate, cast(today_increase_count as varchar) today_increase_count, cast(today_decrease_count as varchar) today_decrease_count
+		  from (
+				select x.coin_ticker
+					 , case when x.o_c_type = 'P' then '상승' when x.o_c_type = 'M' then '하락' else '보합' end o_c_type
+					 , MIN(x.date_kst) || ' ~ ' || MAX(x.date_kst) as between_date
+					 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = 'BTCUSDT' and left(y.datetime_kst, 10) = current_date::varchar) today_btc_atranslation_rate
+					 , (select count(*) from binance_futures_coin_day y where left(y.datetime_kst, 10) = current_date::varchar and cast(o_c_price_rate as float) <![CDATA[>]]> 0) today_increase_count
+					 , (select count(*) from binance_futures_coin_day y where left(y.datetime_kst, 10) = current_date::varchar and cast(o_c_price_rate as float) <![CDATA[<]]> 0) today_decrease_count
+					 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_kst, 10) = current_date::varchar) today_translation_rate
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_kst, 10) = MIN(x.date_kst)) o_price
+					 , (select c_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_kst, 10) = MAX(x.date_kst)) c_price
+					 , (select c_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_kst, 10) = current_date::varchar) today_c_price
+					 , COUNT(*) as straight_days
+				  from (
+						select x.date_kst, x.coin_ticker, x.o_c_type, x.prev_same_tag
+							 , SUM(prev_same_tag) OVER (PARTITION BY x.coin_ticker ORDER BY x.coin_ticker, x.date_kst asc) straight_group  
+						  from (
+								select x.date_kst, x.coin_ticker, x.o_c_type
+									 , lag(x.o_c_type, 1) over(order by x.coin_ticker, x.date_kst asc) prev_o_c_type
+									 , case when coalesce(lag(x.o_c_type, 1) over(PARTITION BY x.coin_ticker order by x.coin_ticker, x.date_kst asc), '') = x.o_c_type then 0 else 1 end prev_same_tag 
+								  from (
+										select left(x.datetime_kst, 10) date_kst, x.coin_ticker
+											 , case when cast(x.o_c_price_rate as double precision) > 0 then 'P' when cast(x.o_c_price_rate as double precision) <![CDATA[<]]> 0 then 'M' else '-' end o_c_type
+										  from binance_futures_coin_day x
+										 where left(x.datetime_kst, 10) <![CDATA[>]]> left(cast((current_timestamp + '-1 months') as varchar), 10)
+										   and left(x.datetime_kst, 10) <![CDATA[<]]> current_date::varchar
+										 order by x.coin_ticker, x.datetime_kst asc
+								 	   ) x
+								order by x.coin_ticker, x.date_kst asc
+							   ) x
+						group by x.date_kst, x.coin_ticker, x.o_c_type, x.prev_same_tag
+						order by x.coin_ticker, x.date_kst asc
+					  ) x
+				where x.o_c_type != '-'
+				  --and coin_ticker = 'BTCUSDT'
+				group by x.coin_ticker, x.straight_group, x.o_c_type
+				having MAX(x.date_kst) = to_char(now() - '1 days'::interval, 'YYYY-MM-DD') 
+				order by MAX(x.date_kst) desc
+			   ) x
+		 where 1=1
+		 order by ROUND(((x.c_price - x.o_price)/x.o_price)*100,2) desc
 	</select>
 </mapper>

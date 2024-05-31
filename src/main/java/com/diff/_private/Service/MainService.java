@@ -138,7 +138,7 @@ public class MainService {
 		return MainMapper.UPBIT_BTC_OPEN_4HOUR_Ticker_Comparison(map);
 	}
 	
-	public List<HashMap<String, String>> BINANCE_FUTURES_DAY_ANALYSIS(HashMap<String, String> map) throws Exception{
-		return MainMapper.BINANCE_FUTURES_DAY_ANALYSIS(map);
+	public List<HashMap<String, String>> BINANCE_FUTURES_DAY_ANALYSIS() throws Exception{
+		return MainMapper.BINANCE_FUTURES_DAY_ANALYSIS();
 	}
 }

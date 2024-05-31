@@ -1364,12 +1364,7 @@ public class Main {
 	
 	@GetMapping(path = "/BINANCE_FUTURES_DAY_ANALYSIS")
 	public List<HashMap<String, String>> BINANCE_FUTURES_DAY_ANALYSIS(HttpServletRequest req) throws Exception {
-		String date = (req.getParameter("date")==null)?"":req.getParameter("date");
-		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("date", date);
-		List<HashMap<String, String>> list = MainService.BINANCE_FUTURES_DAY_ANALYSIS(map);
-		return list;
+		return MainService.BINANCE_FUTURES_DAY_ANALYSIS();
 	}
 	
 	public String Double_ReFresh(String Origin_Data) {
