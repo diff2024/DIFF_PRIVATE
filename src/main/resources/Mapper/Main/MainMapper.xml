@@ -2607,7 +2607,6 @@
 		 order by datetime_kst
 	</select>
 	
-	
 	<select id="BINANCE_FUTURES_DAY_ANALYSIS" parameterType="HashMap" resultType="HashMap">
 		select replace(x.coin_ticker, 'USDT', '') as id
 			 , x.o_c_type as gubun
@@ -2657,5 +2656,50 @@
 			   ) x
 		 where 1=1
 		 order by ROUND(((x.c_price - x.o_price)/x.o_price)*100,2) desc
+	</select>
+	
+	<select id="BINANCE_FUTURES_DAY_ANALYSIS_DETAILS" parameterType="HashMap" resultType="HashMap">
+		select x.coin_ticker
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = current_date::varchar) today_translation_rate
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '1 days'::interval, 'YYYY-MM-DD')) days_1_translation_rate
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '2 days'::interval, 'YYYY-MM-DD')) days_2_translation_rate
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '3 days'::interval, 'YYYY-MM-DD')) days_3_translation_rate
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '4 days'::interval, 'YYYY-MM-DD')) days_4_translation_rate
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '5 days'::interval, 'YYYY-MM-DD')) days_5_translation_rate
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '6 days'::interval, 'YYYY-MM-DD')) days_6_translation_rate
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '7 days'::interval, 'YYYY-MM-DD')) days_7_translation_rate
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '8 days'::interval, 'YYYY-MM-DD')) days_8_translation_rate
+			 , (select o_c_price_rate from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '9 days'::interval, 'YYYY-MM-DD')) days_9_translation_rate
+			 , cast(ROUND(((x.today_c_price - x.days_1_o_price)/x.days_1_o_price)*100,2) as varchar) as days_1_accumulate_rate
+			 , cast(ROUND(((x.today_c_price - x.days_2_o_price)/x.days_2_o_price)*100,2) as varchar) as days_2_accumulate_rate
+			 , cast(ROUND(((x.today_c_price - x.days_3_o_price)/x.days_3_o_price)*100,2) as varchar) as days_3_accumulate_rate
+			 , cast(ROUND(((x.today_c_price - x.days_4_o_price)/x.days_4_o_price)*100,2) as varchar) as days_4_accumulate_rate
+			 , cast(ROUND(((x.today_c_price - x.days_5_o_price)/x.days_5_o_price)*100,2) as varchar) as days_5_accumulate_rate
+			 , cast(ROUND(((x.today_c_price - x.days_6_o_price)/x.days_6_o_price)*100,2) as varchar) as days_6_accumulate_rate
+			 , cast(ROUND(((x.today_c_price - x.days_7_o_price)/x.days_7_o_price)*100,2) as varchar) as days_7_accumulate_rate
+			 , cast(ROUND(((x.today_c_price - x.days_8_o_price)/x.days_8_o_price)*100,2) as varchar) as days_8_accumulate_rate
+			 , cast(ROUND(((x.today_c_price - x.days_9_o_price)/x.days_9_o_price)*100,2) as varchar) as days_9_accumulate_rate
+		  from (
+				select x.coin_ticker
+					 , (select c_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = current_date::varchar) today_c_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '1 days'::interval, 'YYYY-MM-DD')) days_1_o_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '2 days'::interval, 'YYYY-MM-DD')) days_2_o_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '3 days'::interval, 'YYYY-MM-DD')) days_3_o_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '4 days'::interval, 'YYYY-MM-DD')) days_4_o_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '5 days'::interval, 'YYYY-MM-DD')) days_5_o_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '6 days'::interval, 'YYYY-MM-DD')) days_6_o_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '7 days'::interval, 'YYYY-MM-DD')) days_7_o_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '8 days'::interval, 'YYYY-MM-DD')) days_8_o_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '9 days'::interval, 'YYYY-MM-DD')) days_9_o_price
+					 , (select o_price::numeric from binance_futures_coin_day y where y.coin_ticker = x.coin_ticker and left(y.datetime_utc, 10) = to_char(now() - '10 days'::interval, 'YYYY-MM-DD')) days_10_o_price
+				  from binance_futures_coin_info x
+				 where x.coin_delete_yn = 'N'
+				 <if test='coin_ticker != null and coin_ticker != "" '>
+				   and replace(x.coin_ticker, 'USDT', '') = #{coin_ticker}
+				 </if>
+				 order by x.coin_ticker
+		 	 ) x
+		 where 1=1
+		 order by x.coin_ticker
 	</select>
 </mapper>

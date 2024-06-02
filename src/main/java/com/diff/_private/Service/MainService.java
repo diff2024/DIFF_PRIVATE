@@ -141,4 +141,8 @@ public class MainService {
 	public List<HashMap<String, String>> BINANCE_FUTURES_DAY_ANALYSIS() throws Exception{
 		return MainMapper.BINANCE_FUTURES_DAY_ANALYSIS();
 	}
+	
+	public HashMap<String, String> BINANCE_FUTURES_DAY_ANALYSIS_DETAILS(HashMap<String, String> map) throws Exception{
+		return MainMapper.BINANCE_FUTURES_DAY_ANALYSIS_DETAILS(map);
+	}
 }

@@ -1367,6 +1367,16 @@ public class Main {
 		return MainService.BINANCE_FUTURES_DAY_ANALYSIS();
 	}
 	
+	@GetMapping(path = "/BINANCE_FUTURES_DAY_ANALYSIS_DETAILS")
+	public HashMap<String, String> BINANCE_FUTURES_DAY_ANALYSIS_DETAILS(HttpServletRequest req) throws Exception {
+		String coin_ticker = (req.getParameter("coin_ticker")==null)?"":req.getParameter("coin_ticker");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("coin_ticker", coin_ticker);
+		
+		return MainService.BINANCE_FUTURES_DAY_ANALYSIS_DETAILS(map);
+	}
+	
 	public String Double_ReFresh(String Origin_Data) {
 		for(int x=0; x<10; x++) {
 			if(Origin_Data.contains(".")) {
