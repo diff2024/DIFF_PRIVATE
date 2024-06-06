@@ -79,7 +79,7 @@ export default {
 	beforeMount() {
        this.columnDefs = [
            {headerName: '코인', field:"id", width:100, sortable: false, filter: true, resizable:true},
-           {headerName: '구분', field:"gubun", width:85, cellStyle: {textAlign: "center"}, sortable: false, filter: true, resizable:true},
+           {headerName: '구분', field:"gubun", width:85, cellStyle: {textAlign: "center"}, sortable: true, filter: true, resizable:true},
 		   {headerName: '시작일자 ~ 종료일자', field:"std_date_end_date", hide: "true", width:200, cellStyle: {textAlign: "center"}, sortable: true, filter: false, resizable:true}, 
 		   {headerName: '연속일수', field:"straight_days", hide: "true", width:100, cellDataType: 'number', cellStyle: {textAlign: "right"}, cellRenderer : currencyFormatter, sortable: true, filter: false, resizable:true}, 
 		   {headerName: '금일 변동율(%)', field:"today_rate", hide: "true", width:130, cellDataType: 'number', cellStyle: {textAlign: "right"}, cellRenderer : percentFormatter, sortable: true, filter: false, resizable:true}, 
@@ -372,16 +372,16 @@ export default {
 
 					var dataArray = [];
 					dataArray.push(['X', 'Percent', { role: 'style' }, { role: 'annotation' } ]);
-					dataArray.push(["9일 전\n"+this.days_9, Number(days_9_translation_rate), String(days_9_translation_rate_color), String(days_9_translation_rate)+'%']);
-					dataArray.push(["8일 전\n"+this.days_8, Number(days_8_translation_rate), String(days_8_translation_rate_color), String(days_8_translation_rate)+'%']);
-					dataArray.push(["7일 전\n"+this.days_7, Number(days_7_translation_rate), String(days_7_translation_rate_color), String(days_7_translation_rate)+'%']);
-					dataArray.push(["6일 전\n"+this.days_6, Number(days_6_translation_rate), String(days_6_translation_rate_color), String(days_6_translation_rate)+'%']);
-					dataArray.push(["5일 전\n"+this.days_5, Number(days_5_translation_rate), String(days_5_translation_rate_color), String(days_5_translation_rate)+'%']);
-					dataArray.push(["4일 전\n"+this.days_4, Number(days_4_translation_rate), String(days_4_translation_rate_color), String(days_4_translation_rate)+'%']);
-					dataArray.push(["3일 전\n"+this.days_3, Number(days_3_translation_rate), String(days_3_translation_rate_color), String(days_3_translation_rate)+'%']);
-					dataArray.push(["2일 전\n"+this.days_2, Number(days_2_translation_rate), String(days_2_translation_rate_color), String(days_2_translation_rate)+'%']);
-					dataArray.push(["1일 전\n"+this.days_1, Number(days_1_translation_rate), String(days_1_translation_rate_color), String(days_1_translation_rate)+'%']);
 					dataArray.push(["오늘\n"+this.today, Number(today_translation_rate), String(today_translation_rate_color), String(today_translation_rate)+'%']);
+					dataArray.push(["1일 전\n"+this.days_1, Number(days_1_translation_rate), String(days_1_translation_rate_color), String(days_1_translation_rate)+'%']);
+					dataArray.push(["2일 전\n"+this.days_2, Number(days_2_translation_rate), String(days_2_translation_rate_color), String(days_2_translation_rate)+'%']);
+					dataArray.push(["3일 전\n"+this.days_3, Number(days_3_translation_rate), String(days_3_translation_rate_color), String(days_3_translation_rate)+'%']);
+					dataArray.push(["4일 전\n"+this.days_4, Number(days_4_translation_rate), String(days_4_translation_rate_color), String(days_4_translation_rate)+'%']);
+					dataArray.push(["5일 전\n"+this.days_5, Number(days_5_translation_rate), String(days_5_translation_rate_color), String(days_5_translation_rate)+'%']);
+					dataArray.push(["6일 전\n"+this.days_6, Number(days_6_translation_rate), String(days_6_translation_rate_color), String(days_6_translation_rate)+'%']);
+					dataArray.push(["7일 전\n"+this.days_7, Number(days_7_translation_rate), String(days_7_translation_rate_color), String(days_7_translation_rate)+'%']);
+					dataArray.push(["8일 전\n"+this.days_8, Number(days_8_translation_rate), String(days_8_translation_rate_color), String(days_8_translation_rate)+'%']);
+					dataArray.push(["9일 전\n"+this.days_9, Number(days_9_translation_rate), String(days_9_translation_rate_color), String(days_9_translation_rate)+'%']);
 					
 					var data = new google.visualization.arrayToDataTable(dataArray);
 					var options = {
@@ -418,16 +418,16 @@ export default {
 
 					dataArray = [];
 					dataArray.push(['X', 'Percent', { role: 'style' }, { role: 'annotation' } ]);
-					dataArray.push(["9일 전\n"+this.days_9, Number(days_9_accumulate_rate), String(days_9_accumulate_rate_color), String(days_9_accumulate_rate)+'%']);
-					dataArray.push(["8일 전\n"+this.days_8, Number(days_8_accumulate_rate), String(days_8_accumulate_rate_color), String(days_8_accumulate_rate)+'%']);
-					dataArray.push(["7일 전\n"+this.days_7, Number(days_7_accumulate_rate), String(days_7_accumulate_rate_color), String(days_7_accumulate_rate)+'%']);
-					dataArray.push(["6일 전\n"+this.days_6, Number(days_6_accumulate_rate), String(days_6_accumulate_rate_color), String(days_6_accumulate_rate)+'%']);
-					dataArray.push(["5일 전\n"+this.days_5, Number(days_5_accumulate_rate), String(days_5_accumulate_rate_color), String(days_5_accumulate_rate)+'%']);
-					dataArray.push(["4일 전\n"+this.days_4, Number(days_4_accumulate_rate), String(days_4_accumulate_rate_color), String(days_4_accumulate_rate)+'%']);
-					dataArray.push(["3일 전\n"+this.days_3, Number(days_3_accumulate_rate), String(days_3_accumulate_rate_color), String(days_3_accumulate_rate)+'%']);
-					dataArray.push(["2일 전\n"+this.days_2, Number(days_2_accumulate_rate), String(days_2_accumulate_rate_color), String(days_2_accumulate_rate)+'%']);
-					dataArray.push(["1일 전\n"+this.days_1, Number(days_1_accumulate_rate), String(days_1_accumulate_rate_color), String(days_1_accumulate_rate)+'%']);
 					dataArray.push(["오늘\n"+this.today, Number(today_translation_rate), String(today_translation_rate_color), String(today_translation_rate)+'%']);
+					dataArray.push(["1일 전\n"+this.days_1, Number(days_1_accumulate_rate), String(days_1_accumulate_rate_color), String(days_1_accumulate_rate)+'%']);
+					dataArray.push(["2일 전\n"+this.days_2, Number(days_2_accumulate_rate), String(days_2_accumulate_rate_color), String(days_2_accumulate_rate)+'%']);
+					dataArray.push(["3일 전\n"+this.days_3, Number(days_3_accumulate_rate), String(days_3_accumulate_rate_color), String(days_3_accumulate_rate)+'%']);
+					dataArray.push(["4일 전\n"+this.days_4, Number(days_4_accumulate_rate), String(days_4_accumulate_rate_color), String(days_4_accumulate_rate)+'%']);
+					dataArray.push(["5일 전\n"+this.days_5, Number(days_5_accumulate_rate), String(days_5_accumulate_rate_color), String(days_5_accumulate_rate)+'%']);
+					dataArray.push(["6일 전\n"+this.days_6, Number(days_6_accumulate_rate), String(days_6_accumulate_rate_color), String(days_6_accumulate_rate)+'%']);
+					dataArray.push(["7일 전\n"+this.days_7, Number(days_7_accumulate_rate), String(days_7_accumulate_rate_color), String(days_7_accumulate_rate)+'%']);
+					dataArray.push(["8일 전\n"+this.days_8, Number(days_8_accumulate_rate), String(days_8_accumulate_rate_color), String(days_8_accumulate_rate)+'%']);
+					dataArray.push(["9일 전\n"+this.days_9, Number(days_9_accumulate_rate), String(days_9_accumulate_rate_color), String(days_9_accumulate_rate)+'%']);
 					
 					var LineOption = {
 						title: coinID+' 누적 변동율(%)',	
@@ -473,6 +473,7 @@ export default {
 		axios.get('/Main/BINANCE_FUTURES_DAY_ANALYSIS')
 		.then(response => {
 			for(var x=0; x<response.data.length; x++){
+				//console.log(response.data[x].id)
 				this.rowData.push({
 					id: response.data[x].id,
 					gubun: response.data[x].gubun + ' ['+response.data[x].straight_days+']',
