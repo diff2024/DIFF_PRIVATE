@@ -61,6 +61,10 @@ public class CoinService {
 		CoinMapper.TiStoryReportHTMLDelete(map);
 	}
 	
+	public void CoinAnalysisCreateTMP(HashMap<String, String> map) throws Exception{
+		CoinMapper.CoinAnalysisCreateTMP(map);
+	}
+	
 	public void CoinAnalysisCreate(HashMap<String, String> map) throws Exception{
 		CoinMapper.CoinAnalysisCreate(map);
 	}

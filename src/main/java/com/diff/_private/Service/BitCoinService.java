@@ -57,6 +57,9 @@ public class BitCoinService {
 		BitCoinMapper.WordPressReportHTMLDelete(map);
 		BitCoinMapper.TiStoryReportHTMLDelete(map);
 	}
+	public void CoinAnalysisCreateTMP(HashMap<String, String> map) throws Exception{
+		BitCoinMapper.CoinAnalysisCreateTMP(map);
+	}
 	
 	public void CoinAnalysisCreate(HashMap<String, String> map) throws Exception{
 		BitCoinMapper.CoinAnalysisCreate(map);

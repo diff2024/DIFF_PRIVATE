@@ -289,6 +289,30 @@
 		delete from upbit_coin_report_daily where yyyymmdd = #{date}
 	</delete>
 	
+	<insert id="CoinAnalysisCreateTMP" parameterType="HashMap">
+		insert into upbit_coin_report_daily
+			(yyyymmdd, coin_ticker, o_price, l_price, h_price, c_price, ranking, status, o_c_price, o_c_price_rate, l_h_price, l_h_price_rate, create_datetime)
+		select #{date} yyyymmdd, coin_ticker, o_price, l_price, h_price, c_price
+			 , '기준' as ranking
+			 , case when cast(c_price as numeric) > cast(o_price as numeric) then '상승' when cast(c_price as numeric) <![CDATA[ < ]]> cast(o_price as numeric) then '하락' else '보합' end status
+			 , cast((cast(c_price as numeric) - cast(o_price as numeric)) as varchar) o_c_price, o_c_price_rate
+			 , cast((cast(h_price as numeric) - cast(l_price as numeric)) as varchar) l_h_price, l_h_price_rate
+			 , to_char(now(), 'YYYY-MM-DD HH24:MI:SS')
+		  from upbit_coin_day
+		 where left(datetime_utc, 10) = #{date}
+		   and coin_ticker = 'KRW-BTC'
+		 union all 
+		select #{date}, coin_ticker, o_price, l_price, h_price, c_price
+			 , cast(ROW_NUMBER () OVER (ORDER BY cast(o_c_price_rate as numeric) desc) as varchar) ranking
+			 , case when cast(c_price as numeric) > cast(o_price as numeric) then '상승' when cast(c_price as numeric) <![CDATA[ < ]]> cast(o_price as numeric) then '하락' else '보합' end status
+			 , cast((cast(c_price as numeric) - cast(o_price as numeric)) as varchar) o_c_price, o_c_price_rate
+			 , cast((cast(h_price as numeric) - cast(l_price as numeric)) as varchar) l_h_price, l_h_price_rate
+			 , to_char(now(), 'YYYY-MM-DD HH24:MI:SS')
+		  from upbit_coin_day x
+		 where left(datetime_utc, 10) = #{date}
+		   and coin_ticker != 'KRW-BTC'
+	</insert>
+	
 	<insert id="CoinAnalysisCreate" parameterType="HashMap">
 		insert into upbit_coin_report_daily
 			(yyyymmdd, coin_ticker, o_price, l_price, h_price, c_price, ranking, status, o_c_price, o_c_price_rate, l_h_price, l_h_price_rate

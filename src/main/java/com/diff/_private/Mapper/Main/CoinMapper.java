@@ -16,6 +16,7 @@ public interface CoinMapper {
 	public String BlogUploadLogDeleteYN(HashMap<String, String> map) throws Exception;
 	public void BlogUploadLogUpdate(HashMap<String, String> map) throws Exception;
 	public void CoinAnalysisDelete(HashMap<String, String> map) throws Exception;
+	public void CoinAnalysisCreateTMP(HashMap<String, String> map) throws Exception;
 	public void CoinAnalysisCreate(HashMap<String, String> map) throws Exception;
 	public void CoinAnalysisHourGraphDelete(HashMap<String, String> map) throws Exception;
 	public void CoinAnalysisHourGraphCreate(HashMap<String, String> map) throws Exception;

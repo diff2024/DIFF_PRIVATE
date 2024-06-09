@@ -163,6 +163,8 @@ public class BitCoinController {
 	    
 	    BitCoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
+	    BitCoinService.CoinAnalysisCreateTMP(map);
+	    /*
 	    BitCoinService.BlogUploadLogCreate(map);
 	    map.put("upload_start_datetime", BitCoinService.BlogUploadLogConfirm());
 	    BitCoinService.CoinAnalysisCreate(map);
@@ -189,6 +191,7 @@ public class BitCoinController {
 	    BitCoinService.TiStoryReportHTMLCreate(map);
 	    map.put("log_number", "4");
 	    BitCoinService.BlogUploadLogUpdate(map);
+	    */
 	}
 	
 	@GetMapping(path = "/CoinDailyReportList")

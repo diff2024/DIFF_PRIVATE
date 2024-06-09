@@ -159,6 +159,8 @@ public class CoinController {
 	    
 	    CoinService.CoinAnalysisDelete(map);
 	    Thread.sleep(1500);
+	    CoinService.CoinAnalysisCreateTMP(map);
+	    /*
 	    CoinService.BlogUploadLogCreate(map);
 	    map.put("upload_start_datetime", CoinService.BlogUploadLogConfirm());
 	    CoinService.CoinAnalysisCreate(map);
@@ -185,6 +187,7 @@ public class CoinController {
 	    CoinService.TiStoryReportHTMLCreate(map);
 	    map.put("log_number", "4");
 	    CoinService.BlogUploadLogUpdate(map);
+	    */
 	}
 	
 	@GetMapping(path = "/CoinDailyReportList")
