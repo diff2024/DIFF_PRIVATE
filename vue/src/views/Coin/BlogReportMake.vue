@@ -99,6 +99,7 @@ export default {
 		
 	},
 	mounted (){
+
 		let today = new Date();
 		let year = today.getFullYear();
 		let month = today.getMonth() + 1;
@@ -143,6 +144,33 @@ export default {
 			}
 			this.yesterday = yesterday_year+'-'+yesterday_month+'-'+yesterday_day
 		}
+
+		Swal.fire({
+			icon: 'question',
+			text: "빗썸, 업비트에서 데이터를 가져 오시겠습니까?",
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '실행',
+			cancelButtonText: '취소',
+			allowOutsideClick: false,
+		}).then(function (result) {
+			if (result.isConfirmed) {
+				
+				axios.post('/Main/SeverSetting', null,{
+					params: {
+							option_number: '1',
+							option_data: 'Y'
+					}
+				})
+				.then(response => {
+					Swal.fire({
+						title:'데이터 요청이 정상적으로 완료되었습니다.',
+						icon: 'success'
+					});
+				})
+			}
+		});
 	},
 	methods: {
 		BithumbMakeReport(){

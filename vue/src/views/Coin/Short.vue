@@ -419,6 +419,19 @@ export default {
 			this.rank1_l_h_price = params.data.rank1_l_h_price;
 			this.rank1_l_h_price_rate = params.data.rank1_l_h_price_rate;
 
+			if(this.rank1_o_price.substring(this.rank1_o_price.length-2, this.rank1_o_price.length) == '.0'){
+				this.rank1_o_price = this.rank1_o_price.slice(0, -2);
+			}
+			if(this.rank1_l_price.substring(this.rank1_l_price.length-2, this.rank1_l_price.length) == '.0'){
+				this.rank1_l_price = this.rank1_l_price.slice(0, -2);
+			}
+			if(this.rank1_h_price.substring(this.rank1_h_price.length-2, this.rank1_h_price.length) == '.0'){
+				this.rank1_h_price = this.rank1_h_price.slice(0, -2);
+			}
+			if(this.rank1_c_price.substring(this.rank1_c_price.length-2, this.rank1_c_price.length) == '.0'){
+				this.rank1_c_price = this.rank1_c_price.slice(0, -2);
+			}
+
 			this.rank2_coin_ticker = params.data.rank2_coin_ticker;
 			this.rank2_coin_name = params.data.rank2_coin_name;
 			this.rank2_coin_particle = params.data.rank2_coin_particle;
@@ -431,6 +444,19 @@ export default {
 			this.rank2_l_h_price = params.data.rank2_l_h_price;
 			this.rank2_l_h_price_rate = params.data.rank2_l_h_price_rate;
 			
+			if(this.rank2_o_price.substring(this.rank2_o_price.length-2, this.rank2_o_price.length) == '.0'){
+				this.rank2_o_price = this.rank2_o_price.slice(0, -2);
+			}
+			if(this.rank2_l_price.substring(this.rank2_l_price.length-2, this.rank2_l_price.length) == '.0'){
+				this.rank2_l_price = this.rank2_l_price.slice(0, -2);
+			}
+			if(this.rank2_h_price.substring(this.rank2_h_price.length-2, this.rank2_h_price.length) == '.0'){
+				this.rank2_h_price = this.rank2_h_price.slice(0, -2);
+			}
+			if(this.rank2_c_price.substring(this.rank2_c_price.length-2, this.rank2_c_price.length) == '.0'){
+				this.rank2_c_price = this.rank2_c_price.slice(0, -2);
+			}
+
 			this.rank3_coin_ticker = params.data.rank3_coin_ticker;
 			this.rank3_coin_name = params.data.rank3_coin_name;
 			this.rank3_coin_particle = params.data.rank3_coin_particle;
@@ -442,6 +468,19 @@ export default {
 			this.rank3_o_c_price_rate = params.data.rank3_o_c_price_rate;
 			this.rank3_l_h_price = params.data.rank3_l_h_price;
 			this.rank3_l_h_price_rate = params.data.rank3_l_h_price_rate;
+
+			if(this.rank3_o_price.substring(this.rank3_o_price.length-2, this.rank3_o_price.length) == '.0'){
+				this.rank3_o_price = this.rank3_o_price.slice(0, -2);
+			}
+			if(this.rank3_l_price.substring(this.rank3_l_price.length-2, this.rank3_l_price.length) == '.0'){
+				this.rank3_l_price = this.rank3_l_price.slice(0, -2);
+			}
+			if(this.rank3_h_price.substring(this.rank3_h_price.length-2, this.rank3_h_price.length) == '.0'){
+				this.rank3_h_price = this.rank3_h_price.slice(0, -2);
+			}
+			if(this.rank3_c_price.substring(this.rank3_c_price.length-2, this.rank3_c_price.length) == '.0'){
+				this.rank3_c_price = this.rank3_c_price.slice(0, -2);
+			}
 
 			this.rank4_coin_ticker = params.data.rank4_coin_ticker;
 			this.rank4_coin_name = params.data.rank4_coin_name;
@@ -573,12 +612,12 @@ export default {
 				}
 				this.short_html += '젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/><br/>';
-				this.short_html += '영상 시청 감사드리며, 좋아요와 구독 부탁 드립니다.';
-				this.short_html += '<br/><br/>';
+				//this.short_html += '영상 시청 감사드리며, 좋아요와 구독 부탁 드립니다.';
+				//this.short_html += '<br/><br/>';
 				this.short_html += '영상 시청 감사드리며, 유튜브 코인분석기 채널 방문 부탁드립니다.';
 				this.short_html += '<br/><br/>';
 
-				this.short_html += korea_date+', ' +'빗썸, 업비트 코인 순위를 알아보겠습니다.';
+				this.short_html += korea_date+' 코인 순위를 알아보겠습니다.';
 				this.short_html += '<br/>'
 				if(this.search_market == 'upbit'){
 					this.short_html += '업비트 '
@@ -642,6 +681,8 @@ export default {
 				}
 				this.short_html += '젓가대비곳가는 '+this.rank1_l_h_price_rate+'% 상승 하였습니다.';
 				this.short_html += '<br/>';
+				this.short_html += '영상 시청 감사드리며, 좋아요와 구독 부탁 드립니다.';
+				this.short_html += '<br/><br/>';
 				this.short_html += '</div>';
 
 				/* 아래에서부터는 돈표시가 되어야함, 근데 소수점 이하는 돈표시하면 소수점이 이상하게 나오는 경우가 발생하여 999원 기준으로 미리 수정함. */

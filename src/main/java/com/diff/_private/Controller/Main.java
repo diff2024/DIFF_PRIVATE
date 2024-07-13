@@ -1377,6 +1377,17 @@ public class Main {
 		return MainService.BINANCE_FUTURES_DAY_ANALYSIS_DETAILS(map);
 	}
 	
+	@PostMapping(path = "/SeverSetting")
+	public void SeverSetting(HttpServletRequest req) throws Exception {
+		String option_number = (req.getParameter("option_number")==null)?"":req.getParameter("option_number");
+		String option_data = (req.getParameter("option_data")==null)?"":req.getParameter("option_data");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("option_number", option_number);
+		map.put("option_data", option_data);
+		MainService.SeverSetting(map);
+	}
+	
 	public String Double_ReFresh(String Origin_Data) {
 		for(int x=0; x<10; x++) {
 			if(Origin_Data.contains(".")) {

@@ -145,4 +145,8 @@ public class MainService {
 	public HashMap<String, String> BINANCE_FUTURES_DAY_ANALYSIS_DETAILS(HashMap<String, String> map) throws Exception{
 		return MainMapper.BINANCE_FUTURES_DAY_ANALYSIS_DETAILS(map);
 	}
+	
+	public void SeverSetting(HashMap<String, String> map) throws Exception{
+		MainMapper.SeverSetting(map);
+	}
 }
